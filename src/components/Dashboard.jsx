@@ -23,19 +23,19 @@ const Dashboard = () => {
         justifyContent={"center"}
         sx={{ height: "calc(100vh - 70px)" }}
       >
-        {[1, 2, 3, 4, 5, 6].map((item) => (
+        {[1, 2, 3].map((item) => (
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <Item>
               <Grid container spacing={3}>
+                
                 <Grid
                   item
                   xs={12}
                   sx={{
                     backgroundColor: "#dedede",
-
                     mb: 2,
                     ml: 3,
-                    height: "8em",
+                    height: "auto",
                   }}
                 >
                   item
@@ -47,7 +47,7 @@ const Dashboard = () => {
                     backgroundColor: "#dedede",
                     mb: 2,
                     ml: 3,
-                    height: "12em",
+                    height: "auto",
                   }}
                 >
                   item
@@ -59,35 +59,12 @@ const Dashboard = () => {
                     backgroundColor: "#dedede",
                     mb: 2,
                     ml: 3,
-                    height: "12em",
+                    height: "auto",
                   }}
                 >
                   item
                 </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  sx={{
-                    backgroundColor: "#dedede",
-                    mb: 2,
-                    ml: 3,
-                    height: "12em",
-                  }}
-                >
-                  item
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  sx={{
-                    backgroundColor: "#dedede",
-                    mb: 2,
-                    ml: 3,
-                    height: "8em",
-                  }}
-                >
-                  item
-                </Grid>
+           
               </Grid>
             </Item>
           </Grid>
