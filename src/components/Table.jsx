@@ -1,28 +1,28 @@
 import React from "react";
-/* import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid"; */
 import { Typography } from "@mui/material";
+import TableWidget from "../widgets/TableWidget/TableWidget";
+import { dataTable } from "../widgets/TableWidget/fakedata";
 
-/* const rows = [
-  { id: 1, col1: "Hello", col2: "World" },
-  { id: 2, col1: "DataGridPro", col2: "is Awesome" },
-  { id: 3, col1: "MUI", col2: "is Amazing" },
-];
-
-const columns = [
-  { field: "col1", headerName: "Column 1", width: 150 },
-  { field: "col2", headerName: "Column 2", width: 150 },
-]; */
 const Table = () => {
+  const columns = [
+    { field: "id", headerName: "ID", width: 70 },
+    { field: "name", headerName: "Nombre", width: 130 },
+    { field: "username", headerName: "Usuario", flex: 1 },
+    {
+      field: "email",
+      headerName: "Email",
+      flex: 1,
+    },
+    {
+      field: "phone",
+      headerName: "Teléfono",
+      type: "number",
+      flex: 1,
+    },
+  ];
   return (
     <>
-      <Typography>Table</Typography>
-      {/*  <DataGrid
-        rows={rows}
-        columns={columns}
-        components={{
-          Toolbar: GridToolbar,
-        }}
-      /> */}
+      <TableWidget data={dataTable} columns={columns} whatever="sdfsdf" />
     </>
   );
 };
