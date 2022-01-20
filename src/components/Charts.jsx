@@ -1,32 +1,73 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid, Paper, Typography } from "@mui/material";
 import React from "react";
-import HalfDoughnutChart from "./HalfDoughnutChart";
+import HalfDoughnutApex from "./HalfDoughnutApex";
 
 const Charts = () => {
   const data = [
-    [
-      { name: "Group A", value: 4000 },
-      { name: "Group B", value: 300 },
-    ],
-    [
-      { name: "Group A", value: 200 },
-      { name: "Group B", value: 300 },
-    ],
+    [24, 55, 41, 17, 95],
+    [44, 553, 69, 17, 75],
+    [454, 545, 41, 67, 35],
   ];
 
   return (
-    <div>
-      <Typography component="h4" variant="h4">
-        Charts
-      </Typography>
-      <Grid>
+    <>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
-          {data.map((item) => (
-            <HalfDoughnutChart data={item} />
-          ))}
+          <Typography variant="h3" gutterBottom>
+            Semi Donut
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper elevation={2}>
+            {/*  <Typography component="h4" variant="h4">
+              Recharts
+            </Typography>
+            <Grid item container spacing={2}>
+              {data.map((item) => (
+                <Grid item xs={12} md={4}>
+                  <HalfDoughnutRecharts data={item} />
+                </Grid>
+              ))}
+            </Grid> */}
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper elevation={2}>
+            <Grid container spacing={2}>
+              {data.map((item) => (
+                <Grid item xs={12} md={4}>
+                  <HalfDoughnutApex series={item} />
+                </Grid>
+              ))}
+            </Grid>
+          </Paper>
         </Grid>
       </Grid>
-    </div>
+      <Typography variant="h3" gutterBottom>
+        Timeline
+      </Typography>
+      <Paper elevation={2}>
+        {/*  <Typography component="h4" variant="h4">
+          Recharts
+        </Typography>
+        <Grid container spacing={2}>
+          {data.map((item) => (
+            <Grid item xs={12} md={4}>
+              <HalfDoughnutRecharts data={item} />
+            </Grid>
+          ))}
+        </Grid> */}
+      </Paper>
+      <Paper elevation={2}>
+        <Grid container spacing={2}>
+          {data.map((item) => (
+            <Grid item xs={12} md={4}>
+              <HalfDoughnutApex series={item} />
+            </Grid>
+          ))}
+        </Grid>
+      </Paper>
+    </>
   );
 };
 
