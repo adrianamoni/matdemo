@@ -40,31 +40,31 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
       setlinks([
         {
           id: 1,
-          name: "Home",
+          name: <Text tid={"home"} />,
           icon: <HomeIcon />,
           path: "/",
         },
         {
           id: 2,
-          name: "Table",
+          name: <Text tid={"table"} />,
           icon: <TableChartIcon />,
           path: "/table",
         },
         {
           id: 3,
-          name: "Charts",
+          name: <Text tid={"charts"} />,
           icon: <BarChartIcon />,
           path: "/charts",
         },
         {
           id: 4,
-          name: "Dashboard",
+          name: <Text tid={"dashboard"} />,
           icon: <DashboardIcon />,
           path: "/dashboard",
         },
         {
           id: 4,
-          name: "FritDashboard",
+          name: <Text tid={"fritDashboard"} />,
           icon: <DashboardIcon />,
           path: "/frit-dashboard",
         },
