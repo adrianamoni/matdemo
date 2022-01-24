@@ -41,6 +41,12 @@ const navLinks = [
     icon: <DashboardIcon />,
     path: "/dashboard",
   },
+  {
+    id: 4,
+    name: "FritDashboard",
+    icon: <DashboardIcon />,
+    path: "/frit-dashboard",
+  },
 ];
 
 const StyledLink = styled(Link)({
@@ -61,7 +67,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
       </Toolbar>
       <Divider />
       <List>
-        {navLinks.map((link, index) => (
+        {navLinks.map((link) => (
           <StyledLink key={link.id} to={link.path} classes>
             <ListItem button>
               <ListItemIcon sx={{ color: "#0f59a3" }}>{link.icon}</ListItemIcon>
