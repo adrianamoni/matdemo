@@ -26,9 +26,9 @@ export default function LanguageSelector() {
       <Select
         labelId="demo-simple-select-standard-label"
         id="demo-simple-select-standard"
-        value={language.language.text}
+        value={language.language.id}
         onChange={handleLanguageChange}
-        label="Age"
+        label="TEST"
         sx={{ color: "#fff" }}
       >
         {languageOptions.map((item) => (
