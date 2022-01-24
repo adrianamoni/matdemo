@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useContext, useState } from "react";
 import {
   Divider,
   Drawer,
@@ -16,80 +16,46 @@ import TableChartIcon from "@mui/icons-material/TableChart";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import { Link } from "react-router-dom";
 
-const navLinks = [
-  {
-    id: 1,
-    name: "Home",
-    icon: <HomeIcon />,
-    path: "/",
-  },
-  {
-    id: 2,
-    name: "Table",
-    icon: <TableChartIcon />,
-    path: "/table",
-  },
-  {
-    id: 3,
-    name: "Charts",
-    icon: <BarChartIcon />,
-    path: "/charts",
-  },
-  {
-    id: 4,
-    name: "Dashboard",
-    icon: <DashboardIcon />,
-    path: "/dashboard",
-  },
-];
-
-const StyledLink = styled(Link)({
-  textDecoration: "none",
-  color: "inherit",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-evenly",
-});
+import Text from "../languages/Text";
+import { languageContext } from "../context/ContextProvider";
+import DrawerComp from "./Drawer";
 
 const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
-  const drawer = (
-    <div>
-      <Toolbar sx={{ backgroundColor: "#0f59a3", color: "whitesmoke" }}>
-        <Typography variant="h5" noWrap>
-          APP LOGO
-        </Typography>
-      </Toolbar>
-      <Divider />
-      <List>
-        {navLinks.map((link, index) => (
-          <StyledLink key={link.id} to={link.path} classes>
-            <ListItem button>
-              <ListItemIcon sx={{ color: "#0f59a3" }}>{link.icon}</ListItemIcon>
-              <ListItemText primary={link.name} />
-            </ListItem>
-          </StyledLink>
-        ))}
-      </List>
-    </div>
-  );
-  /* <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-          <li>
-            <Link to="/nothing-here">Nothing Here</Link>
-          </li>
-        </ul>
-      </nav> */
+  const language = useContext(languageContext);
+  const [links, setlinks] = useState(undefined);
   const container =
     window !== undefined ? () => window().document.body : undefined;
+
+  useEffect(() => {
+    if (!links) {
+      setlinks([
+        {
+          id: 1,
+          name: <Text tid={"home"} />,
+          icon: <HomeIcon />,
+          path: "/",
+        },
+        {
+          id: 2,
+          name: <Text tid={"table"} />,
+          icon: <TableChartIcon />,
+          path: "/table",
+        },
+        {
+          id: 3,
+          name: <Text tid={"charts"} />,
+          icon: <BarChartIcon />,
+          path: "/charts",
+        },
+        {
+          id: 4,
+          name: <Text tid={"dashboard"} />,
+          icon: <DashboardIcon />,
+          path: "/dashboard",
+        },
+      ]);
+    }
+  }, []);
 
   return (
     <>
@@ -110,7 +76,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
           },
         }}
       >
-        {drawer}
+        {links && <DrawerComp navLinks={links} />}
       </Drawer>
       <Drawer
         variant="permanent"
@@ -124,7 +90,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
         }}
         open
       >
-        {drawer}
+        {links && <DrawerComp navLinks={links} />}
       </Drawer>
     </>
   );

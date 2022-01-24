@@ -1,6 +1,7 @@
 import React from "react";
 import { AppBar, Typography, IconButton, Toolbar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import LanguageSelector from "../languages/LanguageSelector";
 
 const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
   return (
@@ -24,6 +25,7 @@ const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
         <Typography variant="h6" noWrap component="div">
           Navbar
         </Typography>
+        <LanguageSelector />
       </Toolbar>
     </AppBar>
   );
