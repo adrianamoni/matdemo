@@ -42,6 +42,7 @@ function Layout(props) {
       <Box
         component="main"
         sx={{
+          m: 0,
           flexGrow: 1,
           p: 3,
           width: { sm: `calc(100% - ${drawerWidth}px)` },

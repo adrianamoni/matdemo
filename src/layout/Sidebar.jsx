@@ -23,6 +23,15 @@ import DrawerComp from "./Drawer";
 const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
   const language = useContext(languageContext);
   const [links, setlinks] = useState(undefined);
+
+  const StyledLink = styled(Link)({
+    textDecoration: "none",
+    color: "inherit",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+  });
+
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
@@ -31,27 +40,33 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
       setlinks([
         {
           id: 1,
-          name: <Text tid={"home"} />,
+          name: "Home",
           icon: <HomeIcon />,
           path: "/",
         },
         {
           id: 2,
-          name: <Text tid={"table"} />,
+          name: "Table",
           icon: <TableChartIcon />,
           path: "/table",
         },
         {
           id: 3,
-          name: <Text tid={"charts"} />,
+          name: "Charts",
           icon: <BarChartIcon />,
           path: "/charts",
         },
         {
           id: 4,
-          name: <Text tid={"dashboard"} />,
+          name: "Dashboard",
           icon: <DashboardIcon />,
           path: "/dashboard",
+        },
+        {
+          id: 4,
+          name: "FritDashboard",
+          icon: <DashboardIcon />,
+          path: "/frit-dashboard",
         },
       ]);
     }

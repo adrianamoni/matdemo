@@ -5,6 +5,8 @@ const HalfDoughnut = ({ value }) => {
   /**
    * @param {{value:Array}}
    */
+
+  let color = value < 20 ? "#fb0032" : value < 80 ? "#fbac00" : "#00fb64";
   const series = value;
   const options = {
     chart: {
@@ -21,7 +23,7 @@ const HalfDoughnut = ({ value }) => {
         track: {
           background: "#e7e7e7",
           strokeWidth: "97%",
-          margin: 5, // margin is in pixels
+          margin: -5, // margin is in pixels
           dropShadow: {
             enabled: true,
             top: 2,
@@ -37,7 +39,8 @@ const HalfDoughnut = ({ value }) => {
           },
           value: {
             offsetY: -2,
-            fontSize: "22px",
+            fontSize: "1.2em",
+            fontWeight: 700,
           },
         },
       },
@@ -48,6 +51,7 @@ const HalfDoughnut = ({ value }) => {
       },
     },
     fill: {
+      colors: color,
       type: "gradient",
       gradient: {
         shade: "light",

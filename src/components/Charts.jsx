@@ -1,32 +1,46 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid, Paper, Typography } from "@mui/material";
 import React from "react";
-import HalfDoughnutChart from "./HalfDoughnutChart";
+import HalfDoughnut from "../widgets/halfDoughnut/HalfDoughnut";
 
 const Charts = () => {
-  const data = [
-    [
-      { name: "Group A", value: 4000 },
-      { name: "Group B", value: 300 },
-    ],
-    [
-      { name: "Group A", value: 200 },
-      { name: "Group B", value: 300 },
-    ],
-  ];
+  const data = [[24], [36], [68]];
+  const data2 = [[4], [53], [97]];
 
   return (
-    <div>
-      <Typography component="h4" variant="h4">
-        Charts
-      </Typography>
-      <Grid>
+    <>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
-          {data.map((item) => (
-            <HalfDoughnutChart data={item} />
-          ))}
+          <Typography variant="h5" gutterBottom>
+            Semi Donut
+          </Typography>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Paper elevation={2}>
+            <Grid container spacing={2}>
+              {data.map((item) => (
+                <Grid item xs={12} md={4}>
+                  <HalfDoughnut value={item} />
+                </Grid>
+              ))}
+            </Grid>
+          </Paper>
         </Grid>
       </Grid>
-    </div>
+      <Typography variant="h5" gutterBottom>
+        Timeline
+      </Typography>
+
+      <Paper elevation={2}>
+        <Grid container spacing={2}>
+          {data2.map((item) => (
+            <Grid item xs={12} md={4}>
+              <HalfDoughnut value={item} />
+            </Grid>
+          ))}
+        </Grid>
+      </Paper>
+    </>
   );
 };
 
