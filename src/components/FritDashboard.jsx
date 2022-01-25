@@ -21,6 +21,7 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
 import PauseIcon from "@mui/icons-material/Pause";
 import Timeline from "../widgets/timeline/Timeline";
+import Text from "./../languages/Text";
 
 const FritDashboard = () => {
   return (
@@ -50,7 +51,7 @@ const FritDashboard = () => {
                     <Grid container>
                       <Grid item xs={6}>
                         <Typography>
-                          <strong>Disponibilidad</strong>
+                          <strong>{Text({ tid: "availability" })}</strong>
                         </Typography>
                       </Grid>
                       <Grid item xs={6}>
@@ -62,7 +63,7 @@ const FritDashboard = () => {
                     <Grid container>
                       <Grid item xs={6}>
                         <Typography>
-                          <strong>Rendimiento</strong>
+                          <strong>{Text({ tid: "performance" })}</strong>
                         </Typography>
                       </Grid>
                       <Grid item xs={6}>
@@ -74,7 +75,7 @@ const FritDashboard = () => {
                     <Grid container>
                       <Grid item xs={6}>
                         <Typography>
-                          <strong>Calidad</strong>
+                          <strong>{Text({ tid: "quality" })}</strong>
                         </Typography>
                       </Grid>
                       <Grid item xs={6}>
