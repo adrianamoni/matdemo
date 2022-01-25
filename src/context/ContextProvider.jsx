@@ -6,6 +6,7 @@ const history = createBrowserHistory();
 
 const historyContext = React.createContext(history);
 const loginContext = React.createContext({ username: "" });
+const pageSizeContext = React.createContext();
 
 /**Multilanguage Stuff */
 const languageContext = React.createContext({
@@ -17,6 +18,11 @@ const languageContext = React.createContext({
 const ContextProvider = (props) => {
   const [loginUser, setLoginUser] = useState({
     username: "",
+  });
+  /**page size setup*/
+  const [pageSize, setPageSize] = useState({
+    width: undefined,
+    height: undefined,
   });
   /**MultiLanguage Setup */
   const [language, setLanguage] = useState(languageOptions[0]);
@@ -39,11 +45,13 @@ const ContextProvider = (props) => {
     <>
       <languageContext.Provider value={provider}>
         <loginContext.Provider value={{ loginUser, setLoginUser }}>
-          {props.children}
+          <pageSizeContext.Provider value={{ pageSize, setPageSize }}>
+            {props.children}
+          </pageSizeContext.Provider>
         </loginContext.Provider>
       </languageContext.Provider>
     </>
   );
 };
 
-export { ContextProvider, languageContext, loginContext };
+export { ContextProvider, languageContext, loginContext, pageSizeContext };

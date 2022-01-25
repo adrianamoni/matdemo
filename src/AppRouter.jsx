@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import About from "./components/About";
 import Dashboard from "./components/Dashboard";
@@ -9,8 +9,22 @@ import Table from "./components/Table";
 import NoMatch from "./components/NoMatch";
 import Layout from "./layout/Layout";
 import FetchData from "./components/FetchData";
+import useWindowSize from "./components/customHooks/UseWindowsSize";
+import { pageSizeContext } from "./context/ContextProvider";
 
 const AppRouter = () => {
+  const { setPageSize } = useContext(pageSizeContext);
+  const size = useWindowSize();
+
+  //useEffect for hiding the switch on table layout
+  useEffect(() => {
+    console.log("size", size);
+    setPageSize(size);
+  }, [size]);
+  useEffect(() => {
+    setPageSize(size);
+  }, []);
+
   return (
     <>
       <BrowserRouter>
