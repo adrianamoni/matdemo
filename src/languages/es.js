@@ -18,6 +18,17 @@ const es = {
   trueStart: "Inicio real",
   user: "Usuario",
   wo: "Wo",
+  //OF DETAIL MENU
+  signals: "Señales",
+  parameters: "Parámetros",
+  materials: "Materiales",
+  load: "Cargar",
+  consumptions: "Consumos",
+  productions: "Producciones",
+  quality: "Auto Controles",
+  interruptions: "Paros",
+  documentation: "Documentación",
+  planification: "Planificación",
 };
 
 export default es;

@@ -5,7 +5,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
-import { Typography } from "@mui/material";
 import Sidebar from "./Sidebar";
 
 const drawerWidth = 200;

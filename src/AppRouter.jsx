@@ -8,6 +8,7 @@ import Charts from "./components/Charts";
 import Table from "./components/Table";
 import NoMatch from "./components/NoMatch";
 import Layout from "./layout/Layout";
+import FetchData from "./components/FetchData";
 
 const AppRouter = () => {
   return (
@@ -21,6 +22,7 @@ const AppRouter = () => {
             <Route path="frit-dashboard" element={<FritDashboard />} />
             <Route path="table" element={<Table />} />
             <Route path="charts" element={<Charts />} />
+            <Route path="fetch-data" element={<FetchData />} />
             <Route path="*" element={<NoMatch />} />
           </Route>
         </Routes>
