@@ -31,9 +31,14 @@ import { pageSizeContext } from "../context/ContextProvider";
 import useWindowSize from "./customHooks/UseWindowsSize";
 import General from "./fritdashboardTabs/General";
 import Materials from "./fritdashboardTabs/Materials";
+import { useParams } from "react-router-dom";
+import LineProgress from "../widgets/progress/LineProgress";
 
 const FritDashboard = () => {
   const { size } = useContext(pageSizeContext);
+  let { slug } = useParams();
+  const { width } = useWindowSize();
+
   const ofDetailNav = [
     "General",
     Text({ tid: "signals" }),

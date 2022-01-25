@@ -35,6 +35,10 @@ const en = {
   interruptions: "Interruptions",
   documentation: "Documentation",
   planification: "Planification",
+  //
+  production: "Production",
+  product: "Product",
+  order: "Order",
 };
 
 export default en;

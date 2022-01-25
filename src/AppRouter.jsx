@@ -34,6 +34,7 @@ const AppRouter = () => {
             <Route path="about" element={<About />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="frit-dashboard" element={<FritDashboard />} />
+            <Route path="frit-dashboard/:slug" element={<FritDashboard />} />
             <Route path="table" element={<Table />} />
             <Route path="charts" element={<Charts />} />
             <Route path="fetch-data" element={<FetchData />} />

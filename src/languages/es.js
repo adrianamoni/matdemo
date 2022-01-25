@@ -35,6 +35,10 @@ const es = {
   interruptions: "Paros",
   documentation: "Documentación",
   planification: "Planificación",
+  //
+  production: "Producción",
+  product: "Producto",
+  order: "Orden",
 };
 
 export default es;
