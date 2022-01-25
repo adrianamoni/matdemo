@@ -53,7 +53,7 @@ const General = () => {
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
-                    <Typography align="right">12%</Typography>
+                    <Typography align="right">{slug}12%</Typography>
                   </Grid>
                 </Grid>
               </ListItem>
@@ -291,36 +291,77 @@ const General = () => {
                   </ListItem>
                 </List>
               </Grid>
+              <Grid
+                item
+                container
+                xs={12}
+                sm={12}
+                md={12}
+                lg={4}
+                justifyContent={"center"}
+              >
+                <ButtonGroup
+                  variant="contained"
+                  size="small"
+                  aria-label="large button group"
+                >
+                  <IconButton>
+                    <PlayArrowIcon />
+                  </IconButton>
+                  <IconButton>
+                    <StopIcon />
+                  </IconButton>
+                  <IconButton>
+                    <PauseIcon />
+                  </IconButton>
+                </ButtonGroup>
+              </Grid>
+              <Grid
+                item
+                container
+                xs={12}
+                sm={12}
+                md={12}
+                lg={8}
+                justifyContent={"center"}
+                alignItems={"center"}
+                sx={{ p: 2 }}
+              >
+                <Grid item xs={3}>
+                  {width < 550 ? "Prod." : Text({ tid: "production" })}
+                </Grid>
+                <Grid item xs={9}>
+                  <LineProgress value={23} />
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
 
-          <Grid item xs={12} md={4} sx={{ padding: 2 }}>
-            <Grid container>
-              <Grid container item>
-                <Grid item xs={12}>
-                  <Typography align="center" variant="h6" component="h6">
-                    OEE INSTANTANEO
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <HalfDoughnut value={[78]} />
-                </Grid>
+          <Grid item container xs={12} md={4} sx={{ padding: 2 }}>
+            <Grid container item xs={12}>
+              <Grid item xs={12}>
+                <Typography align="center" variant="h6" component="h6">
+                  OEE INSTANTANEO
+                </Typography>
               </Grid>
-              <Grid container item align="center">
-                <Grid item xs={12}>
-                  <Typography variant="h6" component="h6">
-                    AUTO CONTROLES
-                  </Typography>
-                </Grid>
+              <Grid item xs={12}>
+                <HalfDoughnut value={[78]} />
+              </Grid>
+            </Grid>
+            <Grid container align="center" item xs={12}>
+              <Grid item xs={12}>
+                <Typography variant="h6" component="h6">
+                  AUTO CONTROLES
+                </Typography>
+              </Grid>
 
-                <Grid item xs={6}>
-                  Fecha último
-                  <br />
-                  auto control
-                </Grid>
-                <Grid item xs={6}>
-                  -
-                </Grid>
+              <Grid item xs={6}>
+                Fecha último
+                <br />
+                auto control
+              </Grid>
+              <Grid item xs={6}>
+                -
               </Grid>
             </Grid>
           </Grid>
@@ -386,11 +427,14 @@ const General = () => {
                 xs={12}
                 sm={12}
                 md={4}
-                align="center"
+                alignItems="center"
+                justifyContent="center"
                 sx={{ p: 2 }}
               >
                 <Grid item xs={6}>
-                  <Typography>Tiempo restante</Typography>
+                  <Typography>
+                    <strong>Tiempo restante</strong>
+                  </Typography>
                 </Grid>
                 <Grid item xs={6}>
                   <Typography>2 min</Typography>
@@ -428,11 +472,11 @@ const General = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12} md={4}>
-            <Grid container item align="center">
+          <Grid item xs={12} md={4} align="center">
+            <Grid container item>
               <Grid item xs={12}>
-                <Typography align="center" variant="h6" component="h6">
-                  AUTO CONTROLES
+                <Typography variant="h6" component="h6">
+                  PAROS
                 </Typography>
               </Grid>
 
