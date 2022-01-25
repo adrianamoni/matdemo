@@ -15,6 +15,7 @@ import {
   Tabs,
   Tab,
 } from "@mui/material";
+import { useParams } from "react-router-dom";
 
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
@@ -24,8 +25,12 @@ import React from "react";
 import Text from "../../languages/Text";
 import HalfDoughnut from "../../widgets/halfDoughnut/HalfDoughnut";
 import Timeline from "../../widgets/timeline/Timeline";
+import useWindowSize from "../customHooks/UseWindowsSize";
+import LineProgress from "../../widgets/progress/LineProgress";
 
 const General = () => {
+  let { slug } = useParams();
+  const { width } = useWindowSize();
   return (
     <Grid container>
       <Paper sx={{ width: "100%", marginTop: "1rem" }}>
