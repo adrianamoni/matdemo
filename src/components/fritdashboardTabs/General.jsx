@@ -58,7 +58,7 @@ const General = () => {
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
-                    <Typography align="right">{slug}12%</Typography>
+                    <Typography align="right">12%</Typography>
                   </Grid>
                 </Grid>
               </ListItem>

@@ -115,7 +115,16 @@ const Dashboard = () => {
             </Grid>
           </Grid>
           {/* <Divider orientation="vertical" /> */}
-          <Grid container item spacing={3} xs={12} sm={12} md={12} lg={4}>
+          <Grid
+            container
+            item
+            spacing={3}
+            xs={12}
+            sm={12}
+            md={12}
+            lg={4}
+            justifyContent={"center"}
+          >
             <Grid item>
               <CardItem color={blue[600]} line="L002" />
             </Grid>
@@ -126,7 +135,16 @@ const Dashboard = () => {
               <CardItem color={orange[600]} line="L002" />
             </Grid>
           </Grid>
-          <Grid container item spacing={3} xs={12} sm={12} md={12} lg={4}>
+          <Grid
+            container
+            item
+            spacing={3}
+            xs={12}
+            sm={12}
+            md={12}
+            lg={4}
+            justifyContent={"center"}
+          >
             <Grid item>
               <CardItem color={blue[600]} line="L003" />
             </Grid>
