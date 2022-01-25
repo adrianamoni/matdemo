@@ -23,8 +23,11 @@ import StopIcon from "@mui/icons-material/Stop";
 import PauseIcon from "@mui/icons-material/Pause";
 import Timeline from "../widgets/timeline/Timeline";
 import Text from "./../languages/Text";
+import { useParams } from "react-router-dom";
 
 const FritDashboard = () => {
+  let { slug } = useParams();
+
   const ofDetailNav = [
     "General",
     Text({ tid: "signals" }),
@@ -104,7 +107,7 @@ const FritDashboard = () => {
                           </Typography>
                         </Grid>
                         <Grid item xs={6}>
-                          <Typography align="right">12%</Typography>
+                          <Typography align="right">{slug}12%</Typography>
                         </Grid>
                       </Grid>
                     </ListItem>

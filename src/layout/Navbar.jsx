@@ -3,7 +3,7 @@ import { AppBar, Typography, IconButton, Toolbar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import LanguageSelector from "../languages/LanguageSelector";
 
-const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
+const Navbar = ({ drawerWidth, handleDrawerToggle, title }) => {
   return (
     <AppBar
       position="fixed"
@@ -23,7 +23,7 @@ const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap component="div" sx={{ flex: 1 }}>
-          Navbar
+          {title || "Inicio"}
         </Typography>
         <LanguageSelector />
       </Toolbar>

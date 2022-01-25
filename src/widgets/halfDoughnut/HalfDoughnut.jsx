@@ -39,7 +39,7 @@ const HalfDoughnut = ({ value }) => {
           },
           value: {
             offsetY: -2,
-            fontSize: "1.2em",
+            fontSize: "1.1em",
             fontWeight: 700,
           },
         },

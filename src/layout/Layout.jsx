@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 
@@ -11,6 +11,7 @@ const drawerWidth = 200;
 
 function Layout(props) {
   const { window } = props;
+  let { slug } = useParams();
 
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -24,6 +25,7 @@ function Layout(props) {
       <Navbar
         handleDrawerToggle={handleDrawerToggle}
         drawerWidth={drawerWidth}
+        title={slug}
       />
       <Box
         component="nav"
