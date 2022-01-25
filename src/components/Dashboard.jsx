@@ -24,6 +24,7 @@ import { ExpandMore } from "@mui/icons-material";
 import HalfDoughnut from "../widgets/halfDoughnut/HalfDoughnut";
 import { blue, green, orange, red } from "@mui/material/colors";
 import { Link } from "react-router-dom";
+import Text from "./../languages/Text";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -60,7 +61,7 @@ const CardItem = ({ color, line }) => {
             <Grid container alignItems="center">
               <Grid item xs={6}>
                 <Typography variant="h6" gutterBottom>
-                  <strong>Producto</strong>
+                  <strong>{Text({ tid: "product" })}</strong>
                 </Typography>
               </Grid>
               <Grid item xs={6}>
@@ -70,7 +71,7 @@ const CardItem = ({ color, line }) => {
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="h6" gutterBottom>
-                  <strong>Orden</strong>
+                  <strong>{Text({ tid: "order" })}</strong>
                 </Typography>
               </Grid>
               <Grid item xs={6}>
