@@ -29,7 +29,7 @@ export default function LanguageSelector() {
         value={language.language.id}
         onChange={handleLanguageChange}
         label="TEST"
-        sx={{ color: "#fff" }}
+        sx={{ color: "#fff", fontSize: "11px" }}
       >
         {languageOptions.map((item) => (
           <MenuItem key={item.id} value={item.id}>

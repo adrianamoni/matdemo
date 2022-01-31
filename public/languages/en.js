@@ -1,18 +1,13 @@
-const en = {
+var LANG_EN = {
   alternative: "Alternative",
   availability: "Availability",
   charts: "Charts",
-  comment: "Comment",
-  createInterruption: "create Interruption",
   dashboard: "Dashboard",
-  duration: "Duration",
   email: "Email",
-  endDate: "End date",
   entityBatch: "Ent. Batch",
   fritDashboard: "Frit Dashboard",
   home: "Home",
   id: "Id",
-  justifyInterruption: "Justify Interruption",
   language: "Language",
   material: "Material",
   name: "Name",
@@ -21,7 +16,6 @@ const en = {
   provisioning: "Provisioning",
   quality: "Quality",
   status: "Status",
-  startDate: "Start Date",
   table: "Table",
   theoricalStaff: "Theor. Staff",
   theoricalStart: "Theor. Start",
@@ -38,7 +32,6 @@ const en = {
   consumptions: "Consumptions",
   productions: "Productions",
   quality: "Quality",
-  interruption: "Interruption",
   interruptions: "Interruptions",
   documentation: "Documentation",
   planification: "Planification",
@@ -47,5 +40,3 @@ const en = {
   product: "Product",
   order: "Order",
 };
-
-export default en;

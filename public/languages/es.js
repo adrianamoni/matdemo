@@ -1,18 +1,13 @@
-const es = {
+var LANG_ES = {
   alternative: "Alternativos",
   availability: "Disponibilidad",
   charts: "Gráficos",
-  comment: "Comentario",
-  createInterruption: "Generar Paro",
   dashboard: "Tablero",
-  duration: "Duración",
   email: "Email",
-  endDate: "Fecha fin",
   entityBatch: "Ent. Lote",
   fritDashboard: "Tablero Frit",
   home: "Inicio",
   id: "Id",
-  justifyInterruption: "Justificar Paro",
   language: "Idioma",
   material: "Material",
   name: "Nombre",
@@ -21,7 +16,6 @@ const es = {
   provisioning: "Aprovisionamiento",
   quality: "Calidad",
   status: "Estado",
-  startDate: "Fecha inicio",
   table: "Tabla",
   theoricalStaff: "Pers Teor.",
   theoricalStart: "Inicio Teor.",
@@ -38,7 +32,6 @@ const es = {
   consumptions: "Consumos",
   productions: "Producciones",
   quality: "Auto Controles",
-  interruption: "Paro",
   interruptions: "Paros",
   documentation: "Documentación",
   planification: "Planificación",
@@ -47,5 +40,3 @@ const es = {
   product: "Producto",
   order: "Orden",
 };
-
-export default es;

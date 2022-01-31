@@ -337,3 +337,13 @@ export const dataTableMat = [
     qtyAprov: 700,
   },
 ];
+export const fakeParos = [
+  {
+    id: 1,
+    name: "Averia Pesadora",
+    duracion: "00h01min05s",
+    fechaInicio: "10:58:03 31/02/2022",
+    fechaFin: "10:59:03 31/02/2022",
+    comentario: "test",
+  },
+];

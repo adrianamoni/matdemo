@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, Paper } from "@mui/material";
 import { dataTableMat } from "../../widgets/TableWidget/fakedata";
 import TableWidget from "../../widgets/TableWidget/TableWidget";
@@ -40,6 +40,10 @@ const Materials = () => {
       flex: 1,
     },
   ];
+  useEffect(() => {
+    console.log("Objeto LANGUAGES:", window.LANG_EN);
+  }, []);
+
   return (
     <Grid container>
       <Paper sx={{ width: "100%", marginTop: "1rem" }}>

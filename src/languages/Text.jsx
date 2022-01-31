@@ -3,7 +3,13 @@ import { languageContext } from "../context/ContextProvider";
 
 const Text = ({ tid }) => {
   const globalDictionary = useContext(languageContext);
-  return globalDictionary.dictionary[tid];
+  const result = globalDictionary.dictionary[tid];
+  if (result) {
+    return result;
+  } else {
+    console.log(`${tid} is not a valid string on dictionary`);
+    return "-";
+  }
 };
 
 export default Text;
