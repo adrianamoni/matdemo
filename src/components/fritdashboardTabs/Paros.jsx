@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {
   Grid,
   Paper,
-  FormControl,
+  TextField,
   InputLabel,
   Select,
   MenuItem,
@@ -13,6 +13,7 @@ import { fakeParos, seccionFake } from "../../widgets/TableWidget/fakedata";
 import ButtonGroupWidget from "../../widgets/buttonGroup/ButtonGroupWidget";
 import ModalWidget from "./../../widgets/modalWidget/ModalWidget";
 import SelectWidget from "../../widgets/forms/SelectWidget";
+import InputWidget from "../../widgets/forms/InputWidget";
 
 const Paros = () => {
   const [modalCreateInterruption, setmodalCreateInterruption] = useState(false);
@@ -67,7 +68,20 @@ const Paros = () => {
           />
         </Grid>
         <Grid item md={6} xs={12}>
-          <div>1</div>
+          <TextField
+            required
+            id="outlined-required"
+            label="Required"
+            defaultValue="Hello World"
+          />
+        </Grid>
+        <Grid item md={6} xs={12}>
+          <InputWidget
+            formId={"Test"}
+            id={"Inputtest"}
+            label={"Escribe tu nombre"}
+            otherOptions={"required"}
+          />
         </Grid>
       </Grid>
     </>
