@@ -347,3 +347,19 @@ export const fakeParos = [
     comentario: "test",
   },
 ];
+export const seccionFake = [
+  {
+    key: "8c4c804-6142-f31-cb6b-cfc537d38c6",
+    value: 1,
+    text: "PAROSPENDIENTES",
+  },
+  { key: "2d76c4e-c751-4baa-760b-1d5ab53cc6f", value: 2, text: "PRODUCTIVO" },
+  {
+    key: "db6cb4e-8134-c2b0-17ca-d2333c0a4",
+    value: 3,
+    text: "MANTENIMIENTO",
+  },
+  { key: "31768e-0d71-bacd-650-1260582275", value: 4, text: "PAROS" },
+  { key: "31768e-0d71-bacd-650-126058227521", value: 5, text: "AVERIAS" },
+  { key: "31768e-0d71-bacd-650-12605822752121", value: 6, text: "LIMPIEZA" },
+];

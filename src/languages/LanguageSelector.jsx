@@ -10,7 +10,6 @@ export default function LanguageSelector() {
   const language = useContext(languageContext);
 
   const handleLanguageChange = (event) => {
-    console.log("event.target.value", event.target.value);
     const selectedLanguage = languageOptions.find(
       (item) => item.id === event.target.value
     );
