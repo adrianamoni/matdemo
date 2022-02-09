@@ -22,7 +22,9 @@ const StyledLink = styled(Link)({
 const DrawerComp = ({ navLinks }) => {
   return (
     <div>
-      <Toolbar sx={{ backgroundColor: "#0f59a3", color: "whitesmoke" }}>
+      <Toolbar
+        sx={{ backgroundColor: "#0f59a3", color: "whitesmoke", height: 72 }}
+      >
         <Typography variant="h5" noWrap>
           APP LOGO
         </Typography>

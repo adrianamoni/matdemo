@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { styled } from "@mui/material/styles";
 import {
   Grid,
@@ -39,21 +39,20 @@ const StyledLink = styled(Link)({
 });
 
 const CardItem = ({ color, line }) => {
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
-  const randomNumber = Math.random() * 100;
+  const [raise, setRaise] = useState(false);
+  const randomNumber = 25;
 
   return (
-    <Card>
+    <Card
+      raised={raise}
+      onMouseEnter={() => setRaise(true)}
+      onMouseLeave={() => setRaise(false)}
+    >
       <CardActionArea>
         <StyledLink to={`/frit-dashboard/${line}`}>
           <CardHeader
             component="div"
-            sx={{ bgcolor: color, color: "#eee", mb: 2 }}
+            sx={{ bgcolor: color, color: "#fff", mb: 2 }}
             title={line}
           />
           <HalfDoughnut value={[randomNumber.toFixed(2)]} />

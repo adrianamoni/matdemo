@@ -1,3 +1,4 @@
+import { grey } from "@mui/material/colors";
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 
@@ -6,7 +7,7 @@ const HalfDoughnut = ({ value }) => {
    * @param {{value:Array}}
    */
 
-  let color = value < 20 ? "#fb0032" : value < 80 ? "#fbac00" : "#00fb64";
+  /*   let color = value < 20 ? "#fb0032" : value < 80 ? "#fbac00" : "#00fb64"; */
   const series = value;
   const options = {
     chart: {
@@ -21,7 +22,7 @@ const HalfDoughnut = ({ value }) => {
         startAngle: -90,
         endAngle: 90,
         track: {
-          background: "#e7e7e7",
+          background: grey[100],
           strokeWidth: "97%",
           margin: -5, // margin is in pixels
           dropShadow: {
@@ -51,7 +52,7 @@ const HalfDoughnut = ({ value }) => {
       },
     },
     fill: {
-      colors: color,
+      colors: "#fbac00",
       type: "gradient",
       gradient: {
         shade: "light",

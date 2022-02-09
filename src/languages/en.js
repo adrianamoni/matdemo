@@ -6,6 +6,7 @@ const en = {
   email: "Email",
   entityBatch: "Ent. Batch",
   fritDashboard: "Frit Dashboard",
+  detail: "Detail",
   home: "Home",
   id: "Id",
   language: "Language",
