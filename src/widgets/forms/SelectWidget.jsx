@@ -1,12 +1,5 @@
 import React, { useContext } from "react";
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  TextField,
-} from "@mui/material";
-import { seccionFake } from "../TableWidget/fakedata";
+import { MenuItem, TextField } from "@mui/material";
 import { formContext } from "../../context/ContextProvider";
 
 const SelectWidget = ({ formId, id, label, options }) => {

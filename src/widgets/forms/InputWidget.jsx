@@ -5,7 +5,7 @@ import { formContext } from "../../context/ContextProvider";
 const InputWidget = ({ formId, id, label }) => {
   const { formWidget, setformWidget } = useContext(formContext);
   const [localVal, setLocalVal] = useState(formWidget?.[formId]?.[id]);
-
+  //blur event added, to fix performance issues
   const handleBlur = () => {
     let formToChange = formWidget[formId];
     formToChange = { ...formToChange, [id]: localVal };
