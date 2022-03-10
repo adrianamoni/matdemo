@@ -31,6 +31,7 @@ const es = {
   user: "Usuario",
   wo: "Wo",
   //OF DETAIL MENU
+  save: "Guardar",
   signals: "Señales",
   parameters: "Parámetros",
   materials: "Materiales",

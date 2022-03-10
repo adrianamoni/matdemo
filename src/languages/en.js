@@ -31,6 +31,7 @@ const en = {
   user: "User",
   wo: "Wo",
   //OF DETAIL MENU
+  save: "Save",
   signals: "Signals",
   parameters: "Parameters",
   materials: "Materials",
