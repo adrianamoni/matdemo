@@ -17,16 +17,19 @@ const StyledLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-const LineProgress = ({ value }) => {
+const LineProgress = ({ value, indeterminate }) => {
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <Box sx={{ width: "100%", mr: 1 }}>
-        <StyledLinearProgress variant="determinate" value={value || 0} />
+        <StyledLinearProgress
+          variant={indeterminate ? "indeterminate" : "determinate"}
+          value={value || 0}
+        />
       </Box>
       <Box sx={{ minWidth: 35 }}>
-        <Typography variant="body2" color="text.secondary">{`${Math.round(
-          value
-        )}%`}</Typography>
+        <Typography variant="body2" color="text.secondary">
+          {value ? `${Math.round(value)}%` : ""}
+        </Typography>
       </Box>
     </Box>
   );

@@ -11,6 +11,7 @@ import Layout from "./layout/Layout";
 import FetchData from "./components/FetchData";
 import useWindowSize from "./components/customHooks/UseWindowsSize";
 import { pageSizeContext } from "./context/ContextProvider";
+import Test from "./components/Test";
 
 const AppRouter = () => {
   const { setPageSize } = useContext(pageSizeContext);
@@ -38,6 +39,7 @@ const AppRouter = () => {
             <Route path="table" element={<Table />} />
             <Route path="charts" element={<Charts />} />
             <Route path="fetch-data" element={<FetchData />} />
+            <Route path="test" element={<Test />} />
             <Route path="*" element={<NoMatch />} />
           </Route>
         </Routes>

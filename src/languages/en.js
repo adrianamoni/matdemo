@@ -10,6 +10,7 @@ const en = {
   endDate: "End date",
   entityBatch: "Ent. Batch",
   fritDashboard: "Frit Dashboard",
+  detail: "Detail",
   home: "Home",
   id: "Id",
   justifyInterruption: "Justify Interruption",

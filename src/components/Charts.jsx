@@ -2,10 +2,10 @@ import Timeline from "../widgets/timeline/Timeline";
 import { Grid, Paper, Typography } from "@mui/material";
 import React from "react";
 import HalfDoughnut from "../widgets/halfDoughnut/HalfDoughnut";
+import LineProgress from "../widgets/progress/LineProgress";
 
 const Charts = () => {
-  const data = [[24], [36], [68]];
-  const data2 = [[4], [53], [97]];
+  const data = [[14], [36], [88]];
 
   return (
     <>
@@ -33,7 +33,7 @@ const Charts = () => {
             Timeline
           </Typography>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sx={{ mb: 3 }}>
           <Paper elevation={2}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -41,6 +41,22 @@ const Charts = () => {
               </Grid>
             </Grid>
           </Paper>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Typography variant="h5" gutterBottom>
+            Progress
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sx={{ mb: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <LineProgress value={12} />
+            </Grid>
+            <Grid item xs={12}>
+              <LineProgress indeterminate={true} />
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </>

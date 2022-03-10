@@ -1,39 +1,28 @@
 import {
   Grid,
-  Paper,
   Typography,
-  Box,
   IconButton,
   List,
   ListItem,
-  Container,
-  Toolbar,
-  Divider,
+  Card,
   ButtonGroup,
-  Button,
-  Drawer,
-  Tabs,
-  Tab,
 } from "@mui/material";
-import { useParams } from "react-router-dom";
-
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
 import PauseIcon from "@mui/icons-material/Pause";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import React from "react";
 import Text from "../../languages/Text";
 import HalfDoughnut from "../../widgets/halfDoughnut/HalfDoughnut";
 import Timeline from "../../widgets/timeline/Timeline";
 import useWindowSize from "../customHooks/UseWindowsSize";
 import LineProgress from "../../widgets/progress/LineProgress";
+import { blue } from "@mui/material/colors";
 
 const General = () => {
-  let { slug } = useParams();
   const { width } = useWindowSize();
   return (
     <Grid container>
-      <Paper sx={{ width: "100%", marginTop: "1rem" }}>
+      <Card raised sx={{ width: "100%", margin: "1rem" }}>
         <Grid
           container
           item
@@ -58,7 +47,7 @@ const General = () => {
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
-                    <Typography align="right">{slug}12%</Typography>
+                    <Typography align="right">12%</Typography>
                   </Grid>
                 </Grid>
               </ListItem>
@@ -89,17 +78,21 @@ const General = () => {
             </List>
           </Grid>
         </Grid>
-      </Paper>
-      <Paper sx={{ width: "100%", marginTop: 2 }}>
-        <Grid
-          container
-          item
-          sx={{
-            margin: 0,
-            alignItems: "center",
-          }}
-        >
-          <Grid item xs={12} md={8} sx={{ margin: 0, padding: 2 }}>
+      </Card>
+
+      <Grid
+        container
+        item
+        sx={{
+          margin: "1rem",
+          alignItems: "center",
+        }}
+        xs={12}
+        md={12}
+        lg={8}
+      >
+        <Card raised>
+          <Grid item sx={{ margin: 0, padding: 2 }}>
             <Typography component="h5" variant="h5">
               385156 CACAHUETE REP JUMBO SAL 6XB.1K
             </Typography>
@@ -341,12 +334,55 @@ const General = () => {
               </Grid>
             </Grid>
           </Grid>
+        </Card>
+      </Grid>
+      <Grid
+        container
+        item
+        sx={{
+          margin: "1rem",
+          alignItems: "center",
+          height: "100%",
+        }}
+        xs={12}
+        md={12}
+        lg={3}
+      >
+        <Card raised>
+          <Grid container item xs={12}>
+            <Grid item xs={12}>
+              <Typography align="center" variant="h6" component="h6">
+                OEE INSTANTÁNEO
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <HalfDoughnut value={[78]} />
+            </Grid>
+          </Grid>
+          <Grid container align="center" item xs={12}>
+            <Grid item xs={12}>
+              <Typography variant="h6" component="h6">
+                AUTO CONTROLES
+              </Typography>
+            </Grid>
 
-          <Grid item container xs={12} md={4} sx={{ padding: 2 }}>
+            <Grid item xs={6}>
+              Fecha último
+              <br />
+              auto control
+            </Grid>
+            <Grid item xs={6}>
+              -
+            </Grid>
+          </Grid>
+        </Card>
+      </Grid>
+      {/* 
+          <Grid item container xs={12} md={12} lg={4} sx={{ padding: 2 }}>
             <Grid container item xs={12}>
               <Grid item xs={12}>
                 <Typography align="center" variant="h6" component="h6">
-                  OEE INSTANTANEO
+                  OEE INSTANTÁNEO
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -370,8 +406,8 @@ const General = () => {
               </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </Paper>
+        </Grid> */}
+      {/*  
       <Paper sx={{ width: "100%", marginTop: 2 }}>
         <Grid
           container
@@ -434,6 +470,7 @@ const General = () => {
                 md={4}
                 alignItems="center"
                 justifyContent="center"
+                textAlign="center"
                 sx={{ p: 2 }}
               >
                 <Grid item xs={6}>
@@ -494,7 +531,7 @@ const General = () => {
             </Grid>
           </Grid>
         </Grid>
-      </Paper>
+      </Paper> */}
     </Grid>
   );
 };

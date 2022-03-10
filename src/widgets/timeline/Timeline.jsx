@@ -1,7 +1,7 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 const colors = ["#FEB019", "#00E396", "#D7263D"];
-const Timeline = () => {
+const Timeline = ({ height }) => {
   const series = [
     {
       name: "Whatever",
@@ -52,7 +52,7 @@ const Timeline = () => {
         options={options}
         series={series}
         type="rangeBar"
-        height={150}
+        height={height || 150}
       />
     </div>
   );

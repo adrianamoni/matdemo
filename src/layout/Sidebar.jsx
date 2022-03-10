@@ -6,7 +6,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import { Link } from "react-router-dom";
-
+import FeedIcon from "@mui/icons-material/Feed";
 import Text from "../languages/Text";
 import { languageContext } from "../context/ContextProvider";
 import DrawerComp from "./Drawer";
@@ -55,8 +55,8 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
         },
         {
           id: 4,
-          name: <Text tid={"fritDashboard"} />,
-          icon: <DashboardIcon />,
+          name: <Text tid={"detail"} />,
+          icon: <FeedIcon />,
           path: "/frit-dashboard",
         },
       ]);

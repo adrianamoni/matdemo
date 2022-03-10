@@ -10,6 +10,7 @@ const es = {
   endDate: "Fecha fin",
   entityBatch: "Ent. Lote",
   fritDashboard: "Tablero Frit",
+  detail: "Detalle",
   home: "Inicio",
   id: "Id",
   justifyInterruption: "Justificar Paro",
