@@ -1,8 +1,9 @@
 import React from "react";
 import { Grid, ButtonGroup, Button } from "@mui/material";
 import Text from "./../../languages/Text";
+import { LoadingButton } from "@mui/lab";
 
-const ButtonGroupWidget = ({ buttons }) => {
+const ButtonGroupWidget = ({ position, buttons, loading }) => {
   console.log("buttons", buttons);
   return (
     <Grid container justifyContent="center">
@@ -10,7 +11,7 @@ const ButtonGroupWidget = ({ buttons }) => {
         item
         xs={12}
         md={12}
-        sx={{ display: "flex", justifyContent: "center" }}
+        sx={{ display: "flex", justifyContent: position }}
       >
         <ButtonGroup
           variant="contained"
@@ -19,7 +20,7 @@ const ButtonGroupWidget = ({ buttons }) => {
         >
           {buttons &&
             buttons.map((btn, i) => {
-              return (
+              return !loading ? (
                 <Button
                   variant="contained"
                   color={btn.color}
@@ -32,6 +33,8 @@ const ButtonGroupWidget = ({ buttons }) => {
                 >
                   {Text({ tid: btn.text })}
                 </Button>
+              ) : (
+                <LoadingButton loading>Submit</LoadingButton>
               );
             })}
         </ButtonGroup>
