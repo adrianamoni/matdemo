@@ -7,7 +7,7 @@ import { Outlet, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 
-const drawerWidth = 200;
+const drawerWidth = 180;
 
 function Layout(props) {
   const { window } = props;

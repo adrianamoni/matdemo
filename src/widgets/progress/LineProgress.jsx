@@ -1,38 +1,25 @@
-import React from "react";
-import LinearProgress, {
-  linearProgressClasses,
-} from "@mui/material/LinearProgress";
-import { Box, styled, Typography } from "@mui/material";
+import * as React from "react";
+import LinearProgress from "@mui/material/LinearProgress";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
-const StyledLinearProgress = styled(LinearProgress)(({ theme }) => ({
-  height: 20,
-  borderRadius: 5,
-  [`&.${linearProgressClasses.colorPrimary}`]: {
-    backgroundColor:
-      theme.palette.grey[theme.palette.mode === "light" ? 200 : 800],
-  },
-  [`& .${linearProgressClasses.bar}`]: {
-    borderRadius: 5,
-    backgroundColor: theme.palette.mode === "light" ? "#1a90ff" : "#308fe8",
-  },
-}));
-
-const LineProgress = ({ value, indeterminate }) => {
+export default function LineProgress({ value, height }) {
   return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
-      <Box sx={{ width: "100%", mr: 1 }}>
-        <StyledLinearProgress
-          variant={indeterminate ? "indeterminate" : "determinate"}
-          value={value || 0}
-        />
-      </Box>
-      <Box sx={{ minWidth: 35 }}>
-        <Typography variant="body2" color="text.secondary">
-          {value ? `${Math.round(value)}%` : ""}
-        </Typography>
+    <Box sx={{ width: "100%" }}>
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box sx={{ width: "100%", mr: 1 }}>
+          <LinearProgress
+            variant="determinate"
+            value={value && value > 100 ? 100 : value || 0}
+            sx={{ height: height || "1rem" }}
+          />
+        </Box>
+        <Box sx={{ minWidth: 35 }}>
+          <Typography variant="body2" color="text.secondary">
+            {value !== undefined ? `${Math.round(value)}%` : ""}
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );
-};
-
-export default LineProgress;
+}

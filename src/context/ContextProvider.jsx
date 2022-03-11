@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { createBrowserHistory } from "history";
 import { languageOptions, dictionaryList } from "../languages";
+import { getStorageData } from "./initalStates";
 
 const history = createBrowserHistory();
 
 const historyContext = React.createContext(history);
-const loginContext = React.createContext({ username: "" });
+const loginContext = React.createContext();
 const pageSizeContext = React.createContext();
 const formContext = React.createContext();
-
+const globalDataContext = React.createContext({});
 /**Multilanguage Stuff */
 const languageContext = React.createContext({
   language: languageOptions[0],
@@ -19,6 +20,7 @@ const languageContext = React.createContext({
 const ContextProvider = (props) => {
   const [loginUser, setLoginUser] = useState({
     username: "",
+    permissions: [],
   });
   /**page size setup*/
   const [pageSize, setPageSize] = useState({
@@ -27,6 +29,16 @@ const ContextProvider = (props) => {
   });
   /**form widget setup*/
   const [formWidget, setformWidget] = useState({});
+
+  const storageData = getStorageData();
+  const [globalData, setGlobalData] = useState({
+    lineData: storageData.lineData || undefined,
+    orderData: storageData.orderData || undefined,
+    oeeSpecs: storageData.oeeSpecs || undefined,
+    terminal: undefined,
+    extras: undefined,
+    orderDetails: undefined,
+  });
   /**MultiLanguage Setup */
   const [language, setLanguage] = useState(languageOptions[0]);
   const [dictionary, setDictionary] = useState(
@@ -50,7 +62,14 @@ const ContextProvider = (props) => {
         <loginContext.Provider value={{ loginUser, setLoginUser }}>
           <pageSizeContext.Provider value={{ pageSize, setPageSize }}>
             <formContext.Provider value={{ formWidget, setformWidget }}>
-              {props.children}
+              <globalDataContext.Provider
+                value={{
+                  globalData,
+                  setGlobalData,
+                }}
+              >
+                {props.children}
+              </globalDataContext.Provider>
             </formContext.Provider>
           </pageSizeContext.Provider>
         </loginContext.Provider>
@@ -65,4 +84,5 @@ export {
   loginContext,
   pageSizeContext,
   formContext,
+  globalDataContext,
 };

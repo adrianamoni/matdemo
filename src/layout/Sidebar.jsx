@@ -53,12 +53,12 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
           icon: <DashboardIcon />,
           path: "/dashboard",
         },
-        {
+        /*  {
           id: 4,
           name: <Text tid={"detail"} />,
           icon: <FeedIcon />,
           path: "/frit-dashboard",
-        },
+        }, */
       ]);
     }
   }, []);

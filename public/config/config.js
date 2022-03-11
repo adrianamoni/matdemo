@@ -1,0 +1,18 @@
+
+// IPS a las que apuntan las diferentes llamadas para conseguir datos
+
+/* 
+Cada variable tiene que ser de tipo string,
+y seguir el formato <IP>:<PUERTO>
+(excepto en el caso de la documentación, que require solo la IP)
+*/
+
+//! NO CAMBIAR EL NOMBRE DE LAS VARIABLES
+//(o avisar si se hace en cualquier caso)
+
+var POINTING_IPS = {
+  dispatcher: "192.168.10.168:8080",
+  memoryDatabase: "192.168.10.168:8095",
+  documentacion: "192.168.10.168",
+  pesajeCarretillero: "pherkad.frit-nt1.local:4444"
+}
