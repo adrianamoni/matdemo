@@ -78,7 +78,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: drawerWidth,
-            backgroundColor: "#ededed",
+            bgcolor: "background.paper",
           },
         }}
       >
@@ -91,7 +91,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: drawerWidth,
-            backgroundColor: "#eee",
+            bgcolor: "background.paper",
           },
         }}
         open

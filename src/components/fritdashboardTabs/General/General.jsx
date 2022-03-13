@@ -7,6 +7,8 @@ import {
   ListItem,
   Card,
   ButtonGroup,
+  LinearProgress,
+  Box,
 } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
@@ -25,86 +27,89 @@ import AutoControles from "../../fritdashboardComps/orderDetail/AutoControles";
 import Paros from "../../fritdashboardComps/orderDetail/Paros";
 import Limpieza from "../../fritdashboardComps/orderDetail/Limpieza";
 
-const General = () => {
+const General = ({ loading }) => {
   const { width } = useWindowSize();
   const { globalData } = useContext(globalDataContext);
   const { orderDetails } = globalData;
 
-  return (
-    <Grid container sx={{ p: 3 }} spacing={2}>
-      <Grid item xs={12} sm={12}>
-        <Card sx={{ p: 1 }}>
-          <OeeHistorico />
-        </Card>
+  return loading ? (
+    <Box sx={{ width: "100%" }}>
+      <LinearProgress />
+    </Box>
+  ) : (
+    <Grid container sx={{ p: 2 }} columnSpacing={4} alignItems="stretch">
+      <Grid
+        container
+        alignItems="stretch"
+        columnSpacing={4}
+        rowSpacing={1}
+        sx={{ p: 2 }}
+      >
+        <Grid item xs={12} sm={12}>
+          <Card sx={{ p: 2 }}>
+            <OeeHistorico />
+          </Card>
+        </Grid>
       </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={7}>
-        <Card sx={{ p: 1 }}>
-          <InfoOE
-            data={
-              orderDetails &&
-              orderDetails.productionData &&
-              orderDetails.productionData
-            }
-          />
-        </Card>
-      </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={5} style={{ height: "100%" }}>
-        <Grid container spacing={2}>
+      <Grid
+        sx={{ p: 2, display: "flex" }}
+        container
+        alignItems="stretch"
+        columnSpacing={4}
+        rowSpacing={4}
+      >
+        <Grid item xs={12} sm={12} md={12} lg={7}>
+          <Card sx={{ p: 2, height: 500 }}>
+            <InfoOE
+              data={
+                orderDetails &&
+                orderDetails.productionData &&
+                orderDetails.productionData
+              }
+            />
+          </Card>
+        </Grid>
+        <Grid
+          item
+          container
+          xs={12}
+          sm={12}
+          md={12}
+          lg={5}
+          columnSpacing={4}
+          rowSpacing={4}
+        >
           <Grid item xs={12}>
-            <Card sx={{ p: 2 }}>
+            <Card sx={{ p: 2, height: "100%" }}>
               <OeeOrden />
             </Card>
           </Grid>
           <Grid item xs={12}>
-            <Card sx={{ p: 2 }}>
+            <Card sx={{ p: 2, height: "100%" }}>
               <AutoControles />
             </Card>
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={7}>
-        <Card sx={{ p: 2 }}>
-          <Limpieza />
-        </Card>
-      </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={5}>
-        <Card sx={{ p: 2 }}>
-          <Paros />
-        </Card>
-      </Grid>
 
-      {/*
-      <Grid item xs={12} md={12} lg={3}>
-        <Card raised>
-          <Grid container item xs={12}>
-            <OeeOrden />
-          </Grid>
-          <Grid container align="center" item xs={12}>
-            <Grid item xs={12}>
-              <Typography variant="h6" component="h6">
-                AUTO CONTROLES
-              </Typography>
-            </Grid>
-
-            <Grid item xs={6}>
-              Fecha último
-              <br />
-              auto control
-            </Grid>
-            <Grid item xs={6}>
-              -
-            </Grid>
-          </Grid>
-        </Card>
+      <Grid
+        container
+        alignItems="stretch"
+        columnSpacing={4}
+        rowSpacing={4}
+        sx={{ p: 2 }}
+      >
+        <Grid item xs={12} sm={12} md={12} lg={7}>
+          <Card sx={{ p: 2 }}>
+            <Limpieza />
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={5}>
+          <Card sx={{ p: 2, height: "100%" }}>
+            <Paros />
+          </Card>
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={12} lg={3}>
-        <Card raised>a</Card>
-      </Grid>
-      <Grid item xs={12} md={12} lg={9}>
-        <Card raised>b</Card>
-      </Grid> */}
-      {/*
-       */}
     </Grid>
   );
 };

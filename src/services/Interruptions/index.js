@@ -131,7 +131,6 @@ const all_interruptions = (entId) => {
 };
 
 const all_interruptions_filtered = ({ entId, section, reason, date }) => {
-  console.log("first", { entId, section, reason, date });
   return {
     dbDataSetName: "ProdEventsAllFilters_Dataset",
     dbQueryParameters: [

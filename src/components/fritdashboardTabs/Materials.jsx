@@ -1,10 +1,15 @@
-import React, { useEffect } from "react";
-import { Grid, Paper } from "@mui/material";
+import React, { useEffect, useContext } from "react";
+import { Grid, Paper, LinearProgress, ButtonGroup } from "@mui/material";
 import { dataTableMat } from "../../widgets/TableWidget/fakedata";
 import TableWidget from "../../widgets/TableWidget/TableWidget";
 import Text from "./../../languages/Text";
+import { Box } from "@mui/system";
+import { globalDataContext } from "../../context/ContextProvider";
+import UseFetchMemory from "../customHooks/UseFetchMemory";
+import ButtonGroupWidget from "../../widgets/buttonGroup/ButtonGroupWidget";
 
 const Materials = () => {
+  const { globalData } = useContext(globalDataContext);
   const columns = [
     {
       field: "item_desc",
@@ -40,15 +45,42 @@ const Materials = () => {
       flex: 1,
     },
   ];
-  useEffect(() => {
-    console.log("Objeto LANGUAGES:", window.LANG_EN);
-  }, []);
 
-  return (
-    <Grid container>
-      <Paper sx={{ width: "100%", marginTop: "1rem" }}>
-        <TableWidget data={dataTableMat} columns={columns} />
-      </Paper>
+  const { loading, data } = UseFetchMemory({
+    request: "material-list",
+    order: {
+      operId: globalData.orderData.operId,
+      entId: globalData.lineData.entId,
+      woId: globalData.orderData.woId,
+      seqNo: globalData.orderData.seqNo,
+    },
+  });
+  const handleTestClick = () => {};
+  return loading ? (
+    <Box sx={{ width: "100%" }}>
+      <LinearProgress />
+    </Box>
+  ) : (
+    <Grid container sx={{ mt: 2 }}>
+      <Grid item xs={12}>
+        <TableWidget data={data} columns={columns} />
+      </Grid>
+
+      <Grid item xs={12}>
+        <ButtonGroupWidget
+          buttons={[
+            {
+              text: "provisioningRequest",
+              color: "primary",
+              onClick: handleTestClick,
+            },
+            {
+              text: "emptyContainerRequest",
+              color: "secondary" /* disabled: true */,
+            },
+          ]}
+        />
+      </Grid>
     </Grid>
   );
 };

@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { createBrowserHistory } from "history";
 import { languageOptions, dictionaryList } from "../languages";
-import { getStorageData } from "./initalStates";
+import {
+  getColorFromStorage,
+  getLoginStorageData,
+  getStorageData,
+} from "./initalStates";
 
 const history = createBrowserHistory();
-
 const historyContext = React.createContext(history);
+const colorModeContext = React.createContext();
 const loginContext = React.createContext();
 const pageSizeContext = React.createContext();
 const formContext = React.createContext();
@@ -18,8 +22,11 @@ const languageContext = React.createContext({
 /**End Multilanguage */
 
 const ContextProvider = (props) => {
+  const userStorageData = getLoginStorageData();
   const [loginUser, setLoginUser] = useState({
-    username: "",
+    userName: "",
+    isLogged: false,
+    isAdmin: false,
     permissions: [],
   });
   /**page size setup*/
@@ -29,7 +36,8 @@ const ContextProvider = (props) => {
   });
   /**form widget setup*/
   const [formWidget, setformWidget] = useState({});
-
+  const colorModeStorage = getColorFromStorage();
+  const [colorMode, setColorMode] = useState(colorModeStorage);
   const storageData = getStorageData();
   const [globalData, setGlobalData] = useState({
     lineData: storageData.lineData || undefined,
@@ -58,28 +66,31 @@ const ContextProvider = (props) => {
   }, [dictionary]);
   return (
     <>
-      <languageContext.Provider value={provider}>
-        <loginContext.Provider value={{ loginUser, setLoginUser }}>
-          <pageSizeContext.Provider value={{ pageSize, setPageSize }}>
-            <formContext.Provider value={{ formWidget, setformWidget }}>
-              <globalDataContext.Provider
-                value={{
-                  globalData,
-                  setGlobalData,
-                }}
-              >
-                {props.children}
-              </globalDataContext.Provider>
-            </formContext.Provider>
-          </pageSizeContext.Provider>
-        </loginContext.Provider>
-      </languageContext.Provider>
+      <colorModeContext.Provider value={{ colorMode, setColorMode }}>
+        <languageContext.Provider value={provider}>
+          <loginContext.Provider value={{ loginUser, setLoginUser }}>
+            <pageSizeContext.Provider value={{ pageSize, setPageSize }}>
+              <formContext.Provider value={{ formWidget, setformWidget }}>
+                <globalDataContext.Provider
+                  value={{
+                    globalData,
+                    setGlobalData,
+                  }}
+                >
+                  {props.children}
+                </globalDataContext.Provider>
+              </formContext.Provider>
+            </pageSizeContext.Provider>
+          </loginContext.Provider>
+        </languageContext.Provider>
+      </colorModeContext.Provider>
     </>
   );
 };
 
 export {
   ContextProvider,
+  colorModeContext,
   languageContext,
   loginContext,
   pageSizeContext,

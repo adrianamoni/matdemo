@@ -113,19 +113,13 @@ const Line = ({ line }) => {
         </Grid>
 
         <Grid item style={{ width: "100%" }}>
-          {currentOrders && currentOrders.length > 0 && (
-            <OeeChartBox
-              line={line}
-              showChart={true}
-              order={currentOrders[0]}
-            />
-          )}
-          {/* <OeeChartBox /> */}
-          {/* <OeeChartBoxWithChart
-              line={line}
-              showChart={true}
-              order={currentOrders[0]}
-            /> */}
+          <OeeChartBox
+            line={line}
+            showChart={true}
+            order={
+              currentOrders && currentOrders.length > 0 && currentOrders[0]
+            }
+          />
         </Grid>
         <Grid item style={{ width: "100%", textAlign: "center" }}>
           <MonthlyCleaningBox

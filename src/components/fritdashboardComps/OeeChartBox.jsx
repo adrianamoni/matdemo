@@ -23,7 +23,6 @@ import { globalDataContext } from "../../context/ContextProvider";
 }); */
 
 const OeeChartBox = ({ showChart, line, order, disableClick }) => {
-  console.log("line", line);
   const navigateTo = useNavigate();
   const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME;
   const { globalData, setGlobalData } = useContext(globalDataContext);
@@ -54,7 +53,6 @@ const OeeChartBox = ({ showChart, line, order, disableClick }) => {
           url: "queryDataFrameDataAsync",
         });
         if (response && response.length > 0 && mountedComp) {
-          console.log("response", response);
           setOeeReal(response);
         }
         clearTimeoutKey = setTimeout(fetchOeeData, 60000);

@@ -24,7 +24,6 @@ import {
 import { propsByState } from "../../../helpers/props";
 
 const InfoOE = ({ data }) => {
-  console.log("data", data);
   const { width } = useWindowSize();
   const [formattedData, setFormattedData] = useState(undefined);
   const [loadingPlay, setLoadingPlay] = useState(false);

@@ -1,53 +1,31 @@
-import React, { useEffect } from "react";
-import { Grid, Paper } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  CircularProgress,
+  Grid,
+  LinearProgress,
+  Paper,
+} from "@mui/material";
 import { dataTableMat } from "../../widgets/TableWidget/fakedata";
 import TableWidget from "../../widgets/TableWidget/TableWidget";
 
 const Signals = () => {
-  /* const columns = [
-    {
-      field: "item_desc",
-      headerName: `${Text({ tid: "material" })}`,
-      flex: 1,
-    },
-    {
-      field: "bom_pos",
-      headerName: `${Text({ tid: "alternative" })}`,
-      width: 70,
-    },
-    {
-      field: "BackFlush",
-      headerName: `${Text({ tid: "entityBatch" })}`,
-      width: 70,
-    },
-    {
-      field: "UnidadMedida",
-      headerName: `${Text({ tid: "unitMeasurement" })}`,
-      flex: 1,
-    },
-    {
-      field: "CantidadAprov",
-      headerName: `${Text({ tid: "provisioning" })}`,
-      type: "number",
-      flex: 1,
-      editable: true,
-    },
-    {
-      field: "CantidadTotal",
-      headerName: `${Text({ tid: "total" })}`,
-      type: "number",
-      flex: 1,
-    },
-  ];
+  let loading;
+  /*  const {loading, data} = await getSignalData() */
+  /* 
   useEffect(() => {
     console.log("Objeto LANGUAGES:", window.LANG_EN);
   }, []); */
 
-  return (
+  return loading ? (
+    <Box sx={{ width: "100%" }}>
+      <LinearProgress />
+    </Box>
+  ) : (
     <Grid container>
       signals
       {/* <Paper sx={{ width: "100%", marginTop: "1rem" }}>
-        <TableWidget data={dataTableMat} columns={columns} />
+        <TableWidget data={dataTableMat} columns={signalTableColumns} />
       </Paper> */}
     </Grid>
   );

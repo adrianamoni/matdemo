@@ -10,12 +10,14 @@ import Signals from "../../fritdashboardTabs/Signals";
 import Text from "../../../languages/Text";
 import { globalDataContext } from "../../../context/ContextProvider";
 import { getOrderDetails } from "./helper";
+import Parameters from "../../fritdashboardTabs/Parameters";
 
 const FritDashboard = () => {
   /*  let { slug } = useParams(); */
   /*  const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME; */
   const { globalData, setGlobalData } = useContext(globalDataContext);
   const { lineData, orderData, oeeSpecs } = globalData;
+  const [loadingInitialData, setLoadingInitialData] = useState(true);
   const ofDetailNav = [
     "General",
     Text({ tid: "signals" }),
@@ -38,7 +40,6 @@ const FritDashboard = () => {
 
   useEffect(() => {
     let clearIntervalOfDetail;
-    console.log("line", { lineData, orderData });
     if (lineData) {
       if (orderData) {
         fetchOrderDetail();
@@ -69,6 +70,7 @@ const FritDashboard = () => {
         cleaningData: cleaningData,
       },
     });
+    setLoadingInitialData(false);
   };
 
   /* const { order } = useContext(OrderContext);
@@ -479,20 +481,23 @@ const FritDashboard = () => {
       </Box>
 
       <Container sx={{ m: "auto" }}>
-        <Panels value={value} />
+        <Panels value={value} loading={loadingInitialData} />
       </Container>
     </Container>
   );
 };
 
-const Panels = ({ value }) => {
+const Panels = ({ value, loading }) => {
   return (
     <>
       <TabPanel value={value} index={0}>
-        <General />
+        <General loading={loading} />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Signals />
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <Parameters />
       </TabPanel>
       <TabPanel value={value} index={3}>
         <Materials />

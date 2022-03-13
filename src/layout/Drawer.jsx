@@ -13,8 +13,10 @@ import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
-import ModalContainer from "../components/modal/ModalContainer";
 import { Box } from "@mui/system";
+import LoginModal from "../components/modals/LoginModal";
+import LogoutModal from "../components/modals/LogoutModal";
+import ModalWidget from "../widgets/modalWidget/ModalWidget";
 const StyledLink = styled(Link)({
   textDecoration: "none",
   color: "inherit",
@@ -25,6 +27,7 @@ const StyledLink = styled(Link)({
 
 const DrawerComp = ({ navLinks }) => {
   const [loginModal, setLoginModal] = useState(false);
+  const [logoutModal, setLogoutModal] = useState(false);
 
   return (
     <>
@@ -60,34 +63,37 @@ const DrawerComp = ({ navLinks }) => {
         </div>
 
         <List>
-          <ListItem>
-            <ListItemButton
-              sx={{ color: "#0f59a3" }}
-              onClick={() => setLoginModal(true)}
-            >
+          <ListItem button onClick={() => setLoginModal(true)}>
+            <ListItemIcon sx={{ color: "#0f59a3" }}>
               <LoginIcon />
-              <ListItemText primary="Login" />
-            </ListItemButton>
+            </ListItemIcon>
+
+            <ListItemText primary="Login" />
           </ListItem>
-          <ListItem>
-            <ListItemButton
-              sx={{ color: "#0f59a3" }}
-              /*    onClick={() => setLoginModal(true)} */
-            >
+          <ListItem button onClick={() => setLogoutModal(true)}>
+            <ListItemIcon sx={{ color: "#0f59a3" }}>
               <LogoutIcon />
-              <ListItemText primary="Logout" />
-            </ListItemButton>
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
           </ListItem>
         </List>
       </div>
-      <ModalContainer opened={loginModal} closed={setLoginModal}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Text in a modal
-        </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-        </Typography>
+      <ModalWidget
+        open={loginModal}
+        close={() => setLoginModal(false)}
+        content={<LoginModal />}
+      />
+      <ModalWidget
+        open={logoutModal}
+        close={() => setLogoutModal(false)}
+        content={<LogoutModal />}
+      />
+      {/* <ModalContainer opened={loginModal} closed={setLoginModal}>
+        <LoginModal />
       </ModalContainer>
+      <ModalContainer opened={logoutModal} closed={setLogoutModal}>
+        <LogoutModal />
+      </ModalContainer> */}
     </>
   );
 };

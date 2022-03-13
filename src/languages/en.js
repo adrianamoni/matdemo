@@ -47,6 +47,10 @@ const en = {
   production: "Production",
   product: "Product",
   order: "Order",
+  parameter: "Parameter",
+  value: "Value",
+  provisioningRequest: "Provisioning Request",
+  emptyContainerRequest: "Empty Container Request",
 };
 
 export default en;

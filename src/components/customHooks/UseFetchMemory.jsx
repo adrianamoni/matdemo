@@ -1,0 +1,52 @@
+import { useEffect, useState } from "react";
+import {
+  tab_materials_init,
+  tab_of_parameters,
+} from "../../services/OFservices";
+import { MemoryDatabaseCall } from "../../services/Service";
+import uuid from "react-uuid";
+
+export default function UseFetchMemory({ request, order }) {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const parameters = getParams(request);
+
+        const response = await MemoryDatabaseCall({
+          params: parameters.params({
+            woId: order.woId,
+            operId: order.operId,
+            seqNo: order.seqNo,
+          }),
+          url: parameters.url,
+        });
+
+        setData(response.map((item) => ({ ...item, id: uuid() })));
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+    return () => {};
+  }, []);
+
+  return { data, error, loading };
+}
+
+const getParams = (request) => {
+  const REQUESTS = {
+    parameters: [tab_of_parameters, "queryDataAsync"],
+    "material-list": [tab_materials_init, "queryDataAsync"],
+  };
+
+  return {
+    params: REQUESTS[request][0],
+    url: REQUESTS[request][1],
+  };
+};
