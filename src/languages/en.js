@@ -32,6 +32,7 @@ const en = {
   user: "User",
   wo: "Wo",
   //OF DETAIL MENU
+
   signals: "Signals",
   parameters: "Parameters",
   materials: "Materials",
@@ -39,6 +40,7 @@ const en = {
   consumptions: "Consumptions",
   productions: "Productions",
   quality: "Quality",
+  selfControls: "Self-Controls",
   interruption: "Interruption",
   interruptions: "Interruptions",
   documentation: "Documentation",
@@ -51,6 +53,7 @@ const en = {
   value: "Value",
   provisioningRequest: "Provisioning Request",
   emptyContainerRequest: "Empty Container Request",
+  signal: "Signal",
 };
 
 export default en;

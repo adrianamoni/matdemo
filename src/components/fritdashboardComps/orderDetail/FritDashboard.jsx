@@ -6,7 +6,7 @@ import TabPanel from "../../TabPanel";
 import General from "../../fritdashboardTabs/General/General";
 import Materials from "../../fritdashboardTabs/Materials";
 import Paros from "../../fritdashboardTabs/Paros";
-import Signals from "../../fritdashboardTabs/Signals";
+import Signals from "../../fritdashboardTabs/Signals/Signals";
 import Text from "../../../languages/Text";
 import { globalDataContext } from "../../../context/ContextProvider";
 import { getOrderDetails } from "./helper";
@@ -26,7 +26,7 @@ const FritDashboard = () => {
     Text({ tid: "load" }),
     Text({ tid: "consumptions" }),
     Text({ tid: "productions" }),
-    Text({ tid: "quality" }),
+    Text({ tid: "selfControls" }),
     Text({ tid: "interruptions" }),
     Text({ tid: "documentation" }),
     Text({ tid: "planification" }),

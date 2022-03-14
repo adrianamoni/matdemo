@@ -59,7 +59,7 @@ const General = ({ loading }) => {
         rowSpacing={4}
       >
         <Grid item xs={12} sm={12} md={12} lg={7}>
-          <Card sx={{ p: 2, height: 500 }}>
+          <Card sx={{ p: 2 }}>
             <InfoOE
               data={
                 orderDetails &&

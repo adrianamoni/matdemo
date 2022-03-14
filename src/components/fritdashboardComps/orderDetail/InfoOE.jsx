@@ -85,139 +85,143 @@ const InfoOE = ({ data }) => {
 
   return data ? (
     <>
-      <Grid item sx={{ margin: 0, padding: 2 }}>
-        <Typography component="h5" variant="h5">
-          {data?.item_id.slice(-6)} {data?.item_desc}
-        </Typography>
+      <Grid container sx={{ height: "100%" }}>
+        <Grid item>
+          <Typography variant="h6" component="h6">
+            {data?.item_id.slice(-6)} {data?.item_desc}
+          </Typography>
 
-        <List>
-          <Grid container item>
-            {formattedData &&
-              formattedData.map((item, index) => (
-                <Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
-                  <ListItem>
-                    <Grid container>
-                      <Grid item xs={6}>
-                        <Typography>
-                          <strong>
-                            {Object.keys(item).length > 0 && Object.keys(item)}
-                          </strong>
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <div
-                          style={
-                            item.hasOwnProperty("Estado")
-                              ? {
-                                  paddingInline: "8px",
-                                  backgroundColor: propsByState({
-                                    prodState: data.state_cd,
-                                    cleanState: null,
-                                  }).background,
-                                }
-                              : {}
-                          }
-                        >
-                          <Typography align="right">
-                            {Object.values(item)}
+          <List>
+            <Grid container item>
+              {formattedData &&
+                formattedData.map((item, index) => (
+                  <Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
+                    <ListItem>
+                      <Grid container>
+                        <Grid item xs={6}>
+                          <Typography>
+                            <strong>
+                              {Object.keys(item).length > 0 &&
+                                Object.keys(item)}
+                            </strong>
                           </Typography>
-                        </div>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <div
+                            style={
+                              item.hasOwnProperty("Estado")
+                                ? {
+                                    paddingInline: "8px",
+                                    backgroundColor: propsByState({
+                                      prodState: data.state_cd,
+                                      cleanState: null,
+                                    }).background,
+                                  }
+                                : {}
+                            }
+                          >
+                            <Typography align="right">
+                              {Object.values(item)}
+                            </Typography>
+                          </div>
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </ListItem>
-                </Grid>
-              ))}
-          </Grid>
-        </List>
-
-        <Grid container>
-          <Grid
-            item
-            container
-            xs={12}
-            sm={12}
-            md={12}
-            lg={4}
-            justifyContent={"center"}
-          >
-            <ButtonGroup
-              variant="contained"
-              size="large"
-              aria-label="large button group"
-            >
-              <LoadingButton
-                loading={loadingPlay}
-                onClick={handlePlay}
-                disabled={
-                  loadingPlay
-                    ? true
-                    : data.state_cd &&
-                      operation_states({
-                        stateCd: data?.state_cd,
-                        type: "prod",
-                      }).play
-                }
-              >
-                <PlayArrowIcon />
-              </LoadingButton>
-              <LoadingButton
-                loading={loadingPause}
-                onClick={handlePause}
-                disabled={
-                  loadingPause
-                    ? true
-                    : data &&
-                      data.state_cd &&
-                      operation_states({
-                        stateCd: data.state_cd,
-                        type: "prod",
-                      }).pause
-                }
-              >
-                <PauseIcon />
-              </LoadingButton>
-              <LoadingButton
-                loading={loadingStop}
-                onClick={handleConfirmStop}
-                disabled={
-                  loadingStop
-                    ? true
-                    : data &&
-                      data.state_cd &&
-                      operation_states({
-                        stateCd: data.state_cd,
-                        type: "prod",
-                      }).stop
-                }
-              >
-                <StopIcon />
-              </LoadingButton>
-            </ButtonGroup>
-          </Grid>
-          <Grid
-            item
-            container
-            xs={12}
-            sm={12}
-            md={12}
-            lg={8}
-            justifyContent={"center"}
-            alignItems={"center"}
-            sx={{ p: 2 }}
-          >
-            <Grid item xs={12} sm={12} md={12} xl={3}>
-              <strong>
-                {width < 550 ? "Prod." : Text({ tid: "production" })}
-              </strong>
+                    </ListItem>
+                  </Grid>
+                ))}
             </Grid>
-            <Grid item xs={12} sm={12} md={12} xl={9}>
-              <LineProgress
-                value={Math.round((data.qty_prod / data.qty_reqd) * 100)}
-              />
+          </List>
+
+          <Grid container>
+            <Grid
+              item
+              container
+              xs={12}
+              sm={12}
+              md={12}
+              lg={4}
+              justifyContent={"center"}
+            >
+              <ButtonGroup
+                variant="contained"
+                size="large"
+                aria-label="large button group"
+              >
+                <LoadingButton
+                  loading={loadingPlay}
+                  onClick={handlePlay}
+                  disabled={
+                    loadingPlay
+                      ? true
+                      : data.state_cd &&
+                        operation_states({
+                          stateCd: data?.state_cd,
+                          type: "prod",
+                        }).play
+                  }
+                >
+                  <PlayArrowIcon />
+                </LoadingButton>
+                <LoadingButton
+                  loading={loadingPause}
+                  onClick={handlePause}
+                  disabled={
+                    loadingPause
+                      ? true
+                      : data &&
+                        data.state_cd &&
+                        operation_states({
+                          stateCd: data.state_cd,
+                          type: "prod",
+                        }).pause
+                  }
+                >
+                  <PauseIcon />
+                </LoadingButton>
+                <LoadingButton
+                  loading={loadingStop}
+                  onClick={handleConfirmStop}
+                  disabled={
+                    loadingStop
+                      ? true
+                      : data &&
+                        data.state_cd &&
+                        operation_states({
+                          stateCd: data.state_cd,
+                          type: "prod",
+                        }).stop
+                  }
+                >
+                  <StopIcon />
+                </LoadingButton>
+              </ButtonGroup>
+            </Grid>
+            <Grid
+              item
+              container
+              xs={12}
+              sm={12}
+              md={12}
+              lg={8}
+              justifyContent={"center"}
+              alignItems={"center"}
+              sx={{ p: 2 }}
+            >
+              <Grid item xs={12} sm={12} md={12} xl={3}>
+                <strong>
+                  {width < 550 ? "Prod." : Text({ tid: "production" })}
+                </strong>
+              </Grid>
+              <Grid item xs={12} sm={12} md={12} xl={9}>
+                <LineProgress
+                  value={Math.round((data.qty_prod / data.qty_reqd) * 100)}
+                />
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
+      {/*  */}
     </>
   ) : (
     <></>

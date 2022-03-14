@@ -10,6 +10,8 @@ import ButtonGroupWidget from "../../widgets/buttonGroup/ButtonGroupWidget";
 
 const Materials = () => {
   const { globalData } = useContext(globalDataContext);
+  const { woId, operId, seqNo } = globalData.orderData;
+
   const columns = [
     {
       field: "item_desc",
@@ -48,11 +50,11 @@ const Materials = () => {
 
   const { loading, data } = UseFetchMemory({
     request: "material-list",
-    order: {
-      operId: globalData.orderData.operId,
+    customParams: {
+      operId,
       entId: globalData.lineData.entId,
-      woId: globalData.orderData.woId,
-      seqNo: globalData.orderData.seqNo,
+      woId,
+      seqNo,
     },
   });
   const handleTestClick = () => {};

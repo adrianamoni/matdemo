@@ -5,8 +5,9 @@ import {
 } from "../../services/OFservices";
 import { MemoryDatabaseCall } from "../../services/Service";
 import uuid from "react-uuid";
+import { read_signals } from "../../services/serviceHelper";
 
-export default function UseFetchMemory({ request, order }) {
+export default function UseFetchMemory({ request, customParams }) {
   const [data, setData] = useState(null);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
@@ -17,11 +18,7 @@ export default function UseFetchMemory({ request, order }) {
         const parameters = getParams(request);
 
         const response = await MemoryDatabaseCall({
-          params: parameters.params({
-            woId: order.woId,
-            operId: order.operId,
-            seqNo: order.seqNo,
-          }),
+          params: parameters.params(customParams || {}),
           url: parameters.url,
         });
 
@@ -43,6 +40,7 @@ const getParams = (request) => {
   const REQUESTS = {
     parameters: [tab_of_parameters, "queryDataAsync"],
     "material-list": [tab_materials_init, "queryDataAsync"],
+    "variables-signals": [read_signals, "queryWWDataFrameDataAsync"],
   };
 
   return {

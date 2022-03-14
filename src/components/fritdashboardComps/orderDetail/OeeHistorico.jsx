@@ -62,7 +62,78 @@ const OEEHistorico = () => {
   calOEE = apiData ? apiData.Calidad * 100 : 0;
   return (
     <>
-      <Grid
+      <Grid container sx={{ height: "100%" }}>
+        <Grid item xs={12}>
+          <Typography align="center" variant="h6" component="h6">
+            OEE TURNO
+          </Typography>
+        </Grid>
+
+        <Grid item xs={12} /* sx={{ height: "100%" }} */>
+          <Grid container sx={{ alignItems: "center" }}>
+            <Grid item xs={12} sm={12} md={6}>
+              <TimelineContainer />
+            </Grid>
+            <Grid item xs={12} sm={12} md={3}>
+              <HalfDoughnut
+                value={[apiData ? apiData.OEE / 100 : 0]}
+                color={colorByValue({
+                  value: apiData && apiData.OEE ? apiData.OEE / 100 : 0,
+                  targetOee: globalData?.lineData?.oeeTarget,
+                  yellowThreshold: globalData?.oeeSpecs?.yellowThreshold,
+                })}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={3}>
+              <List>
+                <ListItem>
+                  <Grid container>
+                    <Grid item xs={6}>
+                      <Typography>
+                        <strong>{Text({ tid: "availability" })}</strong>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography align="right">
+                        {dispOEE ? Math.round(dispOEE) : 0}%
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </ListItem>
+                <ListItem>
+                  <Grid container>
+                    <Grid item xs={6}>
+                      <Typography>
+                        <strong>{Text({ tid: "performance" })}</strong>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography align="right">
+                        {rendOEE ? Math.round(rendOEE) : 0}%
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </ListItem>
+                <ListItem>
+                  <Grid container>
+                    <Grid item xs={6}>
+                      <Typography>
+                        <strong>{Text({ tid: "quality" })}</strong>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography align="right">
+                        {calOEE ? Math.round(calOEE) : 0}%
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </ListItem>
+              </List>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+      {/* <Grid
         container
         item
         sx={{
@@ -129,7 +200,7 @@ const OEEHistorico = () => {
             </ListItem>
           </List>
         </Grid>
-      </Grid>
+      </Grid> */}
     </>
   );
 };

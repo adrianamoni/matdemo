@@ -8,6 +8,7 @@ import UseFetchMemory from "../customHooks/UseFetchMemory";
 
 const Parameters = () => {
   const { globalData } = useContext(globalDataContext);
+  const { woId, operId, seqNo } = globalData.orderData;
   const parameterColumns = [
     {
       field: "attr_desc",
@@ -16,7 +17,6 @@ const Parameters = () => {
     },
     {
       field: "attr_value",
-      headerName: `Valor`,
       headerName: Text({ tid: "value" }),
       flex: 1,
     },
@@ -24,7 +24,11 @@ const Parameters = () => {
 
   const { loading, data } = UseFetchMemory({
     request: "parameters",
-    order: globalData.orderData,
+    customParams: {
+      woId,
+      operId,
+      seqNo,
+    },
   });
 
   return loading ? (
