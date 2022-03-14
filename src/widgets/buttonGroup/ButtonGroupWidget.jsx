@@ -39,8 +39,7 @@ const ButtonGroupWidget = ({ position, buttons, loading }) => {
             })}
         </ButtonGroup>
       </Grid>
-    */}
-    </>
+    </Grid>
   );
 };
 
