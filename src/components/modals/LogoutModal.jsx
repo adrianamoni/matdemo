@@ -1,8 +1,11 @@
+import React, { useContext } from "react";
 import { Typography } from "@mui/material";
-import React from "react";
 
 const LogoutModal = () => {
   const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME;
+  const { setLoggedUser } = useContext(LoggedUserContext);
+  const { pathname } = useLocation();
+  let history = useHistory();
 
   const handleClick = (e) => {
     e.preventDefault();
