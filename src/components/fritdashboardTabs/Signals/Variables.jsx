@@ -36,7 +36,7 @@ const Variables = () => {
   }
   return loading ? (
     <Box sx={{ width: "100%" }}>
-      <LinearProgress />
+      <LinearProgress color="secondary" />
     </Box>
   ) : processedData && processedData.length > 0 ? (
     <Container fluid>

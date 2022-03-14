@@ -62,6 +62,7 @@ const Quality = () => {
       <Grid container sx={{ mt: 2 }}>
         <Grid item xs={12} sx={{ display: "flex" }} justifyContent="flex-end">
           <ButtonGroupWidget
+            position="right"
             buttons={[
               {
                 text: onlyPendings ? "historical" : "pendings",

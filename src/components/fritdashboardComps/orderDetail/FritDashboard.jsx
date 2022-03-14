@@ -13,7 +13,9 @@ import { getOrderDetails } from "./helper";
 import Parameters from "../../fritdashboardTabs/Parameters";
 import Consumptions from "./../../fritdashboardTabs/Consumptions";
 import Productions from "./../../fritdashboardTabs/Productions";
-import Quality from "../../fritdashboardTabs/Quality.jsx/Quality";
+import Quality from "../../fritdashboardTabs/Quality/Quality";
+import Documentation from "../../fritdashboardTabs/Documentation";
+import Planification from "../../fritdashboardTabs/Planification";
 
 const FritDashboard = () => {
   /*  let { slug } = useParams(); */
@@ -26,7 +28,7 @@ const FritDashboard = () => {
     Text({ tid: "signals" }),
     Text({ tid: "parameters" }),
     Text({ tid: "materials" }),
-    Text({ tid: "load" }),
+    /*    Text({ tid: "load" }), */
     Text({ tid: "consumptions" }),
     Text({ tid: "productions" }),
     Text({ tid: "selfControls" }),
@@ -534,17 +536,23 @@ const Panels = ({ value, loading }) => {
       <TabPanel value={value} index={3}>
         <Materials />
       </TabPanel>
-      <TabPanel value={value} index={5}>
+      <TabPanel value={value} index={4}>
         <Consumptions />
       </TabPanel>
-      <TabPanel value={value} index={6}>
+      <TabPanel value={value} index={5}>
         <Productions />
       </TabPanel>
-      <TabPanel value={value} index={7}>
+      <TabPanel value={value} index={6}>
         <Quality />
       </TabPanel>
-      <TabPanel value={value} index={8}>
+      <TabPanel value={value} index={7}>
         <Paros />
+      </TabPanel>
+      <TabPanel value={value} index={8}>
+        <Documentation />
+      </TabPanel>
+      <TabPanel value={value} index={9}>
+        <Planification />
       </TabPanel>
     </>
   );

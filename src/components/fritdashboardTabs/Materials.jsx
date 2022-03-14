@@ -70,6 +70,7 @@ const Materials = () => {
 
       <Grid item xs={12}>
         <ButtonGroupWidget
+          position={"center"}
           buttons={[
             {
               text: "provisioningRequest",
