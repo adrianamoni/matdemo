@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import {
   AppBar,
   Box,
+  Container,
   Grid,
   LinearProgress,
   Tab,
@@ -14,17 +15,9 @@ import CropDinIcon from "@mui/icons-material/CropDin";
 import Variables from "./Variables";
 import VariablesProceso from "./VariablesProceso";
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+  const { children, value, index } = props;
 
-  return (
-    <div role="tabpanel" hidden={value !== index} {...other}>
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
+  return value === index ? <Container>{children}</Container> : <></>;
 }
 
 const Signals = () => {
@@ -56,6 +49,7 @@ const Signals = () => {
             label="Variables de Proceso"
             icon={<WindowIcon />}
             iconPosition="start"
+            disabled
           />
         </Tabs>
       </Box>

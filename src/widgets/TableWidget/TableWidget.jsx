@@ -64,6 +64,7 @@ const TableWidget = ({ data, columns }) => {
         variant="standard"
         value={searchInput}
         onChange={(e) => setsearchInput(e.target.value)}
+        sx={{ p: 1 }}
       />
 
       {pageDimentions && pageDimentions.width < 800 && (
