@@ -1,4 +1,5 @@
 const en = {
+  addDecrease: "Add Decrease",
   alternative: "Alternative",
   availability: "Availability",
   charts: "Charts",
@@ -22,10 +23,12 @@ const en = {
   line: "Line",
   loadMachine: "Load Machine",
   lot: "Lot",
+  manualProduction: "Manual Production",
   material: "Material",
   name: "Name",
   performance: "Performance",
   phone: "Phone",
+  productionCorrection: "Production Correction",
   provisioning: "Provisioning",
   quality: "Quality",
   readRegistration: "Read Registration",

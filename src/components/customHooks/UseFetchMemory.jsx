@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import {
   tab_materials_init,
   tab_of_parameters,
+  tab_consumptions,
+  tab_productions,
 } from "../../services/OFservices";
 import { MemoryDatabaseCall } from "../../services/Service";
 import uuid from "react-uuid";
 import { read_signals } from "../../services/serviceHelper";
-import { tab_consumptions } from "../../services/OFservices";
 
 export default function UseFetchMemory({ request, customParams }) {
   const [data, setData] = useState(null);
@@ -43,6 +44,7 @@ const getParams = (request) => {
     "material-list": [tab_materials_init, "queryDataAsync"],
     "variables-signals": [read_signals, "queryWWDataFrameDataAsync"],
     consumptions: [tab_consumptions, "queryDataAsync"],
+    productions: [tab_productions, "queryDataAsync"],
   };
 
   return {

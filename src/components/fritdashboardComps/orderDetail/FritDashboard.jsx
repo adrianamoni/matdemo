@@ -508,7 +508,7 @@ const Panels = ({ value, loading }) => {
         <Consumptions />
       </TabPanel>
       <TabPanel value={value} index={6}>
-        {/* <Productions /> */}
+        <Productions />
       </TabPanel>
       <TabPanel value={value} index={8}>
         <Paros />

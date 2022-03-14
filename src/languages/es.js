@@ -1,4 +1,5 @@
 const es = {
+  addDecrease: "Añadir Merma",
   alternative: "Alternativos",
   availability: "Disponibilidad",
   charts: "Gráficos",
@@ -22,10 +23,12 @@ const es = {
   line: "Línea",
   loadMachine: "Carga Máquina",
   lot: "Lote",
+  manualProduction: "Producción Manual",
   material: "Material",
   name: "Nombre",
   performance: "Rendimiento",
   phone: "Teléfono",
+  productionCorrection: "Corrección Producción",
   provisioning: "Aprovisionamiento",
   quality: "Calidad",
   quantity: "Cantidad",
