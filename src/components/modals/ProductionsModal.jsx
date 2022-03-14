@@ -75,9 +75,9 @@ const ProductionsModal = ({
 
   const manualProductionModalContent = (
     <>
-      <Typography variant="h6" gutterBottom>
+      {/* <Typography variant="h6" gutterBottom>
         <strong>{Text({ tid: "manualProduction" })}</strong>
-      </Typography>
+      </Typography> */}
       <Divider sx={{ marginTop: "25px", marginBottom: "25px" }} />
       <Grid container spacing={2}>
         <Grid item md={6} xs={12}>
@@ -159,9 +159,9 @@ const ProductionsModal = ({
 
   const productionCorrectionModalContent = (
     <>
-      <Typography variant="h6" gutterBottom>
+      {/* <Typography variant="h6" gutterBottom>
         <strong>{Text({ tid: "productionCorrection" })}</strong>
-      </Typography>
+      </Typography> */}
       <Divider sx={{ marginTop: "25px", marginBottom: "25px" }} />
       <Grid container spacing={2}>
         <Grid item md={8} xs={12}>
@@ -264,9 +264,9 @@ const ProductionsModal = ({
 
   const addDecreaseModalContent = (
     <>
-      <Typography variant="h6" gutterBottom>
+      {/* <Typography variant="h6" gutterBottom>
         <strong>{Text({ tid: "addDecrease" })}</strong>
-      </Typography>
+      </Typography> */}
       <Divider sx={{ marginTop: "25px", marginBottom: "25px" }} />
       <Grid container spacing={2}>
         <Grid item md={6} xs={12}>
@@ -304,6 +304,13 @@ const ProductionsModal = ({
 
   return (
     <ModalWidget
+      title={
+        modalContent === "manualProduction"
+          ? "manualProduction"
+          : modalContent === "productionCorrection"
+          ? "productionCorrection"
+          : "addDecrease"
+      }
       open={showModal}
       close={closeModal}
       content={

@@ -88,9 +88,9 @@ const ConsumptionsModal = ({
 
   const consumCorrectionModalContent = (
     <>
-      <Typography variant="h6" gutterBottom>
+      {/* <Typography variant="h6" gutterBottom>
         <strong>{Text({ tid: "consumptionCorrection" })}</strong>
-      </Typography>
+      </Typography> */}
       <Divider sx={{ marginTop: "25px", marginBottom: "25px" }} />
       <Grid container spacing={2}>
         <Grid item md={8} xs={12}>
@@ -193,9 +193,9 @@ const ConsumptionsModal = ({
 
   const consumeModalContent = (
     <>
-      <Typography variant="h6" gutterBottom>
+      {/* <Typography variant="h6" gutterBottom>
         <strong>{Text({ tid: "consume" })}</strong>
-      </Typography>
+      </Typography> */}
       <Divider sx={{ marginTop: "25px", marginBottom: "25px" }} />
       <Grid container spacing={2}>
         <Grid item md={6} xs={12}>
@@ -319,6 +319,11 @@ const ConsumptionsModal = ({
 
   return (
     <ModalWidget
+      title={
+        modalContent === "consumptionCorrection"
+          ? "consumptionCorrection"
+          : "consume"
+      }
       open={showModal}
       close={closeModal}
       content={
