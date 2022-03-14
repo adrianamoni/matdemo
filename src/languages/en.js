@@ -54,6 +54,15 @@ const en = {
   provisioningRequest: "Provisioning Request",
   emptyContainerRequest: "Empty Container Request",
   signal: "Signal",
+  historical: "Historical",
+  pendings: "Pendings",
+  notificationToQuality: "Notification to Quality",
+  registerTest: "Register Test",
+  date: "Date",
+  state: "State",
+  feature: "Feature",
+  result: "Result",
+  send: "Send",
 };
 
 export default en;

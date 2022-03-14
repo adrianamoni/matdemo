@@ -1,15 +1,9 @@
 import { useEffect, useState } from "react";
-import {
-  tab_materials_init,
-  tab_of_parameters,
-  tab_quality_get_qmspec_by_filter,
-} from "../../services/OFservices";
-import { MemoryDatabaseCall } from "../../services/Service";
-import uuid from "react-uuid";
-import { read_signals } from "../../services/serviceHelper";
-import { tab_consumptions } from "../../services/OFservices";
 
-export default function UseFetchMemory({ request, customParams }) {
+import { ApiCall } from "../../services/Service";
+import uuid from "react-uuid";
+
+export default function UseFetchDispatcher({ request, customParams }) {
   const [data, setData] = useState(null);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
@@ -19,13 +13,11 @@ export default function UseFetchMemory({ request, customParams }) {
       try {
         const parameters = getParams(request);
 
-        const response = await MemoryDatabaseCall({
+        const response = await ApiCall({
           params: parameters.params(customParams || {}),
-          url: parameters.url,
         });
-        if (response && response.length > 0) {
-          setData(response.map((item) => ({ ...item, id: uuid() })));
-        }
+
+        setData(response.map((item) => ({ ...item, id: uuid() })));
       } catch (err) {
         setError(err);
       } finally {
@@ -41,15 +33,14 @@ export default function UseFetchMemory({ request, customParams }) {
 
 const getParams = (request) => {
   const REQUESTS = {
-    parameters: [tab_of_parameters, "queryDataAsync"],
+    /*  parameters: [tab_of_parameters, "queryDataAsync"],
     "material-list": [tab_materials_init, "queryDataAsync"],
     "variables-signals": [read_signals, "queryWWDataFrameDataAsync"],
     consumptions: [tab_consumptions, "queryDataAsync"],
-    "quality-qmspec": [tab_quality_get_qmspec_by_filter, "queryDataAsync"],
+    "quality-qmspec": [tab_quality_get_qmspec_by_filter, "queryDataAsync"], */
   };
 
   return {
     params: REQUESTS[request][0],
-    url: REQUESTS[request][1],
   };
 };

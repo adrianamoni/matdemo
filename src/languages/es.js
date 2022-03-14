@@ -53,6 +53,15 @@ const es = {
   provisioningRequest: "Solicitud Aprovisionamiento",
   emptyContainerRequest: "Solicitud Contenedor Vacío",
   signal: "Señal",
+  historical: "Históricos",
+  pendings: "Pendientes",
+  notificationToQuality: "Notificación a Calidad",
+  registerTest: "Registrar Test",
+  date: "Fecha",
+  state: "Estado",
+  feature: "Característica",
+  result: "Resultado",
+  send: "Enviar",
 };
 
 export default es;

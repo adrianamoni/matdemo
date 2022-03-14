@@ -1,7 +1,14 @@
 import React from "react";
-import { Modal, Paper } from "@mui/material";
+import {
+  Container,
+  Divider,
+  Grid,
+  Modal,
+  Paper,
+  Typography,
+} from "@mui/material";
 
-const ModalWidget = ({ open, close, content }) => {
+const ModalWidget = ({ open, close, title, content }) => {
   const style = {
     position: "absolute",
     top: "50%",
@@ -10,18 +17,27 @@ const ModalWidget = ({ open, close, content }) => {
     width: 400,
     bgcolor: "background.paper",
     boxShadow: 24,
-    p: 4,
+    p: 3,
+  };
+  const handleClose = () => {
+    close();
   };
 
   return (
     <Modal
       open={open}
-      onClose={close}
+      onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
       <Paper elevation={24} sx={style}>
-        {content}
+        <Typography variant="h5" component="h6" sx={{ mb: 1 }}>
+          {title}
+        </Typography>
+        <Divider />
+        <Grid container sx={{ mt: 1 }} spacing={2}>
+          {content}
+        </Grid>
       </Paper>
     </Modal>
   );

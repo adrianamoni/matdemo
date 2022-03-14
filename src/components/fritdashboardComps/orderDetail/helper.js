@@ -45,6 +45,45 @@ export const getOrderDetails = async ({ order }) => {
   return { productionData: obj1, cleaningData: obj2, error };
 };
 
+export const getPendingSamples = async (data) => {
+  /*   let error;
+  let obj1, obj2;
+  const response = await MemoryDatabaseCall({
+    params: get_order_details({
+      woId: order.woId,
+      operId: order.operId,
+      seqNo: order.seqNo,
+    }),
+    url: "queryDataAsync",
+  });
+
+  if (response) {
+    if (response.length > 0) {
+      obj1 = response.find(
+        (data) => data.oper_id !== "limpieza" && data.oper_id !== "NETEJA"
+      );
+
+    }
+  }
+
+  const response2 = await MemoryDatabaseCall({
+    params: get_order_details({
+      woId: order.woId,
+      operId: "NETEJA",
+      seqNo: parseInt(order.spare3),
+    }),
+    url: "queryDataAsync",
+  });
+
+  if (response2) {
+    if (response2.length > 0) {
+      obj2 = response2.find((data) => data.oper_id === "NETEJA");
+    }
+  }
+
+  return { productionData: obj1, cleaningData: obj2, error }; */
+};
+
 export const dateFormater = ({ date, type }) => {
   const dateProp = date;
   let finalDate;

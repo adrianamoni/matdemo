@@ -50,39 +50,37 @@ const Paros = () => {
   };
   const modalContent = (
     <>
-      <Grid container spacing={2}>
-        <Grid item md={6} xs={12}>
-          <SelectWidget
-            formId={"Test"}
-            id={"izquierda"}
-            label={"Select Izquierda"}
-            options={seccionFake}
-          />
-        </Grid>
-        <Grid item md={6} xs={12}>
-          <SelectWidget
-            formId={"Test"}
-            id={"derecha"}
-            label={"Select Derecha"}
-            options={seccionFake}
-          />
-        </Grid>
-        <Grid item md={6} xs={12}>
-          <TextField
-            required
-            id="outlined-required"
-            label="Required"
-            defaultValue="Hello World"
-          />
-        </Grid>
-        <Grid item md={6} xs={12}>
-          <InputWidget
-            formId={"Test"}
-            id={"Inputtest"}
-            label={"Escribe tu nombre"}
-            otherOptions={"required"}
-          />
-        </Grid>
+      <Grid item md={6} xs={12}>
+        <SelectWidget
+          formId={"Test"}
+          id={"izquierda"}
+          label={"Select Izquierda"}
+          options={seccionFake}
+        />
+      </Grid>
+      <Grid item md={6} xs={12}>
+        <SelectWidget
+          formId={"Test"}
+          id={"derecha"}
+          label={"Select Derecha"}
+          options={seccionFake}
+        />
+      </Grid>
+      <Grid item md={6} xs={12}>
+        <TextField
+          required
+          id="outlined-required"
+          label="Required"
+          defaultValue="Hello World"
+        />
+      </Grid>
+      <Grid item md={6} xs={12}>
+        <InputWidget
+          formId={"Test"}
+          id={"Inputtest"}
+          label={"Escribe tu nombre"}
+          otherOptions={"required"}
+        />
       </Grid>
     </>
   );
@@ -93,21 +91,24 @@ const Paros = () => {
         <Paper sx={{ width: "100%", marginTop: "1rem" }}>
           <TableWidget data={fakeParos} columns={columns} />
         </Paper>
-        <ButtonGroupWidget
-          buttons={[
-            {
-              text: "createInterruption",
-              color: "primary",
-              onClick: handleTestClick,
-            },
-            { text: "justifyInterruption", color: "success", disabled: true },
-          ]}
-        />
+        <Grid item xs={12} sx={{ display: "flex" }} justifyContent="center">
+          <ButtonGroupWidget
+            buttons={[
+              {
+                text: "createInterruption",
+                color: "primary",
+                onClick: handleTestClick,
+              },
+              { text: "justifyInterruption", color: "success", disabled: true },
+            ]}
+          />
+        </Grid>
       </Grid>
       <ModalWidget
         open={modalCreateInterruption}
         close={() => setmodalCreateInterruption(false)}
         content={modalContent}
+        title={"Generar Paro"}
       />
     </>
   );

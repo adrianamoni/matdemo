@@ -11,6 +11,7 @@ import Text from "../../../languages/Text";
 import { globalDataContext } from "../../../context/ContextProvider";
 import { getOrderDetails } from "./helper";
 import Parameters from "../../fritdashboardTabs/Parameters";
+import Quality from "../../fritdashboardTabs/Quality.jsx/Quality";
 
 const FritDashboard = () => {
   /*  let { slug } = useParams(); */
@@ -44,6 +45,13 @@ const FritDashboard = () => {
       if (orderData) {
         fetchOrderDetail();
         clearIntervalOfDetail = setInterval(fetchOrderDetail, 6000);
+        fetchPendingSamples();
+        clearIntervalSamples = setInterval(fetchPendingSamples, 6000);
+        fetchPendingInterruptions();
+        clearIntervalInterruptions = setInterval(
+          fetchPendingInterruptions,
+          6000
+        );
 
         /* 
           fetchSpecs();
@@ -55,11 +63,13 @@ const FritDashboard = () => {
     }
     return () => {
       clearInterval(clearIntervalOfDetail);
+      clearInterval(clearIntervalSamples);
+      clearInterval(clearIntervalInterruptions);
     };
   }, []);
 
   const fetchOrderDetail = async () => {
-    const { productionData, cleaningData, error } = await getOrderDetails({
+    const { productionData, cleaningData } = await getOrderDetails({
       order: orderData,
     });
 
@@ -71,6 +81,26 @@ const FritDashboard = () => {
       },
     });
     setLoadingInitialData(false);
+  };
+  const fetchPendingSamples = async () => {
+    const { response } = await getPendingSamples({
+      order: orderData,
+    });
+
+    setGlobalData({
+      ...globalData,
+      pendingSamples: response,
+    });
+  };
+  const fetchPendingInterruptions = async () => {
+    const { response } = await getPendingInterruptions({
+      order: orderData,
+    });
+
+    setGlobalData({
+      ...globalData,
+      pendingInterruptions: response,
+    });
   };
 
   /* const { order } = useContext(OrderContext);
@@ -501,6 +531,9 @@ const Panels = ({ value, loading }) => {
       </TabPanel>
       <TabPanel value={value} index={3}>
         <Materials />
+      </TabPanel>
+      <TabPanel value={value} index={7}>
+        <Quality />
       </TabPanel>
       <TabPanel value={value} index={8}>
         <Paros />
