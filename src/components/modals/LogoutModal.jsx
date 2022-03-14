@@ -1,37 +1,96 @@
-import React, { useContext } from "react";
-import { Typography } from "@mui/material";
+import React, { useContext, useState } from "react";
+import useWindowSize from "./../customHooks/UseWindowsSize";
+import { useNavigate, useLocation } from "react-router-dom";
+import { loginContext } from "../../context/ContextProvider";
+import { Grid, Typography } from "@mui/material";
+import { createNotification } from "./../alerts/NotificationAlert";
+import { ApiCall } from "./../../services/Service";
+import { logoutObj } from "../../services/serviceHelper";
+import ModalWidget from "../../widgets/modalWidget/ModalWidget";
+import ButtonGroupWidget from "./../../widgets/buttonGroup/ButtonGroupWidget";
+import Text from "./../../languages/Text";
 
-const LogoutModal = () => {
-  const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME;
-  const { setLoggedUser } = useContext(LoggedUserContext);
+const LogoutModal = ({ logoutModal, setLogoutModal }) => {
+  const windowSize = useWindowSize();
   const { pathname } = useLocation();
-  let history = useHistory();
+  let navigate = useNavigate();
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    const userInfo = {
-      userName: "aleix",
-      isLogged: true,
-      isAdmin: false,
-      permissions: [{ desc: "Secuenciacion.Visualizacion" }],
-    };
-    sessionStorage.setItem(
-      `UserInfo_${PROJECT_NAME}`,
-      JSON.stringify(userInfo)
-    );
+  //useContext
+  const { setLoggedUser } = useContext(loginContext);
+  //useState
+  const [loading, setLoading] = useState(false);
+
+  const handleConfirmLogout = (e) => {
+    sessionStorage.removeItem("userInfo");
+    setLoggedUser(null);
+    fetchLogout();
+    setLogoutModal(false);
+    (pathname === "/secuenciacion" || pathname === "/gestor-paros") &&
+      navigate("/");
   };
+
+  const fetchLogout = async () => {
+    const response = await ApiCall({ params: logoutObj });
+    if (response.responseError) {
+      createNotification({
+        status: "error",
+        code: response.responseError,
+        msg: response.responseMsg,
+        hide: response.responseHide,
+      });
+    } else {
+      createNotification({
+        status: "success",
+        msg: "¡Se ha cerrado la sesión!",
+        hide: response.responseHide,
+      });
+    }
+  };
+
+  const close = () => {
+    setLogoutModal(false);
+  };
+
+  const modalContent = (
+    <>
+      <Grid container spacing={2}>
+        <Grid item md={12} xs={12}>
+          <Typography sx={{ padding: "25px" }}>
+            {Text({ tid: "confirmLogout" })}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container>
+        <ButtonGroupWidget
+          position="right"
+          buttons={[
+            {
+              text: "cancel",
+              color: "primary",
+              onClick: close,
+              disabled: false,
+            },
+            {
+              text: "yes",
+              color: "primary",
+              onClick: handleConfirmLogout,
+              disabled: false,
+            },
+          ]}
+          loading={loading}
+        />
+      </Grid>
+    </>
+  );
+
   return (
-    <div className="App">
-      <form className="form">
-        <button onClick={handleClick}>LOGIN</button>
-      </form>
-      <Typography id="modal-modal-title" variant="h6" component="h2">
-        Text in a modal
-      </Typography>
-      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-      </Typography>
-    </div>
+    <ModalWidget
+      title={"logout"}
+      open={logoutModal}
+      close={close}
+      content={modalContent}
+      customWidth={windowSize.width < 620 ? 350 : 800}
+    />
   );
 };
 

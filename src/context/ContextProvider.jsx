@@ -25,12 +25,7 @@ const languageContext = React.createContext({
 
 const ContextProvider = (props) => {
   const userStorageData = getLoginStorageData();
-  const [loginUser, setLoginUser] = useState({
-    userName: "",
-    isLogged: false,
-    isAdmin: false,
-    permissions: [],
-  });
+  const [loggedUser, setLoggedUser] = useState(undefined);
   /**page size setup*/
   const [pageSize, setPageSize] = useState({
     width: undefined,
@@ -75,7 +70,7 @@ const ContextProvider = (props) => {
     <>
       <colorModeContext.Provider value={{ colorMode, setColorMode }}>
         <languageContext.Provider value={provider}>
-          <loginContext.Provider value={{ loginUser, setLoginUser }}>
+          <loginContext.Provider value={{ loggedUser, setLoggedUser }}>
             <pageSizeContext.Provider value={{ pageSize, setPageSize }}>
               <selectedRowsIdsContext.Provider
                 value={{ selectedRowsIds, setSelectedRowsIds }}
