@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -6,8 +6,10 @@ import Toolbar from "@mui/material/Toolbar";
 import { Outlet, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
+import { createTheme, ThemeProvider, useTheme } from "@mui/material";
+import { colorModeContext } from "../context/ContextProvider";
 
-const drawerWidth = 200;
+const drawerWidth = 180;
 
 function Layout(props) {
   const { window } = props;
@@ -19,40 +21,50 @@ function Layout(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  const { colorMode } = useContext(colorModeContext);
+
+  const theme = createTheme({
+    palette: {
+      mode: colorMode,
+    },
+  });
+
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      <Navbar
-        handleDrawerToggle={handleDrawerToggle}
-        drawerWidth={drawerWidth}
-        title={slug}
-      />
-      <Box
-        component="nav"
-        sx={{ width: { md: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
-      >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Sidebar
-          mobileOpen={mobileOpen}
+    <ThemeProvider theme={theme}>
+      <Box sx={{ display: "flex" }}>
+        <CssBaseline />
+        <Navbar
           handleDrawerToggle={handleDrawerToggle}
           drawerWidth={drawerWidth}
-          window={window}
+          title={slug}
         />
+        <Box
+          component="nav"
+          sx={{ width: { md: drawerWidth }, flexShrink: { sm: 0 } }}
+          aria-label="mailbox folders"
+        >
+          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+          <Sidebar
+            mobileOpen={mobileOpen}
+            handleDrawerToggle={handleDrawerToggle}
+            drawerWidth={drawerWidth}
+            window={window}
+          />
+        </Box>
+        <Box
+          component="main"
+          sx={{
+            m: 0,
+            flexGrow: 1,
+            p: 3,
+            width: { sm: `calc(100% - ${drawerWidth}px)` },
+          }}
+        >
+          <Toolbar />
+          <Outlet />
+        </Box>
       </Box>
-      <Box
-        component="main"
-        sx={{
-          m: 0,
-          flexGrow: 1,
-          p: 3,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-        }}
-      >
-        <Toolbar />
-        <Outlet />
-      </Box>
-    </Box>
+    </ThemeProvider>
   );
 }
 

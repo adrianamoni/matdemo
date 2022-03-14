@@ -14,6 +14,7 @@ const es = {
   expiration: "Caducidad",
   filter: "Filtrar",
   fritDashboard: "Tablero Frit",
+  detail: "Detalle",
   home: "Inicio",
   id: "Id",
   justifyInterruption: "Justificar Paro",
@@ -51,7 +52,8 @@ const es = {
   load: "Cargar",
   consumptions: "Consumos",
   productions: "Producciones",
-  quality: "Auto Controles",
+  quality: "Calidad",
+  selfControls: "Auto Controles",
   interruption: "Paro",
   interruptions: "Paros",
   documentation: "Documentación",
@@ -60,6 +62,11 @@ const es = {
   production: "Producción",
   product: "Producto",
   order: "Orden",
+  parameter: "Parámetro",
+  value: "Valor",
+  provisioningRequest: "Solicitud Aprovisionamiento",
+  emptyContainerRequest: "Solicitud Contenedor Vacío",
+  signal: "Señal",
 };
 
 export default es;

@@ -2,15 +2,19 @@ import React, { useContext, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import About from "./components/About";
 import Dashboard from "./components/Dashboard";
-import FritDashboard from "./components/FritDashboard";
+import FritDashboard from "./components/fritDashboardComps/orderDetail/FritDashboard";
 import Home from "./components/Home";
 import Charts from "./components/Charts";
 import Table from "./components/Table";
 import NoMatch from "./components/NoMatch";
 import Layout from "./layout/Layout";
-import FetchData from "./components/FetchData";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import useWindowSize from "./components/customHooks/UseWindowsSize";
 import { pageSizeContext } from "./context/ContextProvider";
+import Test from "./components/Test";
+import MonthlyCleaning from "./components/fritdashboardComps/cleaning/MonthlyCleaning";
+import Init from "./components/Init";
 
 const AppRouter = () => {
   const { setPageSize } = useContext(pageSizeContext);
@@ -35,12 +39,16 @@ const AppRouter = () => {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="frit-dashboard" element={<FritDashboard />} />
             <Route path="frit-dashboard/:slug" element={<FritDashboard />} />
+            <Route path="limpieza-periodica" element={<MonthlyCleaning />} />
             <Route path="table" element={<Table />} />
             <Route path="charts" element={<Charts />} />
-            <Route path="fetch-data" element={<FetchData />} />
+
+            <Route path="test" element={<Test />} />
+            <Route path="init" element={<Init />} />
             <Route path="*" element={<NoMatch />} />
           </Route>
         </Routes>
+        <ToastContainer />
       </BrowserRouter>
     </>
   );

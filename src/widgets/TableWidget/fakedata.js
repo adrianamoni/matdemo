@@ -252,7 +252,7 @@ export const dataTableMat = [
     selected: false,
     qtyAprov: 500,
   },
-  {
+  /* {
     id: 2,
     wo_id: "OFALEIX05072021AB",
     oper_id: "OFALEIX05072021AB-1",
@@ -335,7 +335,7 @@ export const dataTableMat = [
     unique_id: "ef302-d35d-d703-c42-40d32c4d536c",
     selected: false,
     qtyAprov: 700,
-  },
+  }, */
 ];
 export const fakeParos = [
   {

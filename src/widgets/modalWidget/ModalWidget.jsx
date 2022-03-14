@@ -12,6 +12,7 @@ const ModalWidget = ({ open, close, content, customWidth }) => {
     boxShadow: 24,
     p: 4,
   };
+
   return (
     <Modal
       open={open}

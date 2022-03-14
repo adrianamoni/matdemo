@@ -14,6 +14,7 @@ const en = {
   expiration: "Expiration",
   filter: "Filter",
   fritDashboard: "Frit Dashboard",
+  detail: "Detail",
   home: "Home",
   id: "Id",
   justifyInterruption: "Justify Interruption",
@@ -52,6 +53,7 @@ const en = {
   consumptions: "Consumptions",
   productions: "Productions",
   quality: "Quality",
+  selfControls: "Self-Controls",
   interruption: "Interruption",
   interruptions: "Interruptions",
   documentation: "Documentation",
@@ -60,6 +62,11 @@ const en = {
   production: "Production",
   product: "Product",
   order: "Order",
+  parameter: "Parameter",
+  value: "Value",
+  provisioningRequest: "Provisioning Request",
+  emptyContainerRequest: "Empty Container Request",
+  signal: "Signal",
 };
 
 export default en;

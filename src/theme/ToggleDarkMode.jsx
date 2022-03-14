@@ -1,0 +1,31 @@
+import { Box, IconButton } from "@mui/material";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { useContext } from "react";
+import { colorModeContext } from "../context/ContextProvider";
+const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME;
+const ToggleDarkMode = () => {
+  const { colorMode, setColorMode } = useContext(colorModeContext);
+
+  const handleToggle = () => {
+    localStorage.setItem(
+      `ColorMode_${PROJECT_NAME}`,
+      colorMode === "dark" ? "light" : "dark"
+    );
+    setColorMode(colorMode === "dark" ? "light" : "dark");
+  };
+
+  return (
+    <Box
+      sx={{
+        color: "text.primary",
+      }}
+    >
+      <IconButton sx={{ ml: 1 }} onClick={handleToggle}>
+        {colorMode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+      </IconButton>
+    </Box>
+  );
+};
+
+export default ToggleDarkMode;

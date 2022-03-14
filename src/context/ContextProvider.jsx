@@ -1,16 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { createBrowserHistory } from "history";
 import { languageOptions, dictionaryList } from "../languages";
+import {
+  getColorFromStorage,
+  getLoginStorageData,
+  getStorageData,
+} from "./initalStates";
 
 const history = createBrowserHistory();
-
 const historyContext = React.createContext(history);
-const loginContext = React.createContext({ username: "" });
+const colorModeContext = React.createContext();
+const loginContext = React.createContext();
 const pageSizeContext = React.createContext();
 const selectedRowsIdsContext = React.createContext();
 const selectedRowsContext = React.createContext();
 const formContext = React.createContext();
-
+const globalDataContext = React.createContext({});
 /**Multilanguage Stuff */
 const languageContext = React.createContext({
   language: languageOptions[0],
@@ -19,8 +24,12 @@ const languageContext = React.createContext({
 /**End Multilanguage */
 
 const ContextProvider = (props) => {
+  const userStorageData = getLoginStorageData();
   const [loginUser, setLoginUser] = useState({
-    username: "",
+    userName: "",
+    isLogged: false,
+    isAdmin: false,
+    permissions: [],
   });
   /**page size setup*/
   const [pageSize, setPageSize] = useState({
@@ -32,6 +41,17 @@ const ContextProvider = (props) => {
   const [selectedRows, setSelectedRows] = useState([]);
   /**form widget setup*/
   const [formWidget, setformWidget] = useState({});
+  const colorModeStorage = getColorFromStorage();
+  const [colorMode, setColorMode] = useState(colorModeStorage);
+  const storageData = getStorageData();
+  const [globalData, setGlobalData] = useState({
+    lineData: storageData.lineData || undefined,
+    orderData: storageData.orderData || undefined,
+    oeeSpecs: storageData.oeeSpecs || undefined,
+    terminal: undefined,
+    extras: undefined,
+    orderDetails: undefined,
+  });
   /**MultiLanguage Setup */
   const [language, setLanguage] = useState(languageOptions[0]);
   const [dictionary, setDictionary] = useState(
@@ -51,33 +71,44 @@ const ContextProvider = (props) => {
   }, [dictionary]);
   return (
     <>
-      <languageContext.Provider value={provider}>
-        <loginContext.Provider value={{ loginUser, setLoginUser }}>
-          <pageSizeContext.Provider value={{ pageSize, setPageSize }}>
-            <selectedRowsIdsContext.Provider
-              value={{ selectedRowsIds, setSelectedRowsIds }}
-            >
-              <selectedRowsContext.Provider
-                value={{ selectedRows, setSelectedRows }}
+      <colorModeContext.Provider value={{ colorMode, setColorMode }}>
+        <languageContext.Provider value={provider}>
+          <loginContext.Provider value={{ loginUser, setLoginUser }}>
+            <pageSizeContext.Provider value={{ pageSize, setPageSize }}>
+              <selectedRowsIdsContext.Provider
+                value={{ selectedRowsIds, setSelectedRowsIds }}
               >
-                <formContext.Provider value={{ formWidget, setformWidget }}>
-                  {props.children}
-                </formContext.Provider>
-              </selectedRowsContext.Provider>
-            </selectedRowsIdsContext.Provider>
-          </pageSizeContext.Provider>
-        </loginContext.Provider>
-      </languageContext.Provider>
+                <selectedRowsContext.Provider
+                  value={{ selectedRows, setSelectedRows }}
+                >
+                  <formContext.Provider value={{ formWidget, setformWidget }}>
+                    <globalDataContext.Provider
+                      value={{
+                        globalData,
+                        setGlobalData,
+                      }}
+                    >
+                      {props.children}
+                    </globalDataContext.Provider>
+                  </formContext.Provider>
+                </selectedRowsContext.Provider>
+              </selectedRowsIdsContext.Provider>
+            </pageSizeContext.Provider>
+          </loginContext.Provider>
+        </languageContext.Provider>
+      </colorModeContext.Provider>
     </>
   );
 };
 
 export {
   ContextProvider,
+  colorModeContext,
   languageContext,
   loginContext,
   pageSizeContext,
   selectedRowsIdsContext,
   selectedRowsContext,
   formContext,
+  globalDataContext,
 };
