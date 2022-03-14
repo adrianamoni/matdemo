@@ -81,7 +81,7 @@ const Dashboard = () => {
       params: entities_by_terminal({
         name: "terminal",
         dataType: "String",
-        value: 10, //HARDCODED
+        value: 1, //HARDCODED
       }),
       url: "queryDataAsync",
     });

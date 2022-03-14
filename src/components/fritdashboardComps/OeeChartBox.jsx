@@ -91,27 +91,10 @@ const OeeChartBox = ({ showChart, line, order, disableClick }) => {
   }, [order]);
 
   const handlePush = (e) => {
-    setGlobalData({
-      ...globalData,
-      lineData: { entId: line.entId, entName: line.ent_name },
-    });
     localStorage.setItem(
       `LineData_${PROJECT_NAME}`,
       JSON.stringify({ entId: line.entId, entName: line.ent_name })
     );
-
-    setGlobalData({
-      ...globalData,
-      orderData: {
-        woId: order.wo_id,
-        operId: order.oper_id,
-        seqNo: order.seq_no,
-        itemId: order.item_id,
-        stateCd: order.state_cd,
-        spare3: order.spare3,
-      },
-    });
-
     localStorage.setItem(
       `OrderData_${PROJECT_NAME}`,
       JSON.stringify({
@@ -123,6 +106,19 @@ const OeeChartBox = ({ showChart, line, order, disableClick }) => {
         spare3: order.spare3,
       })
     );
+    setGlobalData({
+      ...globalData,
+      orderData: {
+        woId: order.wo_id,
+        operId: order.oper_id,
+        seqNo: order.seq_no,
+        itemId: order.item_id,
+        stateCd: order.state_cd,
+        spare3: order.spare3,
+      },
+      lineData: { entId: line.entId, entName: line.ent_name },
+    });
+
     navigateTo("/frit-dashboard");
   };
 

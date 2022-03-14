@@ -1,14 +1,7 @@
-import {
-  ButtonGroup,
-  Card,
-  Grid,
-  List,
-  ListItem,
-  Typography,
-  IconButton,
-} from "@mui/material";
+import { ButtonGroup, Grid, List, ListItem, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { globalDataContext } from "../../../context/ContextProvider";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
 import PauseIcon from "@mui/icons-material/Pause";
@@ -16,65 +9,84 @@ import LineProgress from "../../../widgets/progress/LineProgress";
 import Text from "../../../languages/Text";
 import useWindowSize from "../../customHooks/UseWindowsSize";
 import { dateFormater, operation_states } from "./helper";
-import {
-  handlePauseButton,
-  handlePlayButton,
-  handleStopButton,
-} from "../../fritdashboardTabs/General/helper";
+import { handleOperationAction } from "../../fritdashboardTabs/General/helper";
 import { propsByState } from "../../../helpers/props";
 
-const InfoOE = ({ data }) => {
+const InfoOE = () => {
+  const { globalData } = useContext(globalDataContext);
+  const { orderDetails, orderData } = globalData;
+  const { woId, operId, seqNo } = globalData.orderData;
+  console.log("orderDetails", orderDetails);
+  const { productionData } = orderDetails;
+  console.log("productionData", productionData);
+
   const { width } = useWindowSize();
-  const [formattedData, setFormattedData] = useState(undefined);
   const [loadingPlay, setLoadingPlay] = useState(false);
   const [loadingPause, setLoadingPause] = useState(false);
   const [loadingStop, setLoadingStop] = useState(false);
   const [confirmStop, setConfirmStop] = useState(false);
   /*     const [modalStockBreak, setModalStockBreak] = useState(false); */
 
-  useEffect(() => {
-    if (data) {
-      const formatData = () => {
-        setFormattedData([
-          { Wo: data.wo_id },
-          { Estado: data.state_desc },
-          {
-            "Inicio teor.": dateFormater({
-              date: data.sched_start_time_local,
-              type: "fecha-hora",
-            }),
-          },
-          {
-            "Inicio Real": dateFormater({
-              date: data.act_start_time_local,
-              type: "fecha-hora",
-            }),
-          },
-          { "Cant. a fabricar": `${data.qty_reqd} ${data.uomAbreviacion}` },
-          { "Cant.Buena": `${data.qty_prod} ${data.uomAbreviacion}` },
-          { "Cant.Rechazada": `${data.qty_rejected} ${data.uomAbreviacion}` },
-        ]);
-      };
-      formatData();
-    }
-  }, [data]);
+  let processedData = [];
+  if (productionData) {
+    processedData = [
+      { Wo: productionData.wo_id },
+      { Estado: productionData.state_desc },
+      {
+        "Inicio teor.": dateFormater({
+          date: productionData.sched_start_time_local,
+          type: "fecha-hora",
+        }),
+      },
+      {
+        "Inicio Real": dateFormater({
+          date: productionData.act_start_time_local,
+          type: "fecha-hora",
+        }),
+      },
+      {
+        "Cant. a fabricar": `${productionData.qty_reqd} ${productionData.uomAbreviacion}`,
+      },
+      {
+        "Cant.Buena": `${productionData.qty_prod} ${productionData.uomAbreviacion}`,
+      },
+      {
+        "Cant.Rechazada": `${productionData.qty_rejected} ${productionData.uomAbreviacion}`,
+      },
+    ];
+  }
 
   const handlePlay = async () => {
     setLoadingPlay(true);
-    await handlePlayButton({ data });
+    await handleOperationAction({
+      type: "start",
+      woId: productionData.wo_id,
+      operId: productionData.oper_id,
+      seqNo: productionData.seq_no,
+    });
     setLoadingPlay(false);
   };
 
   const handlePause = async () => {
     setLoadingPause(true);
-    await handlePauseButton({ data });
+    await handleOperationAction({
+      type: "pause",
+      woId: productionData.wo_id,
+      operId: productionData.oper_id,
+      seqNo: productionData.seq_no,
+    });
     setLoadingPause(false);
   };
 
   const handleStop = async () => {
     setConfirmStop(false);
     setLoadingStop(true);
-    await handleStopButton({ data });
+    await handleOperationAction({
+      type: "stop",
+      woId: productionData.wo_id,
+      operId: productionData.oper_id,
+      seqNo: productionData.seq_no,
+    });
     setLoadingStop(false);
   };
 
@@ -83,18 +95,27 @@ const InfoOE = ({ data }) => {
     setConfirmStop(true);
   };
 
-  return data ? (
+  const { play, pause, stop } = operation_states({
+    stateCd: productionData?.state_cd,
+    type: "prod",
+  });
+  const { background } = propsByState({
+    prodState: productionData.state_cd,
+    cleanState: null,
+  });
+
+  return productionData ? (
     <>
       <Grid container sx={{ height: "100%" }}>
         <Grid item>
           <Typography variant="h6" component="h6">
-            {data?.item_id.slice(-6)} {data?.item_desc}
+            {productionData?.item_id.slice(-6)} {productionData?.item_desc}
           </Typography>
 
           <List>
             <Grid container item>
-              {formattedData &&
-                formattedData.map((item, index) => (
+              {processedData &&
+                processedData.map((item, index) => (
                   <Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
                     <ListItem>
                       <Grid container>
@@ -107,23 +128,19 @@ const InfoOE = ({ data }) => {
                           </Typography>
                         </Grid>
                         <Grid item xs={6}>
-                          <div
-                            style={
+                          <Typography
+                            align="right"
+                            sx={
                               item.hasOwnProperty("Estado")
                                 ? {
                                     paddingInline: "8px",
-                                    backgroundColor: propsByState({
-                                      prodState: data.state_cd,
-                                      cleanState: null,
-                                    }).background,
+                                    backgroundColor: background,
                                   }
                                 : {}
                             }
                           >
-                            <Typography align="right">
-                              {Object.values(item)}
-                            </Typography>
-                          </div>
+                            {Object.values(item)}
+                          </Typography>
                         </Grid>
                       </Grid>
                     </ListItem>
@@ -150,47 +167,21 @@ const InfoOE = ({ data }) => {
                 <LoadingButton
                   loading={loadingPlay}
                   onClick={handlePlay}
-                  disabled={
-                    loadingPlay
-                      ? true
-                      : data.state_cd &&
-                        operation_states({
-                          stateCd: data?.state_cd,
-                          type: "prod",
-                        }).play
-                  }
+                  disabled={loadingPlay ? true : play}
                 >
                   <PlayArrowIcon />
                 </LoadingButton>
                 <LoadingButton
                   loading={loadingPause}
                   onClick={handlePause}
-                  disabled={
-                    loadingPause
-                      ? true
-                      : data &&
-                        data.state_cd &&
-                        operation_states({
-                          stateCd: data.state_cd,
-                          type: "prod",
-                        }).pause
-                  }
+                  disabled={loadingPause ? true : pause}
                 >
                   <PauseIcon />
                 </LoadingButton>
                 <LoadingButton
                   loading={loadingStop}
                   onClick={handleConfirmStop}
-                  disabled={
-                    loadingStop
-                      ? true
-                      : data &&
-                        data.state_cd &&
-                        operation_states({
-                          stateCd: data.state_cd,
-                          type: "prod",
-                        }).stop
-                  }
+                  disabled={loadingStop ? true : stop}
                 >
                   <StopIcon />
                 </LoadingButton>
@@ -214,7 +205,9 @@ const InfoOE = ({ data }) => {
               </Grid>
               <Grid item xs={12} sm={12} md={12} xl={9}>
                 <LineProgress
-                  value={Math.round((data.qty_prod / data.qty_reqd) * 100)}
+                  value={Math.round(
+                    (productionData.qty_prod / productionData.qty_reqd) * 100
+                  )}
                 />
               </Grid>
             </Grid>

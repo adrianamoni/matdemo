@@ -35,7 +35,6 @@ const General = ({ loading }) => {
   const { alert: sampleAlert, data: sampleData } = pendingSamples;
   const { alert: interruptionAlert, data: interruptionData } =
     pendingInterruptions;
-  const { orderDetails } = globalData;
 
   return loading ? (
     <Box sx={{ width: "100%" }}>
@@ -65,13 +64,7 @@ const General = ({ loading }) => {
       >
         <Grid item xs={12} sm={12} md={12} lg={7} sx={{}}>
           <Card sx={{ p: 2, height: "100%" }}>
-            <InfoOE
-              data={
-                orderDetails &&
-                orderDetails.productionData &&
-                orderDetails.productionData
-              }
-            />
+            <InfoOE />
           </Card>
         </Grid>
         <Grid

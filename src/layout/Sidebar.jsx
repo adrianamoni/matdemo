@@ -8,11 +8,13 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import { Link } from "react-router-dom";
 import FeedIcon from "@mui/icons-material/Feed";
 import Text from "../languages/Text";
-import { languageContext } from "../context/ContextProvider";
+import { languageContext, colorModeContext } from "../context/ContextProvider";
 import DrawerComp from "./Drawer";
 
 const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
   const language = useContext(languageContext);
+  const { colorMode } = useContext(colorModeContext);
+  console.log("colorMode", colorMode);
   const [links, setlinks] = useState(undefined);
 
   const StyledLink = styled(Link)({
@@ -78,7 +80,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: drawerWidth,
-            bgcolor: "background.paper",
+            bgcolor: colorMode === "dark" ? "grey.900" : "grey.200",
           },
         }}
       >
@@ -91,7 +93,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: drawerWidth,
-            bgcolor: "background.paper",
+            bgcolor: colorMode === "dark" ? "grey.900" : "grey.200",
           },
         }}
         open

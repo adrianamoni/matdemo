@@ -39,7 +39,7 @@ const FritDashboard = () => {
   const {
     lineData,
     orderData,
-    oeeSpecs,
+    /*   oeeSpecs, */
     pendingSamples,
     pendingInterruptions,
   } = globalData;
@@ -536,7 +536,9 @@ const FritDashboard = () => {
               <Tab
                 label={tab}
                 index={index}
-                sx={{ color: (sampleAlert || interruptionAlert) && "red" }}
+                sx={{
+                  color: (sampleAlert || interruptionAlert) && "error.main",
+                }}
               />
             );
           })}

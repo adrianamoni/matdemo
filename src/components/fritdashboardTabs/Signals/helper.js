@@ -26,7 +26,14 @@ export const processData = (data, entName) => {
     const test = result.map((el) => ({
       ...el,
       data: el.data.map((item) => ({
-        [item.tag]: item.Quality === 192 ? item.Value : null,
+        [item.tag]:
+          item.Quality === 192
+            ? item.DataType === "MxBoolean"
+              ? item.Value.toString()
+              : item.Value
+            : item.tag === "description"
+            ? `(${item.Tagname})`
+            : null,
       })),
     }));
 

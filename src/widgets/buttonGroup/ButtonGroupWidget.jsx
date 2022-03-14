@@ -4,7 +4,6 @@ import Text from "./../../languages/Text";
 import { LoadingButton } from "@mui/lab";
 
 const ButtonGroupWidget = ({ position, buttons, loading }) => {
-  console.log("buttons", buttons);
   return (
     <Grid container justifyContent="center">
       <Grid

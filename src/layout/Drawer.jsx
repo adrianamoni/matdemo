@@ -41,9 +41,13 @@ const DrawerComp = ({ navLinks }) => {
       >
         <div>
           <Toolbar
-            sx={{ backgroundColor: "#0f59a3", color: "whitesmoke", height: 65 }}
+            sx={{
+              backgroundColor: "primary.main",
+              /* color: "text", */
+              height: 65,
+            }}
           >
-            <Typography variant="h5" noWrap>
+            <Typography variant="h6" noWrap sx={{ color: "text.main" }}>
               APP LOGO
             </Typography>
           </Toolbar>
@@ -52,7 +56,7 @@ const DrawerComp = ({ navLinks }) => {
             {navLinks.map((link) => (
               <StyledLink key={link.id} to={link.path} classes>
                 <ListItem button>
-                  <ListItemIcon sx={{ color: "#0f59a3" }}>
+                  <ListItemIcon sx={{ color: "secondary.main" }}>
                     {link.icon}
                   </ListItemIcon>
                   <ListItemText primary={link.name} />
@@ -64,14 +68,14 @@ const DrawerComp = ({ navLinks }) => {
 
         <List>
           <ListItem button onClick={() => setLoginModal(true)}>
-            <ListItemIcon sx={{ color: "#0f59a3" }}>
+            <ListItemIcon sx={{ color: "secondary.main" }}>
               <LoginIcon />
             </ListItemIcon>
 
             <ListItemText primary="Login" />
           </ListItem>
           <ListItem button onClick={() => setLogoutModal(true)}>
-            <ListItemIcon sx={{ color: "#0f59a3" }}>
+            <ListItemIcon sx={{ color: "secondary.main" }}>
               <LogoutIcon />
             </ListItemIcon>
             <ListItemText primary="Logout" />

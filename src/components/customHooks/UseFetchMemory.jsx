@@ -6,10 +6,14 @@ import {
   tab_consumptions,
   tab_productions,
   tab_quality_get_qmspec_by_filter,
+  screen_of_last_cleaning,
 } from "../../services/OFservices";
 import { MemoryDatabaseCall } from "../../services/Service";
 import uuid from "react-uuid";
-import { read_signals } from "../../services/serviceHelper";
+import {
+  cleaning_order_time,
+  read_signals,
+} from "../../services/serviceHelper";
 
 export default function UseFetchMemory({ request, customParams }) {
   const [data, setData] = useState(null);
@@ -27,7 +31,6 @@ export default function UseFetchMemory({ request, customParams }) {
         });
 
         if (response && response.length > 0) {
-          console.log("response", response);
           setData(response.map((item) => ({ ...item, id: uuid() })));
         }
       } catch (err) {
@@ -52,6 +55,8 @@ const getParams = (request) => {
     productions: [tab_productions, "queryDataAsync"],
     "quality-qmspec": [tab_quality_get_qmspec_by_filter, "queryDataAsync"],
     pendingSamples: [get_pending_samples, "queryDataFrameDataAsync"],
+    timePerOrder: [cleaning_order_time, "queryDataAsync"],
+    lastCleaning: [screen_of_last_cleaning, "queryDataAsync"],
   };
 
   return {

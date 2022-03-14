@@ -356,7 +356,7 @@ export const operation_states = ({ stateCd, type, prodStateCd }) => {
           state: "Suspended",
           play: false,
           pause: true,
-          stop: true,
+          stop: false,
         };
       case 6:
         return { state: "Onhold", play: true, pause: true, stop: true };
@@ -400,4 +400,18 @@ export const getColorFromBackend = ({ microparo, decFormatColor }) => {
       return { background: `rgb(${red},${green},${blue})`, foreground: "#fff" };
     }
   }
+};
+
+export const processOrderTimeData = ({ orderTime, duracionJob }) => {
+  const orderInMins = orderTime / 60;
+  let res = parseFloat(duracionJob) - orderInMins;
+  if (res < 0) {
+    res = 0;
+  } else {
+    res = parseFloat(duracionJob) - orderInMins;
+  }
+
+  let tempRemainingTime = Math.ceil(res) + " min";
+
+  return { value: res, text: tempRemainingTime };
 };

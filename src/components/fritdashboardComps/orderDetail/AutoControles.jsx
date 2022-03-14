@@ -9,7 +9,9 @@ const AutoControles = ({ data, alert }) => {
   );
   let styledAlert = alert
     ? {
-        border: "1.5px solid crimson",
+        border: "1.5px solid",
+        borderColor: "error.main",
+        backgroundColor: "background.error",
       }
     : {};
 

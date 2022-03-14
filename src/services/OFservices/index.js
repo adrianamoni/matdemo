@@ -39,26 +39,41 @@ const tab_of_parameters = ({ woId, operId, seqNo }) => {
   };
 };
 
-const screen_of_start_btn = ({ items_arr }) => {
+const screen_of_start_btn = ({ woId, operId, seqNo }) => {
+  console.log("woId, operId, seqNo", woId, operId, seqNo);
   return {
     ExecutionType: 1,
     RuleId: "InicioOperacion",
     RuleVersion: 1,
     EventStamp: moment().format(),
     Parameters: {
-      items: items_arr,
+      items: [
+        {
+          woId,
+          operId,
+          seqNo,
+          duracionLimpieza: 0, // Dejar así, el back necesita recibir este parámetro /,
+          tipoLimpieza: "", // Dejar así, el back necesita recibir este parámetro /,
+        },
+      ],
     },
   };
 };
 
-const screen_of_pause_btn = (pauseArray) => {
+const screen_of_pause_btn = ({ woId, operId, seqNo }) => {
   return {
     ExecutionType: 1,
     RuleId: "PausaOperacion",
     RuleVersion: 1,
     EventStamp: moment().format(),
     Parameters: {
-      items: pauseArray,
+      items: [
+        {
+          woId,
+          operId,
+          seqNo,
+        },
+      ],
     },
   };
 };
@@ -985,7 +1000,7 @@ const get_cleaning_orders = ({ filter }) => {
 };
 
 /** MEMORY DB */
-const screen_of_last_cleaning = (entId) => {
+const screen_of_last_cleaning = ({ entId }) => {
   return {
     dbDataSetName: "UltimaLimpieza",
     dbQueryParameters: [

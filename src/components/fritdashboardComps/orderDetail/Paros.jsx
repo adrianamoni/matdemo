@@ -9,6 +9,7 @@ const Paros = ({ alert, data }) => {
   let styledAlert = alert
     ? {
         border: "1.5px solid crimson",
+        backgroundColor: "#DC143C10",
       }
     : {};
 
