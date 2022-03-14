@@ -30,6 +30,11 @@ import Limpieza from "../../fritdashboardComps/orderDetail/Limpieza";
 const General = ({ loading }) => {
   const { width } = useWindowSize();
   const { globalData } = useContext(globalDataContext);
+
+  const { pendingSamples, pendingInterruptions } = globalData;
+  const { alert: sampleAlert, data: sampleData } = pendingSamples;
+  const { alert: interruptionAlert, data: interruptionData } =
+    pendingInterruptions;
   const { orderDetails } = globalData;
 
   return loading ? (
@@ -85,9 +90,7 @@ const General = ({ loading }) => {
             </Card>
           </Grid>
           <Grid item xs={12}>
-            <Card sx={{ p: 2, height: "100%" }}>
-              <AutoControles />
-            </Card>
+            <AutoControles alert={sampleAlert} data={sampleData} />
           </Grid>
         </Grid>
       </Grid>
@@ -105,9 +108,7 @@ const General = ({ loading }) => {
           </Card>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={5}>
-          <Card sx={{ p: 2, height: "100%" }}>
-            <Paros />
-          </Card>
+          <Paros alert={interruptionAlert} data={interruptionData} />
         </Grid>
       </Grid>
     </Grid>

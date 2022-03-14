@@ -78,7 +78,7 @@ export const getPendingSamples = async ({ customParams }) => {
       qualityData = [];
     }
   }
-  return { result: { qualityData, qualityAlert } };
+  return { samplesResult: { qualityData, qualityAlert } };
 };
 
 export const timeFormating = (seconds) => {
@@ -139,7 +139,7 @@ export const getPendingInterruptions = async ({ customParams }) => {
     interruptionAlert = false;
     interruptionData = [];
   }
-  return { result: { interruptionData, interruptionAlert } };
+  return { interruptionResult: { interruptionData, interruptionAlert } };
 };
 export const dateFormater = ({ date, type }) => {
   const dateProp = date;

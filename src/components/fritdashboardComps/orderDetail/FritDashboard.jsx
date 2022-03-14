@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { Box, Container, Tabs, Tab, styled } from "@mui/material";
+import { Box, Container, Tabs, Tab, styled, Badge } from "@mui/material";
 import TabPanel from "../../TabPanel";
 
 import General from "../../fritdashboardTabs/General/General";
@@ -8,7 +8,10 @@ import Materials from "../../fritdashboardTabs/Materials";
 import Paros from "../../fritdashboardTabs/Paros";
 import Signals from "../../fritdashboardTabs/Signals/Signals";
 import Text from "../../../languages/Text";
-import { globalDataContext } from "../../../context/ContextProvider";
+import {
+  globalDataContext,
+  navigationDataContext,
+} from "../../../context/ContextProvider";
 import {
   getOrderDetails,
   getPendingInterruptions,
@@ -20,15 +23,19 @@ import Productions from "./../../fritdashboardTabs/Productions";
 import Quality from "../../fritdashboardTabs/Quality/Quality";
 import Documentation from "../../fritdashboardTabs/Documentation";
 import Planification from "../../fritdashboardTabs/Planification";
-
+/* 
 const CustomTab = styled(Tab)({
   color: "red",
+  zIndex: 9999,
 });
-
+ */
 const FritDashboard = () => {
   /*  let { slug } = useParams(); */
   /*  const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME; */
   const { globalData, setGlobalData } = useContext(globalDataContext);
+  const { navigationData, setNavigationData } = useContext(
+    navigationDataContext
+  );
   const {
     lineData,
     orderData,
@@ -53,28 +60,23 @@ const FritDashboard = () => {
     Text({ tid: "planification" }),
   ];
 
-  const [value, setValue] = useState(0);
+  /* const [value, setValue] = useState(0); */
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    /*     setValue(newValue); */
+    setNavigationData({
+      ...navigationData,
+      activeTab: newValue,
+    });
   };
 
   useEffect(() => {
-    let clearIntervalOfDetail;
-    let clearIntervalSamples;
-    let clearIntervalInterruptions;
+    let clearIntervalData;
 
     if (lineData) {
       if (orderData) {
-        fetchOrderDetail(true);
-        /* clearIntervalOfDetail = setInterval(fetchOrderDetail, 6000); */
-        fetchPendingSamples();
-        /* clearIntervalSamples = setInterval(fetchPendingSamples, 6000); */
-        fetchPendingInterruptions();
-        /* clearIntervalInterruptions = setInterval(
-          fetchPendingInterruptions,
-          6000
-        ); */
+        fetchData(true);
+        clearIntervalData = setInterval(fetchData, 6000);
 
         /* 
           fetchSpecs();
@@ -85,66 +87,40 @@ const FritDashboard = () => {
       }
     }
     return () => {
-      clearInterval(clearIntervalOfDetail);
-      clearInterval(clearIntervalSamples);
-      clearInterval(clearIntervalInterruptions);
+      clearInterval(clearIntervalData);
     };
   }, []);
 
-  const fetchOrderDetail = async (showLoader) => {
+  const fetchData = async (showLoader) => {
     const { productionData, cleaningData } = await getOrderDetails({
       order: orderData,
     });
-
-    setGlobalData({
-      ...globalData,
-      orderDetails: {
-        productionData: productionData,
-        cleaningData: cleaningData,
-      },
-    });
-    showLoader && setLoadingInitialData(false);
-  };
-  const fetchPendingSamples = async () => {
-    const { result } = await getPendingSamples({
+    const { samplesResult } = await getPendingSamples({
       customParams: { entId, woId, operId, seqNo, itemId },
     });
-    console.log("qualData", result.qualityAlert);
-    console.log("qualData", result.qualityData);
-
-    setGlobalData({
-      ...globalData,
-      pendingSamples: {
-        alert: result.qualityAlert,
-        data: result.qualityData,
-      },
-    });
-  };
-  const fetchPendingInterruptions = async () => {
-    const { result } = await getPendingInterruptions({
+    const { interruptionResult } = await getPendingInterruptions({
       customParams: { entId },
     });
-    console.log("intData", result.interruptionAlert);
-    console.log("intData", result.interruptionData);
 
-    setGlobalData({
-      ...globalData,
-      pendingInterruptions: {
-        alert: result.interruptionAlert,
-        data: result.interruptionData,
-      },
-    });
+    if (productionData && cleaningData && samplesResult && interruptionResult) {
+      setGlobalData({
+        ...globalData,
+        orderDetails: {
+          productionData: productionData,
+          cleaningData: cleaningData,
+        },
+        pendingSamples: {
+          alert: samplesResult.qualityAlert,
+          data: samplesResult.qualityData,
+        },
+        pendingInterruptions: {
+          alert: interruptionResult.interruptionAlert,
+          data: interruptionResult.interruptionData,
+        },
+      });
+    }
+    showLoader && setLoadingInitialData(false);
   };
-  /* const fetchPendingInterruptions = async () => {
-    const { response } = await getPendingInterruptions({
-      order: orderData,
-    });
-
-    setGlobalData({
-      ...globalData,
-      pendingInterruptions: response,
-    });
-  }; */
 
   /* const { order } = useContext(OrderContext);
   const { line } = useContext(LineContext);
@@ -540,7 +516,7 @@ const FritDashboard = () => {
         }}
       >
         <Tabs
-          value={value}
+          value={navigationData.activeTab}
           onChange={handleChange}
           variant="scrollable"
           scrollButtons="auto"
@@ -548,17 +524,27 @@ const FritDashboard = () => {
           aria-label="scrollable auto tabs example"
         >
           {ofDetailNav.map((tab, index) => {
-            if (alert) {
-              <CustomTab label={tab} index={index} />;
-            } else {
-              return <Tab label={tab} index={index} />;
+            let sampleAlert, interruptionAlert;
+            if (pendingSamples.alert && index === 6) {
+              sampleAlert = true;
             }
+            if (pendingInterruptions.alert && index === 7) {
+              interruptionAlert = true;
+            }
+
+            return (
+              <Tab
+                label={tab}
+                index={index}
+                sx={{ color: (sampleAlert || interruptionAlert) && "red" }}
+              />
+            );
           })}
         </Tabs>
       </Box>
 
       <Container sx={{ m: "auto" }}>
-        <Panels value={value} loading={loadingInitialData} />
+        <Panels value={navigationData.activeTab} loading={loadingInitialData} />
       </Container>
     </Container>
   );
