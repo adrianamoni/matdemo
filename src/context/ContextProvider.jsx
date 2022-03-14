@@ -51,8 +51,8 @@ const ContextProvider = (props) => {
     terminal: undefined,
     extras: undefined,
     orderDetails: undefined,
-    pendingSamples: undefined,
-    pendingInterruptions: undefined,
+    pendingSamples: { alert: undefined, data: undefined },
+    pendingInterruptions: { alert: undefined, data: undefined },
   });
   /**MultiLanguage Setup */
   const [language, setLanguage] = useState(languageOptions[0]);

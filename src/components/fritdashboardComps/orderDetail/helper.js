@@ -1,6 +1,11 @@
-import { get_order_details } from "../../../services/OFservices";
+import {
+  get_order_details,
+  get_pending_samples,
+} from "../../../services/OFservices";
 import { MemoryDatabaseCall } from "../../../services/Service";
 import moment from "moment";
+import _ from "lodash";
+import { pending_interruptions } from "../../../services/Interruptions";
 
 export const getOrderDetails = async ({ order }) => {
   let error;
@@ -45,45 +50,97 @@ export const getOrderDetails = async ({ order }) => {
   return { productionData: obj1, cleaningData: obj2, error };
 };
 
-export const getPendingSamples = async (data) => {
-  /*   let error;
-  let obj1, obj2;
+export const getPendingSamples = async ({ customParams }) => {
+  let qualityAlert;
+  let qualityData;
   const response = await MemoryDatabaseCall({
-    params: get_order_details({
-      woId: order.woId,
-      operId: order.operId,
-      seqNo: order.seqNo,
-    }),
-    url: "queryDataAsync",
+    params: get_pending_samples(customParams),
+    url: "queryDataFrameDataAsync",
+  });
+  if (response) {
+    if (response.length > 0) {
+      if (response.length > 0) {
+        qualityAlert = true;
+        qualityData = response.map((sample) => ({
+          id: sample.sample_id,
+          name: sample.sample_name,
+          req_time_local: sample.requested_time_local,
+          estado: sample.estado,
+          status: sample.sample_status,
+        }));
+        qualityData = _.sortBy(qualityData, "req_time_local");
+      } else {
+        qualityAlert = false;
+        qualityData = [];
+      }
+    } else {
+      qualityAlert = false;
+      qualityData = [];
+    }
+  }
+  return { result: { qualityData, qualityAlert } };
+};
+
+export const timeFormating = (seconds) => {
+  let formated;
+  if (seconds === 0) {
+    formated = "0min 0s";
+  } else {
+    formated = new Date(seconds * 1000).toISOString();
+    formated = formated
+      .substring(11, 19)
+      .replace(":", "h ")
+      .replace(":", "min ");
+    formated = formated + "s";
+  }
+
+  return formated;
+};
+
+export const getPendingInterruptions = async ({ customParams }) => {
+  let interruptionAlert;
+  let interruptionData;
+
+  const response = await MemoryDatabaseCall({
+    params: pending_interruptions(customParams),
+    url: "queryDataFrameDataAsync",
   });
 
   if (response) {
     if (response.length > 0) {
-      obj1 = response.find(
-        (data) => data.oper_id !== "limpieza" && data.oper_id !== "NETEJA"
-      );
-
+      interruptionAlert = true;
+      interruptionData = response.map((item, i) => ({
+        index: i,
+        Duration: timeFormating(item.Duration),
+        customStartDateTime: dateFormater({
+          date: item.StartDateTime,
+          type: "hora-fecha",
+        }),
+        EndDateTime: dateFormater({
+          date: item.EndDateTime,
+          type: "hora-fecha",
+        }),
+        Prompt: item.Prompt,
+        ID: item.ID,
+        ReasonDesc: item.ReasonDesc,
+        Comment: item.Comment,
+        UtilStateDesc: item.UtilStateDesc,
+        ReasonGrpId: item.ReasonGrpId,
+        ReasonCd: item.ReasonCd,
+        RawReasCd: item.RawReasCd,
+        EntId: item.EntId,
+        StartDateTime: item.StartDateTime,
+      }));
+    } else {
+      interruptionAlert = false;
+      interruptionData = [];
     }
+  } else {
+    interruptionAlert = false;
+    interruptionData = [];
   }
-
-  const response2 = await MemoryDatabaseCall({
-    params: get_order_details({
-      woId: order.woId,
-      operId: "NETEJA",
-      seqNo: parseInt(order.spare3),
-    }),
-    url: "queryDataAsync",
-  });
-
-  if (response2) {
-    if (response2.length > 0) {
-      obj2 = response2.find((data) => data.oper_id === "NETEJA");
-    }
-  }
-
-  return { productionData: obj1, cleaningData: obj2, error }; */
+  return { result: { interruptionData, interruptionAlert } };
 };
-
 export const dateFormater = ({ date, type }) => {
   const dateProp = date;
   let finalDate;
@@ -344,66 +401,3 @@ export const getColorFromBackend = ({ microparo, decFormatColor }) => {
     }
   }
 };
-
-const pendingSamplesFilter = [
-  {
-    filterExpression: null,
-    filterItem: {
-      column: "ent_id",
-      dataType: "INT",
-      value: line.entId,
-      filterItemType: "Equal",
-      checkDBNull: false,
-    },
-  },
-  {
-    filterExpression: null,
-    filterItem: {
-      column: "wo_id",
-      dataType: "STRING",
-      value: order.woId,
-      filterItemType: "Equal",
-      checkDBNull: false,
-    },
-  },
-  {
-    filterExpression: null,
-    filterItem: {
-      column: "oper_id",
-      dataType: "STRING",
-      value: order.operId,
-      filterItemType: "Equal",
-      checkDBNull: false,
-    },
-  },
-  {
-    filterExpression: null,
-    filterItem: {
-      column: "seq_no",
-      dataType: "INT",
-      value: order.seqNo,
-      filterItemType: "Equal",
-      checkDBNull: false,
-    },
-  },
-  {
-    filterExpression: null,
-    filterItem: {
-      column: "item_id",
-      dataType: "STRING",
-      value: order.itemId,
-      filterItemType: "Equal",
-      checkDBNull: false,
-    },
-  },
-  /* {
-          filterExpression: null,
-          filterItem: {
-            column: "Autocontrol",
-            dataType: "STRING",
-            value: "L", //hardcoded, dejar así
-            filterItemType: "NotEqual",
-            checkDBNull: false,
-          },
-        }, */
-];

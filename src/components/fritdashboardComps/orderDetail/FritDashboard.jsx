@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { Box, Container, Tabs, Tab } from "@mui/material";
+import { Box, Container, Tabs, Tab, styled } from "@mui/material";
 import TabPanel from "../../TabPanel";
 
 import General from "../../fritdashboardTabs/General/General";
@@ -9,20 +9,33 @@ import Paros from "../../fritdashboardTabs/Paros";
 import Signals from "../../fritdashboardTabs/Signals/Signals";
 import Text from "../../../languages/Text";
 import { globalDataContext } from "../../../context/ContextProvider";
-import { getOrderDetails, getPendingSamples } from "./helper";
+import {
+  getOrderDetails,
+  getPendingInterruptions,
+  getPendingSamples,
+} from "./helper";
 import Parameters from "../../fritdashboardTabs/Parameters";
 import Consumptions from "./../../fritdashboardTabs/Consumptions";
 import Productions from "./../../fritdashboardTabs/Productions";
 import Quality from "../../fritdashboardTabs/Quality/Quality";
 import Documentation from "../../fritdashboardTabs/Documentation";
 import Planification from "../../fritdashboardTabs/Planification";
-import UseFetchMemory from "../../customHooks/UseFetchMemory";
+
+const CustomTab = styled(Tab)({
+  color: "red",
+});
 
 const FritDashboard = () => {
   /*  let { slug } = useParams(); */
   /*  const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME; */
   const { globalData, setGlobalData } = useContext(globalDataContext);
-  const { lineData, orderData, oeeSpecs } = globalData;
+  const {
+    lineData,
+    orderData,
+    oeeSpecs,
+    pendingSamples,
+    pendingInterruptions,
+  } = globalData;
   const { woId, operId, seqNo, itemId } = orderData;
   const { entId } = lineData;
   const [loadingInitialData, setLoadingInitialData] = useState(true);
@@ -48,17 +61,20 @@ const FritDashboard = () => {
 
   useEffect(() => {
     let clearIntervalOfDetail;
+    let clearIntervalSamples;
+    let clearIntervalInterruptions;
+
     if (lineData) {
       if (orderData) {
-        fetchOrderDetail();
-        clearIntervalOfDetail = setInterval(fetchOrderDetail, 6000);
-        // fetchPendingSamples();
-        // clearIntervalSamples = setInterval(fetchPendingSamples, 6000);
-        // fetchPendingInterruptions();
-        // clearIntervalInterruptions = setInterval(
-        //   fetchPendingInterruptions,
-        //   6000
-        // );
+        fetchOrderDetail(true);
+        /* clearIntervalOfDetail = setInterval(fetchOrderDetail, 6000); */
+        fetchPendingSamples();
+        /* clearIntervalSamples = setInterval(fetchPendingSamples, 6000); */
+        fetchPendingInterruptions();
+        /* clearIntervalInterruptions = setInterval(
+          fetchPendingInterruptions,
+          6000
+        ); */
 
         /* 
           fetchSpecs();
@@ -70,12 +86,12 @@ const FritDashboard = () => {
     }
     return () => {
       clearInterval(clearIntervalOfDetail);
-      // clearInterval(clearIntervalSamples);
-      // clearInterval(clearIntervalInterruptions);
+      clearInterval(clearIntervalSamples);
+      clearInterval(clearIntervalInterruptions);
     };
   }, []);
 
-  const fetchOrderDetail = async () => {
+  const fetchOrderDetail = async (showLoader) => {
     const { productionData, cleaningData } = await getOrderDetails({
       order: orderData,
     });
@@ -87,18 +103,37 @@ const FritDashboard = () => {
         cleaningData: cleaningData,
       },
     });
-    setLoadingInitialData(false);
+    showLoader && setLoadingInitialData(false);
   };
   const fetchPendingSamples = async () => {
-    const { response } = await UseFetchMemory({
-      request: "pendingSamples",
+    const { result } = await getPendingSamples({
       customParams: { entId, woId, operId, seqNo, itemId },
     });
-    console.log("response", response);
-    /* setGlobalData({
+    console.log("qualData", result.qualityAlert);
+    console.log("qualData", result.qualityData);
+
+    setGlobalData({
       ...globalData,
-      pendingSamples: response,
-    }); */
+      pendingSamples: {
+        alert: result.qualityAlert,
+        data: result.qualityData,
+      },
+    });
+  };
+  const fetchPendingInterruptions = async () => {
+    const { result } = await getPendingInterruptions({
+      customParams: { entId },
+    });
+    console.log("intData", result.interruptionAlert);
+    console.log("intData", result.interruptionData);
+
+    setGlobalData({
+      ...globalData,
+      pendingInterruptions: {
+        alert: result.interruptionAlert,
+        data: result.interruptionData,
+      },
+    });
   };
   /* const fetchPendingInterruptions = async () => {
     const { response } = await getPendingInterruptions({
@@ -512,9 +547,13 @@ const FritDashboard = () => {
           allowScrollButtonsMobile
           aria-label="scrollable auto tabs example"
         >
-          {ofDetailNav.map((tab, index) => (
-            <Tab label={tab} index={index} />
-          ))}
+          {ofDetailNav.map((tab, index) => {
+            if (alert) {
+              <CustomTab label={tab} index={index} />;
+            } else {
+              return <Tab label={tab} index={index} />;
+            }
+          })}
         </Tabs>
       </Box>
 

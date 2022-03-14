@@ -25,7 +25,9 @@ export default function UseFetchMemory({ request, customParams }) {
           params: parameters.params(customParams || {}),
           url: parameters.url,
         });
+
         if (response && response.length > 0) {
+          console.log("response", response);
           setData(response.map((item) => ({ ...item, id: uuid() })));
         }
       } catch (err) {
