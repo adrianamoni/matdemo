@@ -11,6 +11,8 @@ import Text from "../../../languages/Text";
 import { globalDataContext } from "../../../context/ContextProvider";
 import { getOrderDetails } from "./helper";
 import Parameters from "../../fritdashboardTabs/Parameters";
+import Consumptions from "./../../fritdashboardTabs/Consumptions";
+import Productions from "./../../fritdashboardTabs/Productions";
 
 const FritDashboard = () => {
   /*  let { slug } = useParams(); */
@@ -501,6 +503,12 @@ const Panels = ({ value, loading }) => {
       </TabPanel>
       <TabPanel value={value} index={3}>
         <Materials />
+      </TabPanel>
+      <TabPanel value={value} index={5}>
+        <Consumptions />
+      </TabPanel>
+      <TabPanel value={value} index={6}>
+        {/* <Productions /> */}
       </TabPanel>
       <TabPanel value={value} index={8}>
         <Paros />
