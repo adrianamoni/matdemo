@@ -9,19 +9,22 @@ import Paros from "../../fritdashboardTabs/Paros";
 import Signals from "../../fritdashboardTabs/Signals/Signals";
 import Text from "../../../languages/Text";
 import { globalDataContext } from "../../../context/ContextProvider";
-import { getOrderDetails } from "./helper";
+import { getOrderDetails, getPendingSamples } from "./helper";
 import Parameters from "../../fritdashboardTabs/Parameters";
 import Consumptions from "./../../fritdashboardTabs/Consumptions";
 import Productions from "./../../fritdashboardTabs/Productions";
 import Quality from "../../fritdashboardTabs/Quality/Quality";
 import Documentation from "../../fritdashboardTabs/Documentation";
 import Planification from "../../fritdashboardTabs/Planification";
+import UseFetchMemory from "../../customHooks/UseFetchMemory";
 
 const FritDashboard = () => {
   /*  let { slug } = useParams(); */
   /*  const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME; */
   const { globalData, setGlobalData } = useContext(globalDataContext);
   const { lineData, orderData, oeeSpecs } = globalData;
+  const { woId, operId, seqNo, itemId } = orderData;
+  const { entId } = lineData;
   const [loadingInitialData, setLoadingInitialData] = useState(true);
   const ofDetailNav = [
     "General",
@@ -86,26 +89,27 @@ const FritDashboard = () => {
     });
     setLoadingInitialData(false);
   };
-  // const fetchPendingSamples = async () => {
-  //   const { response } = await getPendingSamples({
-  //     order: orderData,
-  //   });
+  const fetchPendingSamples = async () => {
+    const { response } = await UseFetchMemory({
+      request: "pendingSamples",
+      customParams: { entId, woId, operId, seqNo, itemId },
+    });
+    console.log("response", response);
+    /* setGlobalData({
+      ...globalData,
+      pendingSamples: response,
+    }); */
+  };
+  /* const fetchPendingInterruptions = async () => {
+    const { response } = await getPendingInterruptions({
+      order: orderData,
+    });
 
-  //   setGlobalData({
-  //     ...globalData,
-  //     pendingSamples: response,
-  //   });
-  // };
-  // const fetchPendingInterruptions = async () => {
-  //   const { response } = await getPendingInterruptions({
-  //     order: orderData,
-  //   });
-
-  //   setGlobalData({
-  //     ...globalData,
-  //     pendingInterruptions: response,
-  //   });
-  // };
+    setGlobalData({
+      ...globalData,
+      pendingInterruptions: response,
+    });
+  }; */
 
   /* const { order } = useContext(OrderContext);
   const { line } = useContext(LineContext);

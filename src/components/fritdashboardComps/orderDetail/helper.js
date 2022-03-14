@@ -344,3 +344,66 @@ export const getColorFromBackend = ({ microparo, decFormatColor }) => {
     }
   }
 };
+
+const pendingSamplesFilter = [
+  {
+    filterExpression: null,
+    filterItem: {
+      column: "ent_id",
+      dataType: "INT",
+      value: line.entId,
+      filterItemType: "Equal",
+      checkDBNull: false,
+    },
+  },
+  {
+    filterExpression: null,
+    filterItem: {
+      column: "wo_id",
+      dataType: "STRING",
+      value: order.woId,
+      filterItemType: "Equal",
+      checkDBNull: false,
+    },
+  },
+  {
+    filterExpression: null,
+    filterItem: {
+      column: "oper_id",
+      dataType: "STRING",
+      value: order.operId,
+      filterItemType: "Equal",
+      checkDBNull: false,
+    },
+  },
+  {
+    filterExpression: null,
+    filterItem: {
+      column: "seq_no",
+      dataType: "INT",
+      value: order.seqNo,
+      filterItemType: "Equal",
+      checkDBNull: false,
+    },
+  },
+  {
+    filterExpression: null,
+    filterItem: {
+      column: "item_id",
+      dataType: "STRING",
+      value: order.itemId,
+      filterItemType: "Equal",
+      checkDBNull: false,
+    },
+  },
+  /* {
+          filterExpression: null,
+          filterItem: {
+            column: "Autocontrol",
+            dataType: "STRING",
+            value: "L", //hardcoded, dejar así
+            filterItemType: "NotEqual",
+            checkDBNull: false,
+          },
+        }, */
+];

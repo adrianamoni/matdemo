@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  get_pending_samples,
   tab_materials_init,
   tab_of_parameters,
   tab_consumptions,
@@ -48,6 +49,7 @@ const getParams = (request) => {
     consumptions: [tab_consumptions, "queryDataAsync"],
     productions: [tab_productions, "queryDataAsync"],
     "quality-qmspec": [tab_quality_get_qmspec_by_filter, "queryDataAsync"],
+    pendingSamples: [get_pending_samples, "queryDataFrameDataAsync"],
   };
 
   return {

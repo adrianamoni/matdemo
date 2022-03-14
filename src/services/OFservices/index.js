@@ -657,14 +657,75 @@ const tab_quality_get_samples = ({ filter }) => {
   };
 }; */
 
-const get_pending_samples = ({ filter }) => {
+const get_pending_samples = ({ entId, woId, operId, seqNo, itemId }) => {
   return {
     clientName: "CLIENTE_WEB",
     dataFrameName: "SamplesPendientesDataframe",
     columns: [],
     filter: {
       filterExpression: {
-        filters: filter,
+        filters: [
+          {
+            filterExpression: null,
+            filterItem: {
+              column: "ent_id",
+              dataType: "INT",
+              value: entId,
+              filterItemType: "Equal",
+              checkDBNull: false,
+            },
+          },
+          {
+            filterExpression: null,
+            filterItem: {
+              column: "wo_id",
+              dataType: "STRING",
+              value: woId,
+              filterItemType: "Equal",
+              checkDBNull: false,
+            },
+          },
+          {
+            filterExpression: null,
+            filterItem: {
+              column: "oper_id",
+              dataType: "STRING",
+              value: operId,
+              filterItemType: "Equal",
+              checkDBNull: false,
+            },
+          },
+          {
+            filterExpression: null,
+            filterItem: {
+              column: "seq_no",
+              dataType: "INT",
+              value: seqNo,
+              filterItemType: "Equal",
+              checkDBNull: false,
+            },
+          },
+          {
+            filterExpression: null,
+            filterItem: {
+              column: "item_id",
+              dataType: "STRING",
+              value: itemId,
+              filterItemType: "Equal",
+              checkDBNull: false,
+            },
+          },
+          /* {
+          filterExpression: null,
+          filterItem: {
+            column: "Autocontrol",
+            dataType: "STRING",
+            value: "L", //hardcoded, dejar así
+            filterItemType: "NotEqual",
+            checkDBNull: false,
+          },
+        }, */
+        ],
         filterExpressionType: "AND",
         negationFilterExpression: false,
       },
