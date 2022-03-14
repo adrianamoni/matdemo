@@ -34,6 +34,8 @@ import Materials from "./fritdashboardTabs/Materials";
 import { useParams } from "react-router-dom";
 import LineProgress from "../widgets/progress/LineProgress";
 import Paros from "./fritdashboardTabs/Paros";
+import Consumptions from "./fritdashboardTabs/Consumptions";
+import Productions from "./fritdashboardTabs/Productions";
 
 const FritDashboard = () => {
   const { size } = useContext(pageSizeContext);
@@ -87,6 +89,12 @@ const FritDashboard = () => {
         </TabPanel>
         <TabPanel value={value} index={3}>
           <Materials />
+        </TabPanel>
+        <TabPanel value={value} index={5}>
+          <Consumptions />
+        </TabPanel>
+        <TabPanel value={value} index={6}>
+          <Productions />
         </TabPanel>
         <TabPanel value={value} index={8}>
           <Paros />

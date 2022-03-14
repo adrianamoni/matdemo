@@ -11,7 +11,7 @@ const ButtonGroupWidget = ({ position, buttons, loading }) => {
         item
         xs={12}
         md={12}
-        sx={{ display: "flex", justifyContent: position }}
+        sx={{ display: "flex", justifyContent: position, marginTop: "25px" }}
       >
         <ButtonGroup
           variant="contained"

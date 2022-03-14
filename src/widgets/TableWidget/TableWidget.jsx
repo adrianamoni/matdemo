@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import TableContainer from "@mui/material/TableContainer";
 import { Switch, TextField } from "@mui/material/";
@@ -10,8 +10,16 @@ import CustomResponsive from "./CustomResponsive";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import useWindowSize from "../../components/customHooks/UseWindowsSize";
 import { searchbarFilter } from "./searchBarHelper";
+import Text from "./../../languages/Text";
+import { selectedRowsIdsContext } from "../../context/ContextProvider";
+import { darken, lighten } from "@mui/material/styles";
 
-const TableWidget = ({ data, columns }) => {
+const TableWidget = ({ data, columns, multipleSelection, tableName }) => {
+  const { selectedRowsIds, setSelectedRowsIds } = useContext(
+    selectedRowsIdsContext
+  );
+
+  const [rowsColors, setRowsColors] = useState(false);
   const [checked, setChecked] = useState(false);
   const [pageDimentions, setPageDimentions] = useState(undefined);
   //searchbar
@@ -37,6 +45,52 @@ const TableWidget = ({ data, columns }) => {
     },
   ]; */
 
+  //Rows colors
+  const getBackgroundColor = (color, mode) =>
+    mode === "dark" ? darken(color, 0.6) : lighten(color, 0.6);
+
+  const getHoverBackgroundColor = (color, mode) =>
+    mode === "dark" ? darken(color, 0.5) : lighten(color, 0.5);
+
+  useEffect(() => {
+    if (data.length > 0) {
+      let bgColorsArr = data.map((el) => {
+        if (el?.color) {
+          let key = "& .super-app-theme--" + el.color;
+          return {
+            [key]: {
+              bgcolor: (theme) =>
+                getBackgroundColor("#" + el.color, theme.palette.mode),
+              "&:hover": {
+                bgcolor: (theme) =>
+                  getHoverBackgroundColor("#" + el.color, theme.palette.mode),
+              },
+            },
+          };
+        }
+      });
+
+      const rowsColorsObj = Object.assign({}, ...bgColorsArr);
+      // const rowsColorsObj = Object.assign(
+      //   // {
+      //   //   boxShadow: 1,
+      //   //   border: 3,
+      //   //   borderColor: "#00000042",
+      //   // },
+      //   ...bgColorsArr
+      // );
+      setRowsColors(rowsColorsObj);
+    }
+    // else {
+    //    const rowsColorsObj = Object.assign({
+    //      boxShadow: 1,
+    //      border: 3,
+    //      borderColor: "#00000042",
+    //    });
+    //    setRowsColors(rowsColorsObj);
+    // }
+  }, [data]);
+
   const size = useWindowSize();
 
   //useEffect for hiding the switch on table layout
@@ -57,10 +111,14 @@ const TableWidget = ({ data, columns }) => {
   }, [searchInput, data]);
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer
+      sx={{
+        border: "solid 1px #bbbbbb",
+      }}
+    >
       <TextField
         id="standard-basic"
-        placeholder="Filtrar.."
+        placeholder={Text({ tid: "filter" })}
         variant="standard"
         value={searchInput}
         onChange={(e) => setsearchInput(e.target.value)}
@@ -85,21 +143,50 @@ const TableWidget = ({ data, columns }) => {
         </div>
       )}
       {!checked ? (
-        <div style={{ height: 400, width: "100%" }}>
-          <DataGrid
-            rows={renderData}
-            columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            checkboxSelection
-          />
-        </div>
+        multipleSelection ? (
+          <div style={{ height: 400, width: "100%" }}>
+            <DataGrid
+              sx={rowsColors}
+              rows={renderData}
+              columns={columns}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+              checkboxSelection
+              onSelectionModelChange={(newSelectionModel) => {
+                setSelectedRowsIds({
+                  ...selectedRowsIds,
+                  [tableName]: newSelectionModel,
+                });
+              }}
+              selectionModel={selectedRowsIds[tableName]}
+              getRowClassName={(params) =>
+                `super-app-theme--${params.row.color}`
+              }
+            />
+          </div>
+        ) : (
+          <div style={{ height: 400, width: "100%" }}>
+            <DataGrid
+              sx={rowsColors}
+              rows={renderData}
+              columns={columns}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+              onSelectionModelChange={(newSelectionModel) => {
+                setSelectedRowsIds({
+                  ...selectedRowsIds,
+                  [tableName]: newSelectionModel,
+                });
+              }}
+              selectionModel={selectedRowsIds[tableName]}
+              getRowClassName={(params) =>
+                `super-app-theme--${params.row.color}`
+              }
+            />
+          </div>
+        )
       ) : (
-        <CustomResponsive
-          rows={renderData}
-          columns={columns}
-          keys={["name", "username", "email", "phone", "website"]}
-        />
+        <CustomResponsive rows={renderData} columns={columns} />
       )}
     </TableContainer>
   );

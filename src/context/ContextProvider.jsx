@@ -7,6 +7,8 @@ const history = createBrowserHistory();
 const historyContext = React.createContext(history);
 const loginContext = React.createContext({ username: "" });
 const pageSizeContext = React.createContext();
+const selectedRowsIdsContext = React.createContext();
+const selectedRowsContext = React.createContext();
 const formContext = React.createContext();
 
 /**Multilanguage Stuff */
@@ -25,6 +27,9 @@ const ContextProvider = (props) => {
     width: undefined,
     height: undefined,
   });
+  /**selected table row setup*/
+  const [selectedRowsIds, setSelectedRowsIds] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
   /**form widget setup*/
   const [formWidget, setformWidget] = useState({});
   /**MultiLanguage Setup */
@@ -49,9 +54,17 @@ const ContextProvider = (props) => {
       <languageContext.Provider value={provider}>
         <loginContext.Provider value={{ loginUser, setLoginUser }}>
           <pageSizeContext.Provider value={{ pageSize, setPageSize }}>
-            <formContext.Provider value={{ formWidget, setformWidget }}>
-              {props.children}
-            </formContext.Provider>
+            <selectedRowsIdsContext.Provider
+              value={{ selectedRowsIds, setSelectedRowsIds }}
+            >
+              <selectedRowsContext.Provider
+                value={{ selectedRows, setSelectedRows }}
+              >
+                <formContext.Provider value={{ formWidget, setformWidget }}>
+                  {props.children}
+                </formContext.Provider>
+              </selectedRowsContext.Provider>
+            </selectedRowsIdsContext.Provider>
           </pageSizeContext.Provider>
         </loginContext.Provider>
       </languageContext.Provider>
@@ -64,5 +77,7 @@ export {
   languageContext,
   loginContext,
   pageSizeContext,
+  selectedRowsIdsContext,
+  selectedRowsContext,
   formContext,
 };
