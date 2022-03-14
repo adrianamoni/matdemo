@@ -47,13 +47,13 @@ const FritDashboard = () => {
       if (orderData) {
         fetchOrderDetail();
         clearIntervalOfDetail = setInterval(fetchOrderDetail, 6000);
-        fetchPendingSamples();
-        clearIntervalSamples = setInterval(fetchPendingSamples, 6000);
-        fetchPendingInterruptions();
-        clearIntervalInterruptions = setInterval(
-          fetchPendingInterruptions,
-          6000
-        );
+        // fetchPendingSamples();
+        // clearIntervalSamples = setInterval(fetchPendingSamples, 6000);
+        // fetchPendingInterruptions();
+        // clearIntervalInterruptions = setInterval(
+        //   fetchPendingInterruptions,
+        //   6000
+        // );
 
         /* 
           fetchSpecs();
@@ -65,8 +65,8 @@ const FritDashboard = () => {
     }
     return () => {
       clearInterval(clearIntervalOfDetail);
-      clearInterval(clearIntervalSamples);
-      clearInterval(clearIntervalInterruptions);
+      // clearInterval(clearIntervalSamples);
+      // clearInterval(clearIntervalInterruptions);
     };
   }, []);
 
@@ -84,26 +84,26 @@ const FritDashboard = () => {
     });
     setLoadingInitialData(false);
   };
-  const fetchPendingSamples = async () => {
-    const { response } = await getPendingSamples({
-      order: orderData,
-    });
+  // const fetchPendingSamples = async () => {
+  //   const { response } = await getPendingSamples({
+  //     order: orderData,
+  //   });
 
-    setGlobalData({
-      ...globalData,
-      pendingSamples: response,
-    });
-  };
-  const fetchPendingInterruptions = async () => {
-    const { response } = await getPendingInterruptions({
-      order: orderData,
-    });
+  //   setGlobalData({
+  //     ...globalData,
+  //     pendingSamples: response,
+  //   });
+  // };
+  // const fetchPendingInterruptions = async () => {
+  //   const { response } = await getPendingInterruptions({
+  //     order: orderData,
+  //   });
 
-    setGlobalData({
-      ...globalData,
-      pendingInterruptions: response,
-    });
-  };
+  //   setGlobalData({
+  //     ...globalData,
+  //     pendingInterruptions: response,
+  //   });
+  // };
 
   /* const { order } = useContext(OrderContext);
   const { line } = useContext(LineContext);

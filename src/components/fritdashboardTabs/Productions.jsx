@@ -90,6 +90,10 @@ const Productions = () => {
 
   // MANUAL PRODUCTION
   const handleManualProduction = () => {
+    setformWidget({
+      ...formWidget,
+      manualProductionForm: {},
+    });
     setModalContent("manualProduction");
     setShowModal(true);
   };
@@ -109,6 +113,10 @@ const Productions = () => {
   };
   // PRODUCTION DECREASE
   const handleDecreaseProduction = () => {
+    setformWidget({
+      ...formWidget,
+      addDecreaseForm: {},
+    });
     setModalContent("decreaseProduction");
     setShowModal(true);
   };

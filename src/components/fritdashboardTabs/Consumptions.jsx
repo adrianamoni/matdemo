@@ -100,6 +100,10 @@ const Consumptions = () => {
 
   // CONSUME
   const handleConsume = () => {
+    setformWidget({
+      ...formWidget,
+      consumeForm: {},
+    });
     setModalContent("consume");
     setShowModal(true);
   };
