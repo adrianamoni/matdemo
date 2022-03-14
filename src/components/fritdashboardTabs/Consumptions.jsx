@@ -22,12 +22,12 @@ const Consumptions = () => {
     {
       field: "lot_no",
       headerName: `${Text({ tid: "lot" })}`,
-      flex: 1,
+      width: 200,
     },
     {
       field: "qty_cons",
       headerName: `${Text({ tid: "quantity" })}`,
-      flex: 1,
+      width: 200,
     },
   ];
 
@@ -64,7 +64,7 @@ const Consumptions = () => {
     if (data?.length > 0) {
       setConsData(
         data.map((el) => {
-          return { ...el, material: el.item_id + "(" + el.item_desc + ")" };
+          return { ...el, material: el.item_id + " (" + el.item_desc + ")" };
         })
       );
     }
@@ -88,7 +88,8 @@ const Consumptions = () => {
     setformWidget({
       ...formWidget,
       consumptionCorrectionForm: {
-        material: selectedRows[0].item_desc,
+        material:
+          selectedRows[0].item_id + " (" + selectedRows[0].item_desc + ")",
         lot: selectedRows[0].lot_no,
         quantity: selectedRows[0].qty_cons,
       },
