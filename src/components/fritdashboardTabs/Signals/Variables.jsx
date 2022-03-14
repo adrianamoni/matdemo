@@ -33,6 +33,7 @@ const Variables = () => {
 
   if (data) {
     const apiData = processData(data, entName);
+    console.log("apiData", apiData);
   }
   return loading ? (
     <Box sx={{ width: "100%" }}>

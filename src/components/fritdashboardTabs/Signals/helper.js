@@ -12,7 +12,7 @@ export const processData = (data, entName) => {
     },
     {
       Tagname: "L001.METROS_DINT.Description",
-      Quality: 192,
+      Quality: 0,
       Timestamp: "2022-01-19T16:26:41.268+01:00",
       DataType: "MxString",
       Value: "Gasto de producto en metros",
@@ -89,23 +89,34 @@ export const processData = (data, entName) => {
   if (data.length > 0) {
     const arr = data
       .filter((el) => el.Tagname.split(".")[0] === entName)
-      .map((it) => ({ ...it, name: it.Tagname.split(".")[1] }));
-
+      .map((it) => {
+        let addProp;
+        if (it.Tagname.split(".")[2] === DESCRIPCION) {
+          addProp = { tag: "description" };
+        } else if (it.Tagname.split(".")[2] === ENG_UNITS) {
+          addProp = { tag: "unit" };
+        } else {
+          addProp = { tag: "value" };
+        }
+        return { ...it, name: it.Tagname.split(".")[1], ...addProp };
+      });
     const result = _(arr)
       .groupBy((x) => x.name)
       .map((value, key) => ({ signal: key, data: value }))
-      .value(); /* _.groupBy(arr, "name"); */
+      .value();
+    const test = result.map((el) => ({
+      ...el,
+      data: el.data.map((item) => ({
+        [item.tag]: item.Quality === 192 ? item.Value : null,
+      })),
+    }));
 
-    console.log("result", result);
-    /*   let processedData = [];
-    if (newArr.length > 0) {
-      processedData = newArr.map((el) => {
-        return {
-          signal: el.Tagname.split(".")[1],
-          value: el.Value,
-          unit: el.Tagname.split(".")[2],
-        };
-      });
-    } */
+    const test2 = test.map((el) => ({
+      ...el,
+      data: Object.assign({}, ...el.data),
+    }));
+    const res = test2.map((el) => ({ ...el.data }));
+
+    return res;
   }
 };

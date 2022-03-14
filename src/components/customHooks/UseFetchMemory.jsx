@@ -6,6 +6,7 @@ import {
 import { MemoryDatabaseCall } from "../../services/Service";
 import uuid from "react-uuid";
 import { read_signals } from "../../services/serviceHelper";
+import { tab_consumptions } from "../../services/OFservices";
 
 export default function UseFetchMemory({ request, customParams }) {
   const [data, setData] = useState(null);
@@ -41,6 +42,7 @@ const getParams = (request) => {
     parameters: [tab_of_parameters, "queryDataAsync"],
     "material-list": [tab_materials_init, "queryDataAsync"],
     "variables-signals": [read_signals, "queryWWDataFrameDataAsync"],
+    consumptions: [tab_consumptions, "queryDataAsync"],
   };
 
   return {

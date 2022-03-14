@@ -52,14 +52,14 @@ const General = ({ loading }) => {
         </Grid>
       </Grid>
       <Grid
-        sx={{ p: 2, display: "flex" }}
+        sx={{ p: 2, display: "flex" /*  */ }}
         container
         alignItems="stretch"
         columnSpacing={4}
         rowSpacing={4}
       >
-        <Grid item xs={12} sm={12} md={12} lg={7}>
-          <Card sx={{ p: 2 }}>
+        <Grid item xs={12} sm={12} md={12} lg={7} sx={{}}>
+          <Card sx={{ p: 2, height: "100%" }}>
             <InfoOE
               data={
                 orderDetails &&
