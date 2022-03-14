@@ -2,7 +2,7 @@ import React from "react";
 import { AppBar, Typography, IconButton, Toolbar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import LanguageSelector from "../languages/LanguageSelector";
-/* import ToggleDarkMode from "../theme/ToggleDarkMode"; */
+import ToggleDarkMode from "../theme/ToggleDarkMode";
 
 const Navbar = ({ drawerWidth, handleDrawerToggle, title }) => {
   return (
@@ -26,7 +26,7 @@ const Navbar = ({ drawerWidth, handleDrawerToggle, title }) => {
         <Typography variant="h6" noWrap component="div" sx={{ flex: 1 }}>
           {title || "Inicio"}
         </Typography>
-        {/* <ToggleDarkMode /> */}
+        <ToggleDarkMode />
         <LanguageSelector />
       </Toolbar>
     </AppBar>

@@ -1,4 +1,4 @@
-import { Box, Grid, LinearProgress } from "@mui/material";
+import { Box, Container, Grid, LinearProgress } from "@mui/material";
 import React, { useContext } from "react";
 import { globalDataContext } from "../../../context/ContextProvider";
 import TableWidget from "../../../widgets/TableWidget/TableWidget";
@@ -9,9 +9,10 @@ import Text from "../../../languages/Text";
 const Variables = () => {
   const { globalData } = useContext(globalDataContext);
   const { entName } = globalData.lineData;
+  let processedData = [];
   const variablesColumns = [
     {
-      field: "signal",
+      field: "description",
       headerName: Text({ tid: "signal" }),
       flex: 1,
     },
@@ -30,21 +31,21 @@ const Variables = () => {
   const { loading, data } = UseFetchMemory({
     request: "variables-signals",
   });
-
   if (data) {
-    const apiData = processData(data, entName);
-    console.log("apiData", apiData);
+    processedData = processData(data, entName);
   }
   return loading ? (
     <Box sx={{ width: "100%" }}>
       <LinearProgress />
     </Box>
-  ) : (
-    <>
+  ) : processedData && processedData.length > 0 ? (
+    <Container fluid>
       <Grid container sx={{ mt: 2 }}>
-        {/* <TableWidget data={data} columns={variablesColumns} /> */}
+        <TableWidget data={processedData} columns={variablesColumns} />
       </Grid>
-    </>
+    </Container>
+  ) : (
+    <></>
   );
 };
 

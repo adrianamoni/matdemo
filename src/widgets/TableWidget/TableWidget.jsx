@@ -122,6 +122,7 @@ const TableWidget = ({ data, columns, multipleSelection, tableName }) => {
         variant="standard"
         value={searchInput}
         onChange={(e) => setsearchInput(e.target.value)}
+        sx={{ p: 1 }}
       />
 
       {pageDimentions && pageDimentions.width < 800 && (

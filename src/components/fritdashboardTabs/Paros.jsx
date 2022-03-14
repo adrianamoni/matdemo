@@ -502,22 +502,25 @@ const Paros = () => {
         <Paper sx={{ width: "100%", marginTop: "1rem" }}>
           <TableWidget data={fakeParos} columns={columns} />
         </Paper>
-        <ButtonGroupWidget
-          buttons={[
-            {
-              text: "createInterruption",
-              color: "primary",
-              onClick: handleTestClick,
-            },
-            { text: "justifyInterruption", color: "success", disabled: true },
-          ]}
-        />
+        <Grid item xs={12} sx={{ display: "flex" }} justifyContent="center">
+          <ButtonGroupWidget
+            buttons={[
+              {
+                text: "createInterruption",
+                color: "primary",
+                onClick: handleTestClick,
+              },
+              { text: "justifyInterruption", color: "success", disabled: true },
+            ]}
+          />
+        </Grid>
       </Grid>
       <ModalWidget
         open={modalCreateInterruption}
         close={() => setmodalCreateInterruption(false)}
         content={modalContent}
         customWidth={windowsSize.width > 767 ? 700 : 350}
+        title={"Generar Paro"}
       />
     </>
   );
