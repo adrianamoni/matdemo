@@ -11,6 +11,7 @@ const es = {
   consumptionCorrection: "Corrección Consumo",
   createInterruption: "Generar Paro",
   dashboard: "Tablero",
+  deassign: "Desasignar",
   description: "Descripción",
   duration: "Duración",
   email: "Email",

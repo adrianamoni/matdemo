@@ -111,8 +111,8 @@ const OperatorAssignment = ({ line, modal, close }) => {
       selectedRowsIds["assignOperators"] &&
       selectedRowsIds["assignOperators"].length > 0
     ) {
-      let tempRow = tableData.filter((operator) => {
-        return operator.id === selectedRowsIds["assignOperators"][0];
+      let tempRow = tableData.filter((line) => {
+        return line.id === selectedRowsIds["assignOperators"][0];
       });
       setSelectedRows(tempRow);
     }
@@ -144,7 +144,7 @@ const OperatorAssignment = ({ line, modal, close }) => {
       setLoading(false);
       createNotification({
         status: "success",
-        msg: "¡Operario asignado a línea correctamente!",
+        msg: "¡Operario asignado a línea correctamente!", //TODO
         hide: response.responseHide,
       });
     }
@@ -213,6 +213,9 @@ const OperatorAssignment = ({ line, modal, close }) => {
       </Grid>
     </>
   );
+};
+OperatorAssignment.defaultProps = {
+  close: () => {},
 };
 
 export default OperatorAssignment;

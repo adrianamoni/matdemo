@@ -11,6 +11,7 @@ const en = {
   consumptionCorrection: "Consumption Correction",
   createInterruption: "create Interruption",
   dashboard: "Dashboard",
+  deassign: "Deassign",
   description: "Description",
   duration: "Duration",
   email: "Email",
