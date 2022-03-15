@@ -42,7 +42,12 @@ const ProductionsModal = ({
   const closeModal = () => {
     setSelectedRowsIds({ productions: [] });
     setSelectedRows([]);
-    setformWidget({ ...formWidget, manualProductionForm: [] });
+    setformWidget({
+      ...formWidget,
+      manualProductionForm: [],
+      productionCorrectionForm: [],
+      addDecreaseForm: [],
+    });
     setShowModal(false);
     setRefreshData(true);
   };
