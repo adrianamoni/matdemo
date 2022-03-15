@@ -1,13 +1,16 @@
 ﻿import React, { useContext, useState, useEffect } from "react";
+import uuid from "react-uuid";
 import {
   globalDataContext,
   formContext,
   selectedRowsIdsContext,
   selectedRowsContext,
 } from "../../../context/ContextProvider";
-import UseFetchMemory from "./../../customHooks/UseFetchMemory";
-import { ApiCall } from "../../../services/Service";
-import { screen_operatorAssignment_assign } from "../../../services/serviceHelper";
+import { ApiCall, MemoryDatabaseCall } from "../../../services/Service";
+import {
+  line_assignment,
+  screen_operatorAssignment_assign,
+} from "../../../services/serviceHelper";
 import { Box, LinearProgress, Grid } from "@mui/material";
 import InputWidget from "../../../widgets/forms/InputWidget";
 import TableWidget from "./../../../widgets/TableWidget/TableWidget";
@@ -38,33 +41,36 @@ const OperatorAssignment = ({ line, modal, close }) => {
   );
   const { selectedRows, setSelectedRows } = useContext(selectedRowsContext);
   //useState
-  const [renderData, setRenderData] = useState(null);
-  const [localLoading, setLocalLoading] = useState(false);
+  const [tableData, setTableData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [refreshData, setRefreshData] = useState(false);
 
-  const localTerminal = terminal
-    ? terminal
-    : localStorage.getItem("FritTerminal");
-
   //fetch data
-  let { loading, data } = UseFetchMemory({
-    request: "operatorsAssignment",
-    customParams: {
-      name: "terminal",
-      dataType: "String",
-      value: localTerminal === "asignacion" ? null : localTerminal,
-    },
-  });
+  const fetchData = async () => {
+    setLoading(true);
+    const localTerminal = terminal
+      ? terminal
+      : localStorage.getItem("FritTerminal");
 
-  useEffect(() => {
-    //TODO
-  }, [refreshData]);
-
-  useEffect(() => {
-    if (data?.length > 0) {
-      linkData(data);
+    let response = await MemoryDatabaseCall({
+      params: line_assignment({
+        name: "terminal",
+        dataType: "String",
+        value: localTerminal === "asignacion" ? null : localTerminal,
+      }),
+      url: "queryDataAsync",
+    });
+    if (response) {
+      if (response.length > 0) {
+        response = response.map((el) => {
+          return { ...el, id: uuid() };
+        });
+        const newResponse = linkData(response);
+        setTableData(newResponse);
+      }
     }
-  }, [data]);
+    setLoading(false);
+  };
 
   const linkData = (response) => {
     let newResponse;
@@ -85,9 +91,19 @@ const OperatorAssignment = ({ line, modal, close }) => {
     } else {
       newResponse = response.filter((el) => el.ent_name !== "LIM01");
     }
-    setRenderData(newResponse);
     return newResponse;
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (refreshData) {
+      fetchData();
+      setRefreshData(false);
+    }
+  }, [refreshData]);
 
   //useEffect on change selected row
   useEffect(() => {
@@ -95,7 +111,7 @@ const OperatorAssignment = ({ line, modal, close }) => {
       selectedRowsIds["assignOperators"] &&
       selectedRowsIds["assignOperators"].length > 0
     ) {
-      let tempRow = data.filter((operator) => {
+      let tempRow = tableData.filter((operator) => {
         return operator.id === selectedRowsIds["assignOperators"][0];
       });
       setSelectedRows(tempRow);
@@ -103,9 +119,9 @@ const OperatorAssignment = ({ line, modal, close }) => {
   }, [selectedRowsIds]);
 
   const handleAssign = async () => {
-    setLocalLoading(true);
+    setLoading(true);
 
-    const param_entId = data.find(
+    const param_entId = tableData.find(
       (e) => e.ent_name === selectedRows[0].ent_name
     ).entId;
 
@@ -117,7 +133,7 @@ const OperatorAssignment = ({ line, modal, close }) => {
     });
 
     if (response.responseError) {
-      setLocalLoading(false);
+      setLoading(false);
       createNotification({
         status: "error",
         code: response.responseError,
@@ -125,7 +141,7 @@ const OperatorAssignment = ({ line, modal, close }) => {
         hide: response.responseHide,
       });
     } else {
-      setLocalLoading(false);
+      setLoading(false);
       createNotification({
         status: "success",
         msg: "¡Operario asignado a línea correctamente!",
@@ -164,7 +180,7 @@ const OperatorAssignment = ({ line, modal, close }) => {
       <Grid container sx={{ mt: 2 }}>
         <Grid item xs={12}>
           <TableWidget
-            data={renderData}
+            data={tableData}
             columns={columns}
             multipleSelection={false}
             tableName="assignOperators"
@@ -191,7 +207,7 @@ const OperatorAssignment = ({ line, modal, close }) => {
                     : true,
               },
             ]}
-            loading={localLoading}
+            loading={loading}
           />
         </Grid>
       </Grid>
