@@ -14,7 +14,7 @@ import TableWidget from "./../../../widgets/TableWidget/TableWidget";
 import ButtonGroupWidget from "./../../../widgets/buttonGroup/ButtonGroupWidget";
 import Text from "../../../languages/Text";
 import ProductionsModal from "./ProductionsModal";
-import CustomSnackBar from "./../../alerts/CustomSnackBar";
+import UserAlert from "./../../alerts/UserAlert";
 
 const Productions = () => {
   const columns = [
@@ -54,8 +54,8 @@ const Productions = () => {
   const [tableData, setTableData] = useState(false);
   const [data, setData] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [snackBarAlert, setSnackBarAlert] = useState({
-    open: false,
+  const [userAlert, setUserAlert] = useState({
+    show: false,
     message: "",
     severity: "",
   });
@@ -139,13 +139,13 @@ const Productions = () => {
 
   useEffect(() => {
     tableData && tableData.length < 1
-      ? setSnackBarAlert({
-          open: true,
-          message: "No hay producciones actualmente", //TODO
+      ? setUserAlert({
+          show: true,
+          message: "No hay producciones actualmente",
           severity: "info",
         })
-      : setSnackBarAlert({
-          open: false,
+      : setUserAlert({
+          show: false,
           message: "",
           severity: "",
         });
@@ -219,47 +219,59 @@ const Productions = () => {
     </Box>
   ) : (
     <>
-      {/* Productions Table */}
-      <Grid container sx={{ mt: 2 }}>
-        <Grid item xs={12}>
-          <TableWidget
-            data={tableData}
-            columns={columns}
-            multipleSelection={false}
-            tableName="productions"
-          />
-        </Grid>
+      {tableData?.length > 0 ? (
+        <>
+          {/* Productions Table */}
+          <Grid container sx={{ mt: 2 }}>
+            <Grid item xs={12}>
+              <TableWidget
+                data={tableData}
+                columns={columns}
+                multipleSelection={false}
+                tableName="productions"
+              />
+            </Grid>
 
-        <Grid item xs={12}>
-          <ButtonGroupWidget
-            position="left"
-            buttons={[
-              {
-                text: "manualProduction",
-                color: "primary",
-                onClick: handleManualProduction,
-                disabled: false,
-              },
-              {
-                text: "productionCorrection",
-                color: "secondary",
-                onClick: handleProductionCorrection,
-                disabled:
-                  !productionCorrectionPermission || !selectedRows[0]
-                    ? true
-                    : false,
-              },
-              {
-                text: "addDecrease",
-                color: "primary",
-                onClick: handleDecreaseProduction,
-                disabled: false,
-              },
-            ]}
-            loading={loading}
+            <Grid item xs={12}>
+              <ButtonGroupWidget
+                position="left"
+                buttons={[
+                  {
+                    text: "manualProduction",
+                    color: "primary",
+                    onClick: handleManualProduction,
+                    disabled: false,
+                  },
+                  {
+                    text: "productionCorrection",
+                    color: "secondary",
+                    onClick: handleProductionCorrection,
+                    disabled:
+                      !productionCorrectionPermission || !selectedRows[0]
+                        ? true
+                        : false,
+                  },
+                  {
+                    text: "addDecrease",
+                    color: "primary",
+                    onClick: handleDecreaseProduction,
+                    disabled: false,
+                  },
+                ]}
+                loading={loading}
+              />
+            </Grid>
+          </Grid>
+        </>
+      ) : (
+        userAlert.show && (
+          <UserAlert
+            severity={userAlert.severity}
+            message={userAlert.message}
           />
-        </Grid>
-      </Grid>
+        )
+      )}
+
       {/* Others */}
       <ProductionsModal
         showModal={showModal}
@@ -267,10 +279,6 @@ const Productions = () => {
         modalContent={modalContent}
         setRefreshData={setRefreshData}
         data={data}
-      />
-      <CustomSnackBar
-        snackBarAlert={snackBarAlert}
-        setSnackBarAlert={setSnackBarAlert}
       />
     </>
   );
