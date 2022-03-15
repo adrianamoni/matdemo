@@ -10,6 +10,8 @@ import FeedIcon from "@mui/icons-material/Feed";
 import Text from "../languages/Text";
 import { languageContext } from "../context/ContextProvider";
 import DrawerComp from "./Drawer";
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
+import PersonRemoveAlt1Icon from "@mui/icons-material/PersonRemoveAlt1";
 
 const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
   const language = useContext(languageContext);
@@ -52,6 +54,18 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
           name: <Text tid={"dashboard"} />,
           icon: <DashboardIcon />,
           path: "/dashboard",
+        },
+        {
+          id: 5,
+          name: <Text tid={"assignment"} />,
+          icon: <PersonAddAlt1Icon />,
+          path: "/asignacion",
+        },
+        {
+          id: 6,
+          name: <Text tid={"deassignment"} />,
+          icon: <PersonRemoveAlt1Icon />,
+          path: "/desasignacion",
         },
         /*  {
           id: 4,

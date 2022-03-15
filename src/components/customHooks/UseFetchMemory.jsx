@@ -8,7 +8,7 @@ import {
 } from "../../services/OFservices";
 import { MemoryDatabaseCall } from "../../services/Service";
 import uuid from "react-uuid";
-import { read_signals } from "../../services/serviceHelper";
+import { line_assignment, read_signals } from "../../services/serviceHelper";
 
 export default function UseFetchMemory({ request, customParams }) {
   const [data, setData] = useState(null);
@@ -48,6 +48,7 @@ const getParams = (request) => {
     consumptions: [tab_consumptions, "queryDataAsync"],
     productions: [tab_productions, "queryDataAsync"],
     "quality-qmspec": [tab_quality_get_qmspec_by_filter, "queryDataAsync"],
+    operatorsAssignment: [line_assignment, "queryDataAsync"],
   };
 
   return {

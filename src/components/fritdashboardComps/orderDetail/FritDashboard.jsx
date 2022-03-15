@@ -11,8 +11,8 @@ import Text from "../../../languages/Text";
 import { globalDataContext } from "../../../context/ContextProvider";
 import { getOrderDetails } from "./helper";
 import Parameters from "../../fritdashboardTabs/Parameters";
-import Consumptions from "./../../fritdashboardTabs/Consumptions";
-import Productions from "./../../fritdashboardTabs/Productions";
+import Consumptions from "./../../fritdashboardTabs/Consumption/Consumptions";
+import Productions from "./../../fritdashboardTabs/Production/Productions";
 import Quality from "../../fritdashboardTabs/Quality.jsx/Quality";
 
 const FritDashboard = () => {

@@ -13,9 +13,8 @@ import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { Box } from "@mui/system";
-import LoginModal from "../components/modals/LoginModal";
-import LogoutModal from "../components/modals/LogoutModal";
+import LoginModal from "./../components/screens/Login/LoginModal";
+import LogoutModal from "./../components/screens/Login/LogoutModal";
 
 const StyledLink = styled(Link)({
   textDecoration: "none",
