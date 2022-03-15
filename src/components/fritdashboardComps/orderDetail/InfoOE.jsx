@@ -196,12 +196,12 @@ const InfoOE = () => {
               alignItems={"center"}
               sx={{ p: 2 }}
             >
-              <Grid item xs={12} sm={12} md={12} xl={3}>
+              <Grid item xs={12} sm={12} md={12} xl={4}>
                 <strong>
                   {width < 550 ? "Prod." : Text({ tid: "production" })}
                 </strong>
               </Grid>
-              <Grid item xs={12} sm={12} md={12} xl={9}>
+              <Grid item xs={12} sm={12} md={12} xl={8}>
                 <LineProgress
                   value={Math.round(
                     (productionData.qty_prod / productionData.qty_reqd) * 100
