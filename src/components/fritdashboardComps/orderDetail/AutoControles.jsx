@@ -1,12 +1,26 @@
 import { Card, Grid, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import moment from "moment";
-import { navigationDataContext } from "../../../context/ContextProvider";
+import {
+  globalDataContext,
+  navigationDataContext,
+} from "../../../context/ContextProvider";
+import { dateFormater } from "./helper";
 
 const AutoControles = ({ data, alert }) => {
   const { navigationData, setNavigationData } = useContext(
     navigationDataContext
   );
+  const { globalData } = useContext(globalDataContext);
+  const { pendingSamples } = globalData;
+
+  let samplesData;
+  if (pendingSamples && pendingSamples.data.length > 0) {
+    let moments = data.map((d) => moment(d.req_time_local)),
+      maxDate = moment.max(moments);
+    samplesData = maxDate._i;
+  }
+
   let styledAlert = alert
     ? {
         border: "1.5px solid",
@@ -14,14 +28,6 @@ const AutoControles = ({ data, alert }) => {
         backgroundColor: "background.error",
       }
     : {};
-
-  let qualityData;
-
-  if (data && data.length > 0) {
-    let moments = data.map((d) => moment(d.req_time_local)),
-      maxDate = moment.max(moments);
-    qualityData = maxDate._i;
-  }
 
   return (
     <Card
@@ -50,7 +56,9 @@ const AutoControles = ({ data, alert }) => {
               </strong>
             </Grid>
             <Grid item xs={6} sm={6} md={6} lg={6} align="right">
-              -
+              {samplesData
+                ? dateFormater({ date: samplesData, type: "hora-fecha" })
+                : "-"}
             </Grid>
           </Grid>
         </Grid>

@@ -1,11 +1,17 @@
 import { Card, Grid, Typography } from "@mui/material";
 import React, { useContext } from "react";
-import { navigationDataContext } from "../../../context/ContextProvider";
+import {
+  globalDataContext,
+  navigationDataContext,
+} from "../../../context/ContextProvider";
 
 const Paros = ({ alert, data }) => {
   const { navigationData, setNavigationData } = useContext(
     navigationDataContext
   );
+  const { globalData } = useContext(globalDataContext);
+  const { pendingInterruptions } = globalData;
+
   let styledAlert = alert
     ? {
         border: "1.5px solid crimson",
@@ -36,7 +42,7 @@ const Paros = ({ alert, data }) => {
               <strong>Paros pendientes</strong>
             </Grid>
             <Grid item xs={6} sm={6} md={6} lg={6} align="right">
-              -
+              {pendingInterruptions?.data.length || "-"}
             </Grid>
           </Grid>
         </Grid>

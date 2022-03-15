@@ -34,7 +34,7 @@ const AppRouter = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
+            <Route index element={<Dashboard />} />
             <Route path="about" element={<About />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="frit-dashboard" element={<FritDashboard />} />

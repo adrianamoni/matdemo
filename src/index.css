@@ -63,3 +63,15 @@ code {
 .MuiDataGrid-cell:focus {
   outline: none !important;
 }
+
+/* MAIN CONTAINER MAX WIDTH */
+#fritDashboard-main-container,
+#fritDashboard-content-container {
+  max-width: none !important;
+  margin: auto !important;
+}
+
+/* CENTER fritDashboard TABS */
+.MuiTabs-flexContainer {
+  justify-content: center !important;
+}

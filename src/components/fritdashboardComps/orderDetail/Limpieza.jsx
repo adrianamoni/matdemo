@@ -22,8 +22,10 @@ import { globalDataContext } from "../../../context/ContextProvider";
 import { handleOperationAction } from "../../fritdashboardTabs/General/helper";
 import UseFetchMemory from "../../customHooks/UseFetchMemory";
 import LastCleaning from "./LastCleaning";
+import useWindowSize from "../../customHooks/UseWindowsSize";
 
 const Limpieza = () => {
+  const { width } = useWindowSize();
   const { globalData } = useContext(globalDataContext);
   const { orderDetails, /* orderData */ lineData } = globalData;
   const { productionData, cleaningData } = orderDetails;
@@ -193,10 +195,26 @@ const Limpieza = () => {
           <Grid item xs={12} sm={12} md={12} lg={12} xl={3}>
             <ListItem>
               <Grid container textAlign="center">
-                <Grid item xs={6} sm={6} md={6} lg={6} xl={12}>
+                <Grid
+                  item
+                  xs={6}
+                  sm={6}
+                  md={6}
+                  lg={6}
+                  xl={12}
+                  textAlign={width > 1536 ? "center" : "left"}
+                >
                   <strong>Tiempo Restante</strong>
                 </Grid>
-                <Grid item xs={6} sm={6} md={6} lg={6} xl={12}>
+                <Grid
+                  item
+                  xs={6}
+                  sm={6}
+                  md={6}
+                  lg={6}
+                  xl={12}
+                  textAlign={width > 1536 ? "center" : "right"}
+                >
                   {processedOrderTime?.text || "-"}
                 </Grid>
               </Grid>
