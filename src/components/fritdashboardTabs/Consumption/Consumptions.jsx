@@ -1,16 +1,19 @@
 ﻿import React, { useContext, useState, useEffect } from "react";
+import uuid from "react-uuid";
 import {
   globalDataContext,
   formContext,
   selectedRowsIdsContext,
   selectedRowsContext,
 } from "../../../context/ContextProvider";
-import UseFetchMemory from "./../../customHooks/UseFetchMemory";
+import { MemoryDatabaseCall } from "../../../services/Service";
+import { tab_consumptions } from "../../../services/OFservices";
 import { Box, LinearProgress, Grid } from "@mui/material";
 import TableWidget from "./../../../widgets/TableWidget/TableWidget";
 import ButtonGroupWidget from "./../../../widgets/buttonGroup/ButtonGroupWidget";
 import Text from "../../../languages/Text";
 import ConsumptionsModal from "./ConsumptionsModal";
+import UserAlert from "./../../alerts/UserAlert";
 
 const Consumptions = () => {
   const columns = [
@@ -34,41 +37,74 @@ const Consumptions = () => {
   //useContext
   const { globalData } = useContext(globalDataContext);
   const { woId, operId, seqNo } = globalData.orderData;
+  const { entId, entName } = globalData.lineData;
   const { formWidget, setformWidget } = useContext(formContext);
   const { selectedRowsIds, setSelectedRowsIds } = useContext(
     selectedRowsIdsContext
   );
   const { selectedRows, setSelectedRows } = useContext(selectedRowsContext);
   //useState
-  const [consData, setConsData] = useState(false);
+  const [tableData, setTableData] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [userAlert, setUserAlert] = useState({
+    show: false,
+    message: "",
+    severity: "",
+  });
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [refreshData, setRefreshData] = useState(false);
 
-  //fetch data
-  let { loading, data } = UseFetchMemory({
-    request: "consumptions",
-    customParams: {
-      operId,
-      entId: globalData.lineData.entId,
-      woId,
-      seqNo,
-    },
-  });
-
   useEffect(() => {
-    //TODO
+    let clearTimeoutKey;
+
+    const fetchData = async (showLoader) => {
+      showLoader && setLoading(true);
+
+      const response = await MemoryDatabaseCall({
+        params: tab_consumptions({
+          entId: entId,
+          woId: woId,
+          operId: operId,
+          seqNo: seqNo,
+        }),
+        url: "queryDataAsync",
+      });
+      if (response) {
+        const res = response.map((item, i) => ({
+          ...item,
+          index: i + 1,
+          id: uuid(),
+          material: item.item_id + " (" + item.item_desc + ")",
+        }));
+        setTableData(res);
+      }
+      setLoading(false);
+      clearTimeoutKey = setTimeout(fetchData, 30000);
+    };
+
+    fetchData(true);
+    refreshData && setRefreshData(false);
+    return () => {
+      clearTimeout(clearTimeoutKey);
+      // setTableVariables({ ...tableVariables, ConsumptionsTable: false });
+      setTableData([]);
+    };
   }, [refreshData]);
 
   useEffect(() => {
-    if (data?.length > 0) {
-      setConsData(
-        data.map((el) => {
-          return { ...el, material: el.item_id + " (" + el.item_desc + ")" };
+    tableData && tableData.length < 1
+      ? setUserAlert({
+          show: true,
+          message: "No hay consumos actualmente", //TODO
+          severity: "info",
         })
-      );
-    }
-  }, [data]);
+      : setUserAlert({
+          show: false,
+          message: "",
+          severity: "",
+        });
+  }, [tableData]);
 
   //useEffect on change selected row
   useEffect(() => {
@@ -76,7 +112,7 @@ const Consumptions = () => {
       selectedRowsIds["consumptions"] &&
       selectedRowsIds["consumptions"].length > 0
     ) {
-      let tempRow = data.filter((consumption) => {
+      let tempRow = tableData.filter((consumption) => {
         return consumption.id === selectedRowsIds["consumptions"][0];
       });
       setSelectedRows(tempRow);
@@ -114,38 +150,50 @@ const Consumptions = () => {
     </Box>
   ) : (
     <>
-      {/* Consumpions Table */}
-      <Grid container sx={{ mt: 2 }}>
-        <Grid item xs={12}>
-          <TableWidget
-            data={consData}
-            columns={columns}
-            multipleSelection={false}
-            tableName="consumptions"
-          />
-        </Grid>
+      {tableData?.length > 0 ? (
+        <>
+          {/* Consumpions Table */}
 
-        <Grid item xs={12}>
-          <ButtonGroupWidget
-            position="left"
-            buttons={[
-              {
-                text: "consumptionCorrection",
-                color: "primary",
-                onClick: handleConsumptionCorrection,
-                disabled: selectedRows?.[0] ? false : true,
-              },
-              {
-                text: "consume",
-                color: "secondary",
-                onClick: handleConsume,
-                disabled: false,
-              },
-            ]}
-            loading={loading}
+          <Grid container sx={{ mt: 2 }}>
+            <Grid item xs={12}>
+              <TableWidget
+                data={tableData}
+                columns={columns}
+                multipleSelection={false}
+                tableName="consumptions"
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <ButtonGroupWidget
+                position="left"
+                buttons={[
+                  {
+                    text: "consumptionCorrection",
+                    color: "primary",
+                    onClick: handleConsumptionCorrection,
+                    disabled: !selectedRows[0] ? true : false,
+                  },
+                  {
+                    text: "consume",
+                    color: "secondary",
+                    onClick: handleConsume,
+                    disabled: false,
+                  },
+                ]}
+                loading={loading}
+              />
+            </Grid>
+          </Grid>
+        </>
+      ) : (
+        userAlert.show && (
+          <UserAlert
+            severity={userAlert.severity}
+            message={userAlert.message}
           />
-        </Grid>
-      </Grid>
+        )
+      )}
       {/* Others */}
       <ConsumptionsModal
         showModal={showModal}
