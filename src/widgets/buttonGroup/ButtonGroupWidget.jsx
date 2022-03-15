@@ -14,7 +14,7 @@ const ButtonGroupWidget = ({ position, buttons, loading }) => {
         sx={{ display: "flex", justifyContent: position, marginTop: "25px" }}
       >
         <ButtonGroup
-          variant="contained"
+          // variant="contained"
           //   orientation="vertical"
           aria-label="outlined primary button group"
         >
