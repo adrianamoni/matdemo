@@ -3,6 +3,7 @@ import { AppBar, Typography, IconButton, Toolbar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import LanguageSelector from "../languages/LanguageSelector";
 import ToggleDarkMode from "../theme/ToggleDarkMode";
+import Text from "../languages/Text";
 
 const Navbar = ({ drawerWidth, handleDrawerToggle, title }) => {
   return (
@@ -24,7 +25,7 @@ const Navbar = ({ drawerWidth, handleDrawerToggle, title }) => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap component="div" sx={{ flex: 1 }}>
-          {title || "Inicio"}
+          {title || Text({ tid: "home" })}
         </Typography>
         <ToggleDarkMode />
         <LanguageSelector />

@@ -23,12 +23,7 @@ import Productions from "./../../fritdashboardTabs/Productions";
 import Quality from "../../fritdashboardTabs/Quality/Quality";
 import Documentation from "../../fritdashboardTabs/Documentation";
 import Planification from "../../fritdashboardTabs/Planification";
-/* 
-const CustomTab = styled(Tab)({
-  color: "red",
-  zIndex: 9999,
-});
- */
+
 const FritDashboard = () => {
   /*  let { slug } = useParams(); */
   /*  const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME; */
@@ -509,22 +504,22 @@ const FritDashboard = () => {
       : setModalGenerate; */
 
   return (
-    <Container sx={{ m: "auto" }} id="fritDashboard-main-container">
+    <Container /* sx={{ m: "auto" }} */ id="fritDashboard-main-container">
       <Box
-      /* sx={{
+        sx={{
           maxWidth: { xs: "350px", sm: "600px", md: "900px", lg: "1200px" },
-        }} */
+          /*  width: "60%", */
+        }}
       >
         <Tabs
           value={navigationData.activeTab}
           onChange={handleChange}
           variant="scrollable"
-          scrollButtons="auto"
+          scrollButtons={true}
           allowScrollButtonsMobile
           aria-label="scrollable auto tabs example"
           sx={{ m: "auto" }}
-          id="fritDashboard-tabs-container"
-          centered
+          /* id="fritDashboard-tabs-container" */
         >
           {ofDetailNav.map((tab, index) => {
             let sampleAlert, interruptionAlert;
@@ -548,7 +543,10 @@ const FritDashboard = () => {
         </Tabs>
       </Box>
 
-      <Container sx={{ m: "auto" }} id="fritDashboard-content-container" fluid>
+      <Container
+        sx={{ m: "auto" }}
+        id="fritDashboard-content-container" /*  fluid */
+      >
         <Panels value={navigationData.activeTab} loading={loadingInitialData} />
       </Container>
     </Container>

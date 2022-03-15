@@ -3,8 +3,8 @@ import { createBrowserHistory } from "history";
 import { languageOptions, dictionaryList } from "../languages";
 import {
   getColorFromStorage,
-  getLoginStorageData,
   getStorageData,
+  getLoginStorageData,
 } from "./initalStates";
 
 const history = createBrowserHistory();
@@ -25,8 +25,8 @@ const languageContext = React.createContext({
 /**End Multilanguage */
 
 const ContextProvider = (props) => {
-  const userStorageData = getLoginStorageData();
-  const [loggedUser, setLoggedUser] = useState(undefined);
+  const userData = getLoginStorageData();
+  const [loggedUser, setLoggedUser] = useState(userData);
   /**page size setup*/
   const [pageSize, setPageSize] = useState({
     width: undefined,

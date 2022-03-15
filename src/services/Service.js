@@ -4,11 +4,11 @@ import axios from "axios";
  */
 
 // const ENVIRONMENT = 'DEVELOPMENT'
-const DISPATCHER_DEVELOPMENT_IP = "192.168.9.128:8080"; //FRIT: 192.168.10.168
+const DISPATCHER_DEVELOPMENT_IP = "192.168.9.128:8083"; //FRIT: 192.168.10.168
 const MEMORY_DEVELOPMENT_IP = "192.168.9.128:8095";
 
 var POINTING_IPS = {
-  dispatcher: "192.168.9.128:8080",
+  dispatcher: "192.168.9.128:8083",
   memoryDatabase: "192.168.9.128:8095",
   documentacion: "192.168.9.128",
   pesajeCarretillero: "pherkad.frit-nt1.local:4444",

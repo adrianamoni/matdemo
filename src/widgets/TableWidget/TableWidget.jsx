@@ -164,6 +164,7 @@ const TableWidget = ({ data, columns, multipleSelection, tableName }) => {
               getRowClassName={(params) =>
                 `super-app-theme--${params.row.color}`
               }
+              /*  onCellEditCommit */
             />
           </div>
         ) : (

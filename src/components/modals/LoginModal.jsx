@@ -12,6 +12,7 @@ import Text from "./../../languages/Text";
 
 const LoginModal = ({ loginModal, setLoginModal }) => {
   const windowSize = useWindowSize();
+  const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME;
 
   //useContext
   const { loggedUser, setLoggedUser } = useContext(loginContext);
@@ -36,33 +37,18 @@ const LoginModal = ({ loginModal, setLoginModal }) => {
       setLoading(false);
     } else {
       const userInfo = {
-        permissions:
-          /* [
-          {
-            desc: "GestionAceites.Edicion",
-          },
-          {
-            desc: "Secuenciacion.Visualizacion",
-          },
-          {
-            desc: "Secuenciacion.Edicion",
-          },
-          {
-            desc: "DescargaMaquina.Visualizacion",
-          },
-          {
-            desc: "ModificarImpresoras.Visualizacion",
-          },
-          {
-            desc: "GestionParos.Visualizacion",
-          },
-        ]  */ response.responseData.Permisos,
+        permissions: response.responseData.Permisos,
         sessionId: response.responseData.SessionId,
         userId: response.responseData.UserId,
+        isLogged: true,
       };
 
+      sessionStorage.setItem(
+        `UserInfo_${PROJECT_NAME}`,
+        JSON.stringify(userInfo)
+      );
       setLoggedUser(userInfo);
-      sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
+
       createNotification({
         status: "success",
         msg: "¡Usuario loggeado correctamente!",
