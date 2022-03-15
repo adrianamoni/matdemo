@@ -30,7 +30,7 @@ const ButtonGroupWidget = ({ position, buttons, loading }) => {
                       ? btn.onClick
                       : () => console.log("no click func")
                   }
-                  sx={{ margin: "10px", padding: "15px" }}
+                  sx={{ marginRight: "10px", padding: "15px" }}
                 >
                   {Text({ tid: btn.text })}
                 </Button>
