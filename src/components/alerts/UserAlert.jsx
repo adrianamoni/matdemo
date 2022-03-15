@@ -3,7 +3,7 @@ import { Alert } from "@mui/material";
 
 const UserAlert = ({ severity, message }) => {
   return (
-    <Alert variant="filled" severity={severity}>
+    <Alert variant="filled" severity={severity} sx={{ width: "100%" }}>
       {message}
     </Alert>
   );
