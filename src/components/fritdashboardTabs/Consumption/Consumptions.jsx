@@ -150,50 +150,48 @@ const Consumptions = () => {
     </Box>
   ) : (
     <>
-      {tableData?.length > 0 ? (
-        <>
-          {/* Consumpions Table */}
-
-          <Grid container sx={{ mt: 2 }}>
-            <Grid item xs={12}>
-              <TableWidget
-                data={tableData}
-                columns={columns}
-                multipleSelection={false}
-                tableName="consumptions"
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <ButtonGroupWidget
-                position="left"
-                buttons={[
-                  {
-                    text: "consumptionCorrection",
-                    color: "primary",
-                    onClick: handleConsumptionCorrection,
-                    disabled: !selectedRows[0] ? true : false,
-                  },
-                  {
-                    text: "consume",
-                    color: "secondary",
-                    onClick: handleConsume,
-                    disabled: false,
-                  },
-                ]}
-                loading={loading}
-              />
-            </Grid>
+      <Grid container sx={{ mt: 2 }}>
+        {/* Consumpions Table */}
+        {tableData?.length > 0 ? (
+          <Grid item xs={12}>
+            <TableWidget
+              data={tableData}
+              columns={columns}
+              multipleSelection={false}
+              tableName="consumptions"
+            />
           </Grid>
-        </>
-      ) : (
-        userAlert.show && (
-          <UserAlert
-            severity={userAlert.severity}
-            message={userAlert.message}
+        ) : (
+          userAlert.show && (
+            <UserAlert
+              severity={userAlert.severity}
+              message={userAlert.message}
+            />
+          )
+        )}
+
+        <Grid item xs={12}>
+          <ButtonGroupWidget
+            position="left"
+            buttons={[
+              {
+                text: "consumptionCorrection",
+                color: "primary",
+                onClick: handleConsumptionCorrection,
+                disabled: !selectedRows[0] ? true : false,
+              },
+              {
+                text: "consume",
+                color: "secondary",
+                onClick: handleConsume,
+                disabled: false,
+              },
+            ]}
+            loading={loading}
           />
-        )
-      )}
+        </Grid>
+      </Grid>
+
       {/* Others */}
       <ConsumptionsModal
         showModal={showModal}

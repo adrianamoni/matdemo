@@ -219,58 +219,56 @@ const Productions = () => {
     </Box>
   ) : (
     <>
-      {tableData?.length > 0 ? (
-        <>
-          {/* Productions Table */}
-          <Grid container sx={{ mt: 2 }}>
-            <Grid item xs={12}>
-              <TableWidget
-                data={tableData}
-                columns={columns}
-                multipleSelection={false}
-                tableName="productions"
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <ButtonGroupWidget
-                position="left"
-                buttons={[
-                  {
-                    text: "manualProduction",
-                    color: "primary",
-                    onClick: handleManualProduction,
-                    disabled: false,
-                  },
-                  {
-                    text: "productionCorrection",
-                    color: "secondary",
-                    onClick: handleProductionCorrection,
-                    disabled:
-                      !productionCorrectionPermission || !selectedRows[0]
-                        ? true
-                        : false,
-                  },
-                  {
-                    text: "addDecrease",
-                    color: "primary",
-                    onClick: handleDecreaseProduction,
-                    disabled: false,
-                  },
-                ]}
-                loading={loading}
-              />
-            </Grid>
+      <Grid container sx={{ mt: 2 }}>
+        {/* Productions Table */}
+        {tableData?.length > 0 ? (
+          <Grid item xs={12}>
+            <TableWidget
+              data={tableData}
+              columns={columns}
+              multipleSelection={false}
+              tableName="productions"
+            />
           </Grid>
-        </>
-      ) : (
-        userAlert.show && (
-          <UserAlert
-            severity={userAlert.severity}
-            message={userAlert.message}
+        ) : (
+          userAlert.show && (
+            <UserAlert
+              severity={userAlert.severity}
+              message={userAlert.message}
+            />
+          )
+        )}
+
+        <Grid item xs={12}>
+          <ButtonGroupWidget
+            position="left"
+            buttons={[
+              {
+                text: "manualProduction",
+                color: "primary",
+                onClick: handleManualProduction,
+                disabled: false,
+              },
+              {
+                text: "productionCorrection",
+                color: "secondary",
+                onClick: handleProductionCorrection,
+                disabled:
+                  !productionCorrectionPermission || !selectedRows[0]
+                    ? true
+                    : false,
+              },
+              {
+                text: "addDecrease",
+                color: "primary",
+                onClick: handleDecreaseProduction,
+                disabled: false,
+              },
+            ]}
+            loading={loading}
           />
-        )
-      )}
+        </Grid>
+      </Grid>
 
       {/* Others */}
       <ProductionsModal
