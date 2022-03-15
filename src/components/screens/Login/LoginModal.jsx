@@ -65,9 +65,10 @@ const LoginModal = ({ loginModal, setLoginModal }) => {
       sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
       createNotification({
         status: "success",
-        msg: "¡Usuario loggeado correctamente!",
+        msg: "¡Usuario loggeado correctamente!", //TODO
         hide: response.responseHide,
       });
+      setformWidget({ ...formWidget, loginForm: [] });
       setLoading(false);
       close(false); //close modal
     }
@@ -84,6 +85,7 @@ const LoginModal = ({ loginModal, setLoginModal }) => {
   };
 
   const close = () => {
+    setformWidget({ ...formWidget, loginForm: [] });
     setLoginModal(false);
   };
 
