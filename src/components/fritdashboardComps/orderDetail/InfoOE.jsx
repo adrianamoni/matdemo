@@ -16,9 +16,7 @@ const InfoOE = () => {
   const { globalData } = useContext(globalDataContext);
   const { orderDetails, orderData } = globalData;
   const { woId, operId, seqNo } = globalData.orderData;
-  console.log("orderDetails", orderDetails);
   const { productionData } = orderDetails;
-  console.log("productionData", productionData);
 
   const { width } = useWindowSize();
   const [loadingPlay, setLoadingPlay] = useState(false);

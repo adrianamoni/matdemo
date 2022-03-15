@@ -14,7 +14,6 @@ import DrawerComp from "./Drawer";
 const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
   const language = useContext(languageContext);
   const { colorMode } = useContext(colorModeContext);
-  console.log("colorMode", colorMode);
   const [links, setlinks] = useState(undefined);
 
   const StyledLink = styled(Link)({

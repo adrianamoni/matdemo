@@ -1,4 +1,4 @@
-import { Button, Grid, Paper } from "@mui/material";
+import { Button, Grid, LinearProgress, Paper } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import {
   globalDataContext,
@@ -9,9 +9,10 @@ import Text from "../../../languages/Text";
 import ButtonGroupWidget from "../../../widgets/buttonGroup/ButtonGroupWidget";
 import ModalWidget from "../../../widgets/modalWidget/ModalWidget";
 import TableWidget from "../../../widgets/TableWidget/TableWidget";
-import UseFetchMemory from "../../customHooks/UseFetchMemory";
 import ModalGenerateSample from "./ModalGenerateSample";
 import ResultsTable from "./ResultsTable";
+import { fetchAllSampleData, multiCall, sortBy } from "./helper";
+import { Box } from "@mui/system";
 
 const Quality = () => {
   const { globalData } = useContext(globalDataContext);
@@ -19,6 +20,8 @@ const Quality = () => {
   const [onlyPendings, setOnlyPendings] = useState(true);
   const [generateSampleModal, setGenerateSampleModal] = useState(false);
   const [results, setResults] = useState(null);
+  const [loadingInitialData, setLoadingInitialData] = useState(false);
+  const [loadingResults, setLoadingResults] = useState(false);
   const { selectedRowsIds, setSelectedRowsIds } = useContext(
     selectedRowsIdsContext
   );
@@ -69,6 +72,7 @@ const Quality = () => {
     if (pendingSamples && onlyPendings) {
       setSamples(pendingSamples.data);
     }
+
     //eslint-disable-next-line
   }, [pendingSamples, onlyPendings]);
   useEffect(() => {
@@ -81,32 +85,23 @@ const Quality = () => {
     }
     //eslint-disable-next-line
   }, [onlyPendings, refreshMain]);
-  let response;
-  if (!onlyPendings) {
-    response = await UseFetchMemory({
-      request: "historical-samples",
-      customParams: {
-        entId: lineData.entId,
-        woId: orderData.woId,
-        operId: orderData.operId,
-        seqNo: orderData.seqNo,
-        itemId: orderDetails.productionData.item_id,
-      },
+  const getAllData = async () => {
+    setLoadingInitialData(true);
+    const { res, err } = await fetchAllSampleData({
+      entId: lineData.entId,
+      woId: orderData.woId,
+      operId: orderData.operId,
+      seqNo: orderData.seqNo,
+      itemId: orderDetails.productionData.item_id,
     });
-  }
-
-  if (response) {
-    console.log("response", response);
-    /* setSamples(
-        data.map((sample) => ({
-          id: sample.sample_id,
-          name: sample.sample_name,
-          req_time_local: sample.requested_time_local,
-          estado: sample.estado,
-          status: sample.sample_status,
-        }))
-      ); */
-  }
+    if (err) {
+      createNotification(err);
+    }
+    if (res) {
+      setSamples(res);
+    }
+    setLoadingInitialData(false);
+  };
 
   const handleTestClick = () => {
     /* setmodalCreateInterruption(true); */
@@ -115,7 +110,6 @@ const Quality = () => {
     setOnlyPendings(!onlyPendings);
   };
   const handleGenerateSample = () => {};
-  console.log("samples", samples);
   return (
     <>
       <Grid container sx={{ mt: 2 }} spacing={1}>
@@ -136,15 +130,24 @@ const Quality = () => {
             ]}
           />
         </Grid>
-        {samples && samples.length > 0 && (
+        {loadingInitialData ? (
           <Grid item xs={12}>
-            <TableWidget
-              data={samples}
-              columns={samplesTableColumns}
-              multipleSelection={false}
-              tableName="samples"
-            />
+            <Box sx={{ width: "100%" }}>
+              <LinearProgress />
+            </Box>
           </Grid>
+        ) : (
+          samples &&
+          samples.length > 0 && (
+            <Grid item xs={12}>
+              <TableWidget
+                data={samples}
+                columns={samplesTableColumns}
+                multipleSelection={false}
+                tableName="samples"
+              />
+            </Grid>
+          )
         )}
 
         <Grid item xs={12}>
@@ -155,16 +158,25 @@ const Quality = () => {
             {Text({ tid: "registerTest" })}
           </Button>
         </Grid>
-        {results && selectedSample && (
+        {loadingResults ? (
           <Grid item xs={12}>
-            <ResultsTable
-            /*  results={results}
+            <Box sx={{ width: "100%" }}>
+              <LinearProgress />
+            </Box>
+          </Grid>
+        ) : (
+          results &&
+          selectedSample && (
+            <Grid item xs={12}>
+              <ResultsTable
+              /*  results={results}
               originalResults={originalResults}
               handleChange={handleChange}
               selectedSample={selectedSample}
               setRefreshMain={setRefreshMain} */
-            />
-          </Grid>
+              />
+            </Grid>
+          )
         )}
       </Grid>
 
