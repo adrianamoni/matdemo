@@ -16,7 +16,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { Box } from "@mui/system";
 import LoginModal from "../components/modals/LoginModal";
 import LogoutModal from "../components/modals/LogoutModal";
-import ModalWidget from "../widgets/modalWidget/ModalWidget";
+
 const StyledLink = styled(Link)({
   textDecoration: "none",
   color: "inherit",
@@ -82,22 +82,8 @@ const DrawerComp = ({ navLinks }) => {
           </ListItem>
         </List>
       </div>
-      <ModalWidget
-        open={loginModal}
-        close={() => setLoginModal(false)}
-        content={<LoginModal />}
-      />
-      <ModalWidget
-        open={logoutModal}
-        close={() => setLogoutModal(false)}
-        content={<LogoutModal />}
-      />
-      {/* <ModalContainer opened={loginModal} closed={setLoginModal}>
-        <LoginModal />
-      </ModalContainer>
-      <ModalContainer opened={logoutModal} closed={setLogoutModal}>
-        <LogoutModal />
-      </ModalContainer> */}
+      <LoginModal loginModal={loginModal} setLoginModal={setLoginModal} />
+      <LogoutModal logoutModal={logoutModal} setLogoutModal={setLogoutModal} />
     </>
   );
 };

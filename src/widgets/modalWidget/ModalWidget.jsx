@@ -7,6 +7,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
+import Text from "./../../languages/Text";
 
 const ModalWidget = ({ open, close, title, content, customWidth }) => {
   const style = {
@@ -32,7 +33,7 @@ const ModalWidget = ({ open, close, title, content, customWidth }) => {
     >
       <Paper elevation={24} sx={style}>
         <Typography variant="h5" component="h6" sx={{ mb: 1 }}>
-          {title}
+          {Text({ tid: title })}
         </Typography>
         <Divider />
         <Grid container sx={{ mt: 1 }} spacing={2}>
