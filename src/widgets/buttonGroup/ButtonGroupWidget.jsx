@@ -13,7 +13,7 @@ const ButtonGroupWidget = ({ position, buttons, loading }) => {
         sx={{ display: "flex", justifyContent: position, marginTop: "25px" }}
       >
         <ButtonGroup
-          variant="contained"
+          // variant="contained"
           //   orientation="vertical"
           aria-label="outlined primary button group"
         >
@@ -29,6 +29,7 @@ const ButtonGroupWidget = ({ position, buttons, loading }) => {
                       ? btn.onClick
                       : () => console.log("no click func")
                   }
+                  sx={{ margin: "10px", padding: "15px" }}
                 >
                   {Text({ tid: btn.text })}
                 </Button>

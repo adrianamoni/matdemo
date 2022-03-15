@@ -15,6 +15,7 @@ import {
   cleaning_order_time,
   read_signals,
 } from "../../services/serviceHelper";
+import { line_assignment, read_signals } from "../../services/serviceHelper";
 
 export default function UseFetchMemory({ request, customParams }) {
   const [data, setData] = useState(null);
@@ -59,6 +60,7 @@ const getParams = (request) => {
     timePerOrder: [cleaning_order_time, "queryDataAsync"],
     lastCleaning: [screen_of_last_cleaning, "queryDataAsync"],
     "historical-samples": [all_samples, "queryDataAsync"],
+    operatorsAssignment: [line_assignment, "queryDataAsync"],
   };
 
   return {

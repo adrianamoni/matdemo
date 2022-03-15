@@ -1,14 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
-import useWindowSize from "./../customHooks/UseWindowsSize";
-import { loginContext, formContext } from "../../context/ContextProvider";
+import useWindowSize from "../../customHooks/UseWindowsSize";
+import { loginContext, formContext } from "../../../context/ContextProvider";
 import { Grid } from "@mui/material";
-import { createNotification } from "./../alerts/NotificationAlert";
-import { ApiCall } from "./../../services/Service";
-import { loginObj } from "../../services/serviceHelper";
-import ModalWidget from "./../../widgets/modalWidget/ModalWidget";
-import InputWidget from "./../../widgets/forms/InputWidget";
-import ButtonGroupWidget from "./../../widgets/buttonGroup/ButtonGroupWidget";
-import Text from "./../../languages/Text";
+import { createNotification } from "../../alerts/NotificationAlert";
+import { ApiCall } from "../../../services/Service";
+import { loginObj } from "../../../services/serviceHelper";
+import ModalWidget from "../../../widgets/modalWidget/ModalWidget";
+import InputWidget from "../../../widgets/forms/InputWidget";
+import ButtonGroupWidget from "../../../widgets/buttonGroup/ButtonGroupWidget";
+import Text from "../../../languages/Text";
 
 const LoginModal = ({ loginModal, setLoginModal }) => {
   const windowSize = useWindowSize();
@@ -51,9 +51,10 @@ const LoginModal = ({ loginModal, setLoginModal }) => {
 
       createNotification({
         status: "success",
-        msg: "¡Usuario loggeado correctamente!",
+        msg: "¡Usuario loggeado correctamente!", //TODO
         hide: response.responseHide,
       });
+      setformWidget({ ...formWidget, loginForm: [] });
       setLoading(false);
       close(false); //close modal
     }
@@ -70,6 +71,7 @@ const LoginModal = ({ loginModal, setLoginModal }) => {
   };
 
   const close = () => {
+    setformWidget({ ...formWidget, loginForm: [] });
     setLoginModal(false);
   };
 

@@ -4,13 +4,13 @@ import {
   formContext,
   selectedRowsIdsContext,
   selectedRowsContext,
-} from "../../context/ContextProvider";
-import UseFetchMemory from "./../customHooks/UseFetchMemory";
+} from "../../../context/ContextProvider";
+import UseFetchMemory from "./../../customHooks/UseFetchMemory";
 import { Box, LinearProgress, Grid } from "@mui/material";
-import TableWidget from "./../../widgets/TableWidget/TableWidget";
-import ButtonGroupWidget from "./../../widgets/buttonGroup/ButtonGroupWidget";
-import Text from "./../../languages/Text";
-import ConsumptionsModal from "./../modals/ConsumptionsModal";
+import TableWidget from "./../../../widgets/TableWidget/TableWidget";
+import ButtonGroupWidget from "./../../../widgets/buttonGroup/ButtonGroupWidget";
+import Text from "../../../languages/Text";
+import ConsumptionsModal from "./ConsumptionsModal";
 
 const Consumptions = () => {
   const columns = [

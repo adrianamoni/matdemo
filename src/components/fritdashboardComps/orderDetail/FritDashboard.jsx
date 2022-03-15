@@ -18,11 +18,12 @@ import {
   getPendingSamples,
 } from "./helper";
 import Parameters from "../../fritdashboardTabs/Parameters";
-import Consumptions from "./../../fritdashboardTabs/Consumptions";
-import Productions from "./../../fritdashboardTabs/Productions";
+
 import Quality from "../../fritdashboardTabs/Quality/Quality";
 import Documentation from "../../fritdashboardTabs/Documentation";
 import Planification from "../../fritdashboardTabs/Planification";
+import Consumptions from "./../../fritdashboardTabs/Consumption/Consumptions";
+import Productions from "./../../fritdashboardTabs/Production/Productions";
 
 const FritDashboard = () => {
   /*  let { slug } = useParams(); */

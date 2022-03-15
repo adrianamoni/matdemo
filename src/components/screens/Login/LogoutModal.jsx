@@ -1,14 +1,14 @@
 import React, { useContext, useState } from "react";
-import useWindowSize from "./../customHooks/UseWindowsSize";
+import useWindowSize from "../../customHooks/UseWindowsSize";
 import { useNavigate, useLocation } from "react-router-dom";
-import { loginContext } from "../../context/ContextProvider";
+import { loginContext } from "../../../context/ContextProvider";
 import { Grid, Typography } from "@mui/material";
-import { createNotification } from "./../alerts/NotificationAlert";
-import { ApiCall } from "./../../services/Service";
-import { logoutObj } from "../../services/serviceHelper";
-import ModalWidget from "../../widgets/modalWidget/ModalWidget";
-import ButtonGroupWidget from "./../../widgets/buttonGroup/ButtonGroupWidget";
-import Text from "./../../languages/Text";
+import { createNotification } from "../../alerts/NotificationAlert";
+import { ApiCall } from "../../../services/Service";
+import { logoutObj } from "../../../services/serviceHelper";
+import ModalWidget from "../../../widgets/modalWidget/ModalWidget";
+import ButtonGroupWidget from "../../../widgets/buttonGroup/ButtonGroupWidget";
+import Text from "../../../languages/Text";
 
 const LogoutModal = ({ logoutModal, setLogoutModal }) => {
   const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME;
@@ -47,7 +47,7 @@ const LogoutModal = ({ logoutModal, setLogoutModal }) => {
     } else {
       createNotification({
         status: "success",
-        msg: "¡Se ha cerrado la sesión!",
+        msg: "¡Se ha cerrado la sesión!", //TODO
         hide: response.responseHide,
       });
     }
