@@ -119,7 +119,7 @@ const OeeChartBox = ({ showChart, line, order, disableClick }) => {
       lineData: { entId: line.entId, entName: line.ent_name },
     });
 
-    navigateTo("/frit-dashboard");
+    navigateTo("/detalle-orden");
   };
 
   let stockAlert = false;

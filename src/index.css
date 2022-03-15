@@ -73,6 +73,6 @@ code {
 
 /* CENTER fritDashboard TABS */
 .MuiTabs-flexContainer {
-  justify-content: center !important;
-  z-index: 9999 !important;
+  /* justify-content: center !important;
+  z-index: 9999 !important; */
 }

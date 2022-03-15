@@ -13,48 +13,90 @@ import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { Box } from "@mui/system";
-import LoginModal from "../components/modals/LoginModal";
-import LogoutModal from "../components/modals/LogoutModal";
 import { globalDataContext, loginContext } from "../context/ContextProvider";
 import HomeIcon from "@mui/icons-material/Home";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import TableChartIcon from "@mui/icons-material/TableChart";
-import BarChartIcon from "@mui/icons-material/BarChart";
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
+import PersonRemoveAlt1Icon from "@mui/icons-material/PersonRemoveAlt1";
+import HistoryToggleOffIcon from "@mui/icons-material/HistoryToggleOff";
+import ViewTimelineIcon from "@mui/icons-material/ViewTimeline";
+import ViewListIcon from "@mui/icons-material/ViewList";
+import AllInboxIcon from "@mui/icons-material/AllInbox";
+import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
 import Text from "../languages/Text";
+import LoginModal from "../components/screens/Login/LoginModal";
+import LogoutModal from "../components/screens/Login/LogoutModal";
 
 const sidebarItems = [
   {
     id: 1,
     name: "home",
     icon: <HomeIcon />,
-    path: "/dashboard",
+    path: "/",
   },
-  /*  {
-          id: 2,
-          name: "table",
-          icon: <TableChartIcon />,
-          path: "/table",
-        },
-        {
-          id: 3,
-          name: "charts",
-          icon: <BarChartIcon />,
-          path: "/charts",
-        }, */
-  /* {
-          id: 4,
-          name: "dashboard",
-          icon: <DashboardIcon />,
-          path: "/dashboard",
-        }, */
-  /*  {
-          id: 4,
-          name: "detail",
-          icon: <FeedIcon />,
-          path: "/frit-dashboard",
-        }, */
+
+  {
+    id: 2,
+    name: "assignment",
+    icon: <PersonAddAlt1Icon />,
+    path: "/asignacion",
+    extra: "asignacion",
+  },
+  {
+    id: 3,
+    name: "deassignment",
+    icon: <PersonRemoveAlt1Icon />,
+    path: "/desasignacion",
+    extra: "asignacion",
+  },
+  {
+    id: 4,
+    name: "hoppers",
+    icon: <AllInboxIcon />,
+    path: "/tolvas",
+    extra: "tolvas",
+  },
+  //UNDO THIS ABOVE
+  {
+    id: 8,
+    name: "orders",
+    icon: <ViewListIcon />,
+    path: "/ordenes",
+    permission: "GestionOrden",
+  },
+  /*   {
+    id: 5,
+    name: "cleaning",
+    icon: <CleaningServicesIcon />,
+    path: "/limpieza",
+    extra: "limpieza",
+  }, */
 ];
+
+const protectedItems = [
+  {
+    id: 6,
+    name: "sequencing",
+    icon: <ViewTimelineIcon />,
+    path: "/secuenciacion",
+    permission: "Secuenciacion",
+  },
+  {
+    id: 7,
+    name: "interruptionManager",
+    icon: <HistoryToggleOffIcon />,
+    path: "/gestor-paros",
+    permission: "GestionParos",
+  },
+  {
+    id: 8,
+    name: "orders",
+    icon: <ViewListIcon />,
+    path: "/ordenes",
+    permission: "GestionOrden",
+  },
+];
+
+const extrasItems = [];
 
 const StyledLink = styled(Link)({
   textDecoration: "none",
@@ -69,13 +111,17 @@ const DrawerComp = () => {
   const { extras } = useContext(globalDataContext);
   const [loginModal, setLoginModal] = useState(false);
   const [logoutModal, setLogoutModal] = useState(false);
-
+  let filteredItems;
   if (loggedUser.isLogged) {
     const perms = loggedUser.permissions;
-    console.log("111 perms", perms);
-  }
 
-  console.log("111 extras", extras);
+    const filteredProtectedItems = protectedItems.filter((item) =>
+      perms.find((el) => el.desc.split(".")[0] === item.permission)
+    );
+    filteredItems = [...sidebarItems, ...filteredProtectedItems];
+  } else {
+    filteredItems = [...sidebarItems];
+  }
 
   return (
     <>
@@ -101,7 +147,7 @@ const DrawerComp = () => {
           </Toolbar>
           <Divider />
           <List>
-            {sidebarItems.map((link) => (
+            {filteredItems.map((link) => (
               <StyledLink key={link.id} to={link.path} classes>
                 <ListItem button>
                   <ListItemIcon sx={{ color: "secondary.main" }}>

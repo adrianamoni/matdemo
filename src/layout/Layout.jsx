@@ -45,13 +45,19 @@ function Layout(props) {
         contrastText: "#fff",
         text: "#fff",
       },
+      info: {
+        main: colorMode === "dark" ? "#36b1f5" : "#0288D1",
+        contrastText: "#fff",
+        text: "#fff",
+      },
       background: {
         error: "#DC143C10",
         success: "#00FA9A10",
         warning: "#d1a35e10",
+        info: "#0288D110",
       },
       text: {
-        main: colorMode === "light" ? "#fff" : "#000",
+        main: colorMode === "light" ? "#111" : "#eee",
       },
     },
     typography: {

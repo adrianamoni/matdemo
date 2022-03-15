@@ -505,12 +505,12 @@ const FritDashboard = () => {
       : setModalGenerate; */
 
   return (
-    <Container /* sx={{ m: "auto" }} */ id="fritDashboard-main-container">
+    <Container sx={{ m: "auto" }} id="fritDashboard-main-container">
       <Box
         sx={{
-          maxWidth: { xs: "350px", sm: "600px", md: "900px", lg: "1200px" },
-          /*  width: "60%", */
+          maxWidth: { xs: 350, sm: 600, md: 900, lg: 1200, xl: 1536 },
         }}
+        justifyContent="center"
       >
         <Tabs
           value={navigationData.activeTab}
@@ -544,10 +544,7 @@ const FritDashboard = () => {
         </Tabs>
       </Box>
 
-      <Container
-        sx={{ m: "auto" }}
-        id="fritDashboard-content-container" /*  fluid */
-      >
+      <Container id="fritDashboard-content-container" fluid>
         <Panels value={navigationData.activeTab} loading={loadingInitialData} />
       </Container>
     </Container>

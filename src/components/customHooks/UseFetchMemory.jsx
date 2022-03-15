@@ -13,9 +13,12 @@ import { MemoryDatabaseCall } from "../../services/Service";
 import uuid from "react-uuid";
 import {
   cleaning_order_time,
+  line_assignment,
+  order_manager_date_filter,
+  order_manager_ent_filter,
+  order_manager_item_filter,
   read_signals,
 } from "../../services/serviceHelper";
-import { line_assignment, read_signals } from "../../services/serviceHelper";
 
 export default function UseFetchMemory({ request, customParams }) {
   const [data, setData] = useState(null);
@@ -61,6 +64,15 @@ const getParams = (request) => {
     lastCleaning: [screen_of_last_cleaning, "queryDataAsync"],
     "historical-samples": [all_samples, "queryDataAsync"],
     operatorsAssignment: [line_assignment, "queryDataAsync"],
+    "order-manager-ent": [order_manager_ent_filter, "queryDataFrameDataAsync"],
+    "order-manager-item": [
+      order_manager_item_filter,
+      "queryDataFrameDataAsync",
+    ],
+    "order-manager-date": [
+      order_manager_date_filter,
+      "queryDataFrameDataAsync",
+    ],
   };
 
   return {

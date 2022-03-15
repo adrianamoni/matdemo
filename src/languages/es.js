@@ -92,6 +92,16 @@ const es = {
   result: "Resultado",
   send: "Enviar",
   turn: "Turno",
+  hoppers: "Tolvas",
+  cleaning: "Limpieza",
+  sequencing: "Sequenciación",
+  interruptionManager: "Gestor de Paros",
+  orders: "Órdenes",
+  notFound: "Página no encontrada",
+  redirecting: "Redirigiendo",
+  initDate: "Fecha inicio",
+  quantityProduced: "Cantidad Producida",
+  quantityRequired: "Cantidad Requerida",
 };
 
 export default es;
