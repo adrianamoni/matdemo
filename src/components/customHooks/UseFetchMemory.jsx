@@ -7,6 +7,7 @@ import {
   tab_productions,
   tab_quality_get_qmspec_by_filter,
   screen_of_last_cleaning,
+  all_samples,
 } from "../../services/OFservices";
 import { MemoryDatabaseCall } from "../../services/Service";
 import uuid from "react-uuid";
@@ -57,6 +58,7 @@ const getParams = (request) => {
     pendingSamples: [get_pending_samples, "queryDataFrameDataAsync"],
     timePerOrder: [cleaning_order_time, "queryDataAsync"],
     lastCleaning: [screen_of_last_cleaning, "queryDataAsync"],
+    "historical-samples": [all_samples, "queryDataAsync"],
   };
 
   return {

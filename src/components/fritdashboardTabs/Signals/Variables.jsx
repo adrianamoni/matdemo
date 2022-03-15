@@ -41,7 +41,11 @@ const Variables = () => {
   ) : processedData && processedData.length > 0 ? (
     <Container fluid>
       <Grid container sx={{ mt: 2 }}>
-        <TableWidget data={processedData} columns={variablesColumns} />
+        <TableWidget
+          data={processedData}
+          columns={variablesColumns}
+          tableName="variables-signals"
+        />
       </Grid>
     </Container>
   ) : (

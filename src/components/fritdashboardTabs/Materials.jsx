@@ -65,7 +65,7 @@ const Materials = () => {
   ) : (
     <Grid container sx={{ mt: 2 }}>
       <Grid item xs={12}>
-        <TableWidget data={data} columns={columns} />
+        <TableWidget data={data} columns={columns} tableName="materials" />
       </Grid>
 
       <Grid item xs={12}>

@@ -1,18 +1,31 @@
 import { Button, Grid, Paper } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  globalDataContext,
+  /*  selectedRowsContext, */
+  selectedRowsIdsContext,
+} from "../../../context/ContextProvider";
 import Text from "../../../languages/Text";
 import ButtonGroupWidget from "../../../widgets/buttonGroup/ButtonGroupWidget";
 import ModalWidget from "../../../widgets/modalWidget/ModalWidget";
 import TableWidget from "../../../widgets/TableWidget/TableWidget";
+import UseFetchMemory from "../../customHooks/UseFetchMemory";
 import ModalGenerateSample from "./ModalGenerateSample";
 import ResultsTable from "./ResultsTable";
 
 const Quality = () => {
+  const { globalData } = useContext(globalDataContext);
+  const { orderData, lineData, orderDetails, pendingSamples } = globalData;
   const [onlyPendings, setOnlyPendings] = useState(true);
   const [generateSampleModal, setGenerateSampleModal] = useState(false);
   const [results, setResults] = useState(null);
-  const [selectedSample, setSelectedSample] = useState(undefined);
+  const { selectedRowsIds, setSelectedRowsIds } = useContext(
+    selectedRowsIdsContext
+  );
+
   const [samples, setSamples] = useState();
+  const [refreshMain, setRefreshMain] = useState(false);
+
   const samplesTableColumns = [
     {
       field: "name",
@@ -52,14 +65,60 @@ const Quality = () => {
       flex: 1,
     },
   ];
+  useEffect(() => {
+    if (pendingSamples && onlyPendings) {
+      setSamples(pendingSamples.data);
+    }
+    //eslint-disable-next-line
+  }, [pendingSamples, onlyPendings]);
+  useEffect(() => {
+    setSelectedRowsIds({ ...selectedRowsIds, samples: [] });
+    if (!onlyPendings) {
+      getAllData();
+    }
+    if (refreshMain) {
+      setRefreshMain(false);
+    }
+    //eslint-disable-next-line
+  }, [onlyPendings, refreshMain]);
+  let response;
+  if (!onlyPendings) {
+    response = await UseFetchMemory({
+      request: "historical-samples",
+      customParams: {
+        entId: lineData.entId,
+        woId: orderData.woId,
+        operId: orderData.operId,
+        seqNo: orderData.seqNo,
+        itemId: orderDetails.productionData.item_id,
+      },
+    });
+  }
+
+  if (response) {
+    console.log("response", response);
+    /* setSamples(
+        data.map((sample) => ({
+          id: sample.sample_id,
+          name: sample.sample_name,
+          req_time_local: sample.requested_time_local,
+          estado: sample.estado,
+          status: sample.sample_status,
+        }))
+      ); */
+  }
+
   const handleTestClick = () => {
     /* setmodalCreateInterruption(true); */
   };
+  const handleTogglePendings = () => {
+    setOnlyPendings(!onlyPendings);
+  };
   const handleGenerateSample = () => {};
-
+  console.log("samples", samples);
   return (
     <>
-      <Grid container sx={{ mt: 2 }}>
+      <Grid container sx={{ mt: 2 }} spacing={1}>
         <Grid item xs={12} sx={{ display: "flex" }} justifyContent="flex-end">
           <ButtonGroupWidget
             position="right"
@@ -67,6 +126,7 @@ const Quality = () => {
               {
                 text: onlyPendings ? "historical" : "pendings",
                 color: "primary",
+                onClick: handleTogglePendings,
               },
               {
                 text: "notificationToQuality",
@@ -76,9 +136,16 @@ const Quality = () => {
             ]}
           />
         </Grid>
-        <Grid item xs={12}>
-          {/* <TableWidget data={samples} columns={samplesTableColumns} /> */}
-        </Grid>
+        {samples && samples.length > 0 && (
+          <Grid item xs={12}>
+            <TableWidget
+              data={samples}
+              columns={samplesTableColumns}
+              multipleSelection={false}
+              tableName="samples"
+            />
+          </Grid>
+        )}
 
         <Grid item xs={12}>
           <Button
