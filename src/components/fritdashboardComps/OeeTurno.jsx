@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import Text from "../../languages/Text";
 import { get_oee_shift } from "../../services/OFservices";
 import { MemoryDatabaseCall } from "../../services/Service";
 import LineProgress from "../../widgets/progress/LineProgress";
@@ -50,10 +51,10 @@ const OeeTurno = ({ line }) => {
     };
     //eslint-disable-next-line
   }, []);
-
+  const cardTitle = `OEE ${Text({ tid: "turn" })} ${line.ent_name}`;
   return (
     <Card>
-      <CardHeader component="div" title={`OEE TURNO ${line.ent_name}`} />
+      <CardHeader component="div" title={cardTitle.toUpperCase()} />
       <CardContent>
         <Grid container alignItems="center">
           {apiData && apiData.length > 0 ? (

@@ -34,9 +34,9 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
           id: 1,
           name: <Text tid={"home"} />,
           icon: <HomeIcon />,
-          path: "/",
+          path: "/dashboard",
         },
-        {
+        /*  {
           id: 2,
           name: <Text tid={"table"} />,
           icon: <TableChartIcon />,
@@ -47,13 +47,13 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
           name: <Text tid={"charts"} />,
           icon: <BarChartIcon />,
           path: "/charts",
-        },
-        {
+        }, */
+        /* {
           id: 4,
           name: <Text tid={"dashboard"} />,
           icon: <DashboardIcon />,
           path: "/dashboard",
-        },
+        }, */
         /*  {
           id: 4,
           name: <Text tid={"detail"} />,

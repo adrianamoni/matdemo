@@ -85,6 +85,7 @@ const en = {
   feature: "Feature",
   result: "Result",
   send: "Send",
+  turn: "Turn",
 };
 
 export default en;
