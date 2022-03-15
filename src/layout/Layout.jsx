@@ -9,7 +9,7 @@ import Sidebar from "./Sidebar";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material";
 import { colorModeContext } from "../context/ContextProvider";
 
-const drawerWidth = 180;
+const drawerWidth = 200;
 
 function Layout(props) {
   const { window } = props;
