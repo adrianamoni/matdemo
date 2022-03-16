@@ -13,11 +13,13 @@ import TreeViewWidget from "./../../../widgets/treeView/TreeViewWidget";
 import ButtonGroupWidget from "./../../../widgets/buttonGroup/ButtonGroupWidget";
 import Text from "./../../../languages/Text";
 import { MemoryDatabaseCall } from "../../../services/Service";
+import { ApiCall } from "./../../../services/Service";
 import {
   getAllowableUtilGroups,
   getAllowableUtilReasons,
+  screen_interruptions_generate,
 } from "../../../services/Interruptions";
-import { ApiCall } from "./../../../services/Service";
+import { write_tags } from "../../../services/serviceHelper";
 import { createNotification } from "./../../alerts/NotificationAlert";
 
 const InterruptionsModal = ({
@@ -25,6 +27,7 @@ const InterruptionsModal = ({
   setShowModal,
   modalContent,
   setRefreshData,
+  fromInterruptionsManager,
 }) => {
   const windowSize = useWindowSize();
 
@@ -46,6 +49,7 @@ const InterruptionsModal = ({
   const [loading, setLoading] = useState(false);
   const [selectedReason, setSelectedReason] = useState(false);
 
+  //TREEVIEW DATA
   useEffect(() => {
     if (showModal) {
       fetchGroupsTreeViewData();
@@ -196,16 +200,7 @@ const InterruptionsModal = ({
     }
   }, [treeReasonsData]);
 
-  const closeModal = () => {
-    setformWidget({
-      ...formWidget,
-      createInterruptionForm: [],
-      justifyInterruptionForm: [],
-    });
-    setShowModal(false);
-    setRefreshData(true);
-  };
-
+  //SELECT REASON
   const handleSelectNode = (event, tempNodeId) => {
     try {
       let nodeId = tempNodeId.replace("reas", "");
@@ -216,8 +211,71 @@ const InterruptionsModal = ({
     } catch (error) {}
   };
 
+  const closeModal = () => {
+    setformWidget({
+      ...formWidget,
+      createInterruptionForm: [],
+      justifyInterruptionForm: [],
+    });
+    setSelectedReason({});
+    setShowModal(false);
+    setRefreshData(true);
+  };
+
   // CREATE INTERRUPTION
-  const handleSubmitCreateInterruption = () => {};
+  const handleSubmitCreateInterruption = async () => {
+    setLoading(true);
+
+    const paramObj = {
+      lineaId: fromInterruptionsManager ? selectedLine : entId,
+      reasCd: selectedReason.reas_cd,
+      comments: formWidget?.createInterruptionForm?.comment
+        ? formWidget.createInterruptionForm.comment
+        : "",
+    };
+
+    const response = await ApiCall({
+      params: screen_interruptions_generate(paramObj),
+    });
+    if (response.responseError) {
+      setLoading(false);
+      createNotification({
+        status: "error",
+        code: response.responseError,
+        msg: response.responseMsg,
+        hide: response.responseHide,
+      });
+      closeModal();
+    } else {
+      const tags_arr = [
+        {
+          TagName: `${entName}.AveriaMantenimiento`,
+          Value: selectedReason === 5 ? 1 : 0, //Si el grupo de paros es 'AVERIAS' escribe 1.
+        },
+      ];
+
+      const response2 = await ApiCall({
+        params: write_tags({ tags_arr }),
+      });
+
+      if (response2.responseError) {
+        createNotification({
+          status: "error",
+          code: response.responseError,
+          msg: response.responseMsg,
+          hide: response.responseHide,
+        });
+      }
+      setLoading(false);
+      createNotification({
+        status: "success",
+        msg: "¡Paro generado con éxito!", //TODO
+        hide: response.responseHide,
+      });
+      closeModal();
+    }
+  };
+
   const createInterruptionModalContent = (
     <>
       <Grid container spacing={2}>

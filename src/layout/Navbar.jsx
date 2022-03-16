@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { AppBar, Typography, IconButton, Toolbar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import LanguageSelector from "../languages/LanguageSelector";
 import ToggleDarkMode from "../theme/ToggleDarkMode";
+import {
+  formContext,
+  selectedRowsIdsContext,
+  selectedRowsContext,
+} from "../context/ContextProvider";
 
 const Navbar = ({ drawerWidth, handleDrawerToggle, title }) => {
+  let location = useLocation();
+
+  const { setformWidget } = useContext(formContext);
+  const { setSelectedRowsIds } = useContext(selectedRowsIdsContext);
+  const { setSelectedRows } = useContext(selectedRowsContext);
+
+  useEffect(() => {
+    setformWidget({});
+    setSelectedRowsIds([]);
+    setSelectedRows([]);
+  }, [location]);
+
   return (
     <AppBar
       position="fixed"

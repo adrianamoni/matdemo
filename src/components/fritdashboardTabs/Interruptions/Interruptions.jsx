@@ -6,8 +6,7 @@ import {
   selectedRowsIdsContext,
   selectedRowsContext,
 } from "../../../context/ContextProvider";
-import { MemoryDatabaseCall } from "../../../services/Service";
-import { all_interruptions } from "../../../services/Interruptions";
+import { fetchAllData } from "./helper";
 import { Box, LinearProgress, Grid, Button } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import TableWidget from "./../../../widgets/TableWidget/TableWidget";
@@ -101,57 +100,6 @@ const Interruptions = () => {
       setTableData(res);
     }
     setLoading(false);
-  };
-
-  const fetchAllData = async (entId) => {
-    let err = null;
-    let res = [];
-
-    const response = await MemoryDatabaseCall({
-      params: all_interruptions(entId),
-      url: "queryDataAsync",
-    });
-
-    if (response) {
-      if (response.responseError) {
-        err = {
-          status: "error",
-          code: response.responseError,
-          msg: response.responseError,
-          hide: 1,
-        };
-      } else {
-        if (response.length > 0) {
-          const newArr = response.map((item, i) => {
-            return {
-              index: i + 1,
-              Duration: timeFormating(item.Duration),
-              customStartDateTime: dateFormater({
-                date: item.StartDateTime,
-                type: "hora-fecha",
-              }),
-              EndDateTime: dateFormater({
-                date: item.EndDateTime,
-                type: "hora-fecha",
-              }),
-              Prompt: item.Prompt,
-              ID: item.ID,
-              ReasonDesc: item.ReasonDesc,
-              Comment: item.Comment,
-              UtilStateDesc: item.UtilStateDesc,
-              ReasonGrpId: item.ReasonGrpId,
-              ReasonCd: item.ReasonCd,
-              RawReasCd: item.RawReasCd,
-              EntId: item.EntId,
-              StartDateTime: item.StartDateTime,
-            };
-          });
-
-          res = newArr;
-        }
-      }
-    }
-    return { res, err };
   };
 
   const handleFilter = () => {
