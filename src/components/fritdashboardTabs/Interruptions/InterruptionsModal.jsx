@@ -29,6 +29,9 @@ const InterruptionsModal = ({
   modalContent,
   setRefreshData,
   fromInterruptionsManager,
+  selectedNode,
+  setSelectedNode,
+  originalData,
 }) => {
   const windowSize = useWindowSize();
 
@@ -48,7 +51,6 @@ const InterruptionsModal = ({
   const [treeReasonsData, setTreeResonsData] = useState(false);
   const [treeViewData, setTreeViewData] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [selectedNode, setSelectedNode] = useState(null);
   const [selectedReason, setSelectedReason] = useState(null);
   const [expandedNodes, setExpandedNodes] = useState([]);
 
@@ -194,6 +196,14 @@ const InterruptionsModal = ({
       });
 
       setTreeResonsData(childReasons);
+
+      if (selectedNode != null) {
+        let nodeId = selectedNode.replace("reas", "");
+        let selectNode = reasonsData.find((el) => {
+          return el.reas_cd == nodeId;
+        });
+        setSelectedReason(selectNode);
+      }
     }
   }, [reasonsData]);
 
@@ -209,21 +219,15 @@ const InterruptionsModal = ({
     }
   }, [treeReasonsData]);
 
-  useEffect(() => {
-    if (selectedRows[0]?.length > 0) {
-      setSelectedNode("reas" + selectedRows[0]?.ReasonCd);
-    }
-  }, [selectedRows]);
-
   //SELECT REASON
   const handleSelectNode = (event, tempNodeId) => {
     try {
       let nodeId = tempNodeId.replace("reas", "");
       setSelectedNode(tempNodeId);
-      let selectedNode = reasonsData.find((el) => {
+      let selectNode = reasonsData.find((el) => {
         return el.reas_cd == nodeId;
       });
-      setSelectedReason(selectedNode);
+      setSelectedReason(selectNode);
     } catch (error) {}
   };
 
@@ -300,7 +304,6 @@ const InterruptionsModal = ({
           <TreeViewWidget
             treeData={treeViewData}
             handleSelectNode={handleSelectNode}
-            expanded={expandedNodes}
             selected={selectedNode}
           />
         </Grid>
@@ -330,7 +333,7 @@ const InterruptionsModal = ({
                 disabled: !selectedReason ? true : false,
               },
             ]}
-            loading={false}
+            loading={loading}
           />
         </Grid>
       </Grid>
@@ -340,12 +343,17 @@ const InterruptionsModal = ({
   // JUSTIFY INTERRUPTION
   const handleSubmitJustifyInterruption = async () => {
     setLoading(true);
+
+    let row = originalData.find((el) => {
+      return el.ID == selectedRows[0].id;
+    });
+
     let submitObj = {
       lineaId: selectedRows[0].EntId,
       reasCd: selectedReason.reas_cd,
       rawReasCd: selectedRows[0].RawReasCd,
-      eventTime: selectedRows[0].customStartDateTime,
-      eventEndTime: selectedRows[0].EndDateTime,
+      eventTime: row.StartDateTime,
+      eventEndTime: row.EndDateTime,
       comments: formWidget?.justifyInterruptionForm?.comment
         ? formWidget.justifyInterruptionForm.comment
         : "",
@@ -410,7 +418,7 @@ const InterruptionsModal = ({
                 disabled: false,
               },
             ]}
-            loading={false}
+            loading={loading}
           />
         </Grid>
       </Grid>

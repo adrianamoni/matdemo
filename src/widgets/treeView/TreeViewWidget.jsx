@@ -4,7 +4,7 @@ import { TreeView, TreeItem } from "@mui/lab";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
 
-const TreeViewWidget = ({ treeData, handleSelectNode, expanded, selected }) => {
+const TreeViewWidget = (props) => {
   const renderTree = (nodes) => (
     <TreeItem
       key={nodes.id}
@@ -17,22 +17,38 @@ const TreeViewWidget = ({ treeData, handleSelectNode, expanded, selected }) => {
         : null}
     </TreeItem>
   );
-
-  return (
-    <TreeView
-      aria-label="customized"
-      defaultExpanded={["root"]}
-      //expanded={expanded}
-      defaultCollapseIcon={<IndeterminateCheckBoxIcon color="primary" />}
-      defaultExpandIcon={<AddBoxIcon color="primary" />}
-      defaultEndIcon={""}
-      sx={{ height: 600, flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
-      multiSelect={false}
-      onNodeSelect={handleSelectNode}
-      selected={selected}
-    >
-      {renderTree(treeData)}
-    </TreeView>
+  return props?.expanded ? (
+    <>
+      <TreeView
+        aria-label="customized"
+        expanded={props.expanded}
+        defaultCollapseIcon={<IndeterminateCheckBoxIcon color="primary" />}
+        defaultExpandIcon={<AddBoxIcon color="primary" />}
+        defaultEndIcon={""}
+        sx={{ height: 600, flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
+        multiSelect={false}
+        onNodeSelect={props.handleSelectNode}
+        selected={props.selected}
+      >
+        {renderTree(props.treeData)}
+      </TreeView>
+    </>
+  ) : (
+    <>
+      <TreeView
+        aria-label="customized"
+        defaultExpanded={["root"]}
+        defaultCollapseIcon={<IndeterminateCheckBoxIcon color="primary" />}
+        defaultExpandIcon={<AddBoxIcon color="primary" />}
+        defaultEndIcon={""}
+        sx={{ height: 600, flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
+        multiSelect={false}
+        onNodeSelect={props.handleSelectNode}
+        selected={props.selected}
+      >
+        {renderTree(props.treeData)}
+      </TreeView>
+    </>
   );
 };
 
