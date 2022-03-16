@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import { ApiCall } from "../../../services/Service";
+import { write_tags } from "../../../services/serviceHelper";
 
 const LineStatusButton = ({ lineName, planificatedButton }) => {
   const [loading, setLoading] = useState(false);
@@ -57,8 +59,8 @@ const StateButton = ({ state, handleClick, loading /*  disabled */ }) => {
   return (
     <LoadingButton
       fullWidth
-      style={{
-        backgroundColor: state ? "#31c46e" : "crimson",
+      sx={{
+        backgroundColor: state ? "success.main" : "error.main",
         color: "white",
       }}
       onClick={() => handleClick(state ? false : true)}

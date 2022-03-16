@@ -234,6 +234,7 @@ const SeqTable = ({
                         showTimeSelect
                         timeIntervals={5}
                         dateFormat="dd/MM/yyyy hh:mm:ss"
+                        sx={{ cursor: "pointer" }}
                       />
                     </TableCell>
                     <TableCell>

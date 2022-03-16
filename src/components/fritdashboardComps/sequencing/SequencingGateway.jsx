@@ -397,13 +397,26 @@ const SequencingGateway = () => {
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={12} md={4} textAlign="left">
                     <ButtonGroup>
-                      <Button onClick={() => handleTimelineDisplayHours(8)}>
+                      <Button
+                        variant={timelineHours === 8 ? "contained" : "outlined"}
+                        onClick={() => handleTimelineDisplayHours(8)}
+                      >
                         8hrs
                       </Button>
-                      <Button onClick={() => handleTimelineDisplayHours(12)}>
+                      <Button
+                        variant={
+                          timelineHours === 12 ? "contained" : "outlined"
+                        }
+                        onClick={() => handleTimelineDisplayHours(12)}
+                      >
                         12hrs
                       </Button>
-                      <Button onClick={() => handleTimelineDisplayHours(24)}>
+                      <Button
+                        variant={
+                          timelineHours === 24 ? "contained" : "outlined"
+                        }
+                        onClick={() => handleTimelineDisplayHours(24)}
+                      >
                         24hrs
                       </Button>
                     </ButtonGroup>

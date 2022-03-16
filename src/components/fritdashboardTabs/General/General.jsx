@@ -24,8 +24,8 @@ import InfoOE from "../../fritdashboardComps/orderDetail/InfoOE";
 import OeeOrden from "../../fritdashboardComps/orderDetail/OeeOrden";
 import OeeHistorico from "../../fritdashboardComps/orderDetail/OeeHistorico";
 import AutoControles from "../../fritdashboardComps/orderDetail/AutoControles";
-import Paros from "../../fritdashboardComps/orderDetail/Paros";
 import Limpieza from "../../fritdashboardComps/orderDetail/Limpieza";
+import Paros from "../../fritdashboardComps/interruptionManagement/Paros";
 
 const General = ({ loading }) => {
   const { width } = useWindowSize();

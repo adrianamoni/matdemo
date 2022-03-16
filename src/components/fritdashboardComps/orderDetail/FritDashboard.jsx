@@ -36,6 +36,8 @@ import Productions from "./../../fritdashboardTabs/Production/Productions";
 import LineStatusButton from "./LineStatusButton";
 import { MemoryDatabaseCall } from "../../../services/Service";
 import { read_tags_teams } from "../../../services/serviceHelper";
+import ActualInterruption from "./ActualInterruption";
+import { get_actual_interruption } from "../../../services/Interruptions";
 
 const FritDashboard = () => {
   /*  let { slug } = useParams(); */
@@ -55,6 +57,10 @@ const FritDashboard = () => {
   const { entId, entName } = lineData;
   const [loadingInitialData, setLoadingInitialData] = useState(true);
   const [planificatedButton, setPlanificatedButton] = useState(undefined);
+  const [actualInterruption, setActualInterruption] = useState(undefined);
+  const [modalGenerate, setModalGenerate] = useState(false);
+  const [modalJustify, setModalJustify] = useState(false);
+  const [refreshMain, setRefreshMain] = useState(false);
 
   const ofDetailNav = [
     "General",
@@ -82,6 +88,24 @@ const FritDashboard = () => {
 
   useEffect(() => {
     let clearIntervalData;
+    let clearTimeoutActualInterruption;
+    let clearTimeoutPlanificate;
+    const fetchActualInterruption = async () => {
+      const response = await MemoryDatabaseCall({
+        params: get_actual_interruption(entId),
+        url: "queryDataAsync",
+      });
+
+      if (response) {
+        if (response.length > 0) {
+          setActualInterruption(response[0]);
+        }
+      }
+      clearTimeoutActualInterruption = setTimeout(
+        fetchActualInterruption,
+        4000
+      );
+    };
     const readPlanificateButtonState = async () => {
       const filter = {
         filterExpression: {
@@ -126,7 +150,7 @@ const FritDashboard = () => {
         fetchData(true);
         clearIntervalData = setInterval(fetchData, 6000);
         readPlanificateButtonState();
-
+        fetchActualInterruption();
         /* 
           fetchSpecs();
           fetchActualInterruption();
@@ -135,10 +159,18 @@ const FritDashboard = () => {
           clearIntervalAlert = setInterval(fetchAlertData, 6000); */
       }
     }
+    if (modalJustify) {
+      clearTimeout(clearTimeoutActualInterruption);
+    }
+    if (refreshMain) {
+      setRefreshMain(false);
+    }
     return () => {
       clearInterval(clearIntervalData);
+      clearTimeout(clearTimeoutPlanificate);
+      clearTimeout(clearTimeoutActualInterruption);
     };
-  }, []);
+  }, [modalJustify]);
 
   const fetchData = async (showLoader) => {
     const { productionData, cleaningData } = await getOrderDetails({
@@ -252,207 +284,8 @@ const FritDashboard = () => {
       );
     };
 
-    const fetchAlertData = async () => {
-      let interruptionAlert;
-      let qualityAlert;
-      let interruptionData;
-      let qualityData;
-
-      const interruption_filter = [
+  
     
-        {
-          filterExpression: null,
-          filterItem: {
-            column: "EntId",
-            dataType: "INT",
-            value: line.entId,
-            filterItemType: "Equal",
-            checkDBNull: false,
-          },
-        },
-
-        {
-          filterExpression: null,
-          filterItem: {
-            column: "ShiftEndDateTime",
-            dataType: "Datetime",
-            value: null,
-            filterItemType: "null",
-            checkDBNull: false,
-          },
-        },
-      ];
-
-      const response = await MemoryDatabaseCall({
-        params: pending_interruptions({
-          filter: interruption_filter,
-        }),
-        url: "queryDataFrameDataAsync",
-      });
-
-      if (response) {
-        if (response.length > 0) {
-          interruptionAlert = true;
-          interruptionData = response.map((item, i) => ({
-            index: i,
-            Duration: timeFormating(item.Duration),
-            customStartDateTime: dateFormater({
-              date: item.StartDateTime,
-              type: "hora-fecha",
-            }),
-            EndDateTime: dateFormater({
-              date: item.EndDateTime,
-              type: "hora-fecha",
-            }),
-            Prompt: item.Prompt,
-            ID: item.ID,
-            ReasonDesc: item.ReasonDesc,
-            Comment: item.Comment,
-            UtilStateDesc: item.UtilStateDesc,
-            ReasonGrpId: item.ReasonGrpId,
-            ReasonCd: item.ReasonCd,
-            RawReasCd: item.RawReasCd,
-            EntId: item.EntId,
-            StartDateTime: item.StartDateTime,
-          }));
-        } else {
-          interruptionAlert = false;
-          interruptionData = [];
-        }
-      } else {
-        interruptionAlert = false;
-        interruptionData = [];
-      }
-
-      const filter = [
-        {
-          filterExpression: null,
-          filterItem: {
-            column: "ent_id",
-            dataType: "INT",
-            value: line.entId,
-            filterItemType: "Equal",
-            checkDBNull: false,
-          },
-        },
-        {
-          filterExpression: null,
-          filterItem: {
-            column: "wo_id",
-            dataType: "STRING",
-            value: order.woId,
-            filterItemType: "Equal",
-            checkDBNull: false,
-          },
-        },
-        {
-          filterExpression: null,
-          filterItem: {
-            column: "oper_id",
-            dataType: "STRING",
-            value: order.operId,
-            filterItemType: "Equal",
-            checkDBNull: false,
-          },
-        },
-        {
-          filterExpression: null,
-          filterItem: {
-            column: "seq_no",
-            dataType: "INT",
-            value: order.seqNo,
-            filterItemType: "Equal",
-            checkDBNull: false,
-          },
-        },
-        {
-          filterExpression: null,
-          filterItem: {
-            column: "item_id",
-            dataType: "STRING",
-            value: order.itemId,
-            filterItemType: "Equal",
-            checkDBNull: false,
-          },
-        },
-       
-      ];
-
-      const response2 = await MemoryDatabaseCall({
-        params: get_pending_samples({ filter }),
-        url: "queryDataFrameDataAsync",
-      });
-      if (response2) {
-        if (response2.length > 0) {
-          if (response2.length > 0) {
-            qualityAlert = true;
-            qualityData = response2.map((sample) => ({
-              id: sample.sample_id,
-              name: sample.sample_name,
-              req_time_local: sample.requested_time_local,
-              estado: sample.estado,
-              status: sample.sample_status,
-            }));
-          } else {
-            qualityAlert = false;
-            qualityData = [];
-          }
-        } else {
-          qualityAlert = false;
-          qualityData = [];
-        }
-      }
-      setPendingData({
-        interruptions: { alert: interruptionAlert, data: interruptionData },
-        quality: { alert: qualityAlert, data: qualityData },
-      });
-
-      
-    };
-
-    const readPlanificateButtonState = async () => {
-      const filter = {
-        filterExpression: {
-          filters: [
-            {
-              filterExpression: null,
-              filterItem: {
-                column: "Tagname",
-                dataType: "String",
-                value: `${line.entName}.Planificada`,
-                filterItemType: "Equal",
-                checkDBNull: false,
-              },
-            },
-          ],
-          filterExpressionType: "AND",
-          negationFilterExpression: false,
-        },
-        filterItem: null,
-      };
-
-      const response = await MemoryDatabaseCall({
-        params: read_tags_teams({ filter }),
-        url: "queryWWDataFrameDataAsync",
-      });
-
-      if (response) {
-        if (response.length > 0) {
-          if (response[0] && response[0].Quality === 192) {
-            if (response[0].Value) {
-              setPlanificatedButton(true);
-            } else {
-              setPlanificatedButton(false);
-            }
-          }
-        }
-      }
-      clearTimeoutPlanificate = setTimeout(
-        readPlanificateButtonState,
-        globalVariables.intervalTime.lowFrequency
-      );
-    };
-
     if (line) {
       if (order) {
         fetchSpecs();
@@ -495,12 +328,7 @@ const FritDashboard = () => {
     //eslint-disable-next-line
   }, [modalJustify]);
 
-  useEffect(() => {
-    setActivePane(globalVariables.activeIndexOFDetailPane);
-  }, [globalVariables]);
-  useEffect(() => {
-    setActivePane(undefined);
-  }, [activePane]);
+ 
 
   const fetchSpecs = async () => {
     let oeeTarget, yellowThreshold;
@@ -549,17 +377,19 @@ const FritDashboard = () => {
       yellowThreshold,
     });
   };
+
+ */
   const push =
     actualInterruption &&
     actualInterruption.reas_desc.toLowerCase().includes("paro") &&
     actualInterruption.reas_desc.toLowerCase().includes("pendiente") &&
     actualInterruption.reas_desc.toLowerCase().includes("justificar")
       ? setModalJustify
-      : setModalGenerate; */
-
+      : setModalGenerate;
   return (
-    <Container sx={{ m: "auto" }} id="fritDashboard-main-container">
-      {/* <Segment.Group
+    <>
+      <Container sx={{ m: "auto" }} id="fritDashboard-main-container">
+        {/* <Segment.Group
           stacked
           raised
           horizontal={pageSize.width > 900}
@@ -575,62 +405,79 @@ const FritDashboard = () => {
             <ActualInterruption interruption={actualInterruption} push={push} />
           )}
         </Segment.Group> */}
-      <Grid container>
-        {planificatedButton !== undefined && (
-          <Grid item xs={6}>
-            <LineStatusButton
-              planificatedButton={planificatedButton}
-              lineName={entName}
-            />
-          </Grid>
-        )}
-
-        <Grid item xs={6}>
-          <Button>b</Button>
-        </Grid>
-      </Grid>
-      <Box
-        sx={{
-          maxWidth: { xs: 350, sm: 600, md: 900, lg: 1200, xl: 1536 },
-        }}
-        justifyContent="center"
-      >
-        <Tabs
-          value={navigationData.activeTab}
-          onChange={handleChange}
-          variant="scrollable"
-          scrollButtons={true}
-          allowScrollButtonsMobile
-          aria-label="scrollable auto tabs example"
-          sx={{ m: "auto" }}
-          /* id="fritDashboard-tabs-container" */
-        >
-          {ofDetailNav.map((tab, index) => {
-            let sampleAlert, interruptionAlert;
-            if (pendingSamples.alert && index === 6) {
-              sampleAlert = true;
-            }
-            if (pendingInterruptions.alert && index === 7) {
-              interruptionAlert = true;
-            }
-
-            return (
-              <Tab
-                label={tab}
-                index={index}
-                sx={{
-                  color: (sampleAlert || interruptionAlert) && "error.main",
-                }}
+        <Grid container>
+          {planificatedButton !== undefined && (
+            <Grid item xs={6}>
+              <LineStatusButton
+                planificatedButton={planificatedButton}
+                lineName={entName}
               />
-            );
-          })}
-        </Tabs>
-      </Box>
+            </Grid>
+          )}
+          {actualInterruption && (
+            <Grid item xs={6}>
+              <ActualInterruption
+                interruption={actualInterruption}
+                push={push}
+              />
+            </Grid>
+          )}
+        </Grid>
+        <Box
+          sx={{
+            maxWidth: { xs: 350, sm: 600, md: 900, lg: 1200, xl: 1536 },
+          }}
+          justifyContent="center"
+        >
+          <Tabs
+            value={navigationData.activeTab}
+            onChange={handleChange}
+            variant="scrollable"
+            scrollButtons={true}
+            allowScrollButtonsMobile
+            aria-label="scrollable auto tabs example"
+            sx={{ m: "auto" }}
+            /* id="fritDashboard-tabs-container" */
+          >
+            {ofDetailNav.map((tab, index) => {
+              let sampleAlert, interruptionAlert;
+              if (pendingSamples.alert && index === 6) {
+                sampleAlert = true;
+              }
+              if (pendingInterruptions.alert && index === 7) {
+                interruptionAlert = true;
+              }
 
-      <Container id="fritDashboard-content-container" fluid>
-        <Panels value={navigationData.activeTab} loading={loadingInitialData} />
+              return (
+                <Tab
+                  label={tab}
+                  index={index}
+                  sx={{
+                    color: (sampleAlert || interruptionAlert) && "error.main",
+                  }}
+                />
+              );
+            })}
+          </Tabs>
+        </Box>
+
+        <Container id="fritDashboard-content-container" fluid>
+          <Panels
+            value={navigationData.activeTab}
+            loading={loadingInitialData}
+          />
+        </Container>
       </Container>
-    </Container>
+      {/* <GenerateInterruptionModal
+        modalGenerate={modalGenerate}
+        setModalGenerate={setModalGenerate}
+      />
+      <JustifyInterruptionOFModal
+        interruptionSelected={actualInterruption}
+        modalJustify={modalJustify}
+        setModalJustify={setModalJustify}
+      /> */}
+    </>
   );
 };
 
