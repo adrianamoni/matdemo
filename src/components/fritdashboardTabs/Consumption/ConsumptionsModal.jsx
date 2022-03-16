@@ -58,14 +58,12 @@ const ConsumptionsModal = ({
       operId: operId,
       seqNo: seqNo,
       entId: selectedRows[0].ent_id,
-      fromEntId: selectedRows[0].from_ent_id
-        ? selectedRows[0].from_ent_id
-        : null,
+      fromEntId: selectedRows[0].from_ent_id,
       itemId: selectedRows[0].item_id,
       lotNo: selectedRows[0].lot_no,
-      sublotNo: selectedRows[0].sublot_no ? selectedRows[0].sublot_no : "",
+      sublotNo: selectedRows[0].sublot_no,
       quantity: parseFloat(formWidget.consumptionCorrectionForm.quantity),
-      rowId: selectedRows[0].row_id ? selectedRows[0].row_id : "",
+      rowId: selectedRows[0].row_id,
     };
     setLoading(true);
     const response = await ApiCall({
