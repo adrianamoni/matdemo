@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -9,11 +9,15 @@ import Sidebar from "./Sidebar";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material";
 import { colorModeContext } from "../context/ContextProvider";
 import { getPalette } from "./palettes";
+import { grey } from "@mui/material/colors";
+import useWindowSize from "../components/customHooks/UseWindowsSize";
 
-const drawerWidth = 200;
+const drawerWidth = 220;
 
 function Layout(props) {
   const { window } = props;
+  /*   const [height, setHeight] = useState();
+  const containerComp = useRef(null); */
   let { slug } = useParams();
 
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -23,20 +27,20 @@ function Layout(props) {
   };
 
   const { colorMode } = useContext(colorModeContext);
-  /* palettes: 'green-orange', 'darkblue-lightblue','pink-purple','purple-green' */
-  const palette = getPalette("darkblue-lightblue", colorMode);
+  /* palettes: 'grey-orange','green-orange', 'darkblue-lightblue','pink-purple','purple-green' */
+  const palette = getPalette("grey-orange", colorMode);
 
   const theme = createTheme({
     palette: {
       mode: colorMode,
       ...palette,
       error: {
-        main: colorMode === "dark" ? "#DC143C" : "#7a0a20",
+        main: colorMode === "dark" ? "#DC143C" : "#a60d2c",
         contrastText: "#fff",
         text: "#fff",
       },
       success: {
-        main: colorMode === "dark" ? "#00FA9A" : "#058554",
+        main: colorMode === "dark" ? "#08c97f" : "#0bd689",
         contrastText: "#fff",
         text: "#fff",
       },
@@ -51,13 +55,17 @@ function Layout(props) {
         text: "#fff",
       },
       background: {
-        error: "#DC143C10",
-        success: "#00FA9A10",
-        warning: "#d1a35e10",
+        error: colorMode === "dark" ? "#2e090d" : "#fae3e3",
+        success: "#00FA9A20",
+        warning: "#d1a35e20",
         info: "#0288D110",
+        grey1: colorMode === "dark" ? "#141414" : grey[600],
+        grey2: colorMode === "dark" ? "#141414" : grey[300], //grey[800] : grey[300],
+        grey3: colorMode === "dark" ? grey[900] : grey[200],
+        grey4: colorMode === "dark" ? grey[900] : grey[50],
       },
       text: {
-        main: colorMode === "light" ? "#111" : "#eee",
+        main: colorMode === "dark" ? "#eee" : "#050505",
       },
     },
     typography: {
@@ -65,9 +73,23 @@ function Layout(props) {
     },
   });
 
+  useEffect(() => {
+    console.log("colorMode", colorMode);
+    document.body.style.backgroundColor =
+      colorMode === "isDark" ? "rgb(20,20,20) " : "#e0e0e0 ";
+  }, [colorMode]);
+
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: "flex" }}>
+      <Box
+        /*    ref={containerComp} */
+        sx={{
+          display: "flex",
+          backgroundColor: "background.grey2",
+          /*           height: "calc(100vh)", */
+          /* height: height, */
+        }}
+      >
         <CssBaseline />
         <Navbar
           handleDrawerToggle={handleDrawerToggle}
@@ -94,6 +116,8 @@ function Layout(props) {
             flexGrow: 1,
             p: 3,
             width: { sm: `calc(100% - ${drawerWidth}px)` },
+
+            backgroundColor: "background.grey2",
           }}
         >
           <Toolbar />

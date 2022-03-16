@@ -3,8 +3,15 @@ import { Grid, ButtonGroup, Button } from "@mui/material";
 import Text from "./../../languages/Text";
 import { LoadingButton } from "@mui/lab";
 
-const ButtonGroupWidget = ({ position, buttons, loading }) => {
+const ButtonGroupWidget = ({ position, buttons, loading, size }) => {
   // console.log("buttons", buttons);
+  /* let customBigSize = {
+    p: 3,
+    fontSize: "1.5rem",
+    fontWeight: "bold",
+  };
+  if (size === "big") {
+  } */
   return (
     <Grid container justifyContent="center">
       <Grid

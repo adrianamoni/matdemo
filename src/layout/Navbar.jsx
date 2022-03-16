@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { AppBar, Typography, IconButton, Toolbar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import LanguageSelector from "../languages/LanguageSelector";
+
 import ToggleDarkMode from "../theme/ToggleDarkMode";
 import {
   formContext,
@@ -46,7 +46,6 @@ const Navbar = ({ drawerWidth, handleDrawerToggle, title }) => {
           {title || Text({ tid: "home" })}
         </Typography>
         <ToggleDarkMode />
-        <LanguageSelector />
       </Toolbar>
     </AppBar>
   );

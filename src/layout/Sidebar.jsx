@@ -29,7 +29,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: drawerWidth,
-            bgcolor: colorMode === "dark" ? "grey.900" : "grey.200",
+            bgcolor: "background.grey3",
           },
         }}
       >
@@ -42,7 +42,7 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: drawerWidth,
-            bgcolor: colorMode === "dark" ? "grey.900" : "grey.200",
+            bgcolor: "background.grey3",
           },
         }}
         open

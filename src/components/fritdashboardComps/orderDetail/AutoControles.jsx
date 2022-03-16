@@ -31,7 +31,13 @@ const AutoControles = ({ data, alert }) => {
 
   return (
     <Card
-      sx={{ p: 2, height: "100%", cursor: "pointer", ...styledAlert }}
+      sx={{
+        p: 2,
+        height: "100%",
+        cursor: "pointer",
+        backgroundColor: "background.grey4",
+        ...styledAlert,
+      }}
       onClick={() => setNavigationData({ ...navigationData, activeTab: 6 })}
     >
       <Grid container sx={{ height: "100%" }}>

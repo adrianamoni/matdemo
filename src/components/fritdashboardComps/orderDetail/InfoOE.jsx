@@ -147,43 +147,64 @@ const InfoOE = () => {
             </Grid>
           </List>
 
-          <Grid container>
+          <Grid container spacing={2}>
             <Grid
               item
               container
               xs={12}
               sm={12}
               md={12}
-              lg={4}
+              lg={12}
+              xl={5}
               justifyContent={"center"}
             >
-              <ButtonGroup
-                variant="contained"
-                size="large"
-                aria-label="large button group"
+              {/* <ButtonGroup variant="contained" size="large"> */}
+              <Grid
+                container
+                spacing={2}
+                textAlign="center"
+                sx={{ maxWidth: 250 }}
               >
-                <LoadingButton
-                  loading={loadingPlay}
-                  onClick={handlePlay}
-                  disabled={loadingPlay ? true : play}
-                >
-                  <PlayArrowIcon />
-                </LoadingButton>
-                <LoadingButton
-                  loading={loadingPause}
-                  onClick={handlePause}
-                  disabled={loadingPause ? true : pause}
-                >
-                  <PauseIcon />
-                </LoadingButton>
-                <LoadingButton
-                  loading={loadingStop}
-                  onClick={handleConfirmStop}
-                  disabled={loadingStop ? true : stop}
-                >
-                  <StopIcon />
-                </LoadingButton>
-              </ButtonGroup>
+                <Grid item xs={4} sm={4} md={4}>
+                  <LoadingButton
+                    loading={loadingPlay}
+                    onClick={handlePlay}
+                    disabled={loadingPlay ? true : play}
+                    variant="contained"
+                    color="primary"
+                    sx={{ marginInline: 1, p: 2 }}
+                  >
+                    <PlayArrowIcon />
+                  </LoadingButton>
+                </Grid>
+                <Grid item xs={4} sm={4} md={4}>
+                  <LoadingButton
+                    loading={loadingPause}
+                    onClick={handlePause}
+                    disabled={loadingPause ? true : pause}
+                    variant="contained"
+                    color="primary"
+                    sx={{ marginInline: 1, p: 2 }}
+                  >
+                    <PauseIcon />
+                  </LoadingButton>
+                </Grid>
+                <Grid item xs={4} sm={4} md={4}>
+                  {" "}
+                  <LoadingButton
+                    loading={loadingStop}
+                    onClick={handleConfirmStop}
+                    disabled={loadingStop ? true : stop}
+                    variant="contained"
+                    color="primary"
+                    sx={{ marginInline: 1, p: 2 }}
+                  >
+                    <StopIcon />
+                  </LoadingButton>
+                </Grid>
+              </Grid>
+
+              {/*      </ButtonGroup> */}
             </Grid>
             <Grid
               item
@@ -191,7 +212,8 @@ const InfoOE = () => {
               xs={12}
               sm={12}
               md={12}
-              lg={8}
+              lg={12}
+              xl={7}
               justifyContent={"center"}
               alignItems={"center"}
               sx={{ p: 2 }}

@@ -25,7 +25,7 @@ import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
 import Text from "../languages/Text";
 import LoginModal from "../components/screens/Login/LoginModal";
 import LogoutModal from "../components/screens/Login/LogoutModal";
-
+import LanguageSelector from "../languages/LanguageSelector";
 const sidebarItems = [
   {
     id: 1,
@@ -150,15 +150,16 @@ const DrawerComp = () => {
         <div>
           <Toolbar
             sx={{
-              backgroundColor: "primary.main",
+              backgroundColor: "background.grey1",
               /* color: "text", */
               height: 65,
+              textAlign: "center",
             }}
           >
             <Typography
               variant="h5"
               noWrap
-              sx={{ color: "whitesmoke", fontWeight: 500 }}
+              sx={{ color: "whitesmoke", fontWeight: 700 }}
             >
               APP LOGO
             </Typography>
@@ -179,6 +180,7 @@ const DrawerComp = () => {
         </div>
 
         <List>
+          <LanguageSelector />
           <ListItem
             button
             onClick={() => setLoginModal(true)}

@@ -100,9 +100,13 @@ const en = {
   notFound: "Page not found",
   redirecting: "Redirecting",
   initDate: "Init Date",
+  initSchedDate: "Init Scheduled Date",
+  endSchedDate: "End Scheduled Date",
   quantityProduced: "Quantity Produced",
   quantityRequired: "Quantity Required",
   splitOrder: "Split Order",
+  startOrder: "Start Order",
+  createOrder: "Create Order",
 };
 
 export default en;

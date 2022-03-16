@@ -12,9 +12,9 @@ export const handleOperationAction = async ({ type, woId, operId, seqNo }) => {
     pause: { service: screen_of_pause_btn, msg: "pausada" },
     stop: { service: screen_of_stop_btn, msg: "parada" },
   };
-
+  const { service, msg } = actions[type];
   const response = await ApiCall({
-    params: actions[type].service({
+    params: service({
       woId,
       operId,
       seqNo,

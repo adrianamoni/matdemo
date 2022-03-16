@@ -158,37 +158,52 @@ const Limpieza = () => {
                   : "0 min"}
               </Grid>
               <Grid item xs={12} textAlign="center">
-                <ButtonGroup
-                  variant="contained"
-                  size="large"
-                  aria-label="large button group"
+                <Grid
+                  container
+                  spacing={2}
+                  sx={{ maxWidth: 250, margin: "auto" }}
                 >
-                  <LoadingButton
-                    loading={loadingPlay}
-                    onClick={handlePlay}
-                    disabled={loadingPlay ? true : play}
-                  >
-                    <PlayArrowIcon />
-                  </LoadingButton>
-                  <LoadingButton
-                    loading={loadingPause}
-                    onClick={handlePause}
-                    disabled={loadingPause ? true : pause}
-                  >
-                    <PauseIcon />
-                  </LoadingButton>
-                  <LoadingButton
-                    loading={loadingStop}
-                    onClick={() =>
-                      processedOrderTime && processedOrderTime.value > 0
-                        ? setConfirmStop(true)
-                        : handleStop()
-                    }
-                    disabled={loadingStop ? true : stop}
-                  >
-                    <StopIcon />
-                  </LoadingButton>
-                </ButtonGroup>
+                  <Grid item xs={4}>
+                    <LoadingButton
+                      loading={loadingPlay}
+                      onClick={handlePlay}
+                      disabled={loadingPlay ? true : play}
+                      variant="contained"
+                      color="primary"
+                      sx={{ marginInline: 1, p: 2 }}
+                    >
+                      <PlayArrowIcon />
+                    </LoadingButton>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <LoadingButton
+                      loading={loadingPause}
+                      onClick={handlePause}
+                      disabled={loadingPause ? true : pause}
+                      variant="contained"
+                      color="primary"
+                      sx={{ marginInline: 1, p: 2 }}
+                    >
+                      <PauseIcon />
+                    </LoadingButton>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <LoadingButton
+                      loading={loadingStop}
+                      onClick={() =>
+                        processedOrderTime && processedOrderTime.value > 0
+                          ? setConfirmStop(true)
+                          : handleStop()
+                      }
+                      disabled={loadingStop ? true : stop}
+                      variant="contained"
+                      color="primary"
+                      sx={{ marginInline: 1, p: 2 }}
+                    >
+                      <StopIcon />
+                    </LoadingButton>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>

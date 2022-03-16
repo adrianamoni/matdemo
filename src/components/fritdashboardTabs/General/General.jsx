@@ -18,7 +18,7 @@ import HalfDoughnut from "../../../widgets/halfDoughnut/HalfDoughnut";
 import Timeline from "../../../widgets/timeline/Timeline";
 import useWindowSize from "../../customHooks/UseWindowsSize";
 import LineProgress from "../../../widgets/progress/LineProgress";
-import { blue } from "@mui/material/colors";
+import { blue, grey } from "@mui/material/colors";
 import { globalDataContext } from "../../../context/ContextProvider";
 import InfoOE from "../../fritdashboardComps/orderDetail/InfoOE";
 import OeeOrden from "../../fritdashboardComps/orderDetail/OeeOrden";
@@ -38,7 +38,7 @@ const General = ({ loading }) => {
 
   return loading ? (
     <Box sx={{ width: "100%" }}>
-      <LinearProgress />
+      <LinearProgress color="secondary" />
     </Box>
   ) : (
     <Grid container sx={{ p: 2 }} columnSpacing={4} alignItems="stretch">
@@ -50,20 +50,22 @@ const General = ({ loading }) => {
         sx={{ p: 2 }}
       >
         <Grid item xs={12} sm={12}>
-          <Card sx={{ p: 2 }}>
+          <Card sx={{ p: 2, backgroundColor: "background.grey4" }}>
             <OeeHistorico />
           </Card>
         </Grid>
       </Grid>
       <Grid
-        sx={{ p: 2, display: "flex" /*  */ }}
+        sx={{ p: 2, display: "flex" }}
         container
         alignItems="stretch"
         columnSpacing={4}
         rowSpacing={4}
       >
         <Grid item xs={12} sm={12} md={12} lg={7} sx={{}}>
-          <Card sx={{ p: 2, height: "100%" }}>
+          <Card
+            sx={{ p: 2, height: "100%", backgroundColor: "background.grey4" }}
+          >
             <InfoOE />
           </Card>
         </Grid>
@@ -78,7 +80,9 @@ const General = ({ loading }) => {
           rowSpacing={4}
         >
           <Grid item xs={12}>
-            <Card sx={{ p: 2, height: "100%" }}>
+            <Card
+              sx={{ p: 2, height: "100%", backgroundColor: "background.grey4" }}
+            >
               <OeeOrden />
             </Card>
           </Grid>
@@ -96,7 +100,7 @@ const General = ({ loading }) => {
         sx={{ p: 2 }}
       >
         <Grid item xs={12} sm={12} md={12} lg={7}>
-          <Card sx={{ p: 2 }}>
+          <Card sx={{ p: 2, backgroundColor: "background.grey4" }}>
             <Limpieza />
           </Card>
         </Grid>

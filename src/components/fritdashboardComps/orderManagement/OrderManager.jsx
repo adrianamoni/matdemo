@@ -22,6 +22,7 @@ import {
   selectedRowsIdsContext,
 } from "../../../context/ContextProvider";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 const OrderManager = () => {
   const { loggedUser, setLoggedUser } = useContext(loginContext);
@@ -68,12 +69,22 @@ const OrderManager = () => {
       flex: 1,
     },
     {
-      field: "act_start_time_local",
+      field: "customSchedStart",
+      headerName: `${Text({ tid: "initSchedDate" })}`,
+      flex: 1,
+    },
+    {
+      field: "customSchedEnd",
+      headerName: `${Text({ tid: "endSchedDate" })}`,
+      flex: 1,
+    },
+    {
+      field: "customActStart",
       headerName: `${Text({ tid: "initDate" })}`,
       flex: 1,
     },
     {
-      field: "act_finish_time_local",
+      field: "customActEnd",
       headerName: `${Text({ tid: "endDate" })}`,
       flex: 1,
     },
@@ -165,10 +176,16 @@ const OrderManager = () => {
 
   const applyFilters = async () => {
     setLoadingData(true);
+
+    let formattedDate;
+    if (dateSelected) {
+      formattedDate = moment(dateSelected, "DD-MM-YYYY").format();
+    }
+    console.log("dateSelected", dateSelected, formattedDate);
     const response = await getOrdersData({
       entId: entIdSelected,
       itemId: itemIdSelected,
-      date: dateSelected,
+      date: formattedDate,
     });
 
     setOrdersData(response);
@@ -193,9 +210,13 @@ const OrderManager = () => {
 
     if (consData) {
       setConsumptionData(consData);
+    } else {
+      setConsumptionData(null);
     }
     if (prodData) {
       setProductionData(prodData);
+    } else {
+      setProductionData(null);
     }
 
     setLoadingFromSelected(false);
@@ -265,25 +286,28 @@ const OrderManager = () => {
         <Grid item xs={12}>
           <LinearProgress variant="indeterminate" />
         </Grid>
-      ) : (
-        ordersData && (
-          <Grid item xs={12}>
-            <TableWidget
-              data={ordersData}
-              columns={orderColumns}
-              tableName="order-management"
-            />
-          </Grid>
-        )
-      )}
-      {loadingFromSelected && (
+      ) : ordersData && ordersData.length > 0 ? (
         <Grid item xs={12}>
-          <LinearProgress variant="indeterminate" />
+          <TableWidget
+            data={ordersData}
+            columns={orderColumns}
+            tableName="order-management"
+          />
+        </Grid>
+      ) : (
+        <Grid item xs={12}>
+          <Alert variant="outlined" severity="info">
+            No hay órdenes que coincidan con los filtros aplicados
+          </Alert>
         </Grid>
       )}
 
-      {consumptionData ? (
-        <Grid item xs={12} sm={12} md={12} lg={6}>
+      {loadingFromSelected ? (
+        <Grid item xs={12}>
+          <LinearProgress variant="indeterminate" />
+        </Grid>
+      ) : consumptionData ? (
+        <Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
           <Grid container>
             <Grid item xs={12}>
               <Typography variant="h6">
@@ -301,13 +325,18 @@ const OrderManager = () => {
         </Grid>
       ) : (
         selectedRows.length > 0 && (
-          <Alert variant="outlined" severity="info">
-            No hay consumos en esta orden
-          </Alert>
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
+            <Alert variant="outlined" severity="info">
+              No hay consumos en esta orden
+            </Alert>
+          </Grid>
         )
       )}
-      {productionData ? (
-        <Grid item xs={12} sm={12} md={12} lg={6}>
+      {console.log("productionData", productionData)}
+      {loadingFromSelected ? (
+        <></>
+      ) : productionData ? (
+        <Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
           <Grid container>
             <Grid item xs={12}>
               <Typography variant="h6">
@@ -324,10 +353,13 @@ const OrderManager = () => {
           </Grid>
         </Grid>
       ) : (
+        !loadingFromSelected &&
         selectedRows.length > 0 && (
-          <Alert variant="outlined" severity="info">
-            No hay producciones en esta orden
-          </Alert>
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
+            <Alert variant="outlined" severity="info">
+              No hay producciones en esta orden
+            </Alert>
+          </Grid>
         )
       )}
     </Grid>

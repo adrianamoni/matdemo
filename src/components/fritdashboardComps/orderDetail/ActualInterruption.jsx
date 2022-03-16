@@ -1,15 +1,17 @@
 import { LoadingButton } from "@mui/lab";
+import { Typography } from "@mui/material";
 import React from "react";
 import { getColorFromBackend } from "./helper";
 
 const ActualInterruption = ({ interruption, push }) => {
+  console.log("interruption", interruption);
   const { background, foreground } = getColorFromBackend({
     microparo: interruption.EsMicroparo,
     decFormatColor: interruption.EsMicroparo
       ? interruption.colorFiltroMicroparo
       : interruption.color,
   });
-
+  console.log("interruption", background, foreground);
   return interruption ? (
     <LoadingButton
       fullWidth
@@ -18,16 +20,17 @@ const ActualInterruption = ({ interruption, push }) => {
       }}
       onClick={() => push(true)}
     >
-      <span
-        style={{
+      <Typography
+        sx={{
           color: foreground,
         }}
+        variant="h6"
       >
         {interruption.EsMicroparo
           ? "MICROPARO"
           : `${interruption.reas_grp_desc} -
                     ${interruption.reas_desc}`}
-      </span>
+      </Typography>
     </LoadingButton>
   ) : (
     <></>

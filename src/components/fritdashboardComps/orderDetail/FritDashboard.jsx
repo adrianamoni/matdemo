@@ -9,6 +9,7 @@ import {
   Badge,
   Grid,
   Button,
+  AppBar,
 } from "@mui/material";
 import TabPanel from "../../TabPanel";
 
@@ -243,7 +244,7 @@ const FritDashboard = () => {
         </Segment.Group> */}
         <Grid container>
           {planificatedButton !== undefined && (
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={12} md={12} lg={6}>
               <LineStatusButton
                 planificatedButton={planificatedButton}
                 lineName={entName}
@@ -251,7 +252,7 @@ const FritDashboard = () => {
             </Grid>
           )}
           {actualInterruption && (
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={12} md={12} lg={6}>
               <ActualInterruption
                 interruption={actualInterruption}
                 push={push}
@@ -261,18 +262,29 @@ const FritDashboard = () => {
         </Grid>
         <Box
           sx={{
-            maxWidth: { xs: 350, sm: 600, md: 900, lg: 1200, xl: 1536 },
+            /* maxWidth: { xs: 350, sm: 600, md: 900, lg: 1200, xl: 1536 }, */
+            maxWidth: { xs: 450, sm: 900, md: 1200, lg: 1536 /* xl: 1536 */ },
           }}
           justifyContent="center"
         >
+          {/* <AppBar
+            position="static"
+            sx={{ backgroundColor: "background.grey3" }}
+          > */}
           <Tabs
             value={navigationData.activeTab}
             onChange={handleChange}
-            variant="scrollable"
             scrollButtons={true}
             allowScrollButtonsMobile
+            variant="scrollable"
+            indicatorColor="secondary"
+            textColor="secondary"
             aria-label="scrollable auto tabs example"
-            sx={{ m: "auto" }}
+            sx={{
+              m: "auto",
+              color: "text.main",
+              backgroundColor: "background.grey3",
+            }}
             /* id="fritDashboard-tabs-container" */
           >
             {ofDetailNav.map((tab, index) => {
@@ -295,9 +307,17 @@ const FritDashboard = () => {
               );
             })}
           </Tabs>
+          {/* </AppBar> */}
         </Box>
 
-        <Container id="fritDashboard-content-container" fluid>
+        <Container
+          id="fritDashboard-content-container"
+          /* fluid */
+          sx={{
+            justifyContent: "center",
+            display: "flex",
+          }}
+        >
           <Panels
             value={navigationData.activeTab}
             loading={loadingInitialData}

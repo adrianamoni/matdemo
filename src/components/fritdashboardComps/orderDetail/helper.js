@@ -377,9 +377,14 @@ export const operation_states = ({ stateCd, type, prodStateCd }) => {
   }
 };
 
+const getForegroundColor = (r, g, b) => {
+  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return luminance < 140 ? "#eee" : "#111";
+};
+
 export const getColorFromBackend = ({ microparo, decFormatColor }) => {
   let red, green, blue;
-
+  let foreground;
   red = decFormatColor % 256;
   green = ((decFormatColor - red) / 256) % 256;
   blue = (decFormatColor - red - green * 256) / 256 / 256;
@@ -397,7 +402,10 @@ export const getColorFromBackend = ({ microparo, decFormatColor }) => {
         foreground: "black",
       };
     } else {
-      return { background: `rgb(${red},${green},${blue})`, foreground: "#fff" };
+      return {
+        background: `rgb(${red},${green},${blue})`,
+        foreground: getForegroundColor(red, green, blue),
+      };
     }
   }
 };

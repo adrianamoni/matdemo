@@ -13,6 +13,7 @@ import { searchbarFilter } from "./searchBarHelper";
 import Text from "./../../languages/Text";
 import { selectedRowsIdsContext } from "../../context/ContextProvider";
 import { darken, lighten } from "@mui/material/styles";
+import { grey } from "@mui/material/colors";
 
 const TableWidget = ({ data, columns, multipleSelection, tableName }) => {
   const { selectedRowsIds, setSelectedRowsIds } = useContext(
@@ -115,6 +116,7 @@ const TableWidget = ({ data, columns, multipleSelection, tableName }) => {
       sx={{
         border: "solid 1px",
         borderColor: "background.paper",
+        backgroundColor: "background.grey4",
       }}
     >
       <TextField

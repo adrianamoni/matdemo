@@ -5,6 +5,7 @@ import {
 } from "../../../services/OFservices";
 import { MemoryDatabaseCall } from "../../../services/Service";
 import { get_all_orders } from "../../../services/serviceHelper";
+import { dateFormater } from "../../common/helpers/helper";
 
 export const getOrdersData = async ({ entId, itemId, date }) => {
   let result;
@@ -16,15 +17,30 @@ export const getOrdersData = async ({ entId, itemId, date }) => {
     }),
     url: "queryDataAsync",
   });
-  console.log("response1", response);
+
   if (response) {
-    console.log("response2", response);
     if (response.length > 0) {
       console.log("response3", response);
       result = response.map((item) => ({
         ...item,
         id: uuid(),
         material: item.item_id + " (" + item.itemDesc + ")",
+        customSchedStart: dateFormater({
+          date: item.sched_start_time_local,
+          type: "hora-fecha",
+        }),
+        customSchedEnd: dateFormater({
+          date: item.sched_finish_time_local,
+          type: "hora-fecha",
+        }),
+        customActStart: dateFormater({
+          date: item.act_start_time_local,
+          type: "hora-fecha",
+        }),
+        customActEnd: dateFormater({
+          date: item.act_finish_time_local,
+          type: "hora-fecha",
+        }),
       }));
       console.log("response4", result);
     }
