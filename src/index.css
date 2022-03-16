@@ -76,3 +76,9 @@ code {
   /* justify-content: center !important;
   z-index: 9999 !important; */
 }
+
+/* DISABLED INPUT */
+.MuiInputBase-root.Mui-disabled {
+  background-color: #e0e0e0 !important;
+  caret-color: transparent !important;
+}
