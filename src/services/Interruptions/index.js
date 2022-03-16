@@ -221,6 +221,36 @@ const oil_tanks = () => {
   };
 };
 
+const getAllowableUtilGroups = (entId) => {
+  return {
+    dbDataSetName: "_SP_065_GetAllowableUtilGroups",
+    dbQueryParameters: [
+      {
+        name: "ent_id",
+        dataType: "INT",
+        value: entId,
+      },
+    ],
+    columns: [],
+    filter: null,
+  };
+};
+
+const getAllowableUtilReasons = (entId) => {
+  return {
+    dbDataSetName: "_SP_066_GetAllowableUtilReasons",
+    dbQueryParameters: [
+      {
+        name: "ent_id",
+        dataType: "INT",
+        value: entId,
+      },
+    ],
+    columns: [],
+    filter: null,
+  };
+};
+
 export {
   screen_interruptions_init,
   screen_interruptions_generate,
@@ -231,4 +261,6 @@ export {
   all_interruptions_filtered,
   oil_tanks,
   get_actual_interruption,
+  getAllowableUtilGroups,
+  getAllowableUtilReasons,
 };

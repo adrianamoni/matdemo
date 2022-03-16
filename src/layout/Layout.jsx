@@ -10,7 +10,7 @@ import { createTheme, ThemeProvider, useTheme } from "@mui/material";
 import { colorModeContext } from "../context/ContextProvider";
 import { getPalette } from "./palettes";
 
-const drawerWidth = 180;
+const drawerWidth = 200;
 
 function Layout(props) {
   const { window } = props;

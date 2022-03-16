@@ -1,16 +1,20 @@
 ﻿import React, { useContext, useState, useEffect } from "react";
+import uuid from "react-uuid";
 import {
+  loginContext,
   globalDataContext,
   formContext,
   selectedRowsIdsContext,
   selectedRowsContext,
 } from "../../../context/ContextProvider";
-import UseFetchMemory from "./../../customHooks/UseFetchMemory";
+import { MemoryDatabaseCall } from "../../../services/Service";
+import { tab_productions, tavil_send } from "../../../services/OFservices";
 import { Box, LinearProgress, Grid } from "@mui/material";
 import TableWidget from "./../../../widgets/TableWidget/TableWidget";
 import ButtonGroupWidget from "./../../../widgets/buttonGroup/ButtonGroupWidget";
 import Text from "../../../languages/Text";
 import ProductionsModal from "./ProductionsModal";
+import UserAlert from "./../../alerts/UserAlert";
 
 const Productions = () => {
   const columns = [
@@ -37,43 +41,131 @@ const Productions = () => {
   ];
 
   //useContext
+  const { loggedUser, setLoggedUser } = useContext(loginContext);
   const { globalData } = useContext(globalDataContext);
   const { woId, operId, seqNo } = globalData.orderData;
+  const { entId, entName } = globalData.lineData;
   const { formWidget, setformWidget } = useContext(formContext);
   const { selectedRowsIds, setSelectedRowsIds } = useContext(
     selectedRowsIdsContext
   );
   const { selectedRows, setSelectedRows } = useContext(selectedRowsContext);
   //useState
-  const [prodData, setProdData] = useState(false);
+  const [tableData, setTableData] = useState(false);
+  const [data, setData] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [userAlert, setUserAlert] = useState({
+    show: false,
+    message: "",
+    severity: "",
+  });
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [refreshData, setRefreshData] = useState(false);
-
-  //fetch data
-  let { loading, data } = UseFetchMemory({
-    request: "productions",
-    customParams: {
-      operId,
-      entId: globalData.lineData.entId,
-      woId,
-      seqNo,
-    },
-  });
+  const [productionCorrectionPermission, setProductionCorrectionPermission] =
+    useState(false);
+  const [disableManualProductionButton, setDisableManualProductionButton] =
+    useState(false);
 
   useEffect(() => {
-    //TODO
+    !loggedUser &&
+      sessionStorage.getItem("userInfo") &&
+      setLoggedUser(JSON.parse(sessionStorage.getItem("userInfo")));
+  }, []);
+
+  useEffect(() => {
+    if (loggedUser) {
+      if (
+        loggedUser.permissions.find(
+          (item) => item.desc === "CorregirProduccion.Edicion" // HARDCODED Edicion o Escritura, o lo que sea.
+        )
+      ) {
+        setProductionCorrectionPermission(true);
+      }
+    }
+  }, [loggedUser]);
+
+  useEffect(() => {
+    let clearTimeoutKey;
+
+    const fetchData = async (showLoader) => {
+      showLoader && setLoading(true);
+      const response = await MemoryDatabaseCall({
+        params: tab_productions({
+          entId: entId,
+          woId: woId,
+          operId: operId,
+          seqNo: seqNo,
+        }),
+        url: "queryDataAsync",
+      });
+      if (response) {
+        setLoading(false);
+
+        setTableData(
+          response.map((item, i) => ({
+            ...item,
+            id: uuid(),
+            index: i + 1,
+            material: item.item_id + " (" + item.item_desc + ")",
+            color: !item.good_prod ? "d11f1f33" : "e6f7ff",
+          }))
+        );
+      } else {
+        setLoading(false);
+      }
+      clearTimeoutKey = setTimeout(fetchData, 30000);
+    };
+
+    fetchData(true);
+    refreshData && setRefreshData(false);
+    return () => {
+      clearTimeout(clearTimeoutKey);
+      setTableData([]);
+    };
   }, [refreshData]);
 
   useEffect(() => {
-    if (data?.length > 0) {
-      setProdData(
-        data.map((el) => {
-          return { ...el, material: el.item_id + " (" + el.item_desc + ")" };
-        })
-      );
+    if (globalData.orderData && globalData.lineData) {
+      setData({
+        woId: woId,
+        operId: operId,
+        entName: entName,
+        seqNo: seqNo,
+      });
+      fetchSendTavilData();
     }
-  }, [data]);
+  }, [globalData.orderData, globalData.lineData]);
+
+  useEffect(() => {
+    tableData && tableData.length < 1
+      ? setUserAlert({
+          show: true,
+          message: "No hay producciones actualmente",
+          severity: "info",
+        })
+      : setUserAlert({
+          show: false,
+          message: "",
+          severity: "",
+        });
+  }, [tableData]);
+
+  const fetchSendTavilData = async () => {
+    const response = await MemoryDatabaseCall({
+      params: tavil_send(entId),
+      url: "queryDataAsync",
+    });
+    if (response) {
+      if (response) {
+        if (response.length > 0) {
+          response[0].EnvioTAVIL
+            ? setDisableManualProductionButton(false)
+            : setDisableManualProductionButton(true);
+        }
+      }
+    }
+  };
 
   //useEffect on change selected row
   useEffect(() => {
@@ -81,7 +173,7 @@ const Productions = () => {
       selectedRowsIds["productions"] &&
       selectedRowsIds["productions"].length > 0
     ) {
-      let tempRow = data.filter((production) => {
+      let tempRow = tableData.filter((production) => {
         return production.id === selectedRowsIds["productions"][0];
       });
       setSelectedRows(tempRow);
@@ -127,16 +219,25 @@ const Productions = () => {
     </Box>
   ) : (
     <>
-      {/* Productions Table */}
       <Grid container sx={{ mt: 2 }}>
-        <Grid item xs={12}>
-          <TableWidget
-            data={prodData}
-            columns={columns}
-            multipleSelection={false}
-            tableName="productions"
-          />
-        </Grid>
+        {/* Productions Table */}
+        {tableData?.length > 0 ? (
+          <Grid item xs={12}>
+            <TableWidget
+              data={tableData}
+              columns={columns}
+              multipleSelection={false}
+              tableName="productions"
+            />
+          </Grid>
+        ) : (
+          userAlert.show && (
+            <UserAlert
+              severity={userAlert.severity}
+              message={userAlert.message}
+            />
+          )
+        )}
 
         <Grid item xs={12}>
           <ButtonGroupWidget
@@ -152,7 +253,10 @@ const Productions = () => {
                 text: "productionCorrection",
                 color: "secondary",
                 onClick: handleProductionCorrection,
-                disabled: selectedRows?.[0] ? false : true,
+                disabled:
+                  !productionCorrectionPermission || !selectedRows[0]
+                    ? true
+                    : false,
               },
               {
                 text: "addDecrease",
@@ -165,12 +269,14 @@ const Productions = () => {
           />
         </Grid>
       </Grid>
+
       {/* Others */}
       <ProductionsModal
         showModal={showModal}
         setShowModal={setShowModal}
         modalContent={modalContent}
         setRefreshData={setRefreshData}
+        data={data}
       />
     </>
   );

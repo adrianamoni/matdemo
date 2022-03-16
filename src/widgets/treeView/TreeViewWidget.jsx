@@ -1,13 +1,17 @@
 ﻿import React from "react";
 import _ from "lodash";
 import { TreeView, TreeItem } from "@mui/lab";
-import { Checkbox, SvgIcon, Radio } from "@mui/material";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
 
 const TreeViewWidget = ({ treeData, handleSelectNode }) => {
   const renderTree = (nodes) => (
-    <TreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name}>
+    <TreeItem
+      key={nodes.id}
+      nodeId={nodes.id}
+      label={nodes.name}
+      sx={{ paddingTop: "15px" }}
+    >
       {Array.isArray(nodes.children)
         ? nodes.children.map((node) => renderTree(node))
         : null}

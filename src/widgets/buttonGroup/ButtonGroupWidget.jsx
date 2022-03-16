@@ -4,6 +4,7 @@ import Text from "./../../languages/Text";
 import { LoadingButton } from "@mui/lab";
 
 const ButtonGroupWidget = ({ position, buttons, loading }) => {
+  // console.log("buttons", buttons);
   return (
     <Grid container justifyContent="center">
       <Grid
@@ -29,7 +30,7 @@ const ButtonGroupWidget = ({ position, buttons, loading }) => {
                       ? btn.onClick
                       : () => console.log("no click func")
                   }
-                  sx={{ margin: "10px", padding: "15px" }}
+                  sx={{ marginRight: "10px", padding: "15px" }}
                 >
                   {Text({ tid: btn.text })}
                 </Button>

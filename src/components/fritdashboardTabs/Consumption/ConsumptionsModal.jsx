@@ -13,6 +13,10 @@ import ButtonGroupWidget from "./../../../widgets/buttonGroup/ButtonGroupWidget"
 import Text from "./../../../languages/Text";
 import { ApiCall } from "./../../../services/Service";
 import { createNotification } from "./../../alerts/NotificationAlert";
+import {
+  tab_consumptions_correction,
+  tab_materials_read_enrollment,
+} from "../../../services/OFservices";
 
 const ConsumptionsModal = ({
   showModal,
@@ -38,11 +42,17 @@ const ConsumptionsModal = ({
   const closeModal = () => {
     setSelectedRowsIds({ consumptions: [] });
     setSelectedRows([]);
+    setformWidget({
+      ...formWidget,
+      consumptionCorrectionForm: [],
+      consumeForm: [],
+    });
     setShowModal(false);
+    setRefreshData(true);
   };
 
   // CONSUMPTION CORRECTION
-  const handleSubmit = async () => {
+  const handleSubmitConsumptionCorrection = async () => {
     const result = {
       woId: woId,
       operId: operId,
@@ -54,7 +64,7 @@ const ConsumptionsModal = ({
       itemId: selectedRows[0].item_id,
       lotNo: selectedRows[0].lot_no,
       sublotNo: selectedRows[0].sublot_no ? selectedRows[0].sublot_no : "",
-      quantity: parseFloat(formWidget?.consumptionCorrectionForm?.quantity),
+      quantity: parseFloat(formWidget.consumptionCorrectionForm.quantity),
       rowId: selectedRows[0].row_id ? selectedRows[0].row_id : "",
     };
     setLoading(true);
@@ -74,66 +84,60 @@ const ConsumptionsModal = ({
       setLoading(false);
       createNotification({
         status: "success",
-        msg: "¡Consumo corregido con éxito!",
+        msg: "¡Consumo corregido con éxito!", //TODO
         hide: response.responseHide,
       });
       closeModal();
-      setRefreshData(true);
     }
   };
 
   const consumCorrectionModalContent = (
     <>
-      {/* <Typography variant="h6" gutterBottom>
-        <strong>{Text({ tid: "consumptionCorrection" })}</strong>
-      </Typography> */}
       <Divider sx={{ marginTop: "25px", marginBottom: "25px" }} />
-      <Grid container spacing={2}>
-        <Grid item md={8} xs={12}>
-          <InputWidget
-            formId={"consumptionCorrectionForm"}
-            id={"material"}
-            label={<Text tid={"material"} />}
-            required={false}
-            multiline={false}
-            type="text"
-            maxLength={100}
-            disabled={true}
-            placeholder={""}
-            min={null}
-            max={null}
-          />
-        </Grid>
-        <Grid item md={4} xs={12}>
-          <InputWidget
-            formId={"consumptionCorrectionForm"}
-            id={"lot"}
-            label={<Text tid={"lot"} />}
-            required={false}
-            multiline={false}
-            type="text"
-            maxLength={100}
-            disabled={true}
-            placeholder={""}
-            min={null}
-            max={null}
-          />
-        </Grid>
-        <Grid item md={6} xs={12}>
-          <InputWidget
-            formId={"consumptionCorrectionForm"}
-            id={"quantity"}
-            label={<Text tid={"quantity"} />}
-            required={true}
-            multiline={false}
-            type="number"
-            maxLength={100}
-            disabled={false}
-            placeholder={""}
-            min={0}
-            max={null}
-          />
-        </Grid>
+      <Grid item md={8} xs={12}>
+        <InputWidget
+          formId={"consumptionCorrectionForm"}
+          id={"material"}
+          label={<Text tid={"material"} />}
+          required={false}
+          multiline={false}
+          type="text"
+          maxLength={100}
+          disabled={true}
+          placeholder={""}
+          min={null}
+          max={null}
+        />
+      </Grid>
+      <Grid item md={4} xs={12}>
+        <InputWidget
+          formId={"consumptionCorrectionForm"}
+          id={"lot"}
+          label={<Text tid={"lot"} />}
+          required={false}
+          multiline={false}
+          type="text"
+          maxLength={100}
+          disabled={true}
+          placeholder={""}
+          min={null}
+          max={null}
+        />
+      </Grid>
+      <Grid item md={6} xs={12}>
+        <InputWidget
+          formId={"consumptionCorrectionForm"}
+          id={"quantity"}
+          label={<Text tid={"quantity"} />}
+          required={true}
+          multiline={false}
+          type="number"
+          maxLength={100}
+          disabled={false}
+          placeholder={""}
+          min={0}
+          max={null}
+        />
       </Grid>
       <Grid container>
         <ButtonGroupWidget
@@ -142,7 +146,7 @@ const ConsumptionsModal = ({
             {
               text: "send",
               color: "primary",
-              onClick: handleSubmit,
+              onClick: handleSubmitConsumptionCorrection,
               disabled:
                 selectedRows.length > 0 &&
                 parseInt(formWidget?.consumptionCorrectionForm?.quantity) ===
@@ -181,6 +185,15 @@ const ConsumptionsModal = ({
       } else {
         setLoading(false);
         setApiEnrollment(response.responseData);
+        setformWidget({
+          ...formWidget,
+          consumeForm: {
+            material: "TODO",
+            lot: "TODO",
+            expiration: "TODO",
+            quantity: "TODO",
+          },
+        });
       }
     }
   };
@@ -189,112 +202,107 @@ const ConsumptionsModal = ({
 
   const consumeModalContent = (
     <>
-      {/* <Typography variant="h6" gutterBottom>
-        <strong>{Text({ tid: "consume" })}</strong>
-      </Typography> */}
       <Divider sx={{ marginTop: "25px", marginBottom: "25px" }} />
-      <Grid container spacing={2}>
-        <Grid item md={6} xs={12}>
-          <InputWidget
-            formId={"consumeForm"}
-            id={"registration"}
-            label={<Text tid={"registration"} />}
-            required={true}
-            multiline={false}
-            type="text"
-            maxLength={100}
-            disabled={false}
-            placeholder={
-              formWidget?.consumeForm?.consumeRegistration
-                ? ""
-                : "Introduzca matrícula"
-            }
-            min={null}
-            max={null}
-          />
-        </Grid>
-        <Grid
-          item
-          md={6}
-          xs={12}
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <ButtonGroupWidget
-            position="left"
-            buttons={[
-              {
-                text: "readRegistration",
-                color: "primary",
-                onClick: handleReadEnrollment,
-                disabled: false,
-              },
-            ]}
-            loading={loading}
-          />
-        </Grid>
-        <Grid item md={8} xs={12}>
-          <InputWidget
-            formId={"consumeForm"}
-            id={"material"}
-            label={<Text tid={"material"} />}
-            required={false}
-            multiline={false}
-            type="text"
-            maxLength={100}
-            disabled={false}
-            placeholder={""}
-            min={null}
-            max={null}
-          />
-        </Grid>
-        <Grid item md={4} xs={12}>
-          <InputWidget
-            formId={"consumeForm"}
-            id={"quantity"}
-            label={<Text tid={"quantity"} />}
-            required={false}
-            multiline={false}
-            type="number"
-            maxLength={100}
-            disabled={false}
-            placeholder={""}
-            min={0}
-            max={1 ^ 10}
-          />
-        </Grid>
-        <Grid item md={6} xs={12}>
-          <InputWidget
-            formId={"consumeForm"}
-            id={"lot"}
-            label={<Text tid={"lot"} />}
-            required={false}
-            multiline={false}
-            type="text"
-            maxLength={100}
-            disabled={false}
-            placeholder={""}
-            min={null}
-            max={null}
-          />
-        </Grid>
-        <Grid item md={6} xs={12}>
-          <InputWidget
-            formId={"consumeForm"}
-            id={"expiration"}
-            label={<Text tid={"expiration"} />}
-            required={false}
-            multiline={false}
-            type="text"
-            maxLength={100}
-            disabled={false}
-            placeholder={""}
-            min={null}
-            max={null}
-          />
-        </Grid>
+      <Grid item md={8} xs={12}>
+        <InputWidget
+          formId={"consumeForm"}
+          id={"registration"}
+          label={<Text tid={"registration"} />}
+          required={true}
+          multiline={false}
+          type="text"
+          maxLength={100}
+          disabled={false}
+          placeholder={
+            formWidget?.consumeForm?.consumeRegistration
+              ? ""
+              : "Introduzca matrícula"
+          }
+          min={null}
+          max={null}
+        />
+      </Grid>
+      <Grid
+        item
+        md={4}
+        xs={12}
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <ButtonGroupWidget
+          position="left"
+          buttons={[
+            {
+              text: "readRegistration",
+              color: "primary",
+              onClick: handleReadEnrollment,
+              disabled: false,
+            },
+          ]}
+          loading={loading}
+        />
+      </Grid>
+      <Grid item md={8} xs={12}>
+        <InputWidget
+          formId={"consumeForm"}
+          id={"material"}
+          label={<Text tid={"material"} />}
+          required={false}
+          multiline={false}
+          type="text"
+          maxLength={100}
+          disabled={true}
+          placeholder={""}
+          min={null}
+          max={null}
+        />
+      </Grid>
+      <Grid item md={4} xs={12}>
+        <InputWidget
+          formId={"consumeForm"}
+          id={"lot"}
+          label={<Text tid={"lot"} />}
+          required={false}
+          multiline={false}
+          type="text"
+          maxLength={100}
+          disabled={true}
+          placeholder={""}
+          min={null}
+          max={null}
+        />
+      </Grid>
+      <Grid item md={8} xs={12}>
+        <InputWidget
+          formId={"consumeForm"}
+          id={"expiration"}
+          label={<Text tid={"expiration"} />}
+          required={false}
+          multiline={false}
+          type="text"
+          maxLength={100}
+          disabled={true}
+          placeholder={""}
+          min={null}
+          max={null}
+        />
+      </Grid>
+      <Grid item md={4} xs={12}>
+        <InputWidget
+          formId={"consumeForm"}
+          id={"quantity"}
+          label={<Text tid={"quantity"} />}
+          required={false}
+          multiline={false}
+          type="number"
+          maxLength={100}
+          disabled={false}
+          placeholder={""}
+          min={0}
+          max={null}
+        />
       </Grid>
       <Grid container>
         <ButtonGroupWidget

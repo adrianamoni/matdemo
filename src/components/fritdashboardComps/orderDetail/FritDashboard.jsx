@@ -14,11 +14,14 @@ import TabPanel from "../../TabPanel";
 
 import General from "../../fritdashboardTabs/General/General";
 import Materials from "../../fritdashboardTabs/Materials";
-import Paros from "../../fritdashboardTabs/Paros";
+import Interruptions from "./../../fritdashboardTabs/Interruptions/Interruptions";
 import Signals from "../../fritdashboardTabs/Signals/Signals";
 import Text from "../../../languages/Text";
 import {
   globalDataContext,
+  formContext,
+  selectedRowsIdsContext,
+  selectedRowsContext,
   navigationDataContext,
 } from "../../../context/ContextProvider";
 import {
@@ -43,16 +46,19 @@ const FritDashboard = () => {
   /*  let { slug } = useParams(); */
   /*  const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME; */
   const { globalData, setGlobalData } = useContext(globalDataContext);
-  const { navigationData, setNavigationData } = useContext(
-    navigationDataContext
-  );
   const {
     lineData,
     orderData,
-    /*   oeeSpecs, */
+    oeeSpecs,
     pendingSamples,
     pendingInterruptions,
   } = globalData;
+  const { setformWidget } = useContext(formContext);
+  const { setSelectedRowsIds } = useContext(selectedRowsIdsContext);
+  const { setSelectedRows } = useContext(selectedRowsContext);
+  const { navigationData, setNavigationData } = useContext(
+    navigationDataContext
+  );
   const { woId, operId, seqNo, itemId } = orderData;
   const { entId, entName } = lineData;
   const [loadingInitialData, setLoadingInitialData] = useState(true);
@@ -171,6 +177,12 @@ const FritDashboard = () => {
       clearTimeout(clearTimeoutActualInterruption);
     };
   }, [modalJustify]);
+
+  // useEffect(() => {
+  //   setformWidget({});
+  //   setSelectedRowsIds({});
+  //   setSelectedRows([]);
+  // }, [value]);
 
   const fetchData = async (showLoader) => {
     const { productionData, cleaningData } = await getOrderDetails({
@@ -330,7 +342,7 @@ const Panels = ({ value, loading }) => {
         <Quality />
       </TabPanel>
       <TabPanel value={value} index={7}>
-        <Paros />
+        <Interruptions />
       </TabPanel>
       <TabPanel value={value} index={8}>
         <Documentation />

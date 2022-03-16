@@ -33,8 +33,14 @@ const InputWidget = ({
       if (value < min) value = min;
 
       setLocalVal(value);
+      let formToChange = formWidget[formId];
+      formToChange = { ...formToChange, [id]: value };
+      setformWidget({ ...formWidget, [formId]: formToChange });
     } else {
       setLocalVal(e.target.value);
+      let formToChange = formWidget[formId];
+      formToChange = { ...formToChange, [id]: e.target.value };
+      setformWidget({ ...formWidget, [formId]: formToChange });
     }
   };
 
