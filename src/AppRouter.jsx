@@ -17,7 +17,9 @@ import MonthlyCleaning from "./components/fritdashboardComps/cleaning/MonthlyCle
 import Init from "./components/Init";
 import OperatorAssignment from "./components/screens/OperatorAssignment/OperatorAssignment";
 import OperatorDeAssignment from "./components/screens/OperatorDeAssignment/OperatorDeAssignment";
-import OrderManagement from "./components/fritDashboardComps/OrderManagement/OrderManagement";
+import OrderManager from "./components/fritDashboardComps/OrderManagement/OrderManager";
+import InterruptionManager from "./components/fritdashboardComps/interruptionManagement/InterruptionManager";
+import SequencingGateway from "./components/fritdashboardComps/sequencing/SequencingGateway";
 
 const AppRouter = () => {
   const { setPageSize } = useContext(pageSizeContext);
@@ -46,7 +48,9 @@ const AppRouter = () => {
             <Route path="table" element={<Table />} />
             <Route path="charts" element={<Charts />} />
             <Route path="asignacion" element={<OperatorAssignment />} />
-            <Route path="ordenes" element={<OrderManagement />} />
+            <Route path="ordenes" element={<OrderManager />} />
+            <Route path="gestor-paros" element={<InterruptionManager />} />
+            <Route path="secuenciacion" element={<SequencingGateway />} />
             <Route path="desasignacion" element={<OperatorDeAssignment />} />
 
             <Route path="test" element={<Test />} />

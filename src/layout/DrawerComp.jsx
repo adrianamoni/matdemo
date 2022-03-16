@@ -57,6 +57,20 @@ const sidebarItems = [
   },
   //UNDO THIS ABOVE
   {
+    id: 6,
+    name: "sequencing",
+    icon: <ViewTimelineIcon />,
+    path: "/secuenciacion",
+    permission: "Secuenciacion",
+  },
+  {
+    id: 7,
+    name: "interruptionManager",
+    icon: <HistoryToggleOffIcon />,
+    path: "/gestor-paros",
+    permission: "GestionParos",
+  },
+  {
     id: 8,
     name: "orders",
     icon: <ViewListIcon />,
@@ -141,7 +155,11 @@ const DrawerComp = () => {
               height: 65,
             }}
           >
-            <Typography variant="h6" noWrap sx={{ color: "text.main" }}>
+            <Typography
+              variant="h5"
+              noWrap
+              sx={{ color: "whitesmoke", fontWeight: 500 }}
+            >
               APP LOGO
             </Typography>
           </Toolbar>

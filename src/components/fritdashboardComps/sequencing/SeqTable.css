@@ -1,0 +1,15 @@
+/* .seq-init-date-input > input {
+  cursor: pointer !important;
+} */
+input::-webkit-calendar-picker-indicator {
+  cursor: pointer !important;
+}
+
+.min-row-seq-table td {
+  padding: 5px 3px !important;
+  font-size: 0.8rem !important;
+}
+.mid-row-seq-table td {
+  padding: 7px 5px !important;
+  font-size: 0.9rem !important;
+}

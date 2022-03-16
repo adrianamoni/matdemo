@@ -1,6 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { Box, Container, Tabs, Tab, styled, Badge } from "@mui/material";
+import {
+  Box,
+  Container,
+  Tabs,
+  Tab,
+  styled,
+  Badge,
+  Grid,
+  Button,
+} from "@mui/material";
 import TabPanel from "../../TabPanel";
 
 import General from "../../fritdashboardTabs/General/General";
@@ -24,6 +33,9 @@ import Documentation from "../../fritdashboardTabs/Documentation";
 import Planification from "../../fritdashboardTabs/Planification";
 import Consumptions from "./../../fritdashboardTabs/Consumption/Consumptions";
 import Productions from "./../../fritdashboardTabs/Production/Productions";
+import LineStatusButton from "./LineStatusButton";
+import { MemoryDatabaseCall } from "../../../services/Service";
+import { read_tags_teams } from "../../../services/serviceHelper";
 
 const FritDashboard = () => {
   /*  let { slug } = useParams(); */
@@ -40,8 +52,10 @@ const FritDashboard = () => {
     pendingInterruptions,
   } = globalData;
   const { woId, operId, seqNo, itemId } = orderData;
-  const { entId } = lineData;
+  const { entId, entName } = lineData;
   const [loadingInitialData, setLoadingInitialData] = useState(true);
+  const [planificatedButton, setPlanificatedButton] = useState(undefined);
+
   const ofDetailNav = [
     "General",
     Text({ tid: "signals" }),
@@ -68,11 +82,50 @@ const FritDashboard = () => {
 
   useEffect(() => {
     let clearIntervalData;
+    const readPlanificateButtonState = async () => {
+      const filter = {
+        filterExpression: {
+          filters: [
+            {
+              filterExpression: null,
+              filterItem: {
+                column: "Tagname",
+                dataType: "String",
+                value: `${entName}.Planificada`,
+                filterItemType: "Equal",
+                checkDBNull: false,
+              },
+            },
+          ],
+          filterExpressionType: "AND",
+          negationFilterExpression: false,
+        },
+        filterItem: null,
+      };
 
+      const response = await MemoryDatabaseCall({
+        params: read_tags_teams({ filter }),
+        url: "queryWWDataFrameDataAsync",
+      });
+
+      if (response) {
+        if (response.length > 0) {
+          if (response[0] && response[0].Quality === 192) {
+            if (response[0].Value) {
+              setPlanificatedButton(true);
+            } else {
+              setPlanificatedButton(false);
+            }
+          }
+        }
+      }
+      clearTimeoutPlanificate = setTimeout(readPlanificateButtonState, 30000);
+    };
     if (lineData) {
       if (orderData) {
         fetchData(true);
         clearIntervalData = setInterval(fetchData, 6000);
+        readPlanificateButtonState();
 
         /* 
           fetchSpecs();
@@ -506,6 +559,36 @@ const FritDashboard = () => {
 
   return (
     <Container sx={{ m: "auto" }} id="fritDashboard-main-container">
+      {/* <Segment.Group
+          stacked
+          raised
+          horizontal={pageSize.width > 900}
+          style={{ border: "none" }}
+        >
+          {planificatedButton !== undefined && (
+            <LineStatusButton
+              planificatedButton={planificatedButton}
+              lineName={line.entName}
+            />
+          )}
+          {actualInterruption && (
+            <ActualInterruption interruption={actualInterruption} push={push} />
+          )}
+        </Segment.Group> */}
+      <Grid container>
+        {planificatedButton !== undefined && (
+          <Grid item xs={6}>
+            <LineStatusButton
+              planificatedButton={planificatedButton}
+              lineName={entName}
+            />
+          </Grid>
+        )}
+
+        <Grid item xs={6}>
+          <Button>b</Button>
+        </Grid>
+      </Grid>
       <Box
         sx={{
           maxWidth: { xs: 350, sm: 600, md: 900, lg: 1200, xl: 1536 },

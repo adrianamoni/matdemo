@@ -102,6 +102,7 @@ const en = {
   initDate: "Init Date",
   quantityProduced: "Quantity Produced",
   quantityRequired: "Quantity Required",
+  splitOrder: "Split Order",
 };
 
 export default en;

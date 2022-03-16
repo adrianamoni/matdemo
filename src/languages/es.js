@@ -94,7 +94,7 @@ const es = {
   turn: "Turno",
   hoppers: "Tolvas",
   cleaning: "Limpieza",
-  sequencing: "Sequenciación",
+  sequencing: "Secuenciación",
   interruptionManager: "Gestor de Paros",
   orders: "Órdenes",
   notFound: "Página no encontrada",
@@ -102,6 +102,7 @@ const es = {
   initDate: "Fecha inicio",
   quantityProduced: "Cantidad Producida",
   quantityRequired: "Cantidad Requerida",
+  splitOrder: "Dividir Orden",
 };
 
 export default es;
