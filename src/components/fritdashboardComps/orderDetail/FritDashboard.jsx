@@ -88,6 +88,8 @@ const FritDashboard = () => {
 
   useEffect(() => {
     let clearIntervalData;
+    let clearTimeoutPlanificate;
+    let clearTimeoutActualInterruption;
     const readPlanificateButtonState = async () => {
       const filter = {
         filterExpression: {
@@ -146,48 +148,41 @@ const FritDashboard = () => {
     };
   }, []);
 
-  useEffect(() => {
-    setformWidget({});
-    setSelectedRowsIds({});
-    setSelectedRows([]);
-  }, [value]);
+  // useEffect(() => {
+  //   setformWidget({});
+  //   setSelectedRowsIds({});
+  //   setSelectedRows([]);
+  // }, [value]);
 
-  const fetchOrderDetail = async () => {
-    const fetchData = async (showLoader) => {
-      const { productionData, cleaningData } = await getOrderDetails({
-        order: orderData,
-      });
-      const { samplesResult } = await getPendingSamples({
-        customParams: { entId, woId, operId, seqNo, itemId },
-      });
-      const { interruptionResult } = await getPendingInterruptions({
-        customParams: { entId },
-      });
+  const fetchData = async (showLoader) => {
+    const { productionData, cleaningData } = await getOrderDetails({
+      order: orderData,
+    });
+    const { samplesResult } = await getPendingSamples({
+      customParams: { entId, woId, operId, seqNo, itemId },
+    });
+    const { interruptionResult } = await getPendingInterruptions({
+      customParams: { entId },
+    });
 
-      if (
-        productionData &&
-        cleaningData &&
-        samplesResult &&
-        interruptionResult
-      ) {
-        setGlobalData({
-          ...globalData,
-          orderDetails: {
-            productionData: productionData,
-            cleaningData: cleaningData,
-          },
-          pendingSamples: {
-            alert: samplesResult.qualityAlert,
-            data: samplesResult.qualityData,
-          },
-          pendingInterruptions: {
-            alert: interruptionResult.interruptionAlert,
-            data: interruptionResult.interruptionData,
-          },
-        });
-      }
-      showLoader && setLoadingInitialData(false);
-    };
+    if (productionData && cleaningData && samplesResult && interruptionResult) {
+      setGlobalData({
+        ...globalData,
+        orderDetails: {
+          productionData: productionData,
+          cleaningData: cleaningData,
+        },
+        pendingSamples: {
+          alert: samplesResult.qualityAlert,
+          data: samplesResult.qualityData,
+        },
+        pendingInterruptions: {
+          alert: interruptionResult.interruptionAlert,
+          data: interruptionResult.interruptionData,
+        },
+      });
+    }
+    showLoader && setLoadingInitialData(false);
   };
 
   return (

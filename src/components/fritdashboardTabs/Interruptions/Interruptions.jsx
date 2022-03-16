@@ -75,7 +75,7 @@ const Interruptions = () => {
 
   useEffect(() => {
     if (pendingInterruptions && onlyPendings) {
-      setApiData(pendingInterruptions);
+      setTableData(pendingInterruptions);
     }
   }, [pendingInterruptions, onlyPendings]);
 
