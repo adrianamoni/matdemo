@@ -48,6 +48,7 @@ const InterruptionsModal = ({
   const [treeViewData, setTreeViewData] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectedReason, setSelectedReason] = useState(false);
+  const [expandedNodes, setExpandedNodes] = useState([]);
 
   //TREEVIEW DATA
   useEffect(() => {
@@ -121,6 +122,12 @@ const InterruptionsModal = ({
       });
 
       setTreeGroupsData(intermediateGrps);
+
+      let groupsIds = groupsData.map((el) => {
+        return el.GrpId;
+      });
+      let expNodes = ["root", ...groupsIds];
+      setExpandedNodes(expNodes);
     }
   }, [groupsData]);
 
@@ -283,6 +290,8 @@ const InterruptionsModal = ({
           <TreeViewWidget
             treeData={treeViewData}
             handleSelectNode={handleSelectNode}
+            selected={null}
+            expanded={["root"]}
           />
         </Grid>
         <Grid item md={6} xs={12}>
@@ -327,6 +336,8 @@ const InterruptionsModal = ({
           <TreeViewWidget
             treeData={treeViewData}
             handleSelectNode={handleSelectNode}
+            selected={"reas" + selectedRows[0]?.ReasonCd}
+            expanded={expandedNodes}
           />
         </Grid>
         <Grid item md={6} xs={12}>

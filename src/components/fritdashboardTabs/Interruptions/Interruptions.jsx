@@ -102,6 +102,19 @@ const Interruptions = () => {
     setLoading(false);
   };
 
+  //useEffect on change selected row
+  useEffect(() => {
+    if (
+      selectedRowsIds["interruptions"] &&
+      selectedRowsIds["interruptions"].length > 0
+    ) {
+      let tempRow = tableData.filter((interruption) => {
+        return interruption.id === selectedRowsIds["interruptions"][0];
+      });
+      setSelectedRows(tempRow);
+    }
+  }, [selectedRowsIds]);
+
   const handleFilter = () => {
     setOnlyPendings(!onlyPendings);
   };
@@ -118,7 +131,9 @@ const Interruptions = () => {
   const handleJustifyInterruption = () => {
     setformWidget({
       ...formWidget,
-      justifyInterruptionForm: {},
+      justifyInterruptionForm: {
+        comment: selectedRows[0].Comment,
+      },
     });
     setModalContent("justifyInterruption");
     setShowModal(true);
