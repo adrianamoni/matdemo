@@ -21,7 +21,8 @@ const TreeViewWidget = ({ treeData, handleSelectNode, expanded, selected }) => {
   return (
     <TreeView
       aria-label="customized"
-      expanded={expanded}
+      defaultExpanded={["root"]}
+      //expanded={expanded}
       defaultCollapseIcon={<IndeterminateCheckBoxIcon color="primary" />}
       defaultExpandIcon={<AddBoxIcon color="primary" />}
       defaultEndIcon={""}
