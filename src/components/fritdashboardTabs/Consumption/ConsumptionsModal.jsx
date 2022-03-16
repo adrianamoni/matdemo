@@ -5,7 +5,7 @@ import {
   selectedRowsIdsContext,
   selectedRowsContext,
 } from "../../../context/ContextProvider";
-import { Grid, Divider } from "@mui/material";
+import { Grid, Divider, InputLabel, TextField } from "@mui/material";
 import useWindowSize from "./../../customHooks/UseWindowsSize";
 import ModalWidget from "./../../../widgets/modalWidget/ModalWidget";
 import InputWidget from "./../../../widgets/forms/InputWidget";
@@ -16,6 +16,7 @@ import { createNotification } from "./../../alerts/NotificationAlert";
 import {
   tab_consumptions_correction,
   tab_materials_read_enrollment,
+  tab_consumptions_consume,
 } from "../../../services/OFservices";
 
 const ConsumptionsModal = ({
@@ -35,6 +36,10 @@ const ConsumptionsModal = ({
   );
   const { selectedRows, setSelectedRows } = useContext(selectedRowsContext);
   //useState
+  const [readLot, setReadLot] = useState(undefined);
+  const [material, setMaterial] = useState(undefined);
+  const [expiration, setExpiration] = useState(undefined);
+  const [quantity, setQuantity] = useState(undefined);
   const [apiEnrollment, setApiEnrollment] = useState(undefined);
   const [loading, setLoading] = useState(false);
   const [notificationModal, setNotificationModal] = useState({});
@@ -160,146 +165,143 @@ const ConsumptionsModal = ({
   );
 
   // CONSUME
-  const handleReadEnrollment = async () => {
-    if (!formWidget?.consumeForm?.registration) {
-      //setErrorMatricula({ state: true, msg: "Debes introducir una matrícula" });
-    } else {
-      //setErrorMatricula({ state: false, msg: "" });
-      setLoading(true);
-      let matricula = formWidget.consumeForm.registration.toUpperCase();
-      const response = await ApiCall({
-        params: tab_materials_read_enrollment({
-          matricula,
-        }),
-      });
-      if (response.responseError) {
-        setLoading(false);
-        setNotificationModal({
-          status: "error",
-          code: response.responseError,
-          msg: response.responseMsg,
-          hide: response.responseHide,
-        });
+  const handleReadEnrollment = async (e) => {
+    if (e.key === "Enter") {
+      if (!readLot) {
+        //setErrorMatricula({ state: true, msg: "Debes introducir una matrícula" });
       } else {
-        setLoading(false);
-        setApiEnrollment(response.responseData);
-        setformWidget({
-          ...formWidget,
-          consumeForm: {
-            material: "TODO",
-            lot: "TODO",
-            expiration: "TODO",
-            quantity: "TODO",
-          },
+        //setErrorMatricula({ state: false, msg: "" });
+        setLoading(true);
+        let matricula = readLot.toUpperCase();
+        const response = await ApiCall({
+          params: tab_materials_read_enrollment({
+            matricula,
+          }),
         });
+        if (response.responseError) {
+          setLoading(false);
+          setNotificationModal({
+            status: "error",
+            code: response.responseError,
+            msg: response.responseMsg,
+            hide: response.responseHide,
+          });
+        } else {
+          setLoading(false);
+          setMaterial(response.responseData.ItemDesc);
+          setExpiration(response.responseData.ExpiryDate);
+          setQuantity(response.responseData.Qty);
+          setApiEnrollment(response.responseData);
+        }
       }
     }
   };
 
-  const handleLoad = async () => {};
+  const handleChangeQty = (e) => {
+    if (e.target.value > 0 && e.target.value <= apiEnrollment.Qty) {
+      setQuantity(e.target.value);
+    } else {
+    }
+  };
+  const handleConsume = async () => {
+    const result = {
+      woId: woId,
+      operId: operId,
+      seqNo: seqNo,
+      quantity: parseFloat(quantity),
+      itemId: apiEnrollment.ItemId,
+      lotNo: apiEnrollment.LotNo,
+      subLotNo: apiEnrollment.matricula,
+    };
+    setLoading(true);
+    const response = await ApiCall({
+      params: tab_consumptions_consume(result),
+    });
+    if (response.responseError) {
+      setLoading(false);
+      createNotification({
+        status: "error",
+        code: response.responseError,
+        msg: response.responseMsg,
+        hide: response.responseHide,
+      });
+      closeModal();
+    } else {
+      setLoading(false);
+      createNotification({
+        status: "success",
+        msg: "¡Consumo realizado con éxito!", //TODO
+        hide: response.responseHide,
+      });
+      closeModal();
+    }
+  };
 
   const consumeModalContent = (
     <>
       <Divider sx={{ marginTop: "25px", marginBottom: "25px" }} />
-      <Grid item md={8} xs={12}>
-        <InputWidget
-          formId={"consumeForm"}
-          id={"registration"}
-          label={<Text tid={"registration"} />}
+      <Grid item md={6} xs={12}>
+        <InputLabel required={true}>
+          <Text tid={"lot"} />
+        </InputLabel>
+        <TextField
           required={true}
-          multiline={false}
-          type="text"
-          maxLength={100}
+          id={`consumeForm-textField-lot-label`}
+          value={readLot}
+          onChange={(e) => {
+            setReadLot(e.target.value);
+          }}
+          onKeyDown={handleReadEnrollment}
+          fullWidth
           disabled={false}
-          placeholder={
-            formWidget?.consumeForm?.consumeRegistration
-              ? ""
-              : "Introduzca matrícula"
-          }
-          min={null}
-          max={null}
+          placeholder={readLot ? "" : "Introduzca lote"}
         />
       </Grid>
-      <Grid
-        item
-        md={4}
-        xs={12}
-        container
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <ButtonGroupWidget
-          position="left"
-          buttons={[
-            {
-              text: "readRegistration",
-              color: "primary",
-              onClick: handleReadEnrollment,
-              disabled: false,
-            },
-          ]}
-          loading={loading}
-        />
-      </Grid>
-      <Grid item md={8} xs={12}>
-        <InputWidget
-          formId={"consumeForm"}
-          id={"material"}
-          label={<Text tid={"material"} />}
+      <Grid item md={6} xs={12}>
+        <InputLabel required={false}>
+          <Text tid={"material"} />
+        </InputLabel>
+        <TextField
           required={false}
-          multiline={false}
-          type="text"
-          maxLength={100}
+          id={`consumeForm-textField-material-label`}
+          value={material}
+          onChange={(e) => {
+            setMaterial(e.target.value);
+          }}
+          fullWidth
           disabled={true}
           placeholder={""}
-          min={null}
-          max={null}
         />
       </Grid>
-      <Grid item md={4} xs={12}>
-        <InputWidget
-          formId={"consumeForm"}
-          id={"lot"}
-          label={<Text tid={"lot"} />}
+      <Grid item md={6} xs={12}>
+        <InputLabel required={false}>
+          <Text tid={"expiration"} />
+        </InputLabel>
+        <TextField
           required={false}
-          multiline={false}
-          type="text"
-          maxLength={100}
+          id={`consumeForm-textField-expiration-label`}
+          value={expiration}
+          onChange={(e) => {
+            setExpiration(e.target.value);
+          }}
+          fullWidth
           disabled={true}
           placeholder={""}
-          min={null}
-          max={null}
         />
       </Grid>
-      <Grid item md={8} xs={12}>
-        <InputWidget
-          formId={"consumeForm"}
-          id={"expiration"}
-          label={<Text tid={"expiration"} />}
+      <Grid item md={6} xs={12}>
+        <InputLabel required={false}>
+          <Text tid={"quantity"} />
+        </InputLabel>
+        <TextField
           required={false}
-          multiline={false}
-          type="text"
-          maxLength={100}
-          disabled={true}
+          id={`consumeForm-textField-quantity-label`}
+          value={quantity}
+          onChange={handleChangeQty}
+          fullWidth
+          disabled={false}
           placeholder={""}
-          min={null}
-          max={null}
-        />
-      </Grid>
-      <Grid item md={4} xs={12}>
-        <InputWidget
-          formId={"consumeForm"}
-          id={"quantity"}
-          label={<Text tid={"quantity"} />}
-          required={false}
-          multiline={false}
           type="number"
-          maxLength={100}
-          disabled={false}
-          placeholder={""}
-          min={0}
-          max={null}
         />
       </Grid>
       <Grid container>
@@ -307,9 +309,9 @@ const ConsumptionsModal = ({
           position="right"
           buttons={[
             {
-              text: "loadMachine",
+              text: "consume",
               color: "primary",
-              onClick: handleLoad,
+              onClick: handleConsume,
               disabled: apiEnrollment ? false : true,
             },
           ]}

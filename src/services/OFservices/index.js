@@ -451,6 +451,32 @@ const tab_consumptions_correction = ({
   };
 };
 
+const tab_consumptions_consume = ({
+  woId,
+  operId,
+  seqNo,
+  quantity,
+  itemId,
+  lotNo,
+  subLotNo,
+}) => {
+  return {
+    ExecutionType: 1,
+    RuleId: "ConsumoManual",
+    RuleVersion: 1,
+    EventStamp: moment().format(),
+    Parameters: {
+      woId,
+      operId,
+      seqNo,
+      quantity,
+      itemId,
+      lotNo,
+      subLotNo,
+    },
+  };
+};
+
 const tab_peak_generation = ({
   matriculaPico,
   woId,
@@ -1235,6 +1261,7 @@ export {
   /*  tab_consumptions_init, */
   tab_consumptions,
   tab_consumptions_correction,
+  tab_consumptions_consume,
   tab_peak_generation,
   /*   tab_productions_init, */
   /*   tab_productions_data, */
