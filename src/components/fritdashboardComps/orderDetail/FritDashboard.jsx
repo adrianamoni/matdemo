@@ -24,7 +24,6 @@ import {
   selectedRowsContext,
   navigationDataContext,
 } from "../../../context/ContextProvider";
-import { getOrderDetails } from "./helper";
 import {
   getOrderDetails,
   getPendingInterruptions,
