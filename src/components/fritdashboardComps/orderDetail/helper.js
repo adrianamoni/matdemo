@@ -1,6 +1,11 @@
-import { get_order_details } from "../../../services/OFservices";
+import {
+  get_order_details,
+  get_pending_samples,
+} from "../../../services/OFservices";
 import { MemoryDatabaseCall } from "../../../services/Service";
 import moment from "moment";
+import _ from "lodash";
+import { pending_interruptions } from "../../../services/Interruptions";
 
 export const getOrderDetails = async ({ order }) => {
   let error;
@@ -45,45 +50,97 @@ export const getOrderDetails = async ({ order }) => {
   return { productionData: obj1, cleaningData: obj2, error };
 };
 
-export const getPendingSamples = async (data) => {
-  /*   let error;
-  let obj1, obj2;
+export const getPendingSamples = async ({ customParams }) => {
+  let qualityAlert;
+  let qualityData;
   const response = await MemoryDatabaseCall({
-    params: get_order_details({
-      woId: order.woId,
-      operId: order.operId,
-      seqNo: order.seqNo,
-    }),
-    url: "queryDataAsync",
+    params: get_pending_samples(customParams),
+    url: "queryDataFrameDataAsync",
+  });
+  if (response) {
+    if (response.length > 0) {
+      if (response.length > 0) {
+        qualityAlert = true;
+        qualityData = response.map((sample) => ({
+          id: sample.sample_id,
+          name: sample.sample_name,
+          req_time_local: sample.requested_time_local,
+          estado: sample.estado,
+          status: sample.sample_status,
+        }));
+        qualityData = _.sortBy(qualityData, "req_time_local");
+      } else {
+        qualityAlert = false;
+        qualityData = [];
+      }
+    } else {
+      qualityAlert = false;
+      qualityData = [];
+    }
+  }
+  return { samplesResult: { qualityData, qualityAlert } };
+};
+
+export const timeFormating = (seconds) => {
+  let formated;
+  if (seconds === 0) {
+    formated = "0min 0s";
+  } else {
+    formated = new Date(seconds * 1000).toISOString();
+    formated = formated
+      .substring(11, 19)
+      .replace(":", "h ")
+      .replace(":", "min ");
+    formated = formated + "s";
+  }
+
+  return formated;
+};
+
+export const getPendingInterruptions = async ({ customParams }) => {
+  let interruptionAlert;
+  let interruptionData;
+
+  const response = await MemoryDatabaseCall({
+    params: pending_interruptions(customParams),
+    url: "queryDataFrameDataAsync",
   });
 
   if (response) {
     if (response.length > 0) {
-      obj1 = response.find(
-        (data) => data.oper_id !== "limpieza" && data.oper_id !== "NETEJA"
-      );
-
+      interruptionAlert = true;
+      interruptionData = response.map((item, i) => ({
+        index: i,
+        Duration: timeFormating(item.Duration),
+        customStartDateTime: dateFormater({
+          date: item.StartDateTime,
+          type: "hora-fecha",
+        }),
+        EndDateTime: dateFormater({
+          date: item.EndDateTime,
+          type: "hora-fecha",
+        }),
+        Prompt: item.Prompt,
+        ID: item.ID,
+        ReasonDesc: item.ReasonDesc,
+        Comment: item.Comment,
+        UtilStateDesc: item.UtilStateDesc,
+        ReasonGrpId: item.ReasonGrpId,
+        ReasonCd: item.ReasonCd,
+        RawReasCd: item.RawReasCd,
+        EntId: item.EntId,
+        StartDateTime: item.StartDateTime,
+      }));
+    } else {
+      interruptionAlert = false;
+      interruptionData = [];
     }
+  } else {
+    interruptionAlert = false;
+    interruptionData = [];
   }
-
-  const response2 = await MemoryDatabaseCall({
-    params: get_order_details({
-      woId: order.woId,
-      operId: "NETEJA",
-      seqNo: parseInt(order.spare3),
-    }),
-    url: "queryDataAsync",
-  });
-
-  if (response2) {
-    if (response2.length > 0) {
-      obj2 = response2.find((data) => data.oper_id === "NETEJA");
-    }
-  }
-
-  return { productionData: obj1, cleaningData: obj2, error }; */
+  return { interruptionResult: { interruptionData, interruptionAlert } };
 };
-
 export const dateFormater = ({ date, type }) => {
   const dateProp = date;
   let finalDate;
@@ -299,7 +356,7 @@ export const operation_states = ({ stateCd, type, prodStateCd }) => {
           state: "Suspended",
           play: false,
           pause: true,
-          stop: true,
+          stop: false,
         };
       case 6:
         return { state: "Onhold", play: true, pause: true, stop: true };
@@ -343,4 +400,18 @@ export const getColorFromBackend = ({ microparo, decFormatColor }) => {
       return { background: `rgb(${red},${green},${blue})`, foreground: "#fff" };
     }
   }
+};
+
+export const processOrderTimeData = ({ orderTime, duracionJob }) => {
+  const orderInMins = orderTime / 60;
+  let res = parseFloat(duracionJob) - orderInMins;
+  if (res < 0) {
+    res = 0;
+  } else {
+    res = parseFloat(duracionJob) - orderInMins;
+  }
+
+  let tempRemainingTime = Math.ceil(res) + " min";
+
+  return { value: res, text: tempRemainingTime };
 };

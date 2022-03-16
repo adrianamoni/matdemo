@@ -91,6 +91,18 @@ const en = {
   feature: "Feature",
   result: "Result",
   send: "Send",
+  turn: "Turn",
+  hoppers: "Hoppers",
+  cleaning: "Cleaning",
+  sequencing: "Sequencing",
+  interruptionManager: "Interruption Manager",
+  orders: "Orders",
+  notFound: "Page not found",
+  redirecting: "Redirecting",
+  initDate: "Init Date",
+  quantityProduced: "Quantity Produced",
+  quantityRequired: "Quantity Required",
+  splitOrder: "Split Order",
 };
 
 export default en;

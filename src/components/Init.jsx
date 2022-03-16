@@ -9,36 +9,42 @@ function Init() {
   const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME;
 
   useEffect(() => {
-    const terminalParam = new URLSearchParams(search).get("terminal");
-    const extrasParam = new URLSearchParams(search).get("extras");
-
+    let terminalParam = new URLSearchParams(search).get("terminal");
+    let extrasParam = new URLSearchParams(search).get("extras");
+    let extrasParams;
     if (terminalParam) {
       localStorage.setItem(`Terminal_${PROJECT_NAME}`, terminalParam);
-      setGlobalData({ ...globalData, terminal: terminalParam });
     } else {
       localStorage.removeItem(`Terminal_${PROJECT_NAME}`);
-      if (localStorage.getItem(`Terminal_${PROJECT_NAME}`)) {
+      /* if (localStorage.getItem(`Terminal_${PROJECT_NAME}`)) {
         setGlobalData({
           ...globalData,
           terminal: localStorage.getItem(`Terminal_${PROJECT_NAME}`),
         });
-      }
+      } */
     }
 
     if (extrasParam) {
-      const params = extrasParam.split("-");
-      localStorage.setItem(`Extras_${PROJECT_NAME}`, JSON.stringify(params));
-      setExtrasConfig({ ...globalData, extras: params });
+      let extrasParams = extrasParam.split("-");
+      localStorage.setItem(
+        `Extras_${PROJECT_NAME}`,
+        JSON.stringify(extrasParams)
+      );
     } else {
       localStorage.removeItem(`Extras_${PROJECT_NAME}`);
-      if (localStorage.getItem(`Extras_${PROJECT_NAME}`)) {
+      /* if (localStorage.getItem(`Extras_${PROJECT_NAME}`)) {
         setGlobalData({
           ...globalData,
           extras: localStorage.getItem(`Extras_${PROJECT_NAME}`),
         });
-      }
+      } */
     }
-    navigateTo("/dashboard");
+    setGlobalData({
+      ...globalData,
+      terminal: terminalParam,
+      extras: extrasParams,
+    });
+    navigateTo("/");
     //eslint-disable-next-line
   }, []);
 

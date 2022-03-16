@@ -565,6 +565,75 @@ const printers_list_options = () => {
   };
 };
 
+const order_manager_ent_filter = () => {
+  return {
+    clientName: "CLIENTE_WEB",
+    dataFrameName: "JobFiltroEnt",
+    columns: [],
+    filter: null,
+  };
+};
+const order_manager_item_filter = () => {
+  return {
+    clientName: "CLIENTE_WEB",
+    dataFrameName: "JobFiltroItem",
+    columns: [],
+    filter: null,
+  };
+};
+const order_manager_date_filter = () => {
+  return {
+    clientName: "CLIENTE_WEB",
+    dataFrameName: "JobFiltroFecha",
+    columns: [],
+    filter: null,
+  };
+};
+
+const get_all_orders = ({ entId, itemId, date }) => {
+  return {
+    dbDataSetName: "JobAllFilters_Dataset",
+    dbQueryParameters: [
+      { name: "ent_id", dataType: "INT", value: entId || null },
+      {
+        name: "item_id",
+        dataType: "STRING",
+        value: itemId || null,
+      },
+      {
+        name: "fecha",
+        dataType: "DATETIME",
+        value: date || null,
+      },
+    ],
+    columns: [],
+    filter: null,
+  };
+};
+
+/* {
+    "dbDataSetName": "JobAllFilters_Dataset",
+    "dbQueryParameters": [
+        {
+            "name": "item_id",
+            "dataType": "STRING",
+            "value": null
+        },
+        {
+            "name": "fecha",
+            "dataType": "DATETIME",
+            "value": null
+        },
+        {
+            "name": "ent_id",
+            "dataType": "INT",
+            "value": null
+        }
+    ],
+    "columns": [],
+    "filter": null
+} */
+
 export {
   loginObj,
   logoutObj,
@@ -603,4 +672,8 @@ export {
   printers_list,
   printers_list_save,
   printers_list_options,
+  order_manager_ent_filter,
+  order_manager_item_filter,
+  order_manager_date_filter,
+  get_all_orders,
 };

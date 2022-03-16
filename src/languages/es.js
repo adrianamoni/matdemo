@@ -91,6 +91,18 @@ const es = {
   feature: "Característica",
   result: "Resultado",
   send: "Enviar",
+  turn: "Turno",
+  hoppers: "Tolvas",
+  cleaning: "Limpieza",
+  sequencing: "Secuenciación",
+  interruptionManager: "Gestor de Paros",
+  orders: "Órdenes",
+  notFound: "Página no encontrada",
+  redirecting: "Redirigiendo",
+  initDate: "Fecha inicio",
+  quantityProduced: "Cantidad Producida",
+  quantityRequired: "Cantidad Requerida",
+  splitOrder: "Dividir Orden",
 };
 
 export default es;

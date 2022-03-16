@@ -1,14 +1,24 @@
 import { useEffect, useState } from "react";
 import {
+  get_pending_samples,
   tab_materials_init,
   tab_of_parameters,
   tab_consumptions,
   tab_productions,
   tab_quality_get_qmspec_by_filter,
+  screen_of_last_cleaning,
+  all_samples,
 } from "../../services/OFservices";
 import { MemoryDatabaseCall } from "../../services/Service";
 import uuid from "react-uuid";
-import { line_assignment, read_signals } from "../../services/serviceHelper";
+import {
+  cleaning_order_time,
+  line_assignment,
+  order_manager_date_filter,
+  order_manager_ent_filter,
+  order_manager_item_filter,
+  read_signals,
+} from "../../services/serviceHelper";
 
 export default function UseFetchMemory({ request, customParams }) {
   const [data, setData] = useState(null);
@@ -24,6 +34,7 @@ export default function UseFetchMemory({ request, customParams }) {
           params: parameters.params(customParams || {}),
           url: parameters.url,
         });
+
         if (response && response.length > 0) {
           setData(response.map((item) => ({ ...item, id: uuid() })));
         }
@@ -48,7 +59,20 @@ const getParams = (request) => {
     consumptions: [tab_consumptions, "queryDataAsync"],
     productions: [tab_productions, "queryDataAsync"],
     "quality-qmspec": [tab_quality_get_qmspec_by_filter, "queryDataAsync"],
+    pendingSamples: [get_pending_samples, "queryDataFrameDataAsync"],
+    timePerOrder: [cleaning_order_time, "queryDataAsync"],
+    lastCleaning: [screen_of_last_cleaning, "queryDataAsync"],
+    "historical-samples": [all_samples, "queryDataAsync"],
     operatorsAssignment: [line_assignment, "queryDataAsync"],
+    "order-manager-ent": [order_manager_ent_filter, "queryDataFrameDataAsync"],
+    "order-manager-item": [
+      order_manager_item_filter,
+      "queryDataFrameDataAsync",
+    ],
+    "order-manager-date": [
+      order_manager_date_filter,
+      "queryDataFrameDataAsync",
+    ],
   };
 
   return {

@@ -3,8 +3,8 @@ import { createBrowserHistory } from "history";
 import { languageOptions, dictionaryList } from "../languages";
 import {
   getColorFromStorage,
-  getLoginStorageData,
   getStorageData,
+  getLoginStorageData,
 } from "./initalStates";
 
 const history = createBrowserHistory();
@@ -15,6 +15,7 @@ const pageSizeContext = React.createContext();
 const selectedRowsIdsContext = React.createContext();
 const selectedRowsContext = React.createContext();
 const formContext = React.createContext();
+const navigationDataContext = React.createContext();
 const globalDataContext = React.createContext({});
 /**Multilanguage Stuff */
 const languageContext = React.createContext({
@@ -24,8 +25,8 @@ const languageContext = React.createContext({
 /**End Multilanguage */
 
 const ContextProvider = (props) => {
-  const userStorageData = getLoginStorageData();
-  const [loggedUser, setLoggedUser] = useState(undefined);
+  const userData = getLoginStorageData();
+  const [loggedUser, setLoggedUser] = useState(userData);
   /**page size setup*/
   const [pageSize, setPageSize] = useState({
     width: undefined,
@@ -38,6 +39,9 @@ const ContextProvider = (props) => {
   const [formWidget, setformWidget] = useState({});
   const colorModeStorage = getColorFromStorage();
   const [colorMode, setColorMode] = useState(colorModeStorage);
+  const [navigationData, setNavigationData] = useState({
+    activeTab: 0,
+  });
   const storageData = getStorageData();
   const [globalData, setGlobalData] = useState({
     lineData: storageData.lineData || undefined,
@@ -46,8 +50,9 @@ const ContextProvider = (props) => {
     terminal: undefined,
     extras: undefined,
     orderDetails: undefined,
-    pendingSamples: undefined,
-    pendingInterruptions: undefined,
+    pendingSamples: { alert: undefined, data: undefined },
+    pendingInterruptions: { alert: undefined, data: undefined },
+    activeTab: undefined,
   });
   /**MultiLanguage Setup */
   const [language, setLanguage] = useState(languageOptions[0]);
@@ -79,14 +84,18 @@ const ContextProvider = (props) => {
                   value={{ selectedRows, setSelectedRows }}
                 >
                   <formContext.Provider value={{ formWidget, setformWidget }}>
-                    <globalDataContext.Provider
-                      value={{
-                        globalData,
-                        setGlobalData,
-                      }}
+                    <navigationDataContext.Provider
+                      value={{ navigationData, setNavigationData }}
                     >
-                      {props.children}
-                    </globalDataContext.Provider>
+                      <globalDataContext.Provider
+                        value={{
+                          globalData,
+                          setGlobalData,
+                        }}
+                      >
+                        {props.children}
+                      </globalDataContext.Provider>
+                    </navigationDataContext.Provider>
                   </formContext.Provider>
                 </selectedRowsContext.Provider>
               </selectedRowsIdsContext.Provider>
@@ -107,5 +116,6 @@ export {
   selectedRowsIdsContext,
   selectedRowsContext,
   formContext,
+  navigationDataContext,
   globalDataContext,
 };

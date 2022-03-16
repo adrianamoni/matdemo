@@ -1,8 +1,11 @@
 import { grey } from "@mui/material/colors";
-import React from "react";
+import React, { useContext } from "react";
 import ReactApexChart from "react-apexcharts";
+import { colorModeContext } from "../../context/ContextProvider";
 
 const HalfDoughnut = ({ value, color }) => {
+  const { colorMode } = useContext(colorModeContext);
+
   /**
    * @param {{value:Array}}
    */
@@ -39,8 +42,9 @@ const HalfDoughnut = ({ value, color }) => {
           },
           value: {
             offsetY: -2,
-            fontSize: "1.1em",
+            fontSize: "1.5rem",
             fontWeight: 700,
+            color: colorMode === "dark" ? "#eee" : "#222",
           },
         },
       },

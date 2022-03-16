@@ -11,6 +11,7 @@ import ButtonGroupWidget from "../../../widgets/buttonGroup/ButtonGroupWidget";
 import Text from "../../../languages/Text";
 
 const LogoutModal = ({ logoutModal, setLogoutModal }) => {
+  const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME;
   const windowSize = useWindowSize();
   const { pathname } = useLocation();
   let navigate = useNavigate();
@@ -21,8 +22,13 @@ const LogoutModal = ({ logoutModal, setLogoutModal }) => {
   const [loading, setLoading] = useState(false);
 
   const handleConfirmLogout = (e) => {
-    sessionStorage.removeItem("userInfo");
-    setLoggedUser(null);
+    sessionStorage.removeItem(`UserInfo_${PROJECT_NAME}`);
+    setLoggedUser({
+      userName: "",
+      isLogged: false,
+      sessionId: null,
+      permissions: [],
+    });
     fetchLogout();
     setLogoutModal(false);
     (pathname === "/secuenciacion" || pathname === "/gestor-paros") &&

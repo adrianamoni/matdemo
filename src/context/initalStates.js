@@ -27,22 +27,22 @@ export const getStorageData = () => {
 
 export const getLoginStorageData = () => {
   let userData;
-  let userName, isLogged, isAdmin, permissions;
+  let userName, isLogged, permissions, sessionId;
 
   if (sessionStorage.getItem(`UserInfo_${PROJECT_NAME}`)) {
     userData = JSON.parse(sessionStorage.getItem(`UserInfo_${PROJECT_NAME}`));
     userName = userData.userName;
     isLogged = true;
-    isAdmin = userData.isAdmin;
+    sessionId = userData.sessionId;
     permissions = userData.permissions;
   } else {
     userName = "";
     isLogged = false;
-    isAdmin = false;
+    sessionId = undefined;
     permissions = [];
   }
 
-  return { userName, isLogged, isAdmin, permissions };
+  return { userName, isLogged, sessionId, permissions };
 };
 
 export const getColorFromStorage = () => {

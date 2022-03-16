@@ -17,6 +17,9 @@ import MonthlyCleaning from "./components/fritdashboardComps/cleaning/MonthlyCle
 import Init from "./components/Init";
 import OperatorAssignment from "./components/screens/OperatorAssignment/OperatorAssignment";
 import OperatorDeAssignment from "./components/screens/OperatorDeAssignment/OperatorDeAssignment";
+import OrderManager from "./components/fritDashboardComps/OrderManagement/OrderManager";
+import InterruptionManager from "./components/fritdashboardComps/interruptionManagement/InterruptionManager";
+import SequencingGateway from "./components/fritdashboardComps/sequencing/SequencingGateway";
 
 const AppRouter = () => {
   const { setPageSize } = useContext(pageSizeContext);
@@ -36,19 +39,22 @@ const AppRouter = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
+            <Route index element={<Dashboard />} />
             <Route path="about" element={<About />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="frit-dashboard" element={<FritDashboard />} />
-            <Route path="frit-dashboard/:slug" element={<FritDashboard />} />
+            {/*        <Route path="dashboard" element={<Dashboard />} /> */}
+            <Route path="detalle-orden" element={<FritDashboard />} />
+            <Route path="detalle-orden/:slug" element={<FritDashboard />} />
             <Route path="limpieza-periodica" element={<MonthlyCleaning />} />
             <Route path="table" element={<Table />} />
             <Route path="charts" element={<Charts />} />
             <Route path="asignacion" element={<OperatorAssignment />} />
+            <Route path="ordenes" element={<OrderManager />} />
+            <Route path="gestor-paros" element={<InterruptionManager />} />
+            <Route path="secuenciacion" element={<SequencingGateway />} />
             <Route path="desasignacion" element={<OperatorDeAssignment />} />
 
             <Route path="test" element={<Test />} />
-            <Route path="init" element={<Init />} />
+            {/*  <Route path="init" element={<Init />} /> */}
             <Route path="*" element={<NoMatch />} />
           </Route>
         </Routes>

@@ -1,26 +1,53 @@
-import { Grid, Typography } from "@mui/material";
-import React from "react";
+import { Card, Grid, Typography } from "@mui/material";
+import React, { useContext } from "react";
+import {
+  globalDataContext,
+  navigationDataContext,
+} from "../../../context/ContextProvider";
 
-const Paros = () => {
+const Paros = ({ alert, data }) => {
+  const { navigationData, setNavigationData } = useContext(
+    navigationDataContext
+  );
+  const { globalData } = useContext(globalDataContext);
+  const { pendingInterruptions } = globalData;
+
+  let styledAlert = alert
+    ? {
+        border: "1.5px solid crimson",
+        backgroundColor: "#DC143C10",
+      }
+    : {};
+
   return (
-    <Grid container sx={{ height: "100%" }}>
-      <Grid item xs={12}>
-        <Typography align="center" variant="h6" component="h6">
-          PAROS
-        </Typography>
-      </Grid>
+    <Card
+      sx={{ p: 2, height: "100%", cursor: "pointer", ...styledAlert }}
+      onClick={() => setNavigationData({ ...navigationData, activeTab: 7 })}
+    >
+      <Grid container sx={{ height: "100%" }}>
+        <Grid item xs={12}>
+          <Typography
+            align="center"
+            variant="h6"
+            component="h6"
+            color={alert && "error"}
+          >
+            PAROS
+          </Typography>
+        </Grid>
 
-      <Grid item xs={12} /* sx={{ height: "100%" }} */>
-        <Grid container sx={{ alignItems: "center" }}>
-          <Grid item xs={6} sm={6} md={6} lg={6} align="left">
-            <strong>Paros pendientes</strong>
-          </Grid>
-          <Grid item xs={6} sm={6} md={6} lg={6} align="right">
-            -
+        <Grid item xs={12} /* sx={{ height: "100%" }} */>
+          <Grid container sx={{ alignItems: "center" }}>
+            <Grid item xs={6} sm={6} md={6} lg={6} align="left">
+              <strong>Paros pendientes</strong>
+            </Grid>
+            <Grid item xs={6} sm={6} md={6} lg={6} align="right">
+              {pendingInterruptions?.data.length || "-"}
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </Card>
   );
 };
 

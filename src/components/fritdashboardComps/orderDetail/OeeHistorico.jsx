@@ -71,10 +71,10 @@ const OEEHistorico = () => {
 
         <Grid item xs={12} /* sx={{ height: "100%" }} */>
           <Grid container sx={{ alignItems: "center" }}>
-            <Grid item xs={12} sm={12} md={6}>
+            <Grid item xs={12} sm={12} md={12} lg={6} te>
               <TimelineContainer />
             </Grid>
-            <Grid item xs={12} sm={12} md={3}>
+            <Grid item xs={12} sm={12} md={6} lg={3}>
               <HalfDoughnut
                 value={[apiData ? apiData.OEE / 100 : 0]}
                 color={colorByValue({
@@ -84,7 +84,7 @@ const OEEHistorico = () => {
                 })}
               />
             </Grid>
-            <Grid item xs={12} sm={12} md={3}>
+            <Grid item xs={12} sm={12} md={6} lg={3}>
               <List>
                 <ListItem>
                   <Grid container>

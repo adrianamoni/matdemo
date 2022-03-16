@@ -1,9 +1,10 @@
 import uuid from "react-uuid";
+import { MemoryDatabaseCall } from "../../../services/Service";
 import {
   all_samples,
   tab_quality_get_attributes,
-} from "../../services/OFservices";
-import { MemoryDatabaseCall } from "../../services/Service";
+} from "../../../services/OFservices";
+import _ from "lodash";
 
 export const fetchAllSampleData = async ({
   entId,
@@ -37,7 +38,7 @@ export const fetchAllSampleData = async ({
           estado: sample.estado,
           status: sample.sample_status,
         }));
-        res = filteredSamples;
+        res = _.sortBy(filteredSamples, "req_time_local");
       }
     }
   }
@@ -196,7 +197,6 @@ const apiCall = async (attr_id) => {
 };
 
 export const multiCall = async (results) => {
-  console.log("TEST results", results);
   let allIds;
   allIds = results.filter((c) => c.attrId > -1);
   const char_attr_id = allIds.map((c) => ({
@@ -231,7 +231,6 @@ export const multiCall = async (results) => {
       }),
     };
   });
-  console.log("TEST drop", drop);
   return drop;
 };
 

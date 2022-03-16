@@ -113,7 +113,8 @@ const TableWidget = ({ data, columns, multipleSelection, tableName }) => {
   return (
     <TableContainer
       sx={{
-        border: "solid 1px #bbbbbb",
+        border: "solid 1px",
+        borderColor: "background.paper",
       }}
     >
       <TextField
@@ -163,6 +164,7 @@ const TableWidget = ({ data, columns, multipleSelection, tableName }) => {
               getRowClassName={(params) =>
                 `super-app-theme--${params.row.color}`
               }
+              /*  onCellEditCommit */
             />
           </div>
         ) : (

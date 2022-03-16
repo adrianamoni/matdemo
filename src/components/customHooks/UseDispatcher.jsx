@@ -1,30 +1,31 @@
 import { useEffect, useState } from "react";
-
 import { ApiCall } from "../../services/Service";
 import uuid from "react-uuid";
+import { screen_of_start_btn } from "../../services/OFservices";
 
-export default function UseFetchDispatcher({ request, customParams }) {
+export default function UseDispatcher({ request, customParams }) {
   const [data, setData] = useState(null);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const sendData = async () => {
       try {
         const parameters = getParams(request);
+        console.log("parameters", parameters);
 
         const response = await ApiCall({
           params: parameters.params(customParams || {}),
         });
-
-        setData(response.map((item) => ({ ...item, id: uuid() })));
+        console.log("response", response);
+        /* setData(response.map((item) => ({ ...item, id: uuid() }))); */
       } catch (err) {
         setError(err);
       } finally {
         setLoading(false);
       }
     };
-    fetchData();
+    sendData();
     return () => {};
   }, []);
 
@@ -33,6 +34,7 @@ export default function UseFetchDispatcher({ request, customParams }) {
 
 const getParams = (request) => {
   const REQUESTS = {
+    playButton: screen_of_start_btn,
     /*  parameters: [tab_of_parameters, "queryDataAsync"],
     "material-list": [tab_materials_init, "queryDataAsync"],
     "variables-signals": [read_signals, "queryWWDataFrameDataAsync"],
@@ -41,6 +43,6 @@ const getParams = (request) => {
   };
 
   return {
-    params: REQUESTS[request][0],
+    params: REQUESTS[request],
   };
 };

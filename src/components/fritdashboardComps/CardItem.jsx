@@ -27,7 +27,7 @@ const CardItem = ({ data, line }) => {
       onMouseLeave={() => setRaise(false)}
     >
       <CardActionArea>
-        <StyledLink to={`/frit-dashboard/${line}`}>
+        <StyledLink to={`/detalle-orden`}>
           <CardHeader
             component="div"
             /*  sx={{ bgcolor: color, color: "#fff", mb: 2 }} */

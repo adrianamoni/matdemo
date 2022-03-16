@@ -39,26 +39,41 @@ const tab_of_parameters = ({ woId, operId, seqNo }) => {
   };
 };
 
-const screen_of_start_btn = ({ items_arr }) => {
+const screen_of_start_btn = ({ woId, operId, seqNo }) => {
+  console.log("woId, operId, seqNo", woId, operId, seqNo);
   return {
     ExecutionType: 1,
     RuleId: "InicioOperacion",
     RuleVersion: 1,
     EventStamp: moment().format(),
     Parameters: {
-      items: items_arr,
+      items: [
+        {
+          woId,
+          operId,
+          seqNo,
+          duracionLimpieza: 0, // Dejar así, el back necesita recibir este parámetro /,
+          tipoLimpieza: "", // Dejar así, el back necesita recibir este parámetro /,
+        },
+      ],
     },
   };
 };
 
-const screen_of_pause_btn = (pauseArray) => {
+const screen_of_pause_btn = ({ woId, operId, seqNo }) => {
   return {
     ExecutionType: 1,
     RuleId: "PausaOperacion",
     RuleVersion: 1,
     EventStamp: moment().format(),
     Parameters: {
-      items: pauseArray,
+      items: [
+        {
+          woId,
+          operId,
+          seqNo,
+        },
+      ],
     },
   };
 };
@@ -657,14 +672,75 @@ const tab_quality_get_samples = ({ filter }) => {
   };
 }; */
 
-const get_pending_samples = ({ filter }) => {
+const get_pending_samples = ({ entId, woId, operId, seqNo, itemId }) => {
   return {
     clientName: "CLIENTE_WEB",
     dataFrameName: "SamplesPendientesDataframe",
     columns: [],
     filter: {
       filterExpression: {
-        filters: filter,
+        filters: [
+          {
+            filterExpression: null,
+            filterItem: {
+              column: "ent_id",
+              dataType: "INT",
+              value: entId,
+              filterItemType: "Equal",
+              checkDBNull: false,
+            },
+          },
+          {
+            filterExpression: null,
+            filterItem: {
+              column: "wo_id",
+              dataType: "STRING",
+              value: woId,
+              filterItemType: "Equal",
+              checkDBNull: false,
+            },
+          },
+          {
+            filterExpression: null,
+            filterItem: {
+              column: "oper_id",
+              dataType: "STRING",
+              value: operId,
+              filterItemType: "Equal",
+              checkDBNull: false,
+            },
+          },
+          {
+            filterExpression: null,
+            filterItem: {
+              column: "seq_no",
+              dataType: "INT",
+              value: seqNo,
+              filterItemType: "Equal",
+              checkDBNull: false,
+            },
+          },
+          {
+            filterExpression: null,
+            filterItem: {
+              column: "item_id",
+              dataType: "STRING",
+              value: itemId,
+              filterItemType: "Equal",
+              checkDBNull: false,
+            },
+          },
+          /* {
+          filterExpression: null,
+          filterItem: {
+            column: "Autocontrol",
+            dataType: "STRING",
+            value: "L", //hardcoded, dejar así
+            filterItemType: "NotEqual",
+            checkDBNull: false,
+          },
+        }, */
+        ],
         filterExpressionType: "AND",
         negationFilterExpression: false,
       },
@@ -924,7 +1000,7 @@ const get_cleaning_orders = ({ filter }) => {
 };
 
 /** MEMORY DB */
-const screen_of_last_cleaning = (entId) => {
+const screen_of_last_cleaning = ({ entId }) => {
   return {
     dbDataSetName: "UltimaLimpieza",
     dbQueryParameters: [

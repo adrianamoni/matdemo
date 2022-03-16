@@ -99,14 +99,36 @@ const screen_interruptions_reasons = () => {
   };
 };
  */
-const pending_interruptions = ({ filter }) => {
+const pending_interruptions = ({ entId }) => {
   return {
     clientName: "CLIENTE_WEB",
     dataFrameName: "ProdEventsPendientesDataFrame",
     columns: [],
     filter: {
       filterExpression: {
-        filters: filter,
+        filters: [
+          {
+            filterExpression: null,
+            filterItem: {
+              column: "EntId",
+              dataType: "INT",
+              value: entId,
+              filterItemType: "Equal",
+              checkDBNull: false,
+            },
+          },
+
+          {
+            filterExpression: null,
+            filterItem: {
+              column: "ShiftEndDateTime",
+              dataType: "Datetime",
+              value: null,
+              filterItemType: "null",
+              checkDBNull: false,
+            },
+          },
+        ],
         filterExpressionType: "AND",
         negationFilterExpression: false,
       },

@@ -9,6 +9,7 @@ import {
   selectedRowsIdsContext,
   selectedRowsContext,
 } from "../context/ContextProvider";
+import Text from "../languages/Text";
 
 const Navbar = ({ drawerWidth, handleDrawerToggle, title }) => {
   let location = useLocation();
@@ -42,7 +43,7 @@ const Navbar = ({ drawerWidth, handleDrawerToggle, title }) => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap component="div" sx={{ flex: 1 }}>
-          {title || "Inicio"}
+          {title || Text({ tid: "home" })}
         </Typography>
         <ToggleDarkMode />
         <LanguageSelector />

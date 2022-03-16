@@ -38,7 +38,11 @@ const Parameters = () => {
   ) : (
     <>
       <Grid container sx={{ mt: 2 }}>
-        <TableWidget data={data} columns={parameterColumns} />
+        <TableWidget
+          data={data}
+          columns={parameterColumns}
+          tableName="parameters"
+        />
       </Grid>
     </>
   );

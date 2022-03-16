@@ -53,7 +53,7 @@ const Line = ({ line }) => {
         clearNextOrdersTimeout = setTimeout(fetchNextOrders, 120000);
       };
 
-      const fetchMonthlyCleaningData = async () => {
+      /* const fetchMonthlyCleaningData = async () => {
         const filter = [
           {
             filterExpression: null,
@@ -79,20 +79,18 @@ const Line = ({ line }) => {
           }
         }
         clearCleaningTimeout = setTimeout(fetchMonthlyCleaningData, 120000);
-      };
+      };*/
 
       fetchNextOrders();
-      fetchMonthlyCleaningData();
+      /* fetchMonthlyCleaningData(); */
       return () => {
         mountedComp = false;
         clearTimeout(clearNextOrdersTimeout);
-        clearTimeout(clearCleaningTimeout);
+        /* clearTimeout(clearCleaningTimeout); */
       };
     },
     //eslint-disable-next-line
-    [
-      /* line */
-    ]
+    []
   );
 
   return (
@@ -121,17 +119,17 @@ const Line = ({ line }) => {
             }
           />
         </Grid>
-        <Grid item style={{ width: "100%", textAlign: "center" }}>
+        {/*  <Grid item style={{ width: "100%", textAlign: "center" }}>
           <MonthlyCleaningBox
             line={line}
-            /* cleaningData={monthlyCleaningData[0]}
+             cleaningData={monthlyCleaningData[0]}
             currentOrder={
               currentOrders &&
               currentOrders.length > 0 &&
               currentOrders[0].wo_id
-            } */
+            } 
           />
-        </Grid>
+        </Grid> */}
       </Grid>
     </>
   );

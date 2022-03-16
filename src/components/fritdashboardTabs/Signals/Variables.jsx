@@ -36,12 +36,16 @@ const Variables = () => {
   }
   return loading ? (
     <Box sx={{ width: "100%" }}>
-      <LinearProgress />
+      <LinearProgress color="secondary" />
     </Box>
   ) : processedData && processedData.length > 0 ? (
     <Container fluid>
       <Grid container sx={{ mt: 2 }}>
-        <TableWidget data={processedData} columns={variablesColumns} />
+        <TableWidget
+          data={processedData}
+          columns={variablesColumns}
+          tableName="variables-signals"
+        />
       </Grid>
     </Container>
   ) : (
