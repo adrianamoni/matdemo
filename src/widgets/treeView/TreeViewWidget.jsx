@@ -3,8 +3,11 @@ import _ from "lodash";
 import { TreeView, TreeItem } from "@mui/lab";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
+import useWindowSize from "./../../components/customHooks/UseWindowsSize";
 
 const TreeViewWidget = (props) => {
+  const windowSize = useWindowSize();
+
   const renderTree = (nodes) => (
     <TreeItem
       key={nodes.id}
@@ -25,7 +28,12 @@ const TreeViewWidget = (props) => {
         defaultCollapseIcon={<IndeterminateCheckBoxIcon color="primary" />}
         defaultExpandIcon={<AddBoxIcon color="primary" />}
         defaultEndIcon={""}
-        sx={{ height: "auto", flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
+        sx={{
+          height: windowSize.width < 820 ? "350px" : "auto",
+          flexGrow: 1,
+          maxWidth: 400,
+          overflowY: "auto",
+        }}
         multiSelect={false}
         onNodeSelect={props.handleSelectNode}
         selected={props.selected}
@@ -41,7 +49,12 @@ const TreeViewWidget = (props) => {
         defaultCollapseIcon={<IndeterminateCheckBoxIcon color="primary" />}
         defaultExpandIcon={<AddBoxIcon color="primary" />}
         defaultEndIcon={""}
-        sx={{ height: "auto", flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
+        sx={{
+          height: windowSize.width < 820 ? "350px" : "auto",
+          flexGrow: 1,
+          maxWidth: 400,
+          overflowY: "auto",
+        }}
         multiSelect={false}
         onNodeSelect={props.handleSelectNode}
         selected={props.selected}
