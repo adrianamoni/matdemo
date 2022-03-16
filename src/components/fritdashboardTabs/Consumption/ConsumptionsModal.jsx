@@ -335,7 +335,7 @@ const ConsumptionsModal = ({
           ? consumCorrectionModalContent
           : consumeModalContent
       }
-      customWidth={windowSize.width < 620 ? 350 : 800}
+      customWidth={windowSize.width < 820 ? 350 : 800}
     />
   );
 };

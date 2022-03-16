@@ -25,7 +25,7 @@ const TreeViewWidget = (props) => {
         defaultCollapseIcon={<IndeterminateCheckBoxIcon color="primary" />}
         defaultExpandIcon={<AddBoxIcon color="primary" />}
         defaultEndIcon={""}
-        sx={{ height: 600, flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
+        sx={{ height: "auto", flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
         multiSelect={false}
         onNodeSelect={props.handleSelectNode}
         selected={props.selected}
@@ -41,7 +41,7 @@ const TreeViewWidget = (props) => {
         defaultCollapseIcon={<IndeterminateCheckBoxIcon color="primary" />}
         defaultExpandIcon={<AddBoxIcon color="primary" />}
         defaultEndIcon={""}
-        sx={{ height: 600, flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
+        sx={{ height: "auto", flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
         multiSelect={false}
         onNodeSelect={props.handleSelectNode}
         selected={props.selected}

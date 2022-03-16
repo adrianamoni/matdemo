@@ -439,7 +439,7 @@ const InterruptionsModal = ({
           ? createInterruptionModalContent
           : justifyInterruptionModalContent
       }
-      customWidth={windowSize.width < 620 ? 350 : 800}
+      customWidth={windowSize.width < 820 ? 350 : 800}
     />
   );
 };
