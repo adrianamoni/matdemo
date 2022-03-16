@@ -71,6 +71,11 @@ const Productions = () => {
     !loggedUser &&
       sessionStorage.getItem("userInfo") &&
       setLoggedUser(JSON.parse(sessionStorage.getItem("userInfo")));
+
+    return () => {
+      setSelectedRows([]);
+      setSelectedRowsIds([]);
+    };
   }, []);
 
   useEffect(() => {
