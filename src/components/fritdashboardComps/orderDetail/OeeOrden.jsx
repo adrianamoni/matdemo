@@ -1,8 +1,45 @@
-import { Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Card, Grid, List, ListItem, Typography } from "@mui/material";
+import { globalDataContext } from "../../../context/ContextProvider";
 import HalfDoughnut from "../../../widgets/halfDoughnut/HalfDoughnut";
+import { get_oee_order } from "../../../services/OFservices";
+import Text from "./../../../languages/Text";
+import { MemoryDatabaseCall } from "../../../services/Service";
+import { colorByValue } from "../../../helpers/props";
 
 const OeeOrden = () => {
+  const { globalData } = useContext(globalDataContext);
+  const [apiData, setApiData] = useState(undefined);
+  const [OEEData, setOEEData] = useState(undefined);
+
+  useEffect(() => {
+    let clearTimeoutTurnoKey;
+
+    const fetch = async () => {
+      let entId = globalData.lineData.entId;
+      console.log("entId", entId);
+      let response = await MemoryDatabaseCall({
+        params: get_oee_order({ entId }),
+        url: "queryDataAsync",
+      });
+      if (response) {
+        if (response.length > 0) {
+          setApiData(response);
+        }
+      }
+
+      clearTimeoutTurnoKey = setTimeout(fetch, 60000);
+    };
+
+    if (globalData && globalData.lineData && globalData.orderData) {
+      fetch();
+    }
+
+    return () => {
+      clearTimeout(clearTimeoutTurnoKey);
+    };
+  }, []);
+
   return (
     <>
       <Grid container sx={{ height: "100%" }}>
@@ -14,8 +51,15 @@ const OeeOrden = () => {
 
         <Grid item xs={12}>
           <Grid container sx={{ alignItems: "center" }}>
-            <Grid item xs={12} sm={12} md={12} lg={12}>
-              <HalfDoughnut value={[78]} />
+            <Grid item xs={12} sm={12} md={6} lg={3}>
+              <HalfDoughnut
+                value={[apiData?.OEE && apiData.OEE != null ? apiData.OEE : 0]}
+                color={colorByValue({
+                  value: apiData?.OEE && apiData.OEE != null ? apiData.OEE : 0,
+                  targetOee: globalData?.lineData?.oeeTarget,
+                  yellowThreshold: globalData?.oeeSpecs?.yellowThreshold,
+                })}
+              />
             </Grid>
           </Grid>
         </Grid>
