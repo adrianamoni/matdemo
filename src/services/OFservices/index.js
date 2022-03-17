@@ -1098,21 +1098,20 @@ const get_oee_shift = ({ filter }) => {
     },
   };
 };
-// const get_oee_shift = ({ filter }) => {
-//   return {
-//     clientName: "CLIENTE_WEB",
-//     dataFrameName: "OEECurrentShift",
-//     columns: [],
-//     filter: {
-//       filterExpression: {
-//         filters: filter,
-//         filterExpressionType: "AND",
-//         negationFilterExpression: false,
-//       },
-//       filterItem: null,
-//     },
-//   };
-// };
+const get_oee_order = ({ entId }) => {
+  return {
+    dbDataSetName: "_sp_SA_OEE_Exec_GetCurrentKPIs_Job",
+    dbQueryParameters: [
+      {
+        name: "ent_id",
+        dataType: "INT",
+        value: entId,
+      },
+    ],
+    columns: [],
+    filter: null,
+  };
+};
 //DEPRECATED
 /* const screen_ofdetail_util_shift = ({ name, dataType, value }) => {
   return {
@@ -1313,6 +1312,7 @@ export {
   get_oee_real,
   /*   screen_ofdetail_oee_shift, */
   get_oee_shift,
+  get_oee_order,
   /*   screen_ofdetail_util_order, */
   /* screen_ofdetail_util_shift, */
   get_utilshift,

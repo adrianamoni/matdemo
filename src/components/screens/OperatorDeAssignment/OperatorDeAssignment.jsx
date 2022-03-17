@@ -56,7 +56,19 @@ const OperatorDeAssignment = ({ line, modal, close }) => {
     });
     if (response) {
       response = response.map((el) => {
-        return { ...el, id: uuid() };
+        console.log("el", el);
+        return {
+          id: uuid(),
+          unusedColor: el.color,
+          fixedtime: el.fixedtime,
+          lab_cd: el.lab_cd,
+          lab_desc: el.lab_desc,
+          last_edit_at: el.last_edit_at,
+          last_edit_by: el.last_edit_by,
+          last_edit_comment: el.last_edit_comment,
+          std_crew: el.std_crew,
+          vartime: el.vartime,
+        };
       });
       setTableData(response);
     }

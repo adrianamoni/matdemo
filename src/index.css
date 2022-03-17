@@ -78,7 +78,7 @@ code {
 }
 #fritDashboard-main-container .frit-tabs > .MuiTabs-scroller > div > button {
   padding-inline: 15px !important;
-
+}
 /* DISABLED INPUT */
 /* .MuiInputBase-root.Mui-disabled {
   background-color: #e0e0e0 !important;
