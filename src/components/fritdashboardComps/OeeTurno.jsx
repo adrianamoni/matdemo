@@ -14,6 +14,7 @@ import LineProgress from "../../widgets/progress/LineProgress";
 
 const OeeTurno = ({ line }) => {
   const [apiData, setApiData] = useState(undefined);
+  const [OEEData, setOEEData] = useState(undefined);
   useEffect(() => {
     let mountedComp = true;
     let clearTimeoutKey;
@@ -22,10 +23,10 @@ const OeeTurno = ({ line }) => {
         {
           filterExpression: null,
           filterItem: {
-            column: "ent_id",
-            dataType: "INT",
-            value: line.entId,
-            filterItemType: "Equal",
+            column: "Tagname",
+            dataType: "String",
+            value: line.ent_name,
+            filterItemType: "StartsWith",
             checkDBNull: false,
           },
         },
@@ -33,7 +34,7 @@ const OeeTurno = ({ line }) => {
 
       const response = await MemoryDatabaseCall({
         params: get_oee_shift({ filter }),
-        url: "queryDataFrameDataAsync",
+        url: "queryWWDataFrameDataAsync",
       });
       if (response && mountedComp) {
         if (response.length > 0) {
@@ -52,6 +53,22 @@ const OeeTurno = ({ line }) => {
     //eslint-disable-next-line
   }, []);
   const cardTitle = `OEE ${Text({ tid: "turn" })} ${line.ent_name}`;
+
+  useEffect(() => {
+    if (apiData?.length > 0) {
+      let OEEPercentageIndex = apiData.findIndex((obj) => {
+        return obj.Tagname.includes("CurrentOEEPercent");
+      });
+
+      setOEEData({
+        OEEPercentage:
+          OEEPercentageIndex != "-1"
+            ? apiData[OEEPercentageIndex].Value.toFixed(0)
+            : 0,
+      });
+    }
+  }, [apiData]);
+
   return (
     <Card>
       <CardHeader component="div" title={cardTitle.toUpperCase()} />
@@ -59,7 +76,11 @@ const OeeTurno = ({ line }) => {
         <Grid container alignItems="center">
           {apiData && apiData.length > 0 ? (
             <LineProgress
-              value={apiData[0].OEE ? parseFloat(apiData[0].OEE) / 100 : 0}
+              value={
+                OEEData?.OEEPercentage
+                  ? parseFloat(OEEData.OEEPercentage) / 100
+                  : 0
+              }
             />
           ) : (
             <LineProgress value={0} />

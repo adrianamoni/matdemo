@@ -33,7 +33,7 @@ import {
 import Parameters from "../../fritdashboardTabs/Parameters";
 
 import Quality from "../../fritdashboardTabs/Quality/Quality";
-import Documentation from "../../fritdashboardTabs/Documentation";
+import Documentation from "../../fritdashboardTabs/Documentation/Documentation";
 import Planification from "../../fritdashboardTabs/Planification/Planification";
 import Simulation from "../../fritdashboardTabs/Simulation/Simulation";
 import Consumptions from "./../../fritdashboardTabs/Consumption/Consumptions";

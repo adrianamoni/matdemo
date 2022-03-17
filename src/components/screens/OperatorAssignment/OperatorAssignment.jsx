@@ -17,6 +17,7 @@ import TableWidget from "./../../../widgets/TableWidget/TableWidget";
 import ButtonGroupWidget from "./../../../widgets/buttonGroup/ButtonGroupWidget";
 import Text from "./../../../languages/Text";
 import { createNotification } from "./../../alerts/NotificationAlert";
+import UserAlert from "./../../alerts/UserAlert";
 
 const OperatorAssignment = ({ line, modal, close }) => {
   const columns = [
@@ -44,6 +45,11 @@ const OperatorAssignment = ({ line, modal, close }) => {
   const [tableData, setTableData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [refreshData, setRefreshData] = useState(false);
+  const [userAlert, setUserAlert] = useState({
+    show: false,
+    message: "",
+    severity: "",
+  });
 
   //fetch data
   const fetchData = async () => {
@@ -97,6 +103,20 @@ const OperatorAssignment = ({ line, modal, close }) => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    tableData && tableData.length < 1
+      ? setUserAlert({
+          show: true,
+          message: "No hay datos actualmente", //TODO
+          severity: "info",
+        })
+      : setUserAlert({
+          show: false,
+          message: "",
+          severity: "",
+        });
+  }, [tableData]);
 
   useEffect(() => {
     if (refreshData) {
@@ -160,57 +180,68 @@ const OperatorAssignment = ({ line, modal, close }) => {
   ) : (
     <>
       {/* Consumpions Table */}
-      <Grid container sx={{ mt: 2 }}>
-        <Grid item md={4} xs={12}>
-          <InputWidget
-            formId={"operatorForm"}
-            id={"operator"}
-            label={<Text tid={"operator"} />}
-            required={true}
-            multiline={false}
-            type="text"
-            maxLength={100}
-            disabled={false}
-            placeholder={""}
-            min={null}
-            max={null}
-          />
-        </Grid>
-      </Grid>
-      <Grid container sx={{ mt: 2 }}>
-        <Grid item xs={12}>
-          <TableWidget
-            data={tableData}
-            columns={columns}
-            multipleSelection={false}
-            tableName="assignOperators"
-          />
-        </Grid>
+      {tableData?.length > 0 ? (
+        <>
+          <Grid container sx={{ mt: 2 }}>
+            <Grid item md={4} xs={12}>
+              <InputWidget
+                formId={"operatorForm"}
+                id={"operator"}
+                label={<Text tid={"operator"} />}
+                required={true}
+                multiline={false}
+                type="text"
+                maxLength={100}
+                disabled={false}
+                placeholder={""}
+                min={null}
+                max={null}
+              />
+            </Grid>
+          </Grid>
+          <Grid container sx={{ mt: 2 }}>
+            <Grid item xs={12}>
+              <TableWidget
+                data={tableData}
+                columns={columns}
+                multipleSelection={false}
+                tableName="assignOperators"
+              />
+            </Grid>
 
-        <Grid item xs={12}>
-          <ButtonGroupWidget
-            position="left"
-            buttons={[
-              {
-                text: "save",
-                color: "primary",
-                onClick: handleAssign,
-                disabled:
-                  formWidget &&
-                  formWidget.operatorForm &&
-                  formWidget.operatorForm.operator &&
-                  formWidget.operatorForm.operator.length > 0 &&
-                  selectedRows &&
-                  selectedRows &&
-                  selectedRows.length > 0
-                    ? false
-                    : true,
-              },
-            ]}
-            loading={loading}
+            <Grid item xs={12}>
+              <ButtonGroupWidget
+                position="left"
+                buttons={[
+                  {
+                    text: "save",
+                    color: "primary",
+                    onClick: handleAssign,
+                    disabled:
+                      formWidget &&
+                      formWidget.operatorForm &&
+                      formWidget.operatorForm.operator &&
+                      formWidget.operatorForm.operator.length > 0 &&
+                      selectedRows &&
+                      selectedRows &&
+                      selectedRows.length > 0
+                        ? false
+                        : true,
+                  },
+                ]}
+                loading={loading}
+              />
+            </Grid>
+          </Grid>
+        </>
+      ) : (
+        userAlert.show && (
+          <UserAlert
+            severity={userAlert.severity}
+            message={userAlert.message}
           />
-        </Grid>
-      </Grid>
+        )
+      )}
     </>
   );
 };

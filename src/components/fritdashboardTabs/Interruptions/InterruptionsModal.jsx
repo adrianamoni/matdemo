@@ -18,6 +18,7 @@ import {
   getAllowableUtilGroups,
   getAllowableUtilReasons,
   screen_interruptions_generate,
+  screen_interruptions_justify,
 } from "../../../services/Interruptions";
 import { write_tags } from "../../../services/serviceHelper";
 import { createNotification } from "./../../alerts/NotificationAlert";
@@ -28,6 +29,9 @@ const InterruptionsModal = ({
   modalContent,
   setRefreshData,
   fromInterruptionsManager,
+  selectedNode,
+  setSelectedNode,
+  originalData,
 }) => {
   const windowSize = useWindowSize();
 
@@ -47,7 +51,8 @@ const InterruptionsModal = ({
   const [treeReasonsData, setTreeResonsData] = useState(false);
   const [treeViewData, setTreeViewData] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [selectedReason, setSelectedReason] = useState(false);
+  const [selectedReason, setSelectedReason] = useState(null);
+  const [expandedNodes, setExpandedNodes] = useState([]);
 
   //TREEVIEW DATA
   useEffect(() => {
@@ -121,6 +126,12 @@ const InterruptionsModal = ({
       });
 
       setTreeGroupsData(intermediateGrps);
+
+      let groupsIds = groupsData.map((el) => {
+        return el.GrpId;
+      });
+      let expNodes = ["root", ...groupsIds];
+      setExpandedNodes(expNodes);
     }
   }, [groupsData]);
 
@@ -185,6 +196,14 @@ const InterruptionsModal = ({
       });
 
       setTreeResonsData(childReasons);
+
+      if (selectedNode != null) {
+        let nodeId = selectedNode.replace("reas", "");
+        let selectNode = reasonsData.find((el) => {
+          return el.reas_cd == nodeId;
+        });
+        setSelectedReason(selectNode);
+      }
     }
   }, [reasonsData]);
 
@@ -204,10 +223,11 @@ const InterruptionsModal = ({
   const handleSelectNode = (event, tempNodeId) => {
     try {
       let nodeId = tempNodeId.replace("reas", "");
-      let selectedNode = reasonsData.find((el) => {
+      setSelectedNode(tempNodeId);
+      let selectNode = reasonsData.find((el) => {
         return el.reas_cd == nodeId;
       });
-      setSelectedReason(selectedNode);
+      setSelectedReason(selectNode);
     } catch (error) {}
   };
 
@@ -217,7 +237,8 @@ const InterruptionsModal = ({
       createInterruptionForm: [],
       justifyInterruptionForm: [],
     });
-    setSelectedReason({});
+    setSelectedNode(null);
+    setSelectedReason(null);
     setShowModal(false);
     setRefreshData(true);
   };
@@ -283,6 +304,7 @@ const InterruptionsModal = ({
           <TreeViewWidget
             treeData={treeViewData}
             handleSelectNode={handleSelectNode}
+            selected={selectedNode}
           />
         </Grid>
         <Grid item md={6} xs={12}>
@@ -311,7 +333,7 @@ const InterruptionsModal = ({
                 disabled: !selectedReason ? true : false,
               },
             ]}
-            loading={false}
+            loading={loading}
           />
         </Grid>
       </Grid>
@@ -319,7 +341,46 @@ const InterruptionsModal = ({
   );
 
   // JUSTIFY INTERRUPTION
-  const handleSubmitJustifyInterruption = () => {};
+  const handleSubmitJustifyInterruption = async () => {
+    setLoading(true);
+
+    let row = originalData.find((el) => {
+      return el.ID == selectedRows[0].id;
+    });
+
+    let submitObj = {
+      lineaId: selectedRows[0].EntId,
+      reasCd: selectedReason.reas_cd,
+      rawReasCd: selectedRows[0].RawReasCd,
+      eventTime: row.StartDateTime,
+      eventEndTime: row.EndDateTime,
+      comments: formWidget?.justifyInterruptionForm?.comment
+        ? formWidget.justifyInterruptionForm.comment
+        : "",
+    };
+    const response = await ApiCall({
+      params: screen_interruptions_justify(submitObj),
+    });
+    if (response.responseError) {
+      setLoading(false);
+      createNotification({
+        status: "error",
+        code: response.responseError,
+        msg: response.responseMsg,
+        hide: response.responseHide,
+      });
+      closeModal();
+    } else {
+      setLoading(false);
+      createNotification({
+        status: "success",
+        msg: "¡Paro justificado con éxito!", //TODO
+        hide: response.responseHide,
+      });
+      closeModal();
+    }
+  };
+
   const justifyInterruptionModalContent = (
     <>
       <Grid container spacing={2}>
@@ -327,6 +388,8 @@ const InterruptionsModal = ({
           <TreeViewWidget
             treeData={treeViewData}
             handleSelectNode={handleSelectNode}
+            expanded={expandedNodes}
+            selected={selectedNode}
           />
         </Grid>
         <Grid item md={6} xs={12}>
@@ -352,10 +415,10 @@ const InterruptionsModal = ({
                 text: "save",
                 color: "primary",
                 onClick: handleSubmitJustifyInterruption,
-                //disabled: selectedNode ? true : false,
+                disabled: false,
               },
             ]}
-            loading={false}
+            loading={loading}
           />
         </Grid>
       </Grid>
@@ -376,7 +439,7 @@ const InterruptionsModal = ({
           ? createInterruptionModalContent
           : justifyInterruptionModalContent
       }
-      customWidth={windowSize.width < 620 ? 350 : 800}
+      customWidth={windowSize.width < 820 ? 350 : 800}
     />
   );
 };

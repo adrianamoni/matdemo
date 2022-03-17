@@ -55,6 +55,7 @@ const Interruptions = () => {
   );
   const { selectedRows, setSelectedRows } = useContext(selectedRowsContext);
   //useState
+  const [originalData, setOriginalData] = useState(false);
   const [tableData, setTableData] = useState(false);
   const [loading, setLoading] = useState(false);
   const [userAlert, setUserAlert] = useState({
@@ -67,9 +68,13 @@ const Interruptions = () => {
   const [refreshData, setRefreshData] = useState(false);
   const [onlyPendings, setOnlyPendings] = useState(true);
 
+  const [selectedNode, setSelectedNode] = useState(null);
+
   useEffect(() => {
     return () => {
       setTableData([]);
+      setSelectedRows([]);
+      setSelectedRowsIds([]);
     };
   }, []);
 
@@ -92,15 +97,30 @@ const Interruptions = () => {
 
   const getAllData = async () => {
     setLoading(true);
-    const { res, err } = await fetchAllData(entId);
+    const { orginalRes, res, err } = await fetchAllData(entId);
     if (err) {
       createNotification(err);
     }
     if (res) {
+      setOriginalData(orginalRes);
       setTableData(res);
     }
     setLoading(false);
   };
+
+  //useEffect on change selected row
+  useEffect(() => {
+    if (
+      selectedRowsIds["interruptions"] &&
+      selectedRowsIds["interruptions"].length > 0
+    ) {
+      let tempRow = tableData.filter((interruption) => {
+        return interruption.id === selectedRowsIds["interruptions"][0];
+      });
+      setSelectedRows(tempRow);
+      setSelectedNode("reas" + tempRow[0]?.ReasonCd);
+    }
+  }, [selectedRowsIds]);
 
   const handleFilter = () => {
     setOnlyPendings(!onlyPendings);
@@ -118,7 +138,9 @@ const Interruptions = () => {
   const handleJustifyInterruption = () => {
     setformWidget({
       ...formWidget,
-      justifyInterruptionForm: {},
+      justifyInterruptionForm: {
+        comment: selectedRows[0].Comment,
+      },
     });
     setModalContent("justifyInterruption");
     setShowModal(true);
@@ -197,6 +219,9 @@ const Interruptions = () => {
         setShowModal={setShowModal}
         modalContent={modalContent}
         setRefreshData={setRefreshData}
+        selectedNode={selectedNode}
+        setSelectedNode={setSelectedNode}
+        originalData={originalData}
       />
     </>
   );

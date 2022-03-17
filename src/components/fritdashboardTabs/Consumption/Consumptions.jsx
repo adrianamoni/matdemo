@@ -56,6 +56,13 @@ const Consumptions = () => {
   const [refreshData, setRefreshData] = useState(false);
 
   useEffect(() => {
+    return () => {
+      setSelectedRows([]);
+      setSelectedRowsIds([]);
+    };
+  }, []);
+
+  useEffect(() => {
     let clearTimeoutKey;
 
     const fetchData = async (showLoader) => {

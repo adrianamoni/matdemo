@@ -49,6 +49,7 @@ const InterruptionManagerFilter = ({ entId }) => {
 
 const fetchAllData = async (entId) => {
   let err = null;
+  let orginalRes = [];
   let res = [];
 
   const response = await MemoryDatabaseCall({
@@ -66,7 +67,7 @@ const fetchAllData = async (entId) => {
       };
     } else {
       if (response.length > 0) {
-        console.log("response", response);
+        orginalRes = response;
         const newArr = response.map((item, i) => {
           return {
             index: i + 1,
@@ -97,7 +98,7 @@ const fetchAllData = async (entId) => {
       }
     }
   }
-  return { res, err };
+  return { orginalRes, res, err };
 };
 
 const fetchAllManagerData = async ({ entId, section, reason, date }) => {
