@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import uuid from "react-uuid";
 import moment from "moment";
 import "./SeqTable.css";
@@ -28,6 +28,8 @@ import {
 import CallSplitIcon from "@mui/icons-material/CallSplit";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import DatePickerWidget from "../../../widgets/forms/DatePickerWidget";
+import { formContext } from "../../../context/ContextProvider";
 const SeqTable = ({
   apiData,
   setApiData,
@@ -38,9 +40,10 @@ const SeqTable = ({
   lines,
   selectedLine,
 }) => {
-  const { width } = useWindowSize();
-  const [startDate, setStartDate] = useState(new Date());
-  console.log("startDate", startDate);
+  /*   const { width } = useWindowSize(); */
+  const { formWidget } = useContext(formContext);
+  /*   const [startDate, setStartDate] = useState(new Date()); */
+
   let productionOrders;
   let cleaningOrders;
 
@@ -83,7 +86,7 @@ const SeqTable = ({
   const handleInitDateChange = (date, rowId) => {
     const formattedData = moment(date).format("YYYY-MM-DDTHH:mm:ss");
 
-    const test = getDateFromInput(date, rowId, apiData);
+    const test = getDateFromInput(formattedData, rowId, apiData);
     setApiData([{ ...test }]);
     //setDisableSave(false);
   };
@@ -120,15 +123,22 @@ const SeqTable = ({
   //} else if (width < 1600) {
   //  tableClass = "mid-row-seq-table";
   //}
-  useEffect(() => {
+  /*   useEffect(() => {
     console.log("startDate2", startDate);
-  }, [startDate]);
+  }, [startDate]); */
+
+  useEffect(() => {
+    if (formWidget.sequencingInitDate) {
+      const id = Object.keys(formWidget.sequencingInitDate);
+      handleInitDateChange(formWidget.sequencingInitDate[id[0]], id[0]);
+    }
+  }, [formWidget]);
 
   return (
     <>
       {productionOrders && productionOrders.length > 0 ? (
         <>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: 1450 }} size="small" aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell></TableCell>
@@ -228,12 +238,18 @@ const SeqTable = ({
                     </TableCell>
                     <TableCell>
                       {console.log("startdate", row.SchedStartTimeLocal)}
-                      <DatePicker
+                      {/* <DatePicker
                         selected={new Date(row.SchedStartTimeLocal)}
                         onChange={(date) => handleInitDateChange(date, row.id)}
                         showTimeSelect
                         timeIntervals={5}
                         dateFormat="dd/MM/yyyy hh:mm:ss"
+                      /> */}
+                      <DatePickerWidget
+                        formId="sequencingInitDate"
+                        id={row.id}
+                        defaultDate={new Date(row.SchedStartTimeLocal)}
+                        type="datetime"
                       />
                     </TableCell>
                     <TableCell>

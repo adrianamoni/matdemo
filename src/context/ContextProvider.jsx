@@ -5,6 +5,7 @@ import {
   getColorFromStorage,
   getStorageData,
   getLoginStorageData,
+  getStorageLineUsers,
 } from "./initalStates";
 
 const history = createBrowserHistory();
@@ -14,6 +15,7 @@ const loginContext = React.createContext();
 const pageSizeContext = React.createContext();
 const selectedRowsIdsContext = React.createContext();
 const selectedRowsContext = React.createContext();
+const lineUsersContext = React.createContext([]);
 const formContext = React.createContext();
 const navigationDataContext = React.createContext();
 const globalDataContext = React.createContext({});
@@ -35,6 +37,8 @@ const ContextProvider = (props) => {
   /**selected table row setup*/
   const [selectedRowsIds, setSelectedRowsIds] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
+  const storageLineUsers = getStorageLineUsers();
+  const [lineUsers, setLineUsers] = useState(storageLineUsers);
   /**form widget setup*/
   const [formWidget, setformWidget] = useState({});
   const colorModeStorage = getColorFromStorage();
@@ -83,20 +87,24 @@ const ContextProvider = (props) => {
                 <selectedRowsContext.Provider
                   value={{ selectedRows, setSelectedRows }}
                 >
-                  <formContext.Provider value={{ formWidget, setformWidget }}>
-                    <navigationDataContext.Provider
-                      value={{ navigationData, setNavigationData }}
-                    >
-                      <globalDataContext.Provider
-                        value={{
-                          globalData,
-                          setGlobalData,
-                        }}
+                  <lineUsersContext.Provider
+                    value={{ lineUsers, setLineUsers }}
+                  >
+                    <formContext.Provider value={{ formWidget, setformWidget }}>
+                      <navigationDataContext.Provider
+                        value={{ navigationData, setNavigationData }}
                       >
-                        {props.children}
-                      </globalDataContext.Provider>
-                    </navigationDataContext.Provider>
-                  </formContext.Provider>
+                        <globalDataContext.Provider
+                          value={{
+                            globalData,
+                            setGlobalData,
+                          }}
+                        >
+                          {props.children}
+                        </globalDataContext.Provider>
+                      </navigationDataContext.Provider>
+                    </formContext.Provider>
+                  </lineUsersContext.Provider>
                 </selectedRowsContext.Provider>
               </selectedRowsIdsContext.Provider>
             </pageSizeContext.Provider>
@@ -116,6 +124,7 @@ export {
   selectedRowsIdsContext,
   selectedRowsContext,
   formContext,
+  lineUsersContext,
   navigationDataContext,
   globalDataContext,
 };

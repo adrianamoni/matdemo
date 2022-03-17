@@ -7,16 +7,17 @@ import {
   globalDataContext,
   selectedRowsIdsContext,
   selectedRowsContext,
-} from "../../context/ContextProvider";
-import Text from "../../languages/Text";
-import { tab_of_planification } from "../../services/OFservices";
-import { MemoryDatabaseCall } from "../../services/Service";
-import ButtonGroupWidget from "../../widgets/buttonGroup/ButtonGroupWidget";
-import TableWidget from "../../widgets/TableWidget/TableWidget";
-import { dateFormater } from "../common/helpers/helper";
-import useWindowSize from "../customHooks/UseWindowsSize";
-import { operation_states } from "../fritdashboardComps/orderDetail/helper";
-import { handleOperationAction } from "./General/helper";
+} from "../../../context/ContextProvider";
+import Text from "../../../languages/Text";
+import { tab_of_planification } from "../../../services/OFservices";
+import { MemoryDatabaseCall } from "../../../services/Service";
+import ButtonGroupWidget from "../../../widgets/buttonGroup/ButtonGroupWidget";
+import TableWidget from "../../../widgets/TableWidget/TableWidget";
+import { dateFormater } from "../../common/helpers/helper";
+import useWindowSize from "../../customHooks/UseWindowsSize";
+import { operation_states } from "../../fritdashboardComps/orderDetail/helper";
+import { handleOperationAction } from "../General/helper";
+import ModalCreateOrder from "./ModalCreateOrder";
 
 const Planification = () => {
   const windowSize = useWindowSize();
@@ -201,99 +202,13 @@ const Planification = () => {
         </Grid>
       </Grid>
 
-      {/* <Grid.Row textAlign="center">
-          <Grid.Column width={16}>
-            <Button
-              onClick={() => setCreateOrderModal(true)}
-              disable={!createOrderPermission}
-            >
-              Crear Orden
-            </Button>
-          </Grid.Column>
-        </Grid.Row> */}
-
-      {/* <ModalCreateOrder
+      <ModalCreateOrder
         open={createOrderModal}
         close={setCreateOrderModal}
-        line={line.entId}
         setRefreshMain={setRefreshMain}
-      /> */}
+      />
     </>
   );
 };
-
-/* const ModalCreateOrder = ({ open, close, line, setRefreshMain }) => {
-  const [material, setMaterial] = useState("");
-  const [cantidad, setCantidad] = useState("");
-  const [cleaningOperId, setCleaningOperId] = useState("");
-
-  const [loadingSubmit, setLoadingSubmit] = useState(false);
-
-  const handleSubmit = async () => {
-    setLoadingSubmit(true);
-
-    setLoadingSubmit(false);
-    handleClose();
-    setRefreshMain(true);
-  };
-
-  const handleClose = () => {
-    setMaterial("");
-    setCantidad("");
-    setCleaningOperId("");
-    close(false);
-  };
-  return (
-    <>
-      <Modal onClose={() => handleClose()} open={open} centered closeIcon>
-        <Modal.Header>Crear Orden</Modal.Header>
-        <Modal.Content>
-          <Modal.Description>
-            <Form>
-              <Form.Group>
-                <Form.Input
-                  label="Material"
-                  width={16}
-                  value={material}
-                  type={"text"}
-                  onChange={(e, d) => setMaterial(d.value)}
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.Input
-                  label="Cantidad"
-                  width={8}
-                  type={"number"}
-                  min="0"
-                  value={cantidad}
-                  onChange={(e, d) => setCantidad(d.value)}
-                />
-                <Form.Input
-                  label="Operación de Limpieza"
-                  width={8}
-                  type={"text"}
-                  value={cleaningOperId}
-                  onChange={(e, d) => setCleaningOperId(d.value)}
-                />
-              </Form.Group>
-            </Form>
-          </Modal.Description>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button
-            primary
-            onClick={handleSubmit}
-            disabled={
-              !material || !cantidad || !cleaningOperId || loadingSubmit
-            }
-            loading={loadingSubmit}
-          >
-            Crear
-          </Button>
-        </Modal.Actions>
-      </Modal>
-    </>
-  );
-}; */
 
 export default Planification;

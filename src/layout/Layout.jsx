@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material";
@@ -18,7 +18,6 @@ function Layout(props) {
   const { window } = props;
   /*   const [height, setHeight] = useState();
   const containerComp = useRef(null); */
-  let { slug } = useParams();
 
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -73,11 +72,10 @@ function Layout(props) {
     },
   });
 
-  useEffect(() => {
-    console.log("colorMode", colorMode);
-    document.body.style.backgroundColor =
-      colorMode === "isDark" ? "rgb(20,20,20) " : "#e0e0e0 ";
-  }, [colorMode]);
+  /*   useEffect(() => {
+    const color = colorMode === "isDark" ? "rgb(20,20,20)" : "#e0e0e0";
+    document.body.style.backgroundColor = color; //"#e0e0e0";
+  }, [colorMode]); */
 
   return (
     <ThemeProvider theme={theme}>
@@ -94,7 +92,6 @@ function Layout(props) {
         <Navbar
           handleDrawerToggle={handleDrawerToggle}
           drawerWidth={drawerWidth}
-          title={slug}
         />
         <Box
           component="nav"
@@ -114,7 +111,7 @@ function Layout(props) {
           sx={{
             m: 0,
             flexGrow: 1,
-            p: 3,
+            p: 2,
             width: { sm: `calc(100% - ${drawerWidth}px)` },
 
             backgroundColor: "background.grey2",

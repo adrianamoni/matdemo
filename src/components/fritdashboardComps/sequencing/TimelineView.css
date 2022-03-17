@@ -1,3 +1,7 @@
 .rct-item-content {
   overflow: visible !important;
 }
+
+.rct-header-root {
+  background-color: #f0f0f0 !important;
+}

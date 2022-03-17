@@ -34,7 +34,8 @@ import Parameters from "../../fritdashboardTabs/Parameters";
 
 import Quality from "../../fritdashboardTabs/Quality/Quality";
 import Documentation from "../../fritdashboardTabs/Documentation";
-import Planification from "../../fritdashboardTabs/Planification";
+import Planification from "../../fritdashboardTabs/Planification/Planification";
+import Simulation from "../../fritdashboardTabs/Simulation/Simulation";
 import Consumptions from "./../../fritdashboardTabs/Consumption/Consumptions";
 import Productions from "./../../fritdashboardTabs/Production/Productions";
 import LineStatusButton from "./LineStatusButton";
@@ -81,6 +82,7 @@ const FritDashboard = () => {
     Text({ tid: "interruptions" }),
     Text({ tid: "documentation" }),
     Text({ tid: "planification" }),
+    Text({ tid: "simulation" }),
   ];
 
   /* const [value, setValue] = useState(0); */
@@ -262,8 +264,10 @@ const FritDashboard = () => {
         </Grid>
         <Box
           sx={{
-            /* maxWidth: { xs: 350, sm: 600, md: 900, lg: 1200, xl: 1536 }, */
-            maxWidth: { xs: 450, sm: 900, md: 1200, lg: 1536 /* xl: 1536 */ },
+            width: "100%",
+
+            maxWidth: { xs: 400, sm: 600, md: 900, lg: 1200, xl: 1536 },
+            /* maxWidth: { xs: 450, sm: 900, md: 1200, lg: 1536  }, */
           }}
           justifyContent="center"
         >
@@ -369,6 +373,9 @@ const Panels = ({ value, loading }) => {
       </TabPanel>
       <TabPanel value={value} index={9}>
         <Planification />
+      </TabPanel>
+      <TabPanel value={value} index={10}>
+        <Simulation />
       </TabPanel>
     </>
   );

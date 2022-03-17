@@ -107,6 +107,10 @@ const es = {
   splitOrder: "Dividir Orden",
   startOrder: "Iniciar Orden",
   createOrder: "Crear Orden",
+  orderDetail: "Detalle Orden",
+  orderManagement: "Gestor de Órdenes",
+  interruptionManagement: "Gestor de Paros",
+  simulation: "Simulación",
 };
 
 export default es;

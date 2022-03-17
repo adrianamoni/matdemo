@@ -23,6 +23,7 @@ import {
 } from "../../../context/ContextProvider";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import ConsAndProds from "./ConsAndProds";
 
 const OrderManager = () => {
   const { loggedUser, setLoggedUser } = useContext(loginContext);
@@ -102,46 +103,6 @@ const OrderManager = () => {
     },
   ];
 
-  const consColumns = [
-    {
-      field: "material",
-      headerName: `${Text({ tid: "material" })}`,
-      flex: 1,
-    },
-    {
-      field: "lot_no",
-      headerName: `${Text({ tid: "lot" })}`,
-      width: 200,
-    },
-    {
-      field: "qty_cons",
-      headerName: `${Text({ tid: "quantity" })}`,
-      width: 200,
-    },
-  ];
-
-  const prodColumns = [
-    {
-      field: "material",
-      headerName: `${Text({ tid: "material" })}`,
-      flex: 1,
-    },
-    {
-      field: "lot_no",
-      headerName: `${Text({ tid: "lot" })}`,
-      width: 200,
-    },
-    {
-      field: "qty_prod",
-      headerName: `${Text({ tid: "quantity" })}`,
-      width: 200,
-    },
-    {
-      field: "reas_desc",
-      headerName: `${Text({ tid: "reason" })}`,
-      width: 200,
-    },
-  ];
   useEffect(() => {
     return () => {
       setOrdersData([]);
@@ -224,7 +185,7 @@ const OrderManager = () => {
 
   return (
     <Grid container spacing={2} alignItems="center">
-      <Grid item xs={12} sm={12} md={11}>
+      <Grid item xs={12} sm={12} md={10} lg={11}>
         <Grid container spacing={2}>
           {entFilter && (
             <Grid item xs={12} sm={12} md={4}>
@@ -276,7 +237,7 @@ const OrderManager = () => {
           )}
         </Grid>
       </Grid>
-      <Grid item xs={12} sm={12} md={1}>
+      <Grid item xs={12} sm={12} md={2} lg={1}>
         <Button fullWidth variant="contained" onClick={() => applyFilters()}>
           Aplicar
         </Button>
@@ -301,67 +262,12 @@ const OrderManager = () => {
           </Alert>
         </Grid>
       )}
-
-      {loadingFromSelected ? (
-        <Grid item xs={12}>
-          <LinearProgress variant="indeterminate" />
-        </Grid>
-      ) : consumptionData ? (
-        <Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="h6">
-                {Text({ tid: "consumptions" })}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <TableWidget
-                data={consumptionData}
-                columns={consColumns}
-                tableName="cons-order-management"
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-      ) : (
-        selectedRows.length > 0 && (
-          <Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
-            <Alert variant="outlined" severity="info">
-              No hay consumos en esta orden
-            </Alert>
-          </Grid>
-        )
-      )}
-      {console.log("productionData", productionData)}
-      {loadingFromSelected ? (
-        <></>
-      ) : productionData ? (
-        <Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="h6">
-                {Text({ tid: "productions" })}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <TableWidget
-                data={productionData}
-                columns={prodColumns}
-                tableName="prod-order-management"
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-      ) : (
-        !loadingFromSelected &&
-        selectedRows.length > 0 && (
-          <Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
-            <Alert variant="outlined" severity="info">
-              No hay producciones en esta orden
-            </Alert>
-          </Grid>
-        )
-      )}
+      <ConsAndProds
+        loading={loadingFromSelected}
+        consumptionData={consumptionData}
+        selectedRows={selectedRows}
+        productionData={productionData}
+      />
     </Grid>
   );
 };

@@ -37,7 +37,7 @@ body {
   font-family: "Ubuntu", "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /*   background-color: rgb(225, 225, 225) !important; */
+  background-color: rgb(225, 225, 225) !important;
 }
 /* #root {
   background-color: #e0e0e0  !important;

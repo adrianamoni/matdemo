@@ -26,6 +26,8 @@ import Text from "../languages/Text";
 import LoginModal from "../components/screens/Login/LoginModal";
 import LogoutModal from "../components/screens/Login/LogoutModal";
 import LanguageSelector from "../languages/LanguageSelector";
+import ToggleDarkMode from "../theme/ToggleDarkMode";
+
 const sidebarItems = [
   {
     id: 1,
@@ -180,6 +182,10 @@ const DrawerComp = () => {
         </div>
 
         <List>
+          <ListItem sx={{ justifyContent: "center" }}>
+            <ToggleDarkMode />
+          </ListItem>
+
           <LanguageSelector />
           <ListItem
             button

@@ -107,6 +107,10 @@ const en = {
   splitOrder: "Split Order",
   startOrder: "Start Order",
   createOrder: "Create Order",
+  orderDetail: "Order Detail",
+  orderManagement: "Order Management",
+  interruptionManagement: "Interruption Management",
+  simulation: "Simulation",
 };
 
 export default en;
