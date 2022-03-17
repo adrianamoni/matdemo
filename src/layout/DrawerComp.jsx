@@ -58,7 +58,7 @@ const sidebarItems = [
     extra: "tolvas",
   },
   //UNDO THIS ABOVE
-  {
+  /*  {
     id: 6,
     name: "sequencing",
     icon: <ViewTimelineIcon />,
@@ -77,8 +77,8 @@ const sidebarItems = [
     name: "orders",
     icon: <ViewListIcon />,
     path: "/ordenes",
-    permission: "GestionOrden",
-  },
+    permission: "GestorOrdenes",
+  }, */
   /*   {
     id: 5,
     name: "cleaning",
@@ -108,7 +108,7 @@ const protectedItems = [
     name: "orders",
     icon: <ViewListIcon />,
     path: "/ordenes",
-    permission: "GestionOrden",
+    permission: "GestorOrdenes",
   },
 ];
 

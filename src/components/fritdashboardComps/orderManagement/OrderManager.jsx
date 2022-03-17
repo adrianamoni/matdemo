@@ -42,13 +42,11 @@ const OrderManager = () => {
   const { selectedRows, setSelectedRows } = useContext(selectedRowsContext);
 
   if (loggedUser.isLogged) {
-    /* //!UNDO
     if (
-      !loggedUser.permissions.find((el) => el.desc.includes("GestionOrden")) 
+      !loggedUser.permissions.find((el) => el.desc.includes("GestorOrdenes"))
     ) {
-     
       navigateTo("/");
-    } */
+    }
   } else {
     navigateTo("/");
   }
@@ -245,7 +243,7 @@ const OrderManager = () => {
       <Divider />
       {loadingData ? (
         <Grid item xs={12}>
-          <LinearProgress variant="indeterminate" />
+          <LinearProgress variant="indeterminate" color="secondary" />
         </Grid>
       ) : ordersData && ordersData.length > 0 ? (
         <Grid item xs={12}>

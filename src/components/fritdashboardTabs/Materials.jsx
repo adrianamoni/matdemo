@@ -96,7 +96,7 @@ const Materials = () => {
 
   return loading ? (
     <Box sx={{ width: "100%" }}>
-      <LinearProgress />
+      <LinearProgress variant="indeterminate" color="secondary" />
     </Box>
   ) : (
     <Grid container sx={{ mt: 2 }}>

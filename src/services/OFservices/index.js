@@ -1216,6 +1216,15 @@ const sections_available_sequencing = () => {
   };
 };
 
+const get_data_create_order = () => {
+  return {
+    clientName: "CLIENTE_WEB",
+    dataFrameName: "CreadorOrdenes_DataFrame",
+    columns: [],
+    filter: null,
+  };
+};
+
 export {
   screen_of_detail,
   tab_of_parameters,
@@ -1275,4 +1284,5 @@ export {
   tab_of_planification,
   tab_of_reprint,
   sections_available_sequencing,
+  get_data_create_order,
 };

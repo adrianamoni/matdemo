@@ -126,7 +126,7 @@ const Interruptions = () => {
 
   return loading ? (
     <Box sx={{ width: "100%" }}>
-      <LinearProgress />
+      <LinearProgress variant="indeterminate" color="secondary" />
     </Box>
   ) : (
     <>

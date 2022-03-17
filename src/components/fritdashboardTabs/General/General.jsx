@@ -1,24 +1,6 @@
 import React, { useContext } from "react";
-import {
-  Grid,
-  Typography,
-  IconButton,
-  List,
-  ListItem,
-  Card,
-  ButtonGroup,
-  LinearProgress,
-  Box,
-} from "@mui/material";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import StopIcon from "@mui/icons-material/Stop";
-import PauseIcon from "@mui/icons-material/Pause";
-import Text from "../../../languages/Text";
-import HalfDoughnut from "../../../widgets/halfDoughnut/HalfDoughnut";
-import Timeline from "../../../widgets/timeline/Timeline";
+import { Grid, Card, LinearProgress, Box } from "@mui/material";
 import useWindowSize from "../../customHooks/UseWindowsSize";
-import LineProgress from "../../../widgets/progress/LineProgress";
-import { blue, grey } from "@mui/material/colors";
 import { globalDataContext } from "../../../context/ContextProvider";
 import InfoOE from "../../fritdashboardComps/orderDetail/InfoOE";
 import OeeOrden from "../../fritdashboardComps/orderDetail/OeeOrden";
@@ -38,7 +20,7 @@ const General = ({ loading }) => {
 
   return loading ? (
     <Box sx={{ width: "100%" }}>
-      <LinearProgress color="secondary" />
+      <LinearProgress variant="indeterminate" color="secondary" />
     </Box>
   ) : (
     <Grid container sx={{ p: 2 }} columnSpacing={4} alignItems="stretch">

@@ -2,7 +2,10 @@ import _ from "lodash";
 import uuid from "react-uuid";
 import { sections_available_sequencing } from "../../../services/OFservices";
 import { ApiCall, MemoryDatabaseCall } from "../../../services/Service";
-import { screen_sequencing_onCreate } from "../../../services/serviceHelper";
+import {
+  screen_sequencing_onCreate,
+  screen_sequencing_onSave,
+} from "../../../services/serviceHelper";
 import { createNotification } from "../../alerts/NotificationAlert";
 import moment from "moment";
 export const getSections = async () => {
@@ -155,9 +158,6 @@ export const getPeopleFromInput = (evalue, rowId, apiData) => {
     (el) => el.velocidad === speed
   ).personas;
 
-  /*  const newDuration = (speed / 1000) * apiData[sectionIndex].ordenes[orderIndex].QtyReqd; */
-  /*   
-  apiData[sectionIndex].ordenes[orderIndex].Duracion = newDuration */
   apiData.ordenes[orderIndex].Personas = people;
 
   return apiData;
@@ -168,7 +168,9 @@ export const getDateFromInput = (evalue, rowId, apiData) => {
 
   let orderIndex = apiData.ordenes.findIndex((el) => el.id === rowId);
 
-  apiData.ordenes[orderIndex].SchedStartTimeLocal = initDate;
+  if (orderIndex !== -1) {
+    apiData.ordenes[orderIndex].SchedStartTimeLocal = initDate;
+  }
   return apiData;
 };
 
@@ -416,6 +418,7 @@ export const saveOrders = async (array) => {
       edited_operations_arr: array,
     }),
   });
+  console.log("response", response);
   if (response.responseError) {
     createNotification({
       status: "error",

@@ -74,7 +74,9 @@ const ConsAndProds = ({
     <>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          {loading && <LinearProgress variant="indeterminate" />}
+          {loading && (
+            <LinearProgress variant="indeterminate" color="secondary" />
+          )}
         </Grid>
         {selectedRows && selectedRows.length > 0 && (
           <Grid item xs={12}>

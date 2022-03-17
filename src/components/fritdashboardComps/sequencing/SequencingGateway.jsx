@@ -35,6 +35,9 @@ import TimelineView from "./TimelineView";
 import SeqTable from "./SeqTable";
 import SplitModal from "./SplitModal";
 import useWindowSize from "../../customHooks/UseWindowsSize";
+import ConfirmationDialog from "../../alerts/ConfirmationDialog";
+import { ApiCall } from "../../../services/Service";
+import { screen_sequencing_onLiberate } from "../../../services/serviceHelper";
 
 const SequencingGateway = () => {
   const navigateTo = useNavigate();
@@ -62,9 +65,10 @@ const SequencingGateway = () => {
   const [selected, setSelected] = useState(undefined);
   const [openSplitModal, setOpenSplitModal] = useState(undefined);
   const [splitOf, setSplitOf] = useState(undefined);
+  const [confirmLiberate, setConfirmLiberate] = useState(false);
+  const [confirmRefresh, setConfirmRefresh] = useState(false);
 
   if (loggedUser.isLogged) {
-    //!UNDO
     if (
       !loggedUser.permissions.find((el) => el.desc.includes("Secuenciacion"))
     ) {
@@ -207,14 +211,15 @@ const SequencingGateway = () => {
     setLoadingInitialData(false);
   };
 
-  const handleSave = async (e) => {
-    e && e.preventDefault();
+  const handleSave = async () => {
     setTimelineHours(24);
     setLoadingSave(true);
-
+    console.log("111", apiData[0].ordenes);
+    console.log("1112", apiData[0].ordenes);
     const arr_seq_table = filterArray(apiData[0].ordenes, originalData);
-    console.log("arr_seq_table", arr_seq_table);
+    console.log("1113", arr_seq_table);
     const allOperations_filtered = formatForSave(arr_seq_table);
+    console.log("1114", allOperations_filtered);
     if (allOperations_filtered.length > 0) {
       const res = await saveOrders(allOperations_filtered);
       if (res) {
@@ -339,164 +344,180 @@ const SequencingGateway = () => {
   console.log("linesDropdown", linesDropdown);
   return (
     <>
-      <Container maxWidth="xl">
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={12} md={4}>
-                {operations && (
-                  <FormControl fullWidth>
-                    <InputLabel>Operación</InputLabel>
-                    <Select
-                      label="Operación"
-                      onChange={(e) => handleOperationSelect(e.target.value)}
-                      value={operationDropdown}
-                    >
-                      {operations.map((op) => (
-                        <MenuItem value={op.value}>{op.text}</MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={12} md={4}>
-                {linesDropdown && (
-                  <FormControl fullWidth>
-                    <InputLabel>Líneas</InputLabel>
-                    <Select
-                      label="Líneas"
-                      onChange={(e) => handleLineSelection(e.target.value)}
-                      value={selectedLine && selectedLine.id}
-                      disabled={!operationDropdown}
-                    >
-                      {linesDropdown.map((line) => (
-                        <MenuItem value={line.value}>{line.text}</MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                )}
-              </Grid>
+      {/* <Container maxWidth="xl"> */}
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={4}>
+              {operations && (
+                <FormControl fullWidth>
+                  <InputLabel>Operación</InputLabel>
+                  <Select
+                    label="Operación"
+                    onChange={(e) => handleOperationSelect(e.target.value)}
+                    value={operationDropdown}
+                  >
+                    {operations.map((op) => (
+                      <MenuItem value={op.value}>{op.text}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
+            </Grid>
+            <Grid item xs={12} sm={12} md={4}>
+              {linesDropdown && (
+                <FormControl fullWidth>
+                  <InputLabel>Líneas</InputLabel>
+                  <Select
+                    label="Líneas"
+                    onChange={(e) => handleLineSelection(e.target.value)}
+                    value={selectedLine && selectedLine.id}
+                    disabled={!operationDropdown}
+                  >
+                    {linesDropdown.map((line) => (
+                      <MenuItem value={line.value}>{line.text}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
             </Grid>
           </Grid>
+        </Grid>
 
-          {loadingInitialData && (
-            <Grid item xs={12}>
-              <LinearProgress variant="indeterminate" />
-            </Grid>
-          )}
-          {notificationModal && notificationModal.status && (
-            <Grid item xs={12}>
-              <Alert variant="outlined" severity="info">
-                {notificationModal.msg}
-              </Alert>
-            </Grid>
-          )}
-          {apiData &&
-            apiData.length > 0 &&
-            apiData[0].ordenes &&
-            apiData[0].ordenes.length > 0 &&
-            teams && (
-              <>
-                <Grid item xs={12}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} sm={12} md={12} lg={3} textAlign="left">
-                      <ButtonGroup fullWidth>
-                        <Button
-                          variant={
-                            timelineHours === 8 ? "contained" : "outlined"
-                          }
-                          onClick={() => handleTimelineDisplayHours(8)}
-                        >
-                          8hrs
-                        </Button>
-                        <Button
-                          variant={
-                            timelineHours === 12 ? "contained" : "outlined"
-                          }
-                          onClick={() => handleTimelineDisplayHours(12)}
-                        >
-                          12hrs
-                        </Button>
-                        <Button
-                          variant={
-                            timelineHours === 24 ? "contained" : "outlined"
-                          }
-                          onClick={() => handleTimelineDisplayHours(24)}
-                        >
-                          24hrs
-                        </Button>
-                      </ButtonGroup>
-                    </Grid>
-                    <Grid item xs={12} sm={12} md={12} lg={9} textAlign="right">
-                      <ButtonGroup
-                        fullWidth
-                        orientation={width < 680 ? "vertical" : "horizontal"}
+        {loadingInitialData && (
+          <Grid item xs={12}>
+            <LinearProgress variant="indeterminate" color="secondary" />
+          </Grid>
+        )}
+        {notificationModal && notificationModal.status && (
+          <Grid item xs={12}>
+            <Alert variant="outlined" severity="info">
+              {notificationModal.msg}
+            </Alert>
+          </Grid>
+        )}
+        {apiData &&
+          apiData.length > 0 &&
+          apiData[0].ordenes &&
+          apiData[0].ordenes.length > 0 &&
+          teams && (
+            <>
+              <Grid item xs={12}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={12} md={12} lg={3} textAlign="left">
+                    <ButtonGroup fullWidth>
+                      <Button
+                        variant={timelineHours === 8 ? "contained" : "outlined"}
+                        onClick={() => handleTimelineDisplayHours(8)}
                       >
-                        <LoadingButton variant="contained" disabled>
-                          <InsertDriveFileIcon />
-                          Generar Necesidades
-                        </LoadingButton>
-                        <LoadingButton
-                          variant="contained"
-                          onClick={() => setConfirmRefresh(true)}
-                        >
-                          <RefreshIcon />
-                          Actualizar
-                        </LoadingButton>
-                        <LoadingButton
-                          variant="contained"
-                          onClick={handleSave}
-                          disabled={!userWritePermissions || !isModified}
-                          loading={loadingSave}
-                        >
-                          <SaveIcon />
-                          Guardar
-                        </LoadingButton>
-                        <LoadingButton
-                          variant="contained"
-                          onClick={() => setConfirmLiberate(true)}
-                          loading={loadingLiberate}
-                          disabled={!userWritePermissions}
-                        >
-                          <ContentPasteGoIcon />
-                          Liberar
-                        </LoadingButton>
-                      </ButtonGroup>
-                    </Grid>
+                        8hrs
+                      </Button>
+                      <Button
+                        variant={
+                          timelineHours === 12 ? "contained" : "outlined"
+                        }
+                        onClick={() => handleTimelineDisplayHours(12)}
+                      >
+                        12hrs
+                      </Button>
+                      <Button
+                        variant={
+                          timelineHours === 24 ? "contained" : "outlined"
+                        }
+                        onClick={() => handleTimelineDisplayHours(24)}
+                      >
+                        24hrs
+                      </Button>
+                    </ButtonGroup>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={9} textAlign="right">
+                    <ButtonGroup
+                      fullWidth
+                      orientation={width < 680 ? "vertical" : "horizontal"}
+                      sx={{ maxWidth: 1000 }}
+                    >
+                      <LoadingButton variant="contained" disabled>
+                        <InsertDriveFileIcon />
+                        Generar Necesidades
+                      </LoadingButton>
+                      <LoadingButton
+                        variant="contained"
+                        onClick={() => setConfirmRefresh(true)}
+                      >
+                        <RefreshIcon />
+                        Actualizar
+                      </LoadingButton>
+                      <LoadingButton
+                        variant="contained"
+                        onClick={handleSave}
+                        disabled={!userWritePermissions || !isModified}
+                        loading={loadingSave}
+                      >
+                        <SaveIcon />
+                        Guardar
+                      </LoadingButton>
+                      <LoadingButton
+                        variant="contained"
+                        onClick={() => setConfirmLiberate(true)}
+                        loading={loadingLiberate}
+                        disabled={!userWritePermissions}
+                      >
+                        <ContentPasteGoIcon />
+                        Liberar
+                      </LoadingButton>
+                    </ButtonGroup>
                   </Grid>
                 </Grid>
+              </Grid>
 
-                {!loadingTimeline && (
-                  <Grid item xs={12}>
-                    <TimelineView
+              {!loadingTimeline && (
+                <Grid item xs={12}>
+                  <TimelineView
+                    apiData={apiData[0]}
+                    teams={teams}
+                    timelineHours={timelineHours}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                </Grid>
+              )}
+              {selectedOperation && (
+                <Grid item xs={12}>
+                  <Paper elevation={16} sx={{ overflowX: "auto" }}>
+                    <SeqTable
                       apiData={apiData[0]}
-                      teams={teams}
-                      timelineHours={timelineHours}
+                      setApiData={setApiData}
+                      selectedOperation={selectedOperation}
+                      splitOF={splitOF}
                       selected={selected}
                       setSelected={setSelected}
+                      lines={lines}
+                      selectedLine={selectedLine}
                     />
-                  </Grid>
-                )}
-                {selectedOperation && (
-                  <Grid item xs={12}>
-                    <Paper elevation={16} sx={{ overflowX: "auto" }}>
-                      <SeqTable
-                        apiData={apiData[0]}
-                        setApiData={setApiData}
-                        selectedOperation={selectedOperation}
-                        splitOF={splitOF}
-                        selected={selected}
-                        setSelected={setSelected}
-                        lines={lines}
-                        selectedLine={selectedLine}
-                      />
-                    </Paper>
-                  </Grid>
-                )}
-              </>
-            )}
-        </Grid>
-      </Container>
+                  </Paper>
+                </Grid>
+              )}
+            </>
+          )}
+      </Grid>
+      {/*  </Container> */}
+
+      <ConfirmationDialog
+        title="Liberar Órdenes"
+        msg="Se liberaran las ordenes asignadas a línea, que actualmente estan en estado 'New'"
+        open={confirmLiberate}
+        close={() => setConfirmLiberate(false)}
+        handleConfirm={handleLiberate}
+      />
+      <ConfirmationDialog
+        title="Liberar Órdenes"
+        open={confirmRefresh}
+        close={() => setConfirmRefresh(false)}
+        msg="¿Quieres guardar los cambios?"
+        handleCancel={() => handleRefresh({ save: false })}
+        handleConfirm={() => handleRefresh({ save: true })}
+      />
+
       <SplitModal
         open={openSplitModal}
         close={setOpenSplitModal}

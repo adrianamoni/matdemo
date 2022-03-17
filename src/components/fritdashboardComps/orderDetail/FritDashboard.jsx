@@ -244,7 +244,7 @@ const FritDashboard = () => {
             <ActualInterruption interruption={actualInterruption} push={push} />
           )}
         </Segment.Group> */}
-        <Grid container>
+        {/* <Grid container>
           {planificatedButton !== undefined && (
             <Grid item xs={12} sm={12} md={12} lg={6}>
               <LineStatusButton
@@ -261,7 +261,7 @@ const FritDashboard = () => {
               />
             </Grid>
           )}
-        </Grid>
+        </Grid> */}
         <Box
           sx={{
             width: "100%",
@@ -287,8 +287,9 @@ const FritDashboard = () => {
             sx={{
               m: "auto",
               color: "text.main",
-              backgroundColor: "background.grey3",
+              /* backgroundColor: "background.grey3", */
             }}
+            className="frit-tabs"
             /* id="fritDashboard-tabs-container" */
           >
             {ofDetailNav.map((tab, index) => {

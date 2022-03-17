@@ -66,6 +66,8 @@ const SeqTable = ({
   }
 
   const handleRowSelect = ({ rowId, day, e }) => {
+    console.log("e.target id", e.target.id);
+    console.log("e.target type", e.target.type);
     if (
       e &&
       e.target &&
@@ -212,6 +214,12 @@ const SeqTable = ({
                     ];
                   }
                 }
+                const peopleValue =
+                  row.posiblesVelocidades.find(
+                    (el) => el.personas === row.Personas
+                  )?.velocidad || undefined;
+
+                console.log("peopleValue", peopleValue);
 
                 return (
                   <TableRow
@@ -297,15 +305,13 @@ const SeqTable = ({
                     <TableCell>
                       {row.StateCd === 1 || row.StateCd === 2 ? (
                         <Select
-                          value={
-                            row.posiblesVelocidades.find(
-                              (el) => el.personas === row.Personas
-                            )?.velocidad || undefined
-                          }
+                          value={peopleValue}
                           onChange={(e) => handlePeopleChange(e, row.id)}
                         >
                           {row.posiblesVelocidades.map((el) => (
-                            <MenuItem value={el.value}>{el.personas}</MenuItem>
+                            <MenuItem value={el.velocidad}>
+                              {el.personas}
+                            </MenuItem>
                           ))}
                         </Select>
                       ) : (
@@ -327,7 +333,7 @@ const SeqTable = ({
           </Table>
         </>
       ) : (
-        <Alert variant="outlined" severity="info">
+        <Alert variant="contained" severity="info">
           No hay ordenes que coincidan con los filtros indicados
         </Alert>
       )}

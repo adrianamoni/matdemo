@@ -4,6 +4,7 @@ const en = {
   assignment: "Assignment",
   availability: "Availability",
   cancel: "Cancel",
+  accept: "Accept",
   charts: "Charts",
   comment: "Comment",
   confirmLogout: "¿Are you sure you want to log out?",

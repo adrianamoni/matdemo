@@ -76,7 +76,11 @@ const Planification = () => {
         )
       ) {
         setCreateOrderPermission(true);
+      } else {
+        setCreateOrderPermission(false);
       }
+    } else {
+      setCreateOrderPermission(false);
     }
     return () => {
       setSelectedRowsIds({ ...selectedRowsIds, planification: [] });
@@ -161,7 +165,7 @@ const Planification = () => {
 
   return loadingInitialData ? (
     <Box sx={{ width: "100%" }}>
-      <LinearProgress variant="indeterminate" />
+      <LinearProgress variant="indeterminate" color="secondary" />
     </Box>
   ) : (
     <>

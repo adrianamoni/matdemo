@@ -268,7 +268,7 @@ const InterruptionManager = () => {
 
   return loadingInitialData ? (
     <Grid item xs={12}>
-      <LinearProgress variant="indeterminate" />
+      <LinearProgress variant="indeterminate" color="secondary" />
     </Grid>
   ) : (
     <>
@@ -438,12 +438,12 @@ const InterruptionManager = () => {
         setRefreshMain={setRefreshMain}
         fromInterruptionsManager={true}
       /> */}
-      <InterruptionsModal
+      {/* <InterruptionsModal
         showModal={showModal}
         setShowModal={setShowModal}
         modalContent={modalContent}
         setRefreshData={setRefreshMain}
-      />
+      /> */}
     </>
   );
 };

@@ -4,6 +4,7 @@ import {
   FormControl,
   Grid,
   InputLabel,
+  LinearProgress,
   MenuItem,
   Select,
   TextField,
@@ -14,43 +15,57 @@ import { Box } from "@mui/system";
 import { create_order_manually } from "../../../services/serviceHelper";
 import { createNotification } from "../../alerts/NotificationAlert";
 import { ApiCall } from "../../../services/Service";
-
+import UseFetchMemory from "../../customHooks/UseFetchMemory";
+import useWindowSize from "../../customHooks/UseWindowsSize";
 const ModalCreateOrder = ({ open, close, setRefreshMain }) => {
+  const { width } = useWindowSize();
   const [material, setMaterial] = useState("");
   const [cantidad, setCantidad] = useState("");
   const [loadingSubmit, setLoadingSubmit] = useState(false);
-  const [materialOptions, setMaterialOptions] = useState(false);
+  /*   const [materialOptions, setMaterialOptions] = useState(false); */
 
+  const { loading, data: materialOptions } = UseFetchMemory({
+    request: "planification-createorder",
+  });
+  /*  if (data) {
+    setMaterialOptions(data);
+  } */
   const handleSubmit = async () => {
     setLoadingSubmit(true);
-
-    const response = await ApiCall({
-      params: create_order_manually({
-        item,
-        qtyReqd,
-      }),
-    });
-    if (response.responseError) {
-      createNotification({
-        status: "error",
-        code: response.responseError,
-        msg: response.responseMsg,
-        hide: response.responseHide,
+    console.log("materialOptions", materialOptions);
+    console.log("materialOptions2", material);
+    const findEl = materialOptions.find((el) => el.itemId === material);
+    console.log("materialOptions3", findEl);
+    if (findEl) {
+      const response = await ApiCall({
+        params: create_order_manually({
+          item: findEl,
+          qtyReqd: cantidad,
+        }),
       });
-    } else {
-      createNotification({
-        status: "success",
-        msg: "¡Orden creada con éxito!",
-        hide: 1,
-      });
+      if (response.responseError) {
+        createNotification({
+          status: "error",
+          code: response.responseError,
+          msg: response.responseMsg,
+          hide: response.responseHide,
+        });
+      } else {
+        createNotification({
+          status: "success",
+          msg: "¡Orden creada con éxito!",
+          hide: 1,
+        });
+      }
     }
+
     setLoadingSubmit(false);
   };
 
   const handleClose = () => {
     setMaterial("");
     setCantidad("");
-    setCleaningOperId("");
+
     close(false);
   };
 
@@ -59,46 +74,61 @@ const ModalCreateOrder = ({ open, close, setRefreshMain }) => {
       <Box
         component="form"
         sx={{
-          "& .MuiTextField-root": { m: 1, width: "25ch" },
+          "& .MuiTextField-root": {
+            m: "1em auto",
+            width: "30ch",
+          },
         }}
         noValidate
         autoComplete="off"
       >
-        <div>
-          <TextField
-            select
-            label="Material"
-            value={material}
-            onChange={() => setMaterial(e.target.value)}
-            variant="filled"
-          >
-            {materialOptions &&
-              materialOptions.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.text}
-                </MenuItem>
-              ))}
-          </TextField>
+        {loading ? (
+          <LinearProgress variant="indetermiante" color="secondary" />
+        ) : (
+          <>
+            <div
+              style={{
+                display: width > 600 && "flex",
+                justifyContent: width > 600 && "center",
+              }}
+            >
+              <TextField
+                select
+                label="Material"
+                value={material}
+                onChange={(e) => setMaterial(e.target.value)}
+                variant="filled"
+              >
+                {materialOptions &&
+                  materialOptions.map((option) => (
+                    <MenuItem key={option.itemId} value={option.itemId}>
+                      {option.itemId}({option.itemDesc})
+                    </MenuItem>
+                  ))}
+              </TextField>
 
-          <TextField
-            id="outlined-number"
-            label="Number"
-            type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-        </div>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <LoadingButton
-            variant="contained"
-            onClick={handleSubmit}
-            disabled={!material || !cantidad || loadingSubmit}
-            loading={loadingSubmit}
-          >
-            Crear
-          </LoadingButton>
-        </div>
+              <TextField
+                id="outlined-number"
+                label="Cantidad a fabricar"
+                type="number"
+                onChange={(e) => setCantidad(e.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <LoadingButton
+                variant="contained"
+                onClick={handleSubmit}
+                disabled={!material || !cantidad || loadingSubmit}
+                loading={loadingSubmit}
+              >
+                Crear
+              </LoadingButton>
+            </div>
+          </>
+        )}
       </Box>
     </>
   );
@@ -108,7 +138,7 @@ const ModalCreateOrder = ({ open, close, setRefreshMain }) => {
       <ModalWidget
         title={"createOrder"}
         open={open}
-        close={close}
+        close={handleClose}
         content={modalContent}
       />
     </>

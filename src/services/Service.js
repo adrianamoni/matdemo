@@ -12,7 +12,7 @@ var POINTING_IPS = {
   memoryDatabase: "192.168.9.128:8095",
   documentacion: "192.168.9.128",
   pesajeCarretillero: "pherkad.frit-nt1.local:4444",
-};
+}; //!UNDO
 
 export const ApiCall = async ({ params }) => {
   /* const getEnvVariables = await fetch("config/config.json");

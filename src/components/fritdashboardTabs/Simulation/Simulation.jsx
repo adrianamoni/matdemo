@@ -134,7 +134,7 @@ const Simulation = () => {
 
   return loadingInitialData ? (
     <Box sx={{ width: "100%" }}>
-      <LinearProgress variant="indeterminate" />
+      <LinearProgress variant="indeterminate" color="secondary" />
     </Box>
   ) : (
     <>

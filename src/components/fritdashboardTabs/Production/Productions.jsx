@@ -32,6 +32,7 @@ const Productions = () => {
       field: "qty_prod",
       headerName: `${Text({ tid: "quantity" })}`,
       width: 200,
+      type: "number",
     },
     {
       field: "reas_desc",
@@ -215,7 +216,7 @@ const Productions = () => {
 
   return loading ? (
     <Box sx={{ width: "100%" }}>
-      <LinearProgress />
+      <LinearProgress variant="indeterminate" color="secondary" />
     </Box>
   ) : (
     <>

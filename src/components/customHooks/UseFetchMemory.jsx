@@ -8,6 +8,7 @@ import {
   tab_quality_get_qmspec_by_filter,
   screen_of_last_cleaning,
   all_samples,
+  get_data_create_order,
 } from "../../services/OFservices";
 import { MemoryDatabaseCall } from "../../services/Service";
 import uuid from "react-uuid";
@@ -71,6 +72,10 @@ const getParams = (request) => {
     ],
     "order-manager-date": [
       order_manager_date_filter,
+      "queryDataFrameDataAsync",
+    ],
+    "planification-createorder": [
+      get_data_create_order,
       "queryDataFrameDataAsync",
     ],
   };

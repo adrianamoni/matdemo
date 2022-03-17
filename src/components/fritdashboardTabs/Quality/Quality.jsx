@@ -133,7 +133,7 @@ const Quality = () => {
         {loadingInitialData ? (
           <Grid item xs={12}>
             <Box sx={{ width: "100%" }}>
-              <LinearProgress />
+              <LinearProgress variant="indeterminate" color="secondary" />
             </Box>
           </Grid>
         ) : (
@@ -161,7 +161,7 @@ const Quality = () => {
         {loadingResults ? (
           <Grid item xs={12}>
             <Box sx={{ width: "100%" }}>
-              <LinearProgress />
+              <LinearProgress variant="indeterminate" color="secondary" />
             </Box>
           </Grid>
         ) : (

@@ -11,6 +11,7 @@ import useWindowSize from "../../customHooks/UseWindowsSize";
 import { dateFormater, operation_states } from "./helper";
 import { handleOperationAction } from "../../fritdashboardTabs/General/helper";
 import { propsByState } from "../../../helpers/props";
+import ConfirmationDialog from "../../alerts/ConfirmationDialog";
 
 const InfoOE = () => {
   const { globalData } = useContext(globalDataContext);
@@ -235,6 +236,16 @@ const InfoOE = () => {
         </Grid>
       </Grid>
       {/*  */}
+      <ConfirmationDialog
+        title="Parar operarción"
+        open={confirmStop}
+        close={() => {
+          setConfirmStop(false);
+          setLoadingStop(false);
+        }}
+        msg="¿Estás seguro de que quieres parar la operación?"
+        handleConfirm={handleStop}
+      />
     </>
   ) : (
     <></>

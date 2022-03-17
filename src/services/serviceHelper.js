@@ -1,5 +1,5 @@
 import moment from "moment";
-
+import { getSEMI001, getPA001, getPA002 } from "./createOrderService";
 /* const getTerminal = ({ terminal }) => {
   return {
     ExecutionType: 1,
@@ -612,92 +612,16 @@ const get_all_orders = ({ entId, itemId, date }) => {
 };
 
 const create_order_manually = ({ item, qtyReqd }) => {
-  const woId = new Date().getTime();
-  const material = "BOB.CASERAS 170G 412MM";
-  const itemId = "000000000000901674";
-  return {
-    ExecutionType: 1,
-    RuleId: "SAPRecepcionOrdenes",
-    RuleVersion: 1,
-    EventStamp: moment().format(),
-    Parameters: {
-      ordenes: {
-        wo: [
-          {
-            woId: woId,
-            woDesc: `Orden ${woId} ${material}`,
-            itemId: itemId,
-            reqqty: qtyReqd,
-            releaseTimeLocal: moment().format(),
-            loteInspeccion: 30000000021,
-            job: [
-              {
-                operId: "AreaEnvasado",
-                jobDesc: "Descripcion job 1",
-                itemId: itemId,
-                initSchedEntName: "AreaEnvasado",
-                targetSchedEntName: "AreaEnvasado",
-                qtyReqd: qtyReqd,
-                duracion: 50,
-                personas: 3,
-                posiblesVelocidades: [
-                  {
-                    personas: 1,
-                    velocidad: 150,
-                  },
-                  {
-                    personas: 2,
-                    velocidad: 75,
-                  },
-                  {
-                    personas: 3,
-                    velocidad: 50,
-                  },
-                  {
-                    personas: 4,
-                    velocidad: 38,
-                  },
-                ],
-                BOM: [
-                  {
-                    bomPos: -1,
-                    itemId: "OliBrut",
-                    qtyPerParentItem: 0.5,
-                    backflush: false,
-                    jobBomSubst: [],
-                  },
-                  {
-                    bomPos: 1,
-                    itemId: "000000000000075840",
-                    qtyPerParentItem: 1.5,
-                    backflush: false,
-                    jobBomSubst: [],
-                  },
-                  {
-                    bomPos: 2,
-                    itemId: "000000000000075482",
-                    qtyPerParentItem: 0.8,
-                    backflush: false,
-                    jobBomSubst: [],
-                  },
-                  {
-                    bomPos: 3,
-                    itemId: "i12",
-                    qtyPerParentItem: 0.7,
-                    backflush: true,
-                    jobBomSubst: [],
-                  },
-                ],
-              },
-              {
-                operId: "NETEJA",
-              },
-            ],
-          },
-        ],
-      },
-    },
-  };
+  let jsonData;
+  if (item.itemId === "PA001") {
+    jsonData = getPA001(qtyReqd);
+  } else if (item.itemId === "PA002") {
+    jsonData = getPA002(qtyReqd);
+  } else {
+    jsonData = getSEMI001(qtyReqd);
+  }
+
+  return jsonData;
 };
 
 export {

@@ -32,7 +32,7 @@ const Signals = () => {
   };
   return loading ? (
     <Box sx={{ width: "100%" }}>
-      <LinearProgress color="secondary" />
+      <LinearProgress variant="indeterminate" color="secondary" />
     </Box>
   ) : (
     <Grid container>
