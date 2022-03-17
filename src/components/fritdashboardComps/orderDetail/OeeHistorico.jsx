@@ -16,6 +16,7 @@ const OEEHistorico = () => {
   const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME;
   const { globalData } = useContext(globalDataContext);
   const [apiData, setApiData] = useState(undefined);
+  const [OEEData, setOEEData] = useState(undefined);
 
   useEffect(() => {
     let clearTimeoutTurnoKey;
@@ -24,10 +25,10 @@ const OEEHistorico = () => {
       {
         filterExpression: null,
         filterItem: {
-          column: "ent_id",
-          dataType: "INT",
-          value: globalData.lineData.entId,
-          filterItemType: "Equal",
+          column: "Tagname",
+          dataType: "String",
+          value: globalData.lineData.entName,
+          filterItemType: "StartsWith",
           checkDBNull: false,
         },
       },
@@ -35,11 +36,11 @@ const OEEHistorico = () => {
     const fetchTurno = async () => {
       let response = await MemoryDatabaseCall({
         params: get_oee_shift({ filter }),
-        url: "queryDataFrameDataAsync",
+        url: "queryWWDataFrameDataAsync",
       });
       if (response) {
         if (response.length > 0) {
-          setApiData(response[0]);
+          setApiData(response);
         }
       }
 
@@ -56,10 +57,42 @@ const OEEHistorico = () => {
     //eslint-disable-next-line
   }, []);
 
-  let dispOEE, rendOEE, calOEE;
-  dispOEE = apiData ? apiData.Disponibilidad * 100 : 0;
-  rendOEE = apiData ? apiData.Rendimiento * 100 : 0;
-  calOEE = apiData ? apiData.Calidad * 100 : 0;
+  useEffect(() => {
+    if (apiData?.length > 0) {
+      let OEEPercentageIndex = apiData.findIndex((obj) => {
+        return obj.Tagname.includes("CurrentOEEPercent");
+      });
+      let OEEAvailableIndex = apiData.findIndex((obj) => {
+        return obj.Tagname.includes("CurrentUtilizationPercent");
+      });
+      let OEEPerformanceIndex = apiData.findIndex((obj) => {
+        return obj.Tagname.includes("CurrentPerformancePercent");
+      });
+      let OEEQualityIndex = apiData.findIndex((obj) => {
+        return obj.Tagname.includes("CurrentQualityPercent");
+      });
+
+      setOEEData({
+        OEEPercentage:
+          OEEPercentageIndex != "-1"
+            ? apiData[OEEPercentageIndex].Value.toFixed(0)
+            : 0,
+        available:
+          OEEAvailableIndex != "-1"
+            ? apiData[OEEAvailableIndex].Value.toFixed(0)
+            : 0,
+        performance:
+          OEEPerformanceIndex != "-1"
+            ? apiData[OEEPerformanceIndex].Value.toFixed(0)
+            : 0,
+        quality:
+          OEEQualityIndex != "-1"
+            ? apiData[OEEQualityIndex].Value.toFixed(0)
+            : 0,
+      });
+    }
+  }, [apiData]);
+
   return (
     <>
       <Grid container sx={{ height: "100%" }}>
@@ -76,9 +109,12 @@ const OEEHistorico = () => {
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={3}>
               <HalfDoughnut
-                value={[apiData ? apiData.OEE / 100 : 0]}
+                value={[OEEData ? OEEData.OEEPercentage : 0]}
                 color={colorByValue({
-                  value: apiData && apiData.OEE ? apiData.OEE / 100 : 0,
+                  value:
+                    OEEData && OEEData.OEEPercentage
+                      ? OEEData.OEEPercentage
+                      : 0,
                   targetOee: globalData?.lineData?.oeeTarget,
                   yellowThreshold: globalData?.oeeSpecs?.yellowThreshold,
                 })}
@@ -95,7 +131,8 @@ const OEEHistorico = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <Typography align="right">
-                        {dispOEE ? Math.round(dispOEE) : 0}%
+                        {OEEData?.available ? Math.round(OEEData.available) : 0}
+                        %
                       </Typography>
                     </Grid>
                   </Grid>
@@ -109,7 +146,10 @@ const OEEHistorico = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <Typography align="right">
-                        {rendOEE ? Math.round(rendOEE) : 0}%
+                        {OEEData?.performance
+                          ? Math.round(OEEData.performance)
+                          : 0}
+                        %
                       </Typography>
                     </Grid>
                   </Grid>
@@ -123,7 +163,7 @@ const OEEHistorico = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <Typography align="right">
-                        {calOEE ? Math.round(calOEE) : 0}%
+                        {OEEData?.quality ? Math.round(OEEData.quality) : 0}%
                       </Typography>
                     </Grid>
                   </Grid>
