@@ -37,20 +37,26 @@ const InterruptionManager = () => {
   const navigateTo = useNavigate();
   //CONTEXT
   const { loggedUser } = useContext(loginContext);
-  const { selectedRowsIds } = useContext(selectedRowsIdsContext);
-  const { selectedRows } = useContext(selectedRowsContext);
-  const { formWidget } = useContext(formContext);
+  const { selectedRowsIds, setSelectedRowsIds } = useContext(
+    selectedRowsIdsContext
+  );
+  const { selectedRows, setSelectedRows } = useContext(selectedRowsContext);
+  const { formWidget, setformWidget } = useContext(formContext);
   /**
    * useState declarations
    */
   const [loadingInitialData, setLoadingInitialData] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
   const [apiData, setApiData] = useState(undefined);
+  const [originalData, setOriginalData] = useState(undefined);
   const [reasons, setReasons] = useState(undefined);
   const [lineOptions, setLineOptions] = useState(undefined);
-  const [interruptionSelected, setInterruptionSelected] = useState(undefined);
+  /*   const [interruptionSelected, setInterruptionSelected] = useState(undefined);
   const [modalJustify, setModalJustify] = useState(false);
-  const [modalGenerate, setModalGenerate] = useState(false);
+  const [modalGenerate, setModalGenerate] = useState(false); */
+  const [showModal, setShowModal] = useState(false);
+  const [selectedNode, setSelectedNode] = useState();
+
   const [generalReasons, setGeneralReasons] = useState(undefined);
   const [specificDropdown, setSpecificDropdown] = useState(undefined);
   const [selectedReason, setSelectedReason] = useState(undefined);
@@ -61,7 +67,6 @@ const InterruptionManager = () => {
   const [notificationModal, setNotificationModal] = useState(undefined);
   const [refreshMain, setRefreshMain] = useState(false);
   const [userWritePermissions, setUserWritePermissions] = useState(undefined);
-  const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState("");
 
   if (loggedUser.isLogged) {
@@ -149,6 +154,22 @@ const InterruptionManager = () => {
     };
     //eslint-disable-next-line
   }, [refreshMain]);
+
+  useEffect(() => {
+    if (
+      selectedRowsIds["InterruptionsManagerTable"] &&
+      selectedRowsIds["InterruptionsManagerTable"].length > 0
+    ) {
+      let tempRow = apiData.filter((interruption) => {
+        return (
+          interruption.id === selectedRowsIds["InterruptionsManagerTable"][0]
+        );
+      });
+      console.log("tempRow", tempRow);
+      setSelectedRows(tempRow);
+      setSelectedNode("reas" + tempRow[0]?.ReasonCd);
+    }
+  }, [selectedRowsIds]);
   /* 
   useEffect(() => {
     tableVariables &&
@@ -218,7 +239,7 @@ const InterruptionManager = () => {
       "DD-MM-YYYY"
     ).format();
 
-    const { res, err } = await fetchAllManagerData({
+    const { originalRes, res, err } = await fetchAllManagerData({
       entId: lineFilter,
       section: section,
       reason,
@@ -234,6 +255,7 @@ const InterruptionManager = () => {
       } //NOT NECESSARY IF THE DATASET FILTER WORKS FINE
 
       setApiData(newArr);
+      setOriginalData(originalRes);
     }
 
     setLoadingData(false);
@@ -264,6 +286,26 @@ const InterruptionManager = () => {
   const handleDateChange = (e) => {
     e.preventDefault();
     setDateFilter(e.target.value);
+  };
+
+  const handleCreateInterruption = () => {
+    setformWidget({
+      ...formWidget,
+      createInterruptionForm: {},
+    });
+    setModalContent("createInterruption");
+    setShowModal(true);
+  };
+
+  const handleJustifyInterruption = () => {
+    setformWidget({
+      ...formWidget,
+      justifyInterruptionForm: {
+        comment: selectedRows[0].Comment,
+      },
+    });
+    setModalContent("justifyInterruption");
+    setShowModal(true);
   };
 
   return loadingInitialData ? (
@@ -365,8 +407,9 @@ const InterruptionManager = () => {
           <Grid item xs={12}>
             <TableWidget
               columns={columns}
-              tableId="InterruptionsManagerTable"
+              tableName="InterruptionsManagerTable"
               data={apiData}
+              pagination={12}
             />
           </Grid>
         ) : (
@@ -384,13 +427,13 @@ const InterruptionManager = () => {
               {
                 text: "createInterruption",
                 color: "primary",
-                /* onClick: handleCreateInterruption, */
+                onClick: handleCreateInterruption,
                 disabled: !userWritePermissions,
               },
               {
                 text: "justifyInterruption",
                 color: "secondary",
-                /*   onClick: handleJustifyInterruption, */
+                onClick: handleJustifyInterruption,
                 disabled: !selectedRows[0] ? true : !userWritePermissions,
               },
             ]}
@@ -423,7 +466,17 @@ const InterruptionManager = () => {
               </Button>
        */}
       </Grid>
-
+      <InterruptionsModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        modalContent={modalContent}
+        setRefreshData={setRefreshMain}
+        selectedNode={selectedNode}
+        setSelectedNode={setSelectedNode}
+        originalData={originalData}
+        lines={lineOptions}
+        fromInterruptionsManager={true}
+      />
       {/* <GenerateInterruptionModal
         modalGenerate={modalGenerate}
         setModalGenerate={setModalGenerate}

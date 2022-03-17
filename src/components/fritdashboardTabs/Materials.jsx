@@ -7,6 +7,7 @@ import { Box } from "@mui/system";
 import {
   globalDataContext,
   selectedRowsIdsContext,
+  formContext,
 } from "../../context/ContextProvider";
 import UseFetchMemory from "../customHooks/UseFetchMemory";
 import ButtonGroupWidget from "../../widgets/buttonGroup/ButtonGroupWidget";
@@ -18,6 +19,7 @@ const Materials = () => {
   const { globalData } = useContext(globalDataContext);
   const { orderData, lineData } = globalData;
   const { woId, operId, seqNo } = orderData;
+  const { formWidget, setformWidget } = useContext(formContext);
   const { selectedRowsIds } = useContext(selectedRowsIdsContext);
   const { materials } = selectedRowsIds;
   const [loadingEmptyContainer, setLoadingEmptyContainer] = useState();
@@ -57,6 +59,12 @@ const Materials = () => {
       flex: 1,
     },
   ];
+  useEffect(() => {
+    if (formWidget.materials) {
+      if (formWidget.materials) {
+      }
+    }
+  }, [formWidget]);
 
   const { loading, data } = UseFetchMemory({
     request: "material-list",
@@ -96,6 +104,43 @@ const Materials = () => {
 
     setLoadingProvisioning(false);
   };
+
+  /* 
+
+const handleProvisioning = async () => {
+  let arr = [...apiData];
+  const cantidades = arr
+    .filter((el) => el.selected === true)
+    .map((item) => ({ itemId: item.item_id, CantidadAprov: item.qtyAprov }));
+
+  setLoadingProvisioning(true);
+  const response = await ApiCall({
+    params: tab_materials_provisioning_request({
+      lineaName: line.entName,
+      woId: order.woId,
+      operId: order.operId,
+      items: cantidades,
+    }),
+  });
+  if (response.responseError) {
+    setLoadingProvisioning(false);
+    createNotification({
+      status: "error",
+      code: response.responseError,
+      msg: response.responseMsg,
+      hide: response.responseHide,
+    });
+  } else {
+    setLoadingProvisioning(false);
+    createNotification({
+      status: "success",
+      msg: "!Solicitud de Aprovisionamiento con éxito!",
+      hide: response.responseHide,
+    });
+  }
+  fetchData();
+}; */
+
   const handleEmptyContainerRequest = async () => {
     setLoadingEmptyContainer(true);
     await emptyContainerRequest({ lineaName: lineData.entName, woId, operId });
@@ -114,6 +159,7 @@ const Materials = () => {
           data={processedData}
           columns={columns}
           tableName="materials"
+          pagination={6}
         />
       </Grid>
 

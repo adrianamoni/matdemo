@@ -35,8 +35,8 @@ const OrderManager = () => {
   const navigateTo = useNavigate();
   const [entIdSelected, setEntIdSelected] = useState();
   const [itemIdSelected, setItemIdSelected] = useState();
-  const [initDateSelected, setInitDateSelected] = useState();
-  const [endDateSelected, setEndDateSelected] = useState();
+  const [initDateSelected, setInitDateSelected] = useState(new Date());
+  const [endDateSelected, setEndDateSelected] = useState(new Date());
   const [ordersData, setOrdersData] = useState();
   const [consumptionData, setConsumptionData] = useState();
   const [productionData, setProductionData] = useState();
@@ -135,10 +135,10 @@ const OrderManager = () => {
   const { data: itemFilter } = UseFetchMemory({
     request: "order-manager-item",
   });
-  const { data: dateFilter } = UseFetchMemory({
+  /*   const { data: dateFilter } = UseFetchMemory({
     request: "order-manager-date",
   });
-
+ */
   const applyFilters = async () => {
     setLoadingData(true);
 
@@ -156,7 +156,8 @@ const OrderManager = () => {
       initDate: initDateFormatted,
       endDate: endDateFormatted,
     });
-
+    setSelectedRows([]);
+    setSelectedRowsIds([]);
     setOrdersData(response);
     setLoadingData(false);
   };
@@ -192,11 +193,11 @@ const OrderManager = () => {
   };
 
   return (
-    <Grid container spacing={2} alignItems="center">
+    <Grid container spacing={1} alignItems="center">
       <Grid item xs={12} sm={12} md={10} lg={11}>
         <Grid container spacing={2}>
           {entFilter && (
-            <Grid item xs={12} sm={12} md={4}>
+            <Grid item xs={12} sm={12} md={3}>
               <FormControl fullWidth>
                 <InputLabel>Línea</InputLabel>
                 <Select
@@ -212,7 +213,7 @@ const OrderManager = () => {
             </Grid>
           )}
           {itemFilter && (
-            <Grid item xs={12} sm={12} md={4}>
+            <Grid item xs={12} sm={12} md={3}>
               <FormControl fullWidth>
                 <InputLabel>Material</InputLabel>
                 <Select
@@ -227,35 +228,39 @@ const OrderManager = () => {
               </FormControl>
             </Grid>
           )}
-          <Grid item xs={12} sm={12} md={4}>
-            <LocalizationProvider
-              dateAdapter={AdapterDateFns}
-              locale={frLocale}
-            >
-              <DatePicker
-                label="Fecha inicio"
-                value={initDateSelected}
-                onChange={(newValue) => {
-                  setInitDateSelected(newValue);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
+          <Grid item xs={12} sm={12} md={3}>
+            <FormControl fullWidth>
+              <LocalizationProvider
+                dateAdapter={AdapterDateFns}
+                locale={frLocale}
+              >
+                <DatePicker
+                  label="Fecha inicio"
+                  value={initDateSelected}
+                  onChange={(newValue) => {
+                    setInitDateSelected(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </FormControl>
           </Grid>
-          <Grid item xs={12} sm={12} md={4}>
-            <LocalizationProvider
-              dateAdapter={AdapterDateFns}
-              locale={frLocale}
-            >
-              <DatePicker
-                label="Fecha inicio"
-                value={endDateSelected}
-                onChange={(newValue) => {
-                  setEndDateSelected(newValue);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
+          <Grid item xs={12} sm={12} md={3}>
+            <FormControl fullWidth>
+              <LocalizationProvider
+                dateAdapter={AdapterDateFns}
+                locale={frLocale}
+              >
+                <DatePicker
+                  label="Fecha inicio"
+                  value={endDateSelected}
+                  onChange={(newValue) => {
+                    setEndDateSelected(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </FormControl>
           </Grid>
         </Grid>
       </Grid>
@@ -284,12 +289,14 @@ const OrderManager = () => {
           </Alert>
         </Grid>
       )}
-      <ConsAndProds
-        loading={loadingFromSelected}
-        consumptionData={consumptionData}
-        selectedRows={selectedRows}
-        productionData={productionData}
-      />
+      <Grid item xs={12}>
+        <ConsAndProds
+          loading={loadingFromSelected}
+          consumptionData={consumptionData}
+          selectedRows={selectedRows}
+          productionData={productionData}
+        />
+      </Grid>
     </Grid>
   );
 };

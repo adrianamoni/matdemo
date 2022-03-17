@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 
 import TableContainer from "@mui/material/TableContainer";
 import { Switch, TextField } from "@mui/material/";
@@ -11,11 +11,21 @@ import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import useWindowSize from "../../components/customHooks/UseWindowsSize";
 import { searchbarFilter } from "./searchBarHelper";
 import Text from "./../../languages/Text";
-import { selectedRowsIdsContext } from "../../context/ContextProvider";
+import {
+  formContext,
+  selectedRowsIdsContext,
+} from "../../context/ContextProvider";
 import { darken, lighten } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";
 
-const TableWidget = ({ data, columns, multipleSelection, tableName }) => {
+const TableWidget = ({
+  data,
+  columns,
+  multipleSelection,
+  tableName,
+  pagination = 5,
+  disableSelection = false,
+}) => {
   const { selectedRowsIds, setSelectedRowsIds } = useContext(
     selectedRowsIdsContext
   );
@@ -26,6 +36,14 @@ const TableWidget = ({ data, columns, multipleSelection, tableName }) => {
   //searchbar
   const [searchInput, setsearchInput] = useState("");
   const [renderData, setrenderData] = useState(undefined);
+  const [editRowsModel, setEditRowsModel] = useState({});
+  const { formWidget, setformWidget } = useContext(formContext);
+  const handleEditRowsModelChange = useCallback((model) => {
+    console.log("model", model);
+    setformWidget({ ...formWidget, materials: model });
+    setEditRowsModel(model);
+  }, []);
+
   /**
    * columns example
    */
@@ -151,13 +169,18 @@ const TableWidget = ({ data, columns, multipleSelection, tableName }) => {
       )} */}
       {checked ? (
         multipleSelection ? (
-          <div style={{ height: 400, width: "100%" }}>
+          <div
+            style={{
+              height: pagination ? pagination * 65 : 400,
+              width: "100%",
+            }}
+          >
             <DataGrid
               sx={rowsColors}
               rows={renderData}
               columns={columns}
-              pageSize={5}
-              rowsPerPageOptions={[5]}
+              pageSize={pagination || 5}
+              rowsPerPageOptions={[pagination || 5]}
               checkboxSelection
               onSelectionModelChange={(newSelectionModel) => {
                 setSelectedRowsIds({
@@ -169,24 +192,32 @@ const TableWidget = ({ data, columns, multipleSelection, tableName }) => {
               getRowClassName={(params) =>
                 `super-app-theme--${params.row.color}`
               }
+              editRowsModel={editRowsModel}
+              onEditRowsModelChange={handleEditRowsModelChange}
               /*  onCellEditCommit */
             />
           </div>
         ) : (
-          <div style={{ height: 400, width: "100%" }}>
+          <div
+            style={{
+              height: pagination ? pagination * 65 : 400,
+              width: "100%",
+            }}
+          >
             <DataGrid
               sx={rowsColors}
               rows={renderData}
               columns={columns}
-              pageSize={5}
-              rowsPerPageOptions={[5]}
+              pageSize={pagination || 5}
+              rowsPerPageOptions={[pagination || 5]}
               onSelectionModelChange={(newSelectionModel) => {
-                setSelectedRowsIds({
-                  ...selectedRowsIds,
-                  [tableName]: newSelectionModel,
-                });
+                !disableSelection &&
+                  setSelectedRowsIds({
+                    ...selectedRowsIds,
+                    [tableName]: newSelectionModel,
+                  });
               }}
-              selectionModel={selectedRowsIds[tableName]}
+              selectionModel={!disableSelection && selectedRowsIds[tableName]}
               getRowClassName={(params) =>
                 `super-app-theme--${params.row.color}`
               }

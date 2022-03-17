@@ -71,13 +71,11 @@ const Simulation = () => {
   };
 
   const handleSubmit = async (check, tag) => {
-    setLoadingSubmit(true);
-
     const newData = [...apiData];
     const findEl = newData.findIndex((el) => el.Tagname === tag);
-    console.log("findEl", findEl);
+
     if (findEl !== -1) {
-      newData[findEl].Value = check ? true : false;
+      newData[findEl].Value = check;
 
       const tags_arr = [
         {
@@ -88,30 +86,28 @@ const Simulation = () => {
       setApiData(newData);
       console.log("tags_arr", tags_arr);
 
-      /* const response = await ApiCall({
-      params: write_tags({ tags_arr }),
-    });
-
-    if (response.responseError) {
-      setLoadingSubmit(false);
-      createNotification({
-        status: "error",
-        code: response.responseError,
-        msg: response.responseMsg,
-        hide: response.responseHide,
+      const response = await ApiCall({
+        params: write_tags({ tags_arr }),
       });
-    } else {
-      if (response.responseCode === "0") {
-        setLoadingSubmit(false);
+
+      if (response.responseError) {
         createNotification({
-          status: "success",
-          msg: "¡Datos guardados correctamente!",
-          hide: 1,
+          status: "error",
+          code: response.responseError,
+          msg: response.responseMsg,
+          hide: response.responseHide,
         });
+      } else {
+        if (response.responseCode === "0") {
+          createNotification({
+            status: "success",
+            msg: "¡Datos guardados correctamente!",
+            hide: 1,
+          });
+        }
       }
-    } */
     }
-    fetchData();
+    setTimeout(() => fetchData(), 20000);
   };
 
   return loadingInitialData ? (
@@ -140,7 +136,7 @@ const Simulation = () => {
 
                         <TableCell align="center">
                           <Switch
-                            checked={item.check}
+                            checked={item.Value}
                             onChange={(e) =>
                               handleSubmit(e.target.checked, item.Tagname)
                             }

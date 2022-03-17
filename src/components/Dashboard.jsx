@@ -142,7 +142,8 @@ const Dashboard = () => {
           <Grid container justifyContent="flex-end">
             <Grid item>
               <IconButton
-                color="primary"
+                color="info"
+                size="large"
                 aria-label="upload picture"
                 component="span"
                 disabled={activePage === pagination.min}
@@ -157,7 +158,8 @@ const Dashboard = () => {
             </Grid>
             <Grid item>
               <IconButton
-                color="primary"
+                size="large"
+                color="info"
                 aria-label="upload picture"
                 component="span"
                 disabled={activePage === pagination.max}

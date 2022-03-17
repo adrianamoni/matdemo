@@ -19,6 +19,7 @@ const Parameters = () => {
       field: "attr_value",
       headerName: Text({ tid: "value" }),
       flex: 1,
+      type: "number",
     },
   ];
 

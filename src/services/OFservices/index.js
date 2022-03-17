@@ -845,6 +845,7 @@ const tab_quality_generate_sample = ({
   seqNo,
   qmSpecName,
 }) => {
+  console.log("first", itemId, woId, operId, entName, seqNo, qmSpecName);
   return {
     ExecutionType: 1,
     RuleId: "GenerateSample",

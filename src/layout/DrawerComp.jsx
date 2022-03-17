@@ -152,7 +152,7 @@ const DrawerComp = () => {
         <div>
           <Toolbar
             sx={{
-              backgroundColor: "background.grey1",
+              backgroundColor: "background.grey2",
               /* color: "text", */
               height: 65,
               textAlign: "center",
@@ -162,9 +162,19 @@ const DrawerComp = () => {
               <Typography
                 variant="h5"
                 noWrap
-                sx={{ color: "whitesmoke", fontWeight: 700 }}
+                sx={{
+                  color: "whitesmoke",
+                  fontWeight: 700,
+
+                  marginBottom: "-18px",
+                }}
               >
-                APP LOGO
+                <img
+                  style={{ width: "85%" }}
+                  src="/images/oasys_logo2.png"
+                  alt="Oasys"
+                />
+                {/*  APP LOGO */}
               </Typography>
             </StyledLink>
           </Toolbar>

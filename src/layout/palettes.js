@@ -1,5 +1,17 @@
 const palettes = (isDark) => {
   return {
+    ["oasys"]: {
+      primary: {
+        main: isDark ? "#828081" : "#828081",
+        contrastText: isDark ? "#000" : "#fff",
+        text: isDark ? "#000" : "#fff",
+      },
+      secondary: {
+        main: isDark ? "#EA5428" : "#EA5428",
+        contrastText: isDark ? "#000" : "#fff",
+        text: isDark ? "#000" : "#fff",
+      },
+    },
     ["grey-orange"]: {
       primary: {
         main: isDark ? "#767676" : "#767676",

@@ -220,8 +220,8 @@ const SeqTable = ({
                           }
                         : {}
                     }
-                    onClick={(e, d) =>
-                      handleRowSelect({ rowId: row.id, e: e, d: d })
+                    onClick={(e) =>
+                      handleRowSelect({ rowId: row.id, e: e.target })
                     }
                   >
                     <TableCell textAlign="center">

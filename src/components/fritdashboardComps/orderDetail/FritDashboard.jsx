@@ -98,75 +98,11 @@ const FritDashboard = () => {
 
   useEffect(() => {
     let clearIntervalData;
-    let clearTimeoutActualInterruption;
-    let clearTimeoutPlanificate;
-    const fetchActualInterruption = async () => {
-      const response = await MemoryDatabaseCall({
-        params: get_actual_interruption(entId),
-        url: "queryDataAsync",
-      });
 
-      if (response) {
-        if (response.length > 0) {
-          setActualInterruption(response[0]);
-        }
-      }
-      clearTimeoutActualInterruption = setTimeout(
-        fetchActualInterruption,
-        4000
-      );
-    };
-    const readPlanificateButtonState = async () => {
-      const filter = {
-        filterExpression: {
-          filters: [
-            {
-              filterExpression: null,
-              filterItem: {
-                column: "Tagname",
-                dataType: "String",
-                value: `${entName}.Planificada`,
-                filterItemType: "Equal",
-                checkDBNull: false,
-              },
-            },
-          ],
-          filterExpressionType: "AND",
-          negationFilterExpression: false,
-        },
-        filterItem: null,
-      };
-
-      const response = await MemoryDatabaseCall({
-        params: read_tags_teams({ filter }),
-        url: "queryWWDataFrameDataAsync",
-      });
-
-      if (response) {
-        if (response.length > 0) {
-          if (response[0] && response[0].Quality === 192) {
-            if (response[0].Value) {
-              setPlanificatedButton(true);
-            } else {
-              setPlanificatedButton(false);
-            }
-          }
-        }
-      }
-      clearTimeoutPlanificate = setTimeout(readPlanificateButtonState, 30000);
-    };
     if (lineData) {
       if (orderData) {
         fetchData(true);
-        clearIntervalData = setInterval(fetchData, 6000);
-        readPlanificateButtonState();
-        fetchActualInterruption();
-        /* 
-          fetchSpecs();
-          fetchActualInterruption();
-          fetchAlertData();
-          readPlanificateButtonState();
-          clearIntervalAlert = setInterval(fetchAlertData, 6000); */
+        clearIntervalData = setInterval(fetchData, 4000);
       }
     }
     if (modalJustify) {
@@ -177,8 +113,6 @@ const FritDashboard = () => {
     }
     return () => {
       clearInterval(clearIntervalData);
-      clearTimeout(clearTimeoutPlanificate);
-      clearTimeout(clearTimeoutActualInterruption);
     };
   }, [modalJustify]);
 
@@ -219,50 +153,9 @@ const FritDashboard = () => {
     showLoader && setLoadingInitialData(false);
   };
 
-  const push =
-    actualInterruption &&
-    actualInterruption.reas_desc.toLowerCase().includes("paro") &&
-    actualInterruption.reas_desc.toLowerCase().includes("pendiente") &&
-    actualInterruption.reas_desc.toLowerCase().includes("justificar")
-      ? setModalJustify
-      : setModalGenerate;
   return (
     <>
       <Container sx={{ m: "auto" }} id="fritDashboard-main-container">
-        {/* <Segment.Group
-          stacked
-          raised
-          horizontal={pageSize.width > 900}
-          style={{ border: "none" }}
-        >
-          {planificatedButton !== undefined && (
-            <LineStatusButton
-              planificatedButton={planificatedButton}
-              lineName={line.entName}
-            />
-          )}
-          {actualInterruption && (
-            <ActualInterruption interruption={actualInterruption} push={push} />
-          )}
-        </Segment.Group> */}
-        {/* <Grid container>
-          {planificatedButton !== undefined && (
-            <Grid item xs={12} sm={12} md={12} lg={6}>
-              <LineStatusButton
-                planificatedButton={planificatedButton}
-                lineName={entName}
-              />
-            </Grid>
-          )}
-          {actualInterruption && (
-            <Grid item xs={12} sm={12} md={12} lg={6}>
-              <ActualInterruption
-                interruption={actualInterruption}
-                push={push}
-              />
-            </Grid>
-          )}
-        </Grid> */}
         <Box
           sx={{
             width: "100%",
@@ -303,7 +196,26 @@ const FritDashboard = () => {
 
               return (
                 <Tab
-                  label={tab}
+                  /*    label={tab} */
+                  label={
+                    sampleAlert ? (
+                      <Badge
+                        badgeContent={pendingSamples.data.length}
+                        color="error"
+                      >
+                        {tab}
+                      </Badge>
+                    ) : interruptionAlert ? (
+                      <Badge
+                        badgeContent={pendingInterruptions.data.length}
+                        color="error"
+                      >
+                        {tab}
+                      </Badge>
+                    ) : (
+                      tab
+                    )
+                  }
                   index={index}
                   sx={{
                     color: (sampleAlert || interruptionAlert) && "error.main",
@@ -329,15 +241,6 @@ const FritDashboard = () => {
           />
         </Container>
       </Container>
-      {/* <GenerateInterruptionModal
-        modalGenerate={modalGenerate}
-        setModalGenerate={setModalGenerate}
-      />
-      <JustifyInterruptionOFModal
-        interruptionSelected={actualInterruption}
-        modalJustify={modalJustify}
-        setModalJustify={setModalJustify}
-      /> */}
     </>
   );
 };

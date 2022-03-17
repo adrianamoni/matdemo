@@ -49,9 +49,9 @@ const OeeOrden = () => {
           </Typography>
         </Grid>
 
-        <Grid item xs={12}>
-          <Grid container sx={{ alignItems: "center" }}>
-            <Grid item xs={12} sm={12} md={6} lg={3}>
+        <Grid item xs={12} textAlign="center">
+          <Grid container justifyContent="center" sx={{ alignItems: "center" }}>
+            <Grid item xs={12} sm={12} md={6} lg={12}>
               <HalfDoughnut
                 value={[apiData?.OEE && apiData.OEE != null ? apiData.OEE : 0]}
                 color={colorByValue({

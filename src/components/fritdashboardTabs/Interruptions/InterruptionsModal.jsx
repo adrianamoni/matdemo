@@ -5,7 +5,14 @@ import {
   selectedRowsIdsContext,
   selectedRowsContext,
 } from "../../../context/ContextProvider";
-import { Grid, Divider } from "@mui/material";
+import {
+  Grid,
+  Divider,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
 import useWindowSize from "./../../customHooks/UseWindowsSize";
 import ModalWidget from "./../../../widgets/modalWidget/ModalWidget";
 import InputWidget from "./../../../widgets/forms/InputWidget";
@@ -32,6 +39,7 @@ const InterruptionsModal = ({
   selectedNode,
   setSelectedNode,
   originalData,
+  lines,
 }) => {
   const windowSize = useWindowSize();
 
@@ -53,7 +61,7 @@ const InterruptionsModal = ({
   const [loading, setLoading] = useState(false);
   const [selectedReason, setSelectedReason] = useState(null);
   const [expandedNodes, setExpandedNodes] = useState([]);
-
+  const [selectedLine, setSelectedLine] = useState(false);
   //TREEVIEW DATA
   useEffect(() => {
     if (showModal) {
@@ -308,19 +316,42 @@ const InterruptionsModal = ({
           />
         </Grid>
         <Grid item md={6} xs={12}>
-          <InputWidget
-            formId={"createInterruptionForm"}
-            id={"comment"}
-            label={<Text tid={"comment"} />}
-            required={false}
-            multiline={true}
-            type={"text"}
-            maxLength={100}
-            disabled={false}
-            placeholder={""}
-            min={null}
-            max={null}
-          />
+          <Grid container>
+            {fromInterruptionsManager && (
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel>Línea</InputLabel>
+                  <Select
+                    value={selectedLine}
+                    label="Línea"
+                    onChange={(e) => setSelectedLine(e.target.value)}
+                  >
+                    {console.log("lines", lines)}
+                    {lines &&
+                      lines.map((ent) => (
+                        <MenuItem value={ent.value}>{ent.text}</MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+            )}
+
+            <Grid item xs={12}>
+              <InputWidget
+                formId={"createInterruptionForm"}
+                id={"comment"}
+                label={<Text tid={"comment"} />}
+                required={false}
+                multiline={true}
+                type={"text"}
+                maxLength={100}
+                disabled={false}
+                placeholder={""}
+                min={null}
+                max={null}
+              />
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item md={12} xs={12}>
           <ButtonGroupWidget

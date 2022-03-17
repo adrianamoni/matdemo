@@ -181,6 +181,7 @@ const Planification = () => {
             </>
           )}
         </Grid>
+        {console.log("createOrderPermission", createOrderPermission)}
         <Grid item xs={12}>
           <ButtonGroupWidget
             position="center"
@@ -199,7 +200,7 @@ const Planification = () => {
                 text: "createOrder",
                 color: "primary",
                 onClick: handleCreateOrderClick,
-                disable: !createOrderPermission,
+                disabled: !createOrderPermission,
               },
             ]}
           />

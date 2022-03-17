@@ -25,12 +25,13 @@ const Consumptions = () => {
     {
       field: "lot_no",
       headerName: `${Text({ tid: "lot" })}`,
-      width: 200,
+      flex: 1,
     },
     {
       field: "qty_cons",
       headerName: `${Text({ tid: "quantity" })}`,
-      width: 200,
+      flex: 1,
+      type: "number",
     },
   ];
 

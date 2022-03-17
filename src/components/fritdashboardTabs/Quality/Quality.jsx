@@ -57,11 +57,13 @@ const Quality = () => {
       field: "lowerLimit",
       headerName: `ll`,
       flex: 1,
+      type: "number",
     },
     {
       field: "upperLimit",
       headerName: `hh`,
       flex: 1,
+      type: "number",
     },
     {
       field: "resultValue",
@@ -104,20 +106,17 @@ const Quality = () => {
     setLoadingInitialData(false);
   };
 
-  const handleTestClick = () => {
-    /* setmodalCreateInterruption(true); */
-  };
   const handleTogglePendings = () => {
     setOnlyPendings(!onlyPendings);
   };
-  const handleGenerateSample = () => {};
+
   return loadingInitialData ? (
     <Box sx={{ width: "100%" }}>
       <LinearProgress variant="indeterminate" color="secondary" />
     </Box>
   ) : (
     <>
-      <Grid container sx={{ mt: 0 }}>
+      <Grid container spacing={1} sx={{ mt: 0 }}>
         <Grid item xs={12} sx={{ textAlign: "right" }}>
           <Button
             variant="contained"
@@ -136,39 +135,17 @@ const Quality = () => {
             )
           </Button>
         </Grid>
-        {/* <Grid container sx={{ mt: 0 }}>
-        <Grid item xs={12} sx={{ display: "flex" }} justifyContent="flex-end">
-          <ButtonGroupWidget
-            position="right"
-            buttons={[
-              {
-                text: onlyPendings ? "historical" : "pendings",
-                color: "primary",
-                onClick: handleTogglePendings,
-              },
-       
-            ]}
-          />
-        </Grid>
-        {loadingInitialData ? (
+
+        {samples && samples.length > 0 && (
           <Grid item xs={12}>
-            <Box sx={{ width: "100%" }}>
-              <LinearProgress variant="indeterminate" color="secondary" />
-            </Box>
+            <TableWidget
+              data={samples}
+              columns={samplesTableColumns}
+              multipleSelection={false}
+              tableName="samples"
+            />
           </Grid>
-        ) : ( */}
-        {/*  {samples &&
-          samples.length > 0 && (
-            <Grid item xs={12}>
-              <TableWidget
-                data={samples}
-                columns={samplesTableColumns}
-                multipleSelection={false}
-                tableName="samples"
-              />
-            </Grid>
-          )
-        )} */}
+        )}
 
         <Grid item xs={12}>
           <Button
@@ -213,8 +190,8 @@ const Quality = () => {
 
       <ModalWidget
         open={generateSampleModal}
-        close={() => setGenerateSampleModal(false)}
-        content={<ModalGenerateSample />}
+        close={setGenerateSampleModal}
+        content={<ModalGenerateSample setRefreshMain={setRefreshMain} />}
         title={"registerTest"}
       />
     </>

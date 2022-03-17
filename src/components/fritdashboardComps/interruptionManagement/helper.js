@@ -107,6 +107,7 @@ const InterruptionManagerFilter = ({ entId }) => {
 const fetchAllManagerData = async ({ entId, section, reason, date }) => {
   let err = null;
   let res = [];
+  let originalRes = [];
   const response = await MemoryDatabaseCall({
     params: all_interruptions_filtered({ entId, section, reason, date }),
     url: "queryDataAsync",
@@ -122,6 +123,7 @@ const fetchAllManagerData = async ({ entId, section, reason, date }) => {
       };
     } else {
       if (response.length > 0) {
+        originalRes = response;
         const newArr = response.map((item, i) => {
           return {
             index: i,
@@ -149,6 +151,8 @@ const fetchAllManagerData = async ({ entId, section, reason, date }) => {
             WOID: item.WOID,
             ProductID: item.ProductID,
             ProductDesc: item.ProductDesc,
+            Producto: `${item.ProductID ? item.ProductID : ""} 
+              ${item.ProductDesc ? "- " + item.ProductDesc : ""}`,
           };
         });
 
@@ -156,7 +160,7 @@ const fetchAllManagerData = async ({ entId, section, reason, date }) => {
       }
     }
   }
-  return { res, err };
+  return { originalRes, res, err };
 };
 
 /* const fetchPendingManagerData = async ({ entId }) => {

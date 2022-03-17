@@ -20,6 +20,7 @@ const Variables = () => {
       field: "value",
       headerName: Text({ tid: "value" }),
       flex: 1,
+      type: "number",
     },
     {
       field: "unit",

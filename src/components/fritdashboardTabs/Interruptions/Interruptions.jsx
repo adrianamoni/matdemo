@@ -80,7 +80,7 @@ const Interruptions = () => {
 
   useEffect(() => {
     if (pendingInterruptions && onlyPendings) {
-      setTableData(pendingInterruptions);
+      setTableData(pendingInterruptions.data);
     }
   }, [pendingInterruptions, onlyPendings]);
 
@@ -152,7 +152,7 @@ const Interruptions = () => {
     </Box>
   ) : (
     <>
-      <Grid container sx={{ mt: 0 }}>
+      <Grid container spacing={1} sx={{ mt: 0 }}>
         <Grid item xs={12} sx={{ textAlign: "right" }}>
           <Button
             variant="contained"
@@ -180,6 +180,7 @@ const Interruptions = () => {
               columns={columns}
               multipleSelection={false}
               tableName="interruptions"
+              pagination={10}
             />
           </Grid>
         ) : (

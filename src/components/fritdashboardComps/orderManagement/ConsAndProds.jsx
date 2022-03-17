@@ -18,7 +18,7 @@ import TableWidget from "../../../widgets/TableWidget/TableWidget";
 function TabPanel(props) {
   const { children, value, index } = props;
 
-  return value === index ? <Container>{children}</Container> : <></>;
+  return value === index ? <>{children}</> : <></>;
 }
 const ConsAndProds = ({
   loading,
@@ -36,12 +36,13 @@ const ConsAndProds = ({
     {
       field: "lot_no",
       headerName: `${Text({ tid: "lot" })}`,
-      width: 200,
+      flex: 1,
     },
     {
       field: "qty_cons",
       headerName: `${Text({ tid: "quantity" })}`,
-      width: 200,
+      type: "number",
+      flex: 1,
     },
   ];
 
@@ -54,17 +55,18 @@ const ConsAndProds = ({
     {
       field: "lot_no",
       headerName: `${Text({ tid: "lot" })}`,
-      width: 200,
+      flex: 1,
     },
     {
       field: "qty_prod",
       headerName: `${Text({ tid: "quantity" })}`,
-      width: 200,
+      flex: 1,
+      type: "number",
     },
     {
       field: "reas_desc",
       headerName: `${Text({ tid: "reason" })}`,
-      width: 200,
+      flex: 1,
     },
   ];
   const handleChange = (event, newValue) => {
@@ -101,68 +103,61 @@ const ConsAndProds = ({
             </Tabs>
           </Grid>
         )}
-
-        <TabPanel value={value} index={0}>
-          <Grid container>
-            {consumptionData ? (
-              <Grid item xs={12}>
-                <Grid container>
-                  <Grid item xs={12}>
-                    <Typography variant="h6">
-                      {Text({ tid: "consumptions" })}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TableWidget
-                      data={consumptionData}
-                      columns={consColumns}
-                      tableName="cons-order-management"
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-            ) : (
-              selectedRows.length > 0 && (
+        <Grid item xs={12}>
+          <TabPanel value={value} index={0}>
+            <Grid container>
+              {consumptionData ? (
                 <Grid item xs={12}>
-                  <Alert variant="outlined" severity="info">
-                    No hay consumos en esta orden
-                  </Alert>
-                </Grid>
-              )
-            )}
-          </Grid>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <Grid container>
-            {productionData ? (
-              <Grid item xs={12}>
-                <Grid container>
-                  <Grid item xs={12}>
-                    <Typography variant="h6">
-                      {Text({ tid: "productions" })}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TableWidget
-                      data={productionData}
-                      columns={prodColumns}
-                      tableName="prod-order-management"
-                    />
+                  <Grid container>
+                    <Grid item xs={12}>
+                      <TableWidget
+                        data={consumptionData}
+                        columns={consColumns}
+                        tableName="cons-order-management"
+                        disableSelection={true}
+                      />
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            ) : (
-              !loading &&
-              selectedRows.length > 0 && (
+              ) : (
+                selectedRows.length > 0 && (
+                  <Grid item xs={12}>
+                    <Alert variant="outlined" severity="info">
+                      No hay consumos en esta orden
+                    </Alert>
+                  </Grid>
+                )
+              )}
+            </Grid>
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <Grid container>
+              {productionData ? (
                 <Grid item xs={12}>
-                  <Alert variant="outlined" severity="info">
-                    No hay producciones en esta orden
-                  </Alert>
+                  <Grid container>
+                    <Grid item xs={12}>
+                      <TableWidget
+                        data={productionData}
+                        columns={prodColumns}
+                        tableName="prod-order-management"
+                        disableSelection={true}
+                      />
+                    </Grid>
+                  </Grid>
                 </Grid>
-              )
-            )}
-          </Grid>
-        </TabPanel>
+              ) : (
+                !loading &&
+                selectedRows.length > 0 && (
+                  <Grid item xs={12}>
+                    <Alert variant="outlined" severity="info">
+                      No hay producciones en esta orden
+                    </Alert>
+                  </Grid>
+                )
+              )}
+            </Grid>
+          </TabPanel>
+        </Grid>
       </Grid>
     </>
   );

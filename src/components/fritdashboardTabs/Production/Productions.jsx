@@ -26,17 +26,17 @@ const Productions = () => {
     {
       field: "lot_no",
       headerName: `${Text({ tid: "lot" })}`,
-      width: 200,
+      flex: 1,
     },
     {
       field: "reas_desc",
       headerName: `${Text({ tid: "reason" })}`,
-      width: 200,
+      flex: 1,
     },
     {
       field: "qty_prod",
       headerName: `${Text({ tid: "quantity" })}`,
-      width: 200,
+      flex: 1,
       type: "number",
     },
   ];

@@ -24,7 +24,7 @@ const OperatorAssignment = ({ line, modal, close }) => {
     {
       field: "ent_name",
       headerName: `${Text({ tid: "section" })}`,
-      width: 250,
+      flex: 1,
     },
     {
       field: "entDescription",

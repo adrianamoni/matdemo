@@ -1,8 +1,10 @@
-import { Grid, Input, Slider } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { Button, Grid, Input, Slider } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { ApiCall } from "../../../services/Service";
 import { split_operation } from "../../../services/serviceHelper";
 import ModalWidget from "../../../widgets/modalWidget/ModalWidget";
+import { createNotification } from "../../alerts/NotificationAlert";
 import useWindowSize from "../../customHooks/UseWindowsSize";
 
 const SplitModal = ({ open, close, ofSelected, setRefreshMain }) => {
@@ -53,6 +55,7 @@ const SplitModal = ({ open, close, ofSelected, setRefreshMain }) => {
       });
     }
     setRefreshMain(true);
+    handleClose();
   };
 
   const handleClose = () => {
@@ -62,26 +65,39 @@ const SplitModal = ({ open, close, ofSelected, setRefreshMain }) => {
   const modalContent = (
     <>
       <Grid container spacing={2} alignItems="center" sx={{ p: 3 }}>
-        <Grid item>
-          <span>0</span>
+        <Grid item xs={12}>
+          <Grid container colSpacing={2} textAlign="center">
+            <Grid item xs={3}>
+              <span>0</span>
+            </Grid>
+            <Grid item xs={6}>
+              <Slider value={qty} onChange={handleSliderChange} />
+            </Grid>
+            <Grid item xs={3}>
+              <Input
+                value={qty}
+                size="small"
+                onChange={handleInputChange}
+                /* onBlur={handleBlur} */
+                inputProps={{
+                  step: 1,
+                  min: 0,
+                  max: qtyMax,
+                  type: "number",
+                  "aria-labelledby": "input-slider",
+                }}
+              />
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item xs>
-          <Slider value={qty} onChange={handleSliderChange} />
-        </Grid>
-        <Grid item>
-          <Input
-            value={qty}
-            size="small"
-            onChange={handleInputChange}
-            /* onBlur={handleBlur} */
-            inputProps={{
-              step: 1,
-              min: 0,
-              max: qtyMax,
-              type: "number",
-              "aria-labelledby": "input-slider",
-            }}
-          />
+        <Grid item xs={12} textAlign="right">
+          <LoadingButton
+            variant="contained"
+            onClick={handleSubmit}
+            loading={loading}
+          >
+            Aceptar
+          </LoadingButton>
         </Grid>
       </Grid>
     </>

@@ -6,6 +6,7 @@ import { MemoryDatabaseCall } from "../../../services/Service";
 import moment from "moment";
 import _ from "lodash";
 import { pending_interruptions } from "../../../services/Interruptions";
+import uuid from "react-uuid";
 
 export const getOrderDetails = async ({ order }) => {
   let error;
@@ -122,6 +123,7 @@ export const getPendingInterruptions = async ({ customParams }) => {
         }),
         Prompt: item.Prompt,
         ID: item.ID,
+        id: uuid(),
         ReasonDesc: item.ReasonDesc,
         Comment: item.Comment,
         UtilStateDesc: item.UtilStateDesc,

@@ -26,8 +26,8 @@ function Layout(props) {
   };
 
   const { colorMode } = useContext(colorModeContext);
-  /* palettes: 'grey-orange','green-orange', 'darkblue-lightblue','pink-purple','purple-green' */
-  const palette = getPalette("grey-orange", colorMode);
+  /* palettes: 'oasys', 'grey-orange','green-orange', 'darkblue-lightblue','pink-purple','purple-green' */
+  const palette = getPalette("oasys", colorMode);
 
   const theme = createTheme({
     palette: {
