@@ -161,7 +161,9 @@ const Limpieza = () => {
                 <Grid
                   container
                   spacing={2}
-                  sx={{ maxWidth: 250, margin: "auto" }}
+                  columnSpacing={3}
+                  textAlign="center"
+                  sx={{ maxWidth: 300 }}
                 >
                   <Grid item xs={4}>
                     <LoadingButton
@@ -170,7 +172,7 @@ const Limpieza = () => {
                       disabled={loadingPlay ? true : play}
                       variant="contained"
                       color="primary"
-                      sx={{ marginInline: 1, p: 2 }}
+                      sx={{ marginInline: 1, p: 3 }}
                     >
                       <PlayArrowIcon />
                     </LoadingButton>
@@ -182,7 +184,7 @@ const Limpieza = () => {
                       disabled={loadingPause ? true : pause}
                       variant="contained"
                       color="primary"
-                      sx={{ marginInline: 1, p: 2 }}
+                      sx={{ marginInline: 1, p: 3 }}
                     >
                       <PauseIcon />
                     </LoadingButton>
@@ -198,7 +200,7 @@ const Limpieza = () => {
                       disabled={loadingStop ? true : stop}
                       variant="contained"
                       color="primary"
-                      sx={{ marginInline: 1, p: 2 }}
+                      sx={{ marginInline: 1, p: 3 }}
                     >
                       <StopIcon />
                     </LoadingButton>

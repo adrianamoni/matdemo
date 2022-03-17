@@ -25,12 +25,14 @@ import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
 import { grey } from "@mui/material/colors";
 import { checkIfModified } from "./helper";
+import { globalDataContext } from "../../../context/ContextProvider";
 
 const Simulation = () => {
+  const { globalData } = useContext(globalDataContext);
+  const { lineData } = globalData;
   const [loadingInitialData, setLoadingInitialData] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [apiData, setApiData] = useState();
-  const [originalData, setOriginalData] = useState();
   const [refreshMain, setRefreshMain] = useState(false);
   const [enableSave, setEnableSave] = useState(false);
 
@@ -40,14 +42,6 @@ const Simulation = () => {
       setRefreshMain(false);
     }
   }, [refreshMain]);
-
-  useEffect(() => {
-    if (apiData) {
-      const temp = checkIfModified(apiData, originalData);
-      console.log("temp", temp);
-      setEnableSave(temp);
-    }
-  }, [apiData]);
 
   const fetchData = async () => {
     const data = [
@@ -84,26 +78,21 @@ const Simulation = () => {
       },
     ];
 
-    const original = JSON.parse(JSON.stringify(data));
     setApiData(data);
-    setOriginalData(original);
   };
 
-  const handleCheck = (checked, id) => {
+  const handleSubmit = async () => {
+    setLoadingSubmit(true);
+
     const newData = [...apiData];
     const findEl = newData.findIndex((el) => el.id === id);
 
     newData[findEl].tag = checked ? true : false;
 
-    setApiData(newData);
-  };
-
-  const handleSubmit = async () => {
-    setLoadingSubmit(true);
     const tagName = "example";
     const tags_arr = [
       {
-        TagName: tagName,
+        TagName: `${lineData.entName}_${tagName}`,
         Value: 0,
       },
     ];
@@ -157,17 +146,12 @@ const Simulation = () => {
                         <TableCell>{item.ReasonGrpDesc}</TableCell>
                         <TableCell>{item.ReasonDesc}</TableCell>
                         <TableCell align="center">
-                          <FormControlLabel
-                            control={
-                              <Switch
-                                checked={item.tag}
-                                onChange={(e) =>
-                                  handleCheck(e.target.checked, item.id)
-                                }
-                                color="secondary"
-                              />
+                          <Switch
+                            checked={item.tag}
+                            onChange={(e) =>
+                              handleSubmit(e.target.checked, item.id)
                             }
-                            label="Label"
+                            color="secondary"
                           />
                         </TableCell>
                       </TableRow>
@@ -177,16 +161,6 @@ const Simulation = () => {
               </TableContainer>
             </>
           )}
-        </Grid>
-        <Grid item xs={12} textAlign="center">
-          <LoadingButton
-            onClick={handleSubmit}
-            variant="contained"
-            loading={loadingSubmit}
-            disabled={!enableSave}
-          >
-            Enviar
-          </LoadingButton>
         </Grid>
       </Grid>
     </>

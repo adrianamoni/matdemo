@@ -43,6 +43,7 @@ import { MemoryDatabaseCall } from "../../../services/Service";
 import { read_tags_teams } from "../../../services/serviceHelper";
 import ActualInterruption from "./ActualInterruption";
 import { get_actual_interruption } from "../../../services/Interruptions";
+import BadgeSvg from "../../svg/BadgeSvg";
 
 const FritDashboard = () => {
   /*  let { slug } = useParams(); */
@@ -265,7 +266,6 @@ const FritDashboard = () => {
         <Box
           sx={{
             width: "100%",
-
             maxWidth: { xs: 400, sm: 600, md: 900, lg: 1200, xl: 1536 },
             /* maxWidth: { xs: 450, sm: 900, md: 1200, lg: 1536  }, */
           }}

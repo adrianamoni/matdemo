@@ -13,6 +13,7 @@ import ModalGenerateSample from "./ModalGenerateSample";
 import ResultsTable from "./ResultsTable";
 import { fetchAllSampleData, multiCall, sortBy } from "./helper";
 import { Box } from "@mui/system";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
 const Quality = () => {
   const { globalData } = useContext(globalDataContext);
@@ -110,9 +111,32 @@ const Quality = () => {
     setOnlyPendings(!onlyPendings);
   };
   const handleGenerateSample = () => {};
-  return (
+  return loadingInitialData ? (
+    <Box sx={{ width: "100%" }}>
+      <LinearProgress variant="indeterminate" color="secondary" />
+    </Box>
+  ) : (
     <>
-      <Grid container sx={{ mt: 2 }} spacing={1}>
+      <Grid container sx={{ mt: 0 }}>
+        <Grid item xs={12} sx={{ textAlign: "right" }}>
+          <Button
+            variant="contained"
+            startIcon={<FilterAltIcon />}
+            onClick={handleTogglePendings}
+            style={{
+              backgroundColor: "#c0c1c2",
+              color: "#000000",
+            }}
+          >
+            {onlyPendings ? <Text tid="pendings" /> : <Text tid="historical" />}
+            <span>&nbsp;&nbsp;</span>(
+            {onlyPendings
+              ? pendingSamples.data.length
+              : samples && samples.length}
+            )
+          </Button>
+        </Grid>
+        {/* <Grid container sx={{ mt: 0 }}>
         <Grid item xs={12} sx={{ display: "flex" }} justifyContent="flex-end">
           <ButtonGroupWidget
             position="right"
@@ -122,11 +146,7 @@ const Quality = () => {
                 color: "primary",
                 onClick: handleTogglePendings,
               },
-              {
-                text: "notificationToQuality",
-                color: "secondary",
-                onClick: handleTestClick,
-              },
+       
             ]}
           />
         </Grid>
@@ -136,8 +156,8 @@ const Quality = () => {
               <LinearProgress variant="indeterminate" color="secondary" />
             </Box>
           </Grid>
-        ) : (
-          samples &&
+        ) : ( */}
+        {/*  {samples &&
           samples.length > 0 && (
             <Grid item xs={12}>
               <TableWidget
@@ -148,14 +168,14 @@ const Quality = () => {
               />
             </Grid>
           )
-        )}
+        )} */}
 
         <Grid item xs={12}>
           <Button
             variant="contained"
             onClick={() => setGenerateSampleModal(true)}
           >
-            {Text({ tid: "registerTest" })}
+            <Text tid="registerTest" />
           </Button>
         </Grid>
         {loadingResults ? (
@@ -195,7 +215,7 @@ const Quality = () => {
         open={generateSampleModal}
         close={() => setGenerateSampleModal(false)}
         content={<ModalGenerateSample />}
-        title={Text({ tid: "registerTest" })}
+        title={"registerTest"}
       />
     </>
   );

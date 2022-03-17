@@ -34,7 +34,7 @@ function Layout(props) {
       mode: colorMode,
       ...palette,
       error: {
-        main: colorMode === "dark" ? "#DC143C" : "#a60d2c",
+        main: colorMode === "dark" ? "#DC143C" : "#c41034",
         contrastText: "#fff",
         text: "#fff",
       },
@@ -54,7 +54,7 @@ function Layout(props) {
         text: "#fff",
       },
       background: {
-        error: colorMode === "dark" ? "#2e090d" : "#fae3e3",
+        error: colorMode === "dark" ? "#2e090d" : "#fff2f2",
         success: "#00FA9A20",
         warning: "#d1a35e20",
         info: "#0288D110",

@@ -157,7 +157,7 @@ const Consumptions = () => {
     </Box>
   ) : (
     <>
-      <Grid container sx={{ mt: 2 }}>
+      <Grid container sx={{ mt: 4 }}>
         {/* Consumpions Table */}
         {tableData?.length > 0 ? (
           <Grid item xs={12}>

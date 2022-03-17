@@ -15,8 +15,9 @@ const Paros = ({ alert, data }) => {
 
   let styledAlert = alert
     ? {
-        border: "1.5px solid crimson",
-        backgroundColor: "#DC143C10",
+        border: "1.5px solid",
+        borderColor: "error.main",
+        backgroundColor: "background.error",
       }
     : {};
 
@@ -29,6 +30,7 @@ const Paros = ({ alert, data }) => {
         cursor: "pointer",
         ...styledAlert,
       }}
+      className={alert && "blinking-effect-red"}
       onClick={() => setNavigationData({ ...navigationData, activeTab: 7 })}
     >
       <Grid container sx={{ height: "100%" }}>
@@ -38,6 +40,7 @@ const Paros = ({ alert, data }) => {
             variant="h6"
             component="h6"
             color={alert && "error"}
+            className="title"
           >
             PAROS
           </Typography>

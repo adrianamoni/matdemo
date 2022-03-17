@@ -24,11 +24,11 @@ const Materials = () => {
   const [loadingProvisioning, setLoadingProvisioning] = useState();
   const columns = [
     {
-      field: "item_desc",
+      field: "material",
       headerName: `${Text({ tid: "material" })}`,
       flex: 1,
     },
-    {
+    /*  {
       field: "bom_pos",
       headerName: `${Text({ tid: "alternative" })}`,
       width: 70,
@@ -37,7 +37,7 @@ const Materials = () => {
       field: "BackFlush",
       headerName: `${Text({ tid: "entityBatch" })}`,
       width: 70,
-    },
+    }, */
     {
       field: "UnidadMedida",
       headerName: `${Text({ tid: "unitMeasurement" })}`,
@@ -67,6 +67,14 @@ const Materials = () => {
       seqNo,
     },
   });
+  let processedData;
+  if (data) {
+    processedData = data.map((el) => ({
+      ...el,
+      material: `${el.item_id} (${el.item_desc})`,
+    }));
+  }
+
   const handleProvisioningRequest = async () => {
     setLoadingProvisioning(true);
     let cantidades;
@@ -99,11 +107,11 @@ const Materials = () => {
       <LinearProgress variant="indeterminate" color="secondary" />
     </Box>
   ) : (
-    <Grid container sx={{ mt: 2 }}>
+    <Grid container sx={{ mt: 4 }}>
       <Grid item xs={12}>
         <TableWidget
           multipleSelection={true}
-          data={data}
+          data={processedData}
           columns={columns}
           tableName="materials"
         />

@@ -2,7 +2,7 @@ import moment from "moment";
 
 export const getSEMI001 = (qtyReqd) => {
   const getDate = moment().format();
-  const woId = `ADVANCED_FACTORIES_${getDate}`;
+  const woId = moment().format("YYYYMMDDHHmmss");
   let duration = (66.66 / 1000) * qtyReqd;
   duration = duration / 0.59;
   return {
@@ -99,7 +99,7 @@ export const getSEMI001 = (qtyReqd) => {
 };
 export const getPA001 = (qtyReqd) => {
   const getDate = moment().format();
-  const woId = `ADVANCED_FACTORIES_${getDate}`;
+  const woId = moment().format("YYYYMMDDHHmmss");
   let duration = (66.66 / 1000) * qtyReqd;
   duration = duration / 0.59;
   return {
@@ -197,7 +197,7 @@ export const getPA001 = (qtyReqd) => {
 
 export const getPA002 = (qtyReqd) => {
   const getDate = moment().format();
-  const woId = `ADVANCED_FACTORIES_${getDate}`;
+  const woId = moment().format("YYYYMMDDHHmmss");
   let duration = (66.66 / 1000) * qtyReqd;
   duration = duration / 0.59;
   return {

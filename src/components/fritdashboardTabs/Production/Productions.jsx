@@ -29,15 +29,15 @@ const Productions = () => {
       width: 200,
     },
     {
+      field: "reas_desc",
+      headerName: `${Text({ tid: "reason" })}`,
+      width: 200,
+    },
+    {
       field: "qty_prod",
       headerName: `${Text({ tid: "quantity" })}`,
       width: 200,
       type: "number",
-    },
-    {
-      field: "reas_desc",
-      headerName: `${Text({ tid: "reason" })}`,
-      width: 200,
     },
   ];
 
@@ -225,7 +225,7 @@ const Productions = () => {
     </Box>
   ) : (
     <>
-      <Grid container sx={{ mt: 2 }}>
+      <Grid container sx={{ mt: 4 }}>
         {/* Productions Table */}
         {tableData?.length > 0 ? (
           <Grid item xs={12}>

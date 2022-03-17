@@ -38,6 +38,7 @@ const AutoControles = ({ data, alert }) => {
         backgroundColor: "background.grey4",
         ...styledAlert,
       }}
+      className={alert && "blinking-effect-red"}
       onClick={() => setNavigationData({ ...navigationData, activeTab: 6 })}
     >
       <Grid container sx={{ height: "100%" }}>
@@ -47,6 +48,7 @@ const AutoControles = ({ data, alert }) => {
             variant="h6"
             component="h6"
             color={alert && "error"}
+            className="title"
           >
             AUTO CONTROLES
           </Typography>

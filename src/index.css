@@ -78,10 +78,35 @@ code {
 }
 #fritDashboard-main-container .frit-tabs > .MuiTabs-scroller > div > button {
   padding-inline: 15px !important;
+}
 
 /* DISABLED INPUT */
-/* .MuiInputBase-root.Mui-disabled {
+.MuiInputBase-root.Mui-disabled {
   background-color: #e0e0e0 !important;
   caret-color: transparent !important;
 }
- */
+
+/* BLINKING ANIMATION */
+.blinking-effect-red {
+  animation: blinkRed 1s infinite ease;
+}
+
+.blinking-effect-red .title {
+  color: whitesmoke !important;
+  background-color: #c41034 !important;
+}
+@keyframes blinkRed {
+  0% {
+    border: 1.5px solid lightgray;
+  }
+  50% {
+    border: 1.5px solid #c41034;
+  }
+  100% {
+    border: 1.5px solid lightgray;
+  }
+}
+
+#sidebar-list .MuiSvgIcon-fontSizeMedium {
+  font-size: 2.5rem !important;
+}

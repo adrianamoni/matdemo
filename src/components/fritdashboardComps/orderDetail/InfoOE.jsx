@@ -127,44 +127,57 @@ const InfoOE = () => {
                           </Typography>
                         </Grid>
                         <Grid item xs={6}>
-                          <Typography
-                            align="right"
-                            sx={
-                              item.hasOwnProperty("Estado")
-                                ? {
-                                    paddingInline: "8px",
-                                    backgroundColor: background,
-                                  }
-                                : {}
-                            }
-                          >
-                            {Object.values(item)}
+                          <Typography align="right">
+                            <span
+                              style={
+                                item.hasOwnProperty("Estado")
+                                  ? {
+                                      paddingInline: "12px",
+                                      backgroundColor: background,
+                                    }
+                                  : {}
+                              }
+                            >
+                              {Object.values(item)}
+                            </span>
                           </Typography>
                         </Grid>
                       </Grid>
                     </ListItem>
                   </Grid>
                 ))}
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
+                <ListItem>
+                  <Grid container>
+                    <Grid item xs={6}>
+                      <Typography>
+                        <strong>
+                          {width < 550 ? "Prod." : Text({ tid: "production" })}
+                        </strong>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <LineProgress
+                        value={Math.round(
+                          (productionData.qty_prod / productionData.qty_reqd) *
+                            100
+                        )}
+                      />
+                    </Grid>
+                  </Grid>
+                </ListItem>
+              </Grid>
             </Grid>
           </List>
-
           <Grid container spacing={2}>
-            <Grid
-              item
-              container
-              xs={12}
-              sm={12}
-              md={12}
-              lg={12}
-              xl={5}
-              justifyContent={"center"}
-            >
+            <Grid item container xs={12} justifyContent={"center"}>
               {/* <ButtonGroup variant="contained" size="large"> */}
               <Grid
                 container
                 spacing={2}
+                columnSpacing={3}
                 textAlign="center"
-                sx={{ maxWidth: 250 }}
+                sx={{ maxWidth: 300 }}
               >
                 <Grid item xs={4} sm={4} md={4}>
                   <LoadingButton
@@ -173,7 +186,7 @@ const InfoOE = () => {
                     disabled={loadingPlay ? true : play}
                     variant="contained"
                     color="primary"
-                    sx={{ marginInline: 1, p: 2 }}
+                    sx={{ marginInline: 1, p: 3 }}
                   >
                     <PlayArrowIcon />
                   </LoadingButton>
@@ -185,7 +198,7 @@ const InfoOE = () => {
                     disabled={loadingPause ? true : pause}
                     variant="contained"
                     color="primary"
-                    sx={{ marginInline: 1, p: 2 }}
+                    sx={{ marginInline: 1, p: 3 }}
                   >
                     <PauseIcon />
                   </LoadingButton>
@@ -198,38 +211,11 @@ const InfoOE = () => {
                     disabled={loadingStop ? true : stop}
                     variant="contained"
                     color="primary"
-                    sx={{ marginInline: 1, p: 2 }}
+                    sx={{ marginInline: 1, p: 3 }}
                   >
                     <StopIcon />
                   </LoadingButton>
                 </Grid>
-              </Grid>
-
-              {/*      </ButtonGroup> */}
-            </Grid>
-            <Grid
-              item
-              container
-              xs={12}
-              sm={12}
-              md={12}
-              lg={12}
-              xl={7}
-              justifyContent={"center"}
-              alignItems={"center"}
-              sx={{ p: 2 }}
-            >
-              <Grid item xs={12} sm={12} md={12} xl={4}>
-                <strong>
-                  {width < 550 ? "Prod." : Text({ tid: "production" })}
-                </strong>
-              </Grid>
-              <Grid item xs={12} sm={12} md={12} xl={8}>
-                <LineProgress
-                  value={Math.round(
-                    (productionData.qty_prod / productionData.qty_reqd) * 100
-                  )}
-                />
               </Grid>
             </Grid>
           </Grid>

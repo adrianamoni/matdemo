@@ -97,7 +97,10 @@ const TableWidget = ({ data, columns, multipleSelection, tableName }) => {
   //useEffect for hiding the switch on table layout
   useEffect(() => {
     setPageDimentions(size);
-    if (size.width > 800) {
+    if (size.width > 900) {
+      // CHANGES FOR ADVANCED FACTORIES
+      setChecked(true); //false
+    } else {
       setChecked(false);
     }
   }, [size]);
@@ -127,8 +130,8 @@ const TableWidget = ({ data, columns, multipleSelection, tableName }) => {
         onChange={(e) => setsearchInput(e.target.value)}
         sx={{ p: 1 }}
       />
-
-      {pageDimentions && pageDimentions.width < 800 && (
+      {/* //CHANGES FOR ADVANCED FACTORIES */}
+      {/* {pageDimentions && pageDimentions.width < 800 && (
         <div style={{ display: "flex" }}>
           <div>
             <Switch checked={checked} onChange={() => setChecked(!checked)} />
@@ -145,8 +148,8 @@ const TableWidget = ({ data, columns, multipleSelection, tableName }) => {
             <ListOutlinedIcon />
           </div>
         </div>
-      )}
-      {!checked ? (
+      )} */}
+      {checked ? (
         multipleSelection ? (
           <div style={{ height: 400, width: "100%" }}>
             <DataGrid

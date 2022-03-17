@@ -50,13 +50,13 @@ const sidebarItems = [
     path: "/desasignacion",
     extra: "asignacion",
   },
-  {
+  /*  {
     id: 4,
     name: "hoppers",
     icon: <AllInboxIcon />,
     path: "/tolvas",
     extra: "tolvas",
-  },
+  }, */
   //UNDO THIS ABOVE
   /*  {
     id: 6,
@@ -158,20 +158,26 @@ const DrawerComp = () => {
               textAlign: "center",
             }}
           >
-            <Typography
-              variant="h5"
-              noWrap
-              sx={{ color: "whitesmoke", fontWeight: 700 }}
-            >
-              APP LOGO
-            </Typography>
+            <StyledLink to={"/"}>
+              <Typography
+                variant="h5"
+                noWrap
+                sx={{ color: "whitesmoke", fontWeight: 700 }}
+              >
+                APP LOGO
+              </Typography>
+            </StyledLink>
           </Toolbar>
           <Divider />
-          <List>
+          <List id="sidebar-list">
             {filteredItems.map((link) => (
               <StyledLink key={link.id} to={link.path} classes>
                 <ListItem button>
-                  <ListItemIcon sx={{ color: "secondary.main" }}>
+                  <ListItemIcon
+                    sx={{
+                      color: "secondary.main",
+                    }}
+                  >
                     {link.icon}
                   </ListItemIcon>
                   <ListItemText primary={Text({ tid: link.name })} />
@@ -182,9 +188,9 @@ const DrawerComp = () => {
         </div>
 
         <List>
-          <ListItem sx={{ justifyContent: "center" }}>
+          {/* <ListItem sx={{ justifyContent: "center" }}>
             <ToggleDarkMode />
-          </ListItem>
+          </ListItem> */}
 
           <LanguageSelector />
           <ListItem

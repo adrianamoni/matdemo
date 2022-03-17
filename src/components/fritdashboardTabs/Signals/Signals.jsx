@@ -35,7 +35,8 @@ const Signals = () => {
       <LinearProgress variant="indeterminate" color="secondary" />
     </Box>
   ) : (
-    <Grid container>
+    <>
+      {/* <Grid container>
       <Box sx={{ width: "100%" }}>
         <Tabs
           value={value}
@@ -53,13 +54,14 @@ const Signals = () => {
           />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
-        <Variables />
-      </TabPanel>
+      <TabPanel value={value} index={0}> */}
+      <Variables />
+      {/*  </TabPanel>
       <TabPanel value={value} index={1}>
         <VariablesProceso disabled />
       </TabPanel>
-    </Grid>
+    </Grid> */}
+    </>
   );
 };
 

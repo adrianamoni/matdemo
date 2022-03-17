@@ -39,15 +39,13 @@ const Variables = () => {
       <LinearProgress variant="indeterminate" color="secondary" />
     </Box>
   ) : processedData && processedData.length > 0 ? (
-    <Container fluid>
-      <Grid container sx={{ mt: 2 }}>
-        <TableWidget
-          data={processedData}
-          columns={variablesColumns}
-          tableName="variables-signals"
-        />
-      </Grid>
-    </Container>
+    <Grid container sx={{ mt: 4 }}>
+      <TableWidget
+        data={processedData}
+        columns={variablesColumns}
+        tableName="variables-signals"
+      />
+    </Grid>
   ) : (
     <></>
   );
