@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { globalDataContext } from "../../../context/ContextProvider";
 import { MemoryDatabaseCall } from "../../../services/Service";
 import { get_documentation_data } from "../../../services/OFservices";
@@ -10,7 +11,6 @@ import {
   Divider,
   Stack,
   Button,
-  Link,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import FileOpenIcon from "@mui/icons-material/FileOpen";
@@ -148,12 +148,12 @@ const Documentation = () => {
       {tableData?.length > 0 ? (
         <>
           <Grid container xs={12} sx={{ mt: 2 }}>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={4}>
               <Typography variant="h6" component="h6">
                 <Text tid={"files"} />
               </Typography>
               <Divider sx={{ marginTop: "25px", marginBottom: "25px" }} />
-              {tableData.map((el, i) => (
+              {tableData.map((el) => (
                 <Stack
                   direction="column"
                   justifyContent="center"
@@ -179,11 +179,6 @@ const Documentation = () => {
                                 : development_uri
                             }${el.NombreFichero}#navpanes=0`,
                           })
-                        }
-                        disabled={
-                          el.NombreFichero === displayPdfViewer.name
-                            ? false
-                            : true
                         }
                         sx={{ marginBottom: "10px", padding: "10px" }}
                       >
@@ -212,13 +207,13 @@ const Documentation = () => {
                           <FileOpenIcon color="primary" />
                         </Button>
                         <Button
-                          component={Link}
                           variant="contained"
-                          to={`${
+                          href={`${
                             process.env.NODE_ENV === "production"
                               ? production_uri
                               : development_uri
                           }${el.NombreFichero}`}
+                          target="_blank"
                           color="neutral"
                         >
                           <ScreenShareIcon color="action" />
@@ -229,7 +224,7 @@ const Documentation = () => {
                 </Stack>
               ))}
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={8}>
               <IframeComp url={displayPdfViewer.url} />
             </Grid>
           </Grid>
