@@ -65,20 +65,8 @@ const SeqTable = ({
     );
   }
 
-  const handleRowSelect = ({ rowId, day, e }) => {
-    console.log("e.target id", e.target.id);
-    console.log("e.target type", e.target.type);
-    if (
-      e &&
-      e.target &&
-      (e.target.type === "datetime-local" ||
-        e.target.id === "split-icon" ||
-        e.target.id === "search-icon" ||
-        e.target.id === "quantity-input")
-    ) {
-    } else {
-      selected === rowId ? setSelected(undefined) : setSelected(rowId);
-    }
+  const handleRowSelect = ({ rowId, e }) => {
+    selected === rowId ? setSelected(null) : setSelected(rowId);
   };
 
   const handleSplitClick = (row) => {

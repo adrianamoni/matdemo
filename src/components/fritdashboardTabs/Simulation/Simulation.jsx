@@ -17,7 +17,7 @@ import {
 import { Box } from "@mui/system";
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useState, useEffect, useContext } from "react";
-import { ApiCall } from "../../../services/Service";
+import { ApiCall, MemoryDatabaseCall } from "../../../services/Service";
 import { write_tags } from "../../../services/serviceHelper";
 import TableWidget from "../../../widgets/TableWidget/TableWidget";
 import { createNotification } from "../../alerts/NotificationAlert";
@@ -26,6 +26,7 @@ import { tableCellClasses } from "@mui/material/TableCell";
 import { grey } from "@mui/material/colors";
 import { checkIfModified } from "./helper";
 import { globalDataContext } from "../../../context/ContextProvider";
+import { get_simulation_interruptions } from "../../../services/OFservices";
 
 const Simulation = () => {
   const { globalData } = useContext(globalDataContext);
@@ -42,62 +43,52 @@ const Simulation = () => {
       setRefreshMain(false);
     }
   }, [refreshMain]);
-
   const fetchData = async () => {
-    const data = [
-      {
-        ReasonGrpDesc: "Producción",
-        ReasonDesc: "Producción",
-        id: 1,
-        tag: false,
-      },
-      {
-        ReasonGrpDesc: "Producción",
-        ReasonDesc: "Producción",
-        id: 2,
-        tag: true,
-      },
+    const response = await MemoryDatabaseCall({
+      params: get_simulation_interruptions(),
+      url: "queryWWDataFrameDataAsync",
+    });
+    if (response) {
+      if (response.length > 0) {
+        const indexedResponse = response
+          .filter((row) => row.Tagname.split(".")[0] === lineData.entName)
+          .map((item) => ({
+            ...item,
+            name: item.Tagname.split(".")[1],
+            check: item.Value,
 
-      {
-        ReasonGrpDesc: "Averia",
-        ReasonDesc: "Atasco de salida",
-        id: 3,
-        tag: true,
-      },
-      {
-        ReasonGrpDesc: "Paros Pendientes de Justificar",
-        ReasonDesc: "Paro pendiente de justificar",
-        id: 4,
-        tag: false,
-      },
-      {
-        ReasonGrpDesc: "Averia",
-        ReasonDesc: "Averia pesadora",
-        id: 5,
-        tag: false,
-      },
-    ];
+            /* id: uuid(),
+         material: item.item_id + " (" + item.item_desc + ")",
+         customSchedStart: dateFormater({
+           date: item.sched_start_time_local,
+           type: "hora-fecha",
+         }), */
+          }));
 
-    setApiData(data);
+        setApiData(indexedResponse);
+      }
+    }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (check, tag) => {
     setLoadingSubmit(true);
 
     const newData = [...apiData];
-    const findEl = newData.findIndex((el) => el.id === id);
+    const findEl = newData.findIndex((el) => el.Tagname === tag);
+    console.log("findEl", findEl);
+    if (findEl !== -1) {
+      newData[findEl].Value = check ? true : false;
 
-    newData[findEl].tag = checked ? true : false;
+      const tags_arr = [
+        {
+          TagName: tag,
+          Value: check,
+        },
+      ];
+      setApiData(newData);
+      console.log("tags_arr", tags_arr);
 
-    const tagName = "example";
-    const tags_arr = [
-      {
-        TagName: `${lineData.entName}_${tagName}`,
-        Value: 0,
-      },
-    ];
-
-    /* const response = await ApiCall({
+      /* const response = await ApiCall({
       params: write_tags({ tags_arr }),
     });
 
@@ -119,6 +110,8 @@ const Simulation = () => {
         });
       }
     } */
+    }
+    fetchData();
   };
 
   return loadingInitialData ? (
@@ -136,21 +129,22 @@ const Simulation = () => {
                   <TableHead sx={{ backgroundColor: "background.grey3" }}>
                     <TableRow>
                       <TableCell>Paro</TableCell>
-                      <TableCell>Motivo</TableCell>
+
                       <TableCell align="center">Tag</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {apiData.map((item) => (
                       <TableRow>
-                        <TableCell>{item.ReasonGrpDesc}</TableCell>
-                        <TableCell>{item.ReasonDesc}</TableCell>
+                        <TableCell>{item.name}</TableCell>
+
                         <TableCell align="center">
                           <Switch
-                            checked={item.tag}
+                            checked={item.check}
                             onChange={(e) =>
-                              handleSubmit(e.target.checked, item.id)
+                              handleSubmit(e.target.checked, item.Tagname)
                             }
+                            disabled={item.Quality !== 192}
                             color="secondary"
                           />
                         </TableCell>

@@ -590,7 +590,7 @@ const order_manager_date_filter = () => {
   };
 };
 
-const get_all_orders = ({ entId, itemId, date }) => {
+const get_all_orders = ({ entId, itemId, initDate, endDate }) => {
   return {
     dbDataSetName: "JobAllFilters_Dataset",
     dbQueryParameters: [
@@ -601,9 +601,14 @@ const get_all_orders = ({ entId, itemId, date }) => {
         value: itemId || null,
       },
       {
-        name: "fecha",
+        name: "fechaIni",
         dataType: "DATETIME",
-        value: date || null,
+        value: initDate || null,
+      },
+      {
+        name: "fechaFin",
+        dataType: "DATETIME",
+        value: endDate || null,
       },
     ],
     columns: [],

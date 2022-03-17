@@ -1266,6 +1266,15 @@ const get_data_create_order = () => {
   };
 };
 
+const get_simulation_interruptions = () => {
+  return {
+    clientName: "WebBrowser",
+    dataFrameName: "ParosAutomaticos",
+    columns: [],
+    filter: null,
+  };
+};
+
 export {
   screen_of_detail,
   tab_of_parameters,
@@ -1327,4 +1336,5 @@ export {
   tab_of_reprint,
   sections_available_sequencing,
   get_data_create_order,
+  get_simulation_interruptions,
 };

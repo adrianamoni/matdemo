@@ -7,13 +7,14 @@ import { MemoryDatabaseCall } from "../../../services/Service";
 import { get_all_orders } from "../../../services/serviceHelper";
 import { dateFormater } from "../../common/helpers/helper";
 
-export const getOrdersData = async ({ entId, itemId, date }) => {
+export const getOrdersData = async ({ entId, itemId, initDate, endDate }) => {
   let result;
   let response = await MemoryDatabaseCall({
     params: get_all_orders({
       entId,
       itemId,
-      date,
+      initDate,
+      endDate,
     }),
     url: "queryDataAsync",
   });

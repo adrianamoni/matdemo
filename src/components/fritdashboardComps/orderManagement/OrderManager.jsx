@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
   Alert,
+  Box,
   Button,
   Container,
   Divider,
@@ -10,6 +11,7 @@ import {
   LinearProgress,
   MenuItem,
   Select,
+  TextField,
   Typography,
 } from "@mui/material";
 import UseFetchMemory from "../../customHooks/UseFetchMemory";
@@ -24,13 +26,17 @@ import {
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import ConsAndProds from "./ConsAndProds";
+import { DatePicker, LocalizationProvider } from "@mui/lab";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import frLocale from "date-fns/locale/fr";
 
 const OrderManager = () => {
   const { loggedUser, setLoggedUser } = useContext(loginContext);
   const navigateTo = useNavigate();
   const [entIdSelected, setEntIdSelected] = useState();
   const [itemIdSelected, setItemIdSelected] = useState();
-  const [dateSelected, setDateSelected] = useState();
+  const [initDateSelected, setInitDateSelected] = useState();
+  const [endDateSelected, setEndDateSelected] = useState();
   const [ordersData, setOrdersData] = useState();
   const [consumptionData, setConsumptionData] = useState();
   const [productionData, setProductionData] = useState();
@@ -55,7 +61,7 @@ const OrderManager = () => {
     {
       field: "wo_id",
       headerName: `${Text({ tid: "order" })}`,
-      flex: 1,
+      flex: 2,
     },
     {
       field: "run_ent_name",
@@ -65,27 +71,27 @@ const OrderManager = () => {
     {
       field: "material",
       headerName: "Material",
-      flex: 1,
+      flex: 3,
     },
     {
       field: "customSchedStart",
       headerName: `${Text({ tid: "initSchedDate" })}`,
-      flex: 1,
+      flex: 2,
     },
     {
       field: "customSchedEnd",
       headerName: `${Text({ tid: "endSchedDate" })}`,
-      flex: 1,
+      flex: 2,
     },
     {
       field: "customActStart",
       headerName: `${Text({ tid: "initDate" })}`,
-      flex: 1,
+      flex: 2,
     },
     {
       field: "customActEnd",
       headerName: `${Text({ tid: "endDate" })}`,
-      flex: 1,
+      flex: 2,
     },
     {
       field: "qty_prod",
@@ -136,15 +142,19 @@ const OrderManager = () => {
   const applyFilters = async () => {
     setLoadingData(true);
 
-    let formattedDate;
-    if (dateSelected) {
-      formattedDate = moment(dateSelected, "DD-MM-YYYY").format();
+    let initDateFormatted, endDateFormatted;
+    if (initDateSelected) {
+      initDateFormatted = moment(initDateSelected, "DD-MM-YYYY").format();
     }
-    console.log("dateSelected", dateSelected, formattedDate);
+    if (endDateSelected) {
+      endDateFormatted = moment(endDateSelected, "DD-MM-YYYY").format();
+    }
+
     const response = await getOrdersData({
       entId: entIdSelected,
       itemId: itemIdSelected,
-      date: formattedDate,
+      initDate: initDateFormatted,
+      endDate: endDateFormatted,
     });
 
     setOrdersData(response);
@@ -217,22 +227,36 @@ const OrderManager = () => {
               </FormControl>
             </Grid>
           )}
-          {dateFilter && (
-            <Grid item xs={12} sm={12} md={4}>
-              <FormControl fullWidth>
-                <InputLabel>Fecha</InputLabel>
-                <Select
-                  value={dateSelected}
-                  label="Fecha"
-                  onChange={(e) => setDateSelected(e.target.value)}
-                >
-                  {dateFilter.map((date) => (
-                    <MenuItem value={date[""]}>{date[""]}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-          )}
+          <Grid item xs={12} sm={12} md={4}>
+            <LocalizationProvider
+              dateAdapter={AdapterDateFns}
+              locale={frLocale}
+            >
+              <DatePicker
+                label="Fecha inicio"
+                value={initDateSelected}
+                onChange={(newValue) => {
+                  setInitDateSelected(newValue);
+                }}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
+          </Grid>
+          <Grid item xs={12} sm={12} md={4}>
+            <LocalizationProvider
+              dateAdapter={AdapterDateFns}
+              locale={frLocale}
+            >
+              <DatePicker
+                label="Fecha inicio"
+                value={endDateSelected}
+                onChange={(newValue) => {
+                  setEndDateSelected(newValue);
+                }}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
+          </Grid>
         </Grid>
       </Grid>
       <Grid item xs={12} sm={12} md={2} lg={1}>
