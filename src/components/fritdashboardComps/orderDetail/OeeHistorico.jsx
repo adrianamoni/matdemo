@@ -112,7 +112,7 @@ const OEEHistorico = () => {
                 value={[OEEData ? OEEData.OEEPercentage : 0]}
                 color={colorByValue({
                   value:
-                    OEEData && OEEData.OEEPercentage
+                    OEEData && OEEData.OEEPercentage != null
                       ? OEEData.OEEPercentage
                       : 0,
                   targetOee: globalData?.lineData?.oeeTarget,
@@ -131,7 +131,9 @@ const OEEHistorico = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <Typography align="right">
-                        {OEEData?.available ? Math.round(OEEData.available) : 0}
+                        {OEEData && OEEData.available != null
+                          ? Math.round(OEEData.available)
+                          : 0}
                         %
                       </Typography>
                     </Grid>
@@ -146,7 +148,7 @@ const OEEHistorico = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <Typography align="right">
-                        {OEEData?.performance
+                        {OEEData && OEEData.performance != null
                           ? Math.round(OEEData.performance)
                           : 0}
                         %
@@ -163,7 +165,10 @@ const OEEHistorico = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <Typography align="right">
-                        {OEEData?.quality ? Math.round(OEEData.quality) : 0}%
+                        {OEEData && OEEData.quality != null
+                          ? Math.round(OEEData.quality)
+                          : 0}
+                        %
                       </Typography>
                     </Grid>
                   </Grid>
