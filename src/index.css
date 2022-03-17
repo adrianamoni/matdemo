@@ -37,9 +37,11 @@ body {
   font-family: "Ubuntu", "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /*   background-color: #f9f9f9 !important; */
+  background-color: rgb(225, 225, 225) !important;
 }
-
+/* #root {
+  background-color: #e0e0e0  !important;
+} */
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -65,16 +67,14 @@ code {
 }
 
 /* MAIN CONTAINER MAX WIDTH */
+
 #fritDashboard-main-container,
 #fritDashboard-content-container {
   max-width: none !important;
   margin: auto !important;
 }
-
-/* CENTER fritDashboard TABS */
-.MuiTabs-flexContainer {
-  /* justify-content: center !important;
-  z-index: 9999 !important; */
+#fritDashboard-content-container.MuiContainer-root {
+  padding-right: 0px !important;
 }
 
 /* DISABLED INPUT */

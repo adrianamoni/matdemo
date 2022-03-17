@@ -9,6 +9,7 @@ import {
   Badge,
   Grid,
   Button,
+  AppBar,
 } from "@mui/material";
 import TabPanel from "../../TabPanel";
 
@@ -33,12 +34,15 @@ import Parameters from "../../fritdashboardTabs/Parameters";
 
 import Quality from "../../fritdashboardTabs/Quality/Quality";
 import Documentation from "../../fritdashboardTabs/Documentation/Documentation";
-import Planification from "../../fritdashboardTabs/Planification";
+import Planification from "../../fritdashboardTabs/Planification/Planification";
+import Simulation from "../../fritdashboardTabs/Simulation/Simulation";
 import Consumptions from "./../../fritdashboardTabs/Consumption/Consumptions";
 import Productions from "./../../fritdashboardTabs/Production/Productions";
 import LineStatusButton from "./LineStatusButton";
 import { MemoryDatabaseCall } from "../../../services/Service";
 import { read_tags_teams } from "../../../services/serviceHelper";
+import ActualInterruption from "./ActualInterruption";
+import { get_actual_interruption } from "../../../services/Interruptions";
 
 const FritDashboard = () => {
   /*  let { slug } = useParams(); */
@@ -61,6 +65,10 @@ const FritDashboard = () => {
   const { entId, entName } = lineData;
   const [loadingInitialData, setLoadingInitialData] = useState(true);
   const [planificatedButton, setPlanificatedButton] = useState(undefined);
+  const [actualInterruption, setActualInterruption] = useState(undefined);
+  const [modalGenerate, setModalGenerate] = useState(false);
+  const [modalJustify, setModalJustify] = useState(false);
+  const [refreshMain, setRefreshMain] = useState(false);
 
   const ofDetailNav = [
     "General",
@@ -74,6 +82,7 @@ const FritDashboard = () => {
     Text({ tid: "interruptions" }),
     Text({ tid: "documentation" }),
     Text({ tid: "planification" }),
+    Text({ tid: "simulation" }),
   ];
 
   /* const [value, setValue] = useState(0); */
@@ -88,8 +97,24 @@ const FritDashboard = () => {
 
   useEffect(() => {
     let clearIntervalData;
-    let clearTimeoutPlanificate;
     let clearTimeoutActualInterruption;
+    let clearTimeoutPlanificate;
+    const fetchActualInterruption = async () => {
+      const response = await MemoryDatabaseCall({
+        params: get_actual_interruption(entId),
+        url: "queryDataAsync",
+      });
+
+      if (response) {
+        if (response.length > 0) {
+          setActualInterruption(response[0]);
+        }
+      }
+      clearTimeoutActualInterruption = setTimeout(
+        fetchActualInterruption,
+        4000
+      );
+    };
     const readPlanificateButtonState = async () => {
       const filter = {
         filterExpression: {
@@ -134,7 +159,7 @@ const FritDashboard = () => {
         fetchData(true);
         clearIntervalData = setInterval(fetchData, 6000);
         readPlanificateButtonState();
-
+        fetchActualInterruption();
         /* 
           fetchSpecs();
           fetchActualInterruption();
@@ -143,10 +168,18 @@ const FritDashboard = () => {
           clearIntervalAlert = setInterval(fetchAlertData, 6000); */
       }
     }
+    if (modalJustify) {
+      clearTimeout(clearTimeoutActualInterruption);
+    }
+    if (refreshMain) {
+      setRefreshMain(false);
+    }
     return () => {
       clearInterval(clearIntervalData);
+      clearTimeout(clearTimeoutPlanificate);
+      clearTimeout(clearTimeoutActualInterruption);
     };
-  }, []);
+  }, [modalJustify]);
 
   // useEffect(() => {
   //   setformWidget({});
@@ -185,9 +218,17 @@ const FritDashboard = () => {
     showLoader && setLoadingInitialData(false);
   };
 
+  const push =
+    actualInterruption &&
+    actualInterruption.reas_desc.toLowerCase().includes("paro") &&
+    actualInterruption.reas_desc.toLowerCase().includes("pendiente") &&
+    actualInterruption.reas_desc.toLowerCase().includes("justificar")
+      ? setModalJustify
+      : setModalGenerate;
   return (
-    <Container sx={{ m: "auto" }} id="fritDashboard-main-container">
-      {/* <Segment.Group
+    <>
+      <Container sx={{ m: "auto" }} id="fritDashboard-main-container">
+        {/* <Segment.Group
           stacked
           raised
           horizontal={pageSize.width > 900}
@@ -203,62 +244,100 @@ const FritDashboard = () => {
             <ActualInterruption interruption={actualInterruption} push={push} />
           )}
         </Segment.Group> */}
-      <Grid container>
-        {planificatedButton !== undefined && (
-          <Grid item xs={6}>
-            <LineStatusButton
-              planificatedButton={planificatedButton}
-              lineName={entName}
-            />
-          </Grid>
-        )}
-
-        <Grid item xs={6}>
-          <Button>b</Button>
-        </Grid>
-      </Grid>
-      <Box
-        sx={{
-          maxWidth: { xs: 350, sm: 600, md: 900, lg: 1200, xl: 1536 },
-        }}
-        justifyContent="center"
-      >
-        <Tabs
-          value={navigationData.activeTab}
-          onChange={handleChange}
-          variant="scrollable"
-          scrollButtons={true}
-          allowScrollButtonsMobile
-          aria-label="scrollable auto tabs example"
-          sx={{ m: "auto" }}
-          /* id="fritDashboard-tabs-container" */
-        >
-          {ofDetailNav.map((tab, index) => {
-            let sampleAlert, interruptionAlert;
-            if (pendingSamples.alert && index === 6) {
-              sampleAlert = true;
-            }
-            if (pendingInterruptions.alert && index === 7) {
-              interruptionAlert = true;
-            }
-
-            return (
-              <Tab
-                label={tab}
-                index={index}
-                sx={{
-                  color: (sampleAlert || interruptionAlert) && "error.main",
-                }}
+        <Grid container>
+          {planificatedButton !== undefined && (
+            <Grid item xs={12} sm={12} md={12} lg={6}>
+              <LineStatusButton
+                planificatedButton={planificatedButton}
+                lineName={entName}
               />
-            );
-          })}
-        </Tabs>
-      </Box>
+            </Grid>
+          )}
+          {actualInterruption && (
+            <Grid item xs={12} sm={12} md={12} lg={6}>
+              <ActualInterruption
+                interruption={actualInterruption}
+                push={push}
+              />
+            </Grid>
+          )}
+        </Grid>
+        <Box
+          sx={{
+            width: "100%",
 
-      <Container id="fritDashboard-content-container" fluid>
-        <Panels value={navigationData.activeTab} loading={loadingInitialData} />
+            maxWidth: { xs: 400, sm: 600, md: 900, lg: 1200, xl: 1536 },
+            /* maxWidth: { xs: 450, sm: 900, md: 1200, lg: 1536  }, */
+          }}
+          justifyContent="center"
+        >
+          {/* <AppBar
+            position="static"
+            sx={{ backgroundColor: "background.grey3" }}
+          > */}
+          <Tabs
+            value={navigationData.activeTab}
+            onChange={handleChange}
+            scrollButtons={true}
+            allowScrollButtonsMobile
+            variant="scrollable"
+            indicatorColor="secondary"
+            textColor="secondary"
+            aria-label="scrollable auto tabs example"
+            sx={{
+              m: "auto",
+              color: "text.main",
+              backgroundColor: "background.grey3",
+            }}
+            /* id="fritDashboard-tabs-container" */
+          >
+            {ofDetailNav.map((tab, index) => {
+              let sampleAlert, interruptionAlert;
+              if (pendingSamples.alert && index === 6) {
+                sampleAlert = true;
+              }
+              if (pendingInterruptions.alert && index === 7) {
+                interruptionAlert = true;
+              }
+
+              return (
+                <Tab
+                  label={tab}
+                  index={index}
+                  sx={{
+                    color: (sampleAlert || interruptionAlert) && "error.main",
+                  }}
+                />
+              );
+            })}
+          </Tabs>
+          {/* </AppBar> */}
+        </Box>
+
+        <Container
+          id="fritDashboard-content-container"
+          /* fluid */
+          sx={{
+            justifyContent: "center",
+            display: "flex",
+          }}
+        >
+          <Panels
+            value={navigationData.activeTab}
+            loading={loadingInitialData}
+          />
+        </Container>
       </Container>
-    </Container>
+      {/* <GenerateInterruptionModal
+        modalGenerate={modalGenerate}
+        setModalGenerate={setModalGenerate}
+      />
+      <JustifyInterruptionOFModal
+        interruptionSelected={actualInterruption}
+        modalJustify={modalJustify}
+        setModalJustify={setModalJustify}
+      /> */}
+    </>
   );
 };
 
@@ -294,6 +373,9 @@ const Panels = ({ value, loading }) => {
       </TabPanel>
       <TabPanel value={value} index={9}>
         <Planification />
+      </TabPanel>
+      <TabPanel value={value} index={10}>
+        <Simulation />
       </TabPanel>
     </>
   );

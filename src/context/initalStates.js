@@ -27,22 +27,22 @@ export const getStorageData = () => {
 
 export const getLoginStorageData = () => {
   let userData;
-  let userName, isLogged, permissions, sessionId;
+  let userId, isLogged, permissions, sessionId;
 
   if (sessionStorage.getItem(`UserInfo_${PROJECT_NAME}`)) {
     userData = JSON.parse(sessionStorage.getItem(`UserInfo_${PROJECT_NAME}`));
-    userName = userData.userName;
+    userId = userData.userId;
     isLogged = true;
     sessionId = userData.sessionId;
     permissions = userData.permissions;
   } else {
-    userName = "";
+    userId = "";
     isLogged = false;
     sessionId = undefined;
     permissions = [];
   }
 
-  return { userName, isLogged, sessionId, permissions };
+  return { userId, isLogged, sessionId, permissions };
 };
 
 export const getColorFromStorage = () => {
@@ -55,4 +55,16 @@ export const getColorFromStorage = () => {
   }
 
   return colorMode;
+};
+
+export const getStorageLineUsers = () => {
+  let users;
+
+  if (localStorage.getItem(`AssignedUsers_${PROJECT_NAME}`)) {
+    users = JSON.parse(localStorage.getItem(`AssignedUsers_${PROJECT_NAME}`));
+  } else {
+    users = [];
+  }
+
+  return users;
 };

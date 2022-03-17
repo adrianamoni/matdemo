@@ -1,5 +1,17 @@
 const palettes = (isDark) => {
   return {
+    ["grey-orange"]: {
+      primary: {
+        main: isDark ? "#767676" : "#767676",
+        contrastText: isDark ? "#000" : "#fff",
+        text: isDark ? "#000" : "#fff",
+      },
+      secondary: {
+        main: isDark ? "#ffbb93" : "#ff8a65",
+        contrastText: isDark ? "#000" : "#fff",
+        text: isDark ? "#000" : "#fff",
+      },
+    },
     ["green-orange"]: {
       primary: {
         main: isDark ? "#52c7b8" : "#009688",
@@ -54,3 +66,8 @@ const palettes = (isDark) => {
 export const getPalette = (palette, colorMode) => {
   return palettes(colorMode === "dark")[palette];
 };
+/* primary: {
+        main: isDark ? "#FF5E27" : "#FF5E27",
+        contrastText: isDark ? "#000" : "#fff",
+        text: isDark ? "#000" : "#fff",
+      }, */

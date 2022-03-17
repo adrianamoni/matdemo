@@ -22,6 +22,8 @@ import {
   selectedRowsIdsContext,
 } from "../../../context/ContextProvider";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
+import ConsAndProds from "./ConsAndProds";
 
 const OrderManager = () => {
   const { loggedUser, setLoggedUser } = useContext(loginContext);
@@ -68,12 +70,22 @@ const OrderManager = () => {
       flex: 1,
     },
     {
-      field: "act_start_time_local",
+      field: "customSchedStart",
+      headerName: `${Text({ tid: "initSchedDate" })}`,
+      flex: 1,
+    },
+    {
+      field: "customSchedEnd",
+      headerName: `${Text({ tid: "endSchedDate" })}`,
+      flex: 1,
+    },
+    {
+      field: "customActStart",
       headerName: `${Text({ tid: "initDate" })}`,
       flex: 1,
     },
     {
-      field: "act_finish_time_local",
+      field: "customActEnd",
       headerName: `${Text({ tid: "endDate" })}`,
       flex: 1,
     },
@@ -91,46 +103,6 @@ const OrderManager = () => {
     },
   ];
 
-  const consColumns = [
-    {
-      field: "material",
-      headerName: `${Text({ tid: "material" })}`,
-      flex: 1,
-    },
-    {
-      field: "lot_no",
-      headerName: `${Text({ tid: "lot" })}`,
-      width: 200,
-    },
-    {
-      field: "qty_cons",
-      headerName: `${Text({ tid: "quantity" })}`,
-      width: 200,
-    },
-  ];
-
-  const prodColumns = [
-    {
-      field: "material",
-      headerName: `${Text({ tid: "material" })}`,
-      flex: 1,
-    },
-    {
-      field: "lot_no",
-      headerName: `${Text({ tid: "lot" })}`,
-      width: 200,
-    },
-    {
-      field: "qty_prod",
-      headerName: `${Text({ tid: "quantity" })}`,
-      width: 200,
-    },
-    {
-      field: "reas_desc",
-      headerName: `${Text({ tid: "reason" })}`,
-      width: 200,
-    },
-  ];
   useEffect(() => {
     return () => {
       setOrdersData([]);
@@ -165,10 +137,16 @@ const OrderManager = () => {
 
   const applyFilters = async () => {
     setLoadingData(true);
+
+    let formattedDate;
+    if (dateSelected) {
+      formattedDate = moment(dateSelected, "DD-MM-YYYY").format();
+    }
+    console.log("dateSelected", dateSelected, formattedDate);
     const response = await getOrdersData({
       entId: entIdSelected,
       itemId: itemIdSelected,
-      date: dateSelected,
+      date: formattedDate,
     });
 
     setOrdersData(response);
@@ -193,9 +171,13 @@ const OrderManager = () => {
 
     if (consData) {
       setConsumptionData(consData);
+    } else {
+      setConsumptionData(null);
     }
     if (prodData) {
       setProductionData(prodData);
+    } else {
+      setProductionData(null);
     }
 
     setLoadingFromSelected(false);
@@ -203,7 +185,7 @@ const OrderManager = () => {
 
   return (
     <Grid container spacing={2} alignItems="center">
-      <Grid item xs={12} sm={12} md={11}>
+      <Grid item xs={12} sm={12} md={10} lg={11}>
         <Grid container spacing={2}>
           {entFilter && (
             <Grid item xs={12} sm={12} md={4}>
@@ -255,7 +237,7 @@ const OrderManager = () => {
           )}
         </Grid>
       </Grid>
-      <Grid item xs={12} sm={12} md={1}>
+      <Grid item xs={12} sm={12} md={2} lg={1}>
         <Button fullWidth variant="contained" onClick={() => applyFilters()}>
           Aplicar
         </Button>
@@ -265,71 +247,27 @@ const OrderManager = () => {
         <Grid item xs={12}>
           <LinearProgress variant="indeterminate" />
         </Grid>
-      ) : (
-        ordersData && (
-          <Grid item xs={12}>
-            <TableWidget
-              data={ordersData}
-              columns={orderColumns}
-              tableName="order-management"
-            />
-          </Grid>
-        )
-      )}
-      {loadingFromSelected && (
+      ) : ordersData && ordersData.length > 0 ? (
         <Grid item xs={12}>
-          <LinearProgress variant="indeterminate" />
-        </Grid>
-      )}
-
-      {consumptionData ? (
-        <Grid item xs={12} sm={12} md={12} lg={6}>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="h6">
-                {Text({ tid: "consumptions" })}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <TableWidget
-                data={consumptionData}
-                columns={consColumns}
-                tableName="cons-order-management"
-              />
-            </Grid>
-          </Grid>
+          <TableWidget
+            data={ordersData}
+            columns={orderColumns}
+            tableName="order-management"
+          />
         </Grid>
       ) : (
-        selectedRows.length > 0 && (
+        <Grid item xs={12}>
           <Alert variant="outlined" severity="info">
-            No hay consumos en esta orden
+            No hay órdenes que coincidan con los filtros aplicados
           </Alert>
-        )
-      )}
-      {productionData ? (
-        <Grid item xs={12} sm={12} md={12} lg={6}>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="h6">
-                {Text({ tid: "productions" })}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <TableWidget
-                data={productionData}
-                columns={prodColumns}
-                tableName="prod-order-management"
-              />
-            </Grid>
-          </Grid>
         </Grid>
-      ) : (
-        selectedRows.length > 0 && (
-          <Alert variant="outlined" severity="info">
-            No hay producciones en esta orden
-          </Alert>
-        )
       )}
+      <ConsAndProds
+        loading={loadingFromSelected}
+        consumptionData={consumptionData}
+        selectedRows={selectedRows}
+        productionData={productionData}
+      />
     </Grid>
   );
 };

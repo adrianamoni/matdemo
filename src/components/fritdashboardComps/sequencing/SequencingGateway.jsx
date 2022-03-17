@@ -3,6 +3,7 @@ import {
   Alert,
   Button,
   ButtonGroup,
+  Container,
   FormControl,
   Grid,
   InputLabel,
@@ -33,9 +34,11 @@ import ContentPasteGoIcon from "@mui/icons-material/ContentPasteGo";
 import TimelineView from "./TimelineView";
 import SeqTable from "./SeqTable";
 import SplitModal from "./SplitModal";
+import useWindowSize from "../../customHooks/UseWindowsSize";
 
 const SequencingGateway = () => {
   const navigateTo = useNavigate();
+  const { width } = useWindowSize();
   const { loggedUser, setLoggedUser } = useContext(loginContext);
   const [loadingInitialData, setLoadingInitialData] = useState(false);
   const [userWritePermissions, setUserWritePermissions] = useState(undefined);
@@ -336,144 +339,164 @@ const SequencingGateway = () => {
   console.log("linesDropdown", linesDropdown);
   return (
     <>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={12} md={4}>
-              {operations && (
-                <FormControl fullWidth>
-                  <InputLabel>Operación</InputLabel>
-                  <Select
-                    label="Operación"
-                    onChange={(e) => handleOperationSelect(e.target.value)}
-                    value={operationDropdown}
-                  >
-                    {operations.map((op) => (
-                      <MenuItem value={op.value}>{op.text}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              )}
-            </Grid>
-            <Grid item xs={12} sm={12} md={4}>
-              {linesDropdown && (
-                <FormControl fullWidth>
-                  <InputLabel>Líneas</InputLabel>
-                  <Select
-                    label="Líneas"
-                    onChange={(e) => handleLineSelection(e.target.value)}
-                    value={selectedLine && selectedLine.id}
-                    disabled={!operationDropdown}
-                  >
-                    {linesDropdown.map((line) => (
-                      <MenuItem value={line.value}>{line.text}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              )}
-            </Grid>
-          </Grid>
-        </Grid>
-
-        {loadingInitialData && (
+      <Container maxWidth="xl">
+        <Grid container spacing={2}>
           <Grid item xs={12}>
-            <LinearProgress variant="indeterminate" />
-          </Grid>
-        )}
-        {notificationModal && notificationModal.status && (
-          <Grid item xs={12}>
-            <Alert variant="outlined" severity="info">
-              {notificationModal.msg}
-            </Alert>
-          </Grid>
-        )}
-        {apiData &&
-          apiData.length > 0 &&
-          apiData[0].ordenes &&
-          apiData[0].ordenes.length > 0 &&
-          teams && (
-            <>
-              <Grid item xs={12}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={12} md={4} textAlign="left">
-                    <ButtonGroup>
-                      <Button onClick={() => handleTimelineDisplayHours(8)}>
-                        8hrs
-                      </Button>
-                      <Button onClick={() => handleTimelineDisplayHours(12)}>
-                        12hrs
-                      </Button>
-                      <Button onClick={() => handleTimelineDisplayHours(24)}>
-                        24hrs
-                      </Button>
-                    </ButtonGroup>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={8} textAlign="right">
-                    <ButtonGroup>
-                      <LoadingButton variant="outlined" disabled>
-                        <InsertDriveFileIcon />
-                        Generar Necesidades
-                      </LoadingButton>
-                      <LoadingButton
-                        variant="outlined"
-                        onClick={() => setConfirmRefresh(true)}
-                      >
-                        <RefreshIcon />
-                        Actualizar
-                      </LoadingButton>
-                      <LoadingButton
-                        variant="outlined"
-                        onClick={handleSave}
-                        disabled={!userWritePermissions || !isModified}
-                        loading={loadingSave}
-                      >
-                        <SaveIcon />
-                        Guardar
-                      </LoadingButton>
-                      <LoadingButton
-                        variant="outlined"
-                        onClick={() => setConfirmLiberate(true)}
-                        loading={loadingLiberate}
-                        disabled={!userWritePermissions}
-                      >
-                        <ContentPasteGoIcon />
-                        Liberar
-                      </LoadingButton>
-                    </ButtonGroup>
-                  </Grid>
-                </Grid>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={12} md={4}>
+                {operations && (
+                  <FormControl fullWidth>
+                    <InputLabel>Operación</InputLabel>
+                    <Select
+                      label="Operación"
+                      onChange={(e) => handleOperationSelect(e.target.value)}
+                      value={operationDropdown}
+                    >
+                      {operations.map((op) => (
+                        <MenuItem value={op.value}>{op.text}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                )}
               </Grid>
-              {!loadingTimeline && (
+              <Grid item xs={12} sm={12} md={4}>
+                {linesDropdown && (
+                  <FormControl fullWidth>
+                    <InputLabel>Líneas</InputLabel>
+                    <Select
+                      label="Líneas"
+                      onChange={(e) => handleLineSelection(e.target.value)}
+                      value={selectedLine && selectedLine.id}
+                      disabled={!operationDropdown}
+                    >
+                      {linesDropdown.map((line) => (
+                        <MenuItem value={line.value}>{line.text}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                )}
+              </Grid>
+            </Grid>
+          </Grid>
+
+          {loadingInitialData && (
+            <Grid item xs={12}>
+              <LinearProgress variant="indeterminate" />
+            </Grid>
+          )}
+          {notificationModal && notificationModal.status && (
+            <Grid item xs={12}>
+              <Alert variant="outlined" severity="info">
+                {notificationModal.msg}
+              </Alert>
+            </Grid>
+          )}
+          {apiData &&
+            apiData.length > 0 &&
+            apiData[0].ordenes &&
+            apiData[0].ordenes.length > 0 &&
+            teams && (
+              <>
                 <Grid item xs={12}>
-                  <TimelineView
-                    apiData={apiData[0]}
-                    teams={teams}
-                    timelineHours={timelineHours}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={12} md={12} lg={3} textAlign="left">
+                      <ButtonGroup fullWidth>
+                        <Button
+                          variant={
+                            timelineHours === 8 ? "contained" : "outlined"
+                          }
+                          onClick={() => handleTimelineDisplayHours(8)}
+                        >
+                          8hrs
+                        </Button>
+                        <Button
+                          variant={
+                            timelineHours === 12 ? "contained" : "outlined"
+                          }
+                          onClick={() => handleTimelineDisplayHours(12)}
+                        >
+                          12hrs
+                        </Button>
+                        <Button
+                          variant={
+                            timelineHours === 24 ? "contained" : "outlined"
+                          }
+                          onClick={() => handleTimelineDisplayHours(24)}
+                        >
+                          24hrs
+                        </Button>
+                      </ButtonGroup>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={12} lg={9} textAlign="right">
+                      <ButtonGroup
+                        fullWidth
+                        orientation={width < 680 ? "vertical" : "horizontal"}
+                      >
+                        <LoadingButton variant="contained" disabled>
+                          <InsertDriveFileIcon />
+                          Generar Necesidades
+                        </LoadingButton>
+                        <LoadingButton
+                          variant="contained"
+                          onClick={() => setConfirmRefresh(true)}
+                        >
+                          <RefreshIcon />
+                          Actualizar
+                        </LoadingButton>
+                        <LoadingButton
+                          variant="contained"
+                          onClick={handleSave}
+                          disabled={!userWritePermissions || !isModified}
+                          loading={loadingSave}
+                        >
+                          <SaveIcon />
+                          Guardar
+                        </LoadingButton>
+                        <LoadingButton
+                          variant="contained"
+                          onClick={() => setConfirmLiberate(true)}
+                          loading={loadingLiberate}
+                          disabled={!userWritePermissions}
+                        >
+                          <ContentPasteGoIcon />
+                          Liberar
+                        </LoadingButton>
+                      </ButtonGroup>
+                    </Grid>
+                  </Grid>
                 </Grid>
-              )}
-              {selectedOperation && (
-                <Grid item xs={12}>
-                  <Paper elevation={16} sx={{ overflowX: "auto" }}>
-                    <SeqTable
+
+                {!loadingTimeline && (
+                  <Grid item xs={12}>
+                    <TimelineView
                       apiData={apiData[0]}
-                      setApiData={setApiData}
-                      selectedOperation={selectedOperation}
-                      splitOF={splitOF}
+                      teams={teams}
+                      timelineHours={timelineHours}
                       selected={selected}
                       setSelected={setSelected}
-                      lines={lines}
-                      selectedLine={selectedLine}
                     />
-                  </Paper>
-                </Grid>
-              )}
-            </>
-          )}
-      </Grid>
-
+                  </Grid>
+                )}
+                {selectedOperation && (
+                  <Grid item xs={12}>
+                    <Paper elevation={16} sx={{ overflowX: "auto" }}>
+                      <SeqTable
+                        apiData={apiData[0]}
+                        setApiData={setApiData}
+                        selectedOperation={selectedOperation}
+                        splitOF={splitOF}
+                        selected={selected}
+                        setSelected={setSelected}
+                        lines={lines}
+                        selectedLine={selectedLine}
+                      />
+                    </Paper>
+                  </Grid>
+                )}
+              </>
+            )}
+        </Grid>
+      </Container>
       <SplitModal
         open={openSplitModal}
         close={setOpenSplitModal}

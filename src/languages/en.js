@@ -101,9 +101,17 @@ const en = {
   notFound: "Page not found",
   redirecting: "Redirecting",
   initDate: "Init Date",
+  initSchedDate: "Init Scheduled Date",
+  endSchedDate: "End Scheduled Date",
   quantityProduced: "Quantity Produced",
   quantityRequired: "Quantity Required",
   splitOrder: "Split Order",
+  startOrder: "Start Order",
+  createOrder: "Create Order",
+  orderDetail: "Order Detail",
+  orderManagement: "Order Management",
+  interruptionManagement: "Interruption Management",
+  simulation: "Simulation",
 };
 
 export default en;

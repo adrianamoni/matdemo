@@ -7,10 +7,12 @@ import {
   LocalizationProvider,
   DesktopDatePicker,
   MobileDatePicker,
+  MobileDateTimePicker,
+  DesktopDateTimePicker,
 } from "@mui/lab";
 import TextField from "@mui/material/TextField";
 
-const DatePickerWidget = ({ formId, id, label, defaultDate }) => {
+const DatePickerWidget = ({ formId, id, label, defaultDate, type }) => {
   const { formWidget, setformWidget } = useContext(formContext);
   const { width } = useWindowSize();
 
@@ -33,34 +35,62 @@ const DatePickerWidget = ({ formId, id, label, defaultDate }) => {
       {width < 1024 ? (
         <>
           <InputLabel>{label}</InputLabel>
-          <MobileDatePicker
-            inputFormat="dd/MM/yyyy"
-            value={formWidget?.[formId]?.[id]}
-            onChange={handleChange}
-            renderInput={(params) => (
-              <TextField
-                id={`${formId}-selectInput-${id}-label`}
-                fullWidth
-                {...params}
-              />
-            )}
-          />
+          {type !== "datetime" ? (
+            <MobileDatePicker
+              inputFormat="dd/MM/yyyy"
+              value={formWidget?.[formId]?.[id]}
+              onChange={handleChange}
+              renderInput={(params) => (
+                <TextField
+                  id={`${formId}-selectInput-${id}-label`}
+                  fullWidth
+                  {...params}
+                />
+              )}
+            />
+          ) : (
+            <MobileDateTimePicker
+              value={formWidget?.[formId]?.[id]}
+              onChange={handleChange}
+              renderInput={(params) => (
+                <TextField
+                  id={`${formId}-selectInput-${id}-label`}
+                  fullWidth
+                  {...params}
+                />
+              )}
+            />
+          )}
         </>
       ) : (
         <>
           <InputLabel>{label}</InputLabel>
-          <DesktopDatePicker
-            inputFormat="dd/MM/yyyy"
-            value={formWidget?.[formId]?.[id]}
-            onChange={handleChange}
-            renderInput={(params) => (
-              <TextField
-                id={`${formId}-selectInput-${id}-label`}
-                fullWidth
-                {...params}
-              />
-            )}
-          />
+          {type !== "datetime" ? (
+            <DesktopDatePicker
+              inputFormat="dd/MM/yyyy"
+              value={formWidget?.[formId]?.[id]}
+              onChange={handleChange}
+              renderInput={(params) => (
+                <TextField
+                  id={`${formId}-selectInput-${id}-label`}
+                  fullWidth
+                  {...params}
+                />
+              )}
+            />
+          ) : (
+            <DesktopDateTimePicker
+              value={formWidget?.[formId]?.[id]}
+              onChange={handleChange}
+              renderInput={(params) => (
+                <TextField
+                  id={`${formId}-selectInput-${id}-label`}
+                  fullWidth
+                  {...params}
+                />
+              )}
+            />
+          )}
         </>
       )}
     </LocalizationProvider>

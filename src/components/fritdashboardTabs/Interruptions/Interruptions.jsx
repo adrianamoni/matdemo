@@ -165,7 +165,11 @@ const Interruptions = () => {
             }}
           >
             {onlyPendings ? <Text tid="pendings" /> : <Text tid="historical" />}
-            <span>&nbsp;&nbsp;</span>({tableData && tableData.length})
+            <span>&nbsp;&nbsp;</span>(
+            {onlyPendings
+              ? pendingInterruptions.data.length
+              : tableData && tableData.length}
+            )
           </Button>
         </Grid>
         {/* Interruptions Table */}

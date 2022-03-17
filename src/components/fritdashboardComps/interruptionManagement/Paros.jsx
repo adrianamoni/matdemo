@@ -1,4 +1,5 @@
 import { Card, Grid, Typography } from "@mui/material";
+import { grey } from "@mui/material/colors";
 import React, { useContext } from "react";
 import {
   globalDataContext,
@@ -21,7 +22,13 @@ const Paros = ({ alert, data }) => {
 
   return (
     <Card
-      sx={{ p: 2, height: "100%", cursor: "pointer", ...styledAlert }}
+      sx={{
+        p: 2,
+        height: "100%",
+        backgroundColor: "background.grey4",
+        cursor: "pointer",
+        ...styledAlert,
+      }}
       onClick={() => setNavigationData({ ...navigationData, activeTab: 7 })}
     >
       <Grid container sx={{ height: "100%" }}>

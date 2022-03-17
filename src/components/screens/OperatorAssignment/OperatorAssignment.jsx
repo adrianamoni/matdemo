@@ -54,15 +54,15 @@ const OperatorAssignment = ({ line, modal, close }) => {
   //fetch data
   const fetchData = async () => {
     setLoading(true);
-    const localTerminal = terminal
+    /*     const localTerminal = terminal
       ? terminal
-      : localStorage.getItem("FritTerminal");
+      : localStorage.getItem("FritTerminal"); */
 
     let response = await MemoryDatabaseCall({
       params: line_assignment({
         name: "terminal",
         dataType: "String",
-        value: localTerminal === "asignacion" ? null : localTerminal,
+        value: "1" /* localTerminal === "asignacion" ? null : localTerminal */,
       }),
       url: "queryDataAsync",
     });

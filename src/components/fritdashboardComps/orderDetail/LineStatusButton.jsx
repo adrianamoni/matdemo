@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import { ApiCall } from "../../../services/Service";
+import { write_tags } from "../../../services/serviceHelper";
 
 const LineStatusButton = ({ lineName, planificatedButton }) => {
   const [loading, setLoading] = useState(false);
@@ -57,14 +59,16 @@ const StateButton = ({ state, handleClick, loading /*  disabled */ }) => {
   return (
     <LoadingButton
       fullWidth
-      style={{
-        backgroundColor: state ? "#31c46e" : "crimson",
-        color: "white",
+      sx={{
+        backgroundColor: state ? "success.main" : "error.main",
+        color: state ? "#111" : "eee",
       }}
       onClick={() => handleClick(state ? false : true)}
       loading={loading}
     >
-      {state ? "MÁQUINA ACTIVA" : "MÁQUINA INACTIVA"}
+      <Typography variant="h6">
+        {state ? "MÁQUINA ACTIVA" : "MÁQUINA INACTIVA"}
+      </Typography>
     </LoadingButton>
   );
 };
