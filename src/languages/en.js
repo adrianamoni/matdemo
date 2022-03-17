@@ -18,6 +18,7 @@ const en = {
   endDate: "End date",
   entityBatch: "Ent. Batch",
   expiration: "Expiration",
+  files: "Files",
   filter: "Filter",
   fritDashboard: "Frit Dashboard",
   deassignment: "Deassignment",

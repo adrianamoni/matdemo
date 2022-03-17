@@ -18,6 +18,7 @@ const es = {
   endDate: "Fecha fin",
   entityBatch: "Ent. Lote",
   expiration: "Caducidad",
+  files: "Ficheros",
   filter: "Filtrar",
   fritDashboard: "Tablero Frit",
   deassignment: "Desasignación",
