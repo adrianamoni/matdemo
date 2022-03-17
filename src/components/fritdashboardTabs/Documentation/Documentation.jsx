@@ -45,9 +45,9 @@ const IframeComp = ({ url }) => {
 };
 
 const Documentation = () => {
-  const getEnvVariables = window.POINTING_IPS;
   const DEVELOPMENT_IP = "192.168.9.128";
-  const production_uri = ""; //`http://${getEnvVariables.documentacion}/documentacion/`; TODO
+  const PRODUCTION_IP = "192.168.9.128";
+  const production_uri = `http://${PRODUCTION_IP}/documentacion/`;
   const development_uri = `http://${DEVELOPMENT_IP}/documentacion/`;
 
   //useContext
@@ -148,7 +148,7 @@ const Documentation = () => {
       {tableData?.length > 0 ? (
         <>
           <Grid container xs={12} sx={{ mt: 2 }}>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={12} lg={12} xl={4}>
               <Typography variant="h6" component="h6">
                 <Text tid={"files"} />
               </Typography>
@@ -159,37 +159,30 @@ const Documentation = () => {
                   justifyContent="center"
                   alignItems="flex-start"
                   spacing={2}
+                  sx={{ margin: "10px" }}
                 >
                   <ThemeProvider theme={theme}>
-                    <Stack
-                      direction="row"
-                      justifyContent="space-between"
-                      alignItems="flex-start"
-                      spacing={12}
-                    >
-                      <Button
-                        variant="contained"
-                        color="neutral"
-                        onClick={() =>
-                          setDisplayPdfViewer({
-                            name: el.NombreFichero,
-                            url: `${
-                              process.env.NODE_ENV === "production"
-                                ? production_uri
-                                : development_uri
-                            }${el.NombreFichero}#navpanes=0`,
-                          })
-                        }
-                        sx={{ marginBottom: "10px", padding: "10px" }}
-                      >
-                        {el.Descripcion}
-                      </Button>
-                      <Stack
-                        direction="row"
-                        justifyContent="space-between"
-                        alignItems="flex-start"
-                        spacing={2}
-                      >
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} md={12} lg={12} xl={8}>
+                        <Button
+                          variant="contained"
+                          color="neutral"
+                          onClick={() =>
+                            setDisplayPdfViewer({
+                              name: el.NombreFichero,
+                              url: `${
+                                process.env.NODE_ENV === "production"
+                                  ? production_uri
+                                  : development_uri
+                              }${el.NombreFichero}#navpanes=0`,
+                            })
+                          }
+                          sx={{ marginBottom: "10px", padding: "10px" }}
+                        >
+                          {el.Descripcion}
+                        </Button>
+                      </Grid>
+                      <Grid item xs={6} md={6} lg={6} xl={2}>
                         <Button
                           variant="contained"
                           onClick={() =>
@@ -206,6 +199,8 @@ const Documentation = () => {
                         >
                           <FileOpenIcon color="primary" />
                         </Button>
+                      </Grid>
+                      <Grid item xs={6} md={6} lg={6} xl={2}>
                         <Button
                           variant="contained"
                           href={`${
@@ -218,13 +213,13 @@ const Documentation = () => {
                         >
                           <ScreenShareIcon color="action" />
                         </Button>
-                      </Stack>
-                    </Stack>
+                      </Grid>
+                    </Grid>
                   </ThemeProvider>
                 </Stack>
               ))}
             </Grid>
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={12} lg={12} xl={8}>
               <IframeComp url={displayPdfViewer.url} />
             </Grid>
           </Grid>
