@@ -459,6 +459,7 @@ const tab_consumptions_consume = ({
   itemId,
   lotNo,
   subLotNo,
+  lotNr,
 }) => {
   return {
     ExecutionType: 1,
@@ -473,6 +474,7 @@ const tab_consumptions_consume = ({
       itemId,
       lotNo,
       subLotNo,
+      lotNr,
     },
   };
 };
