@@ -29,6 +29,7 @@ import {
 } from "../../../services/Interruptions";
 import { write_tags } from "../../../services/serviceHelper";
 import { createNotification } from "./../../alerts/NotificationAlert";
+import SelectChipWidget from "./../../../widgets/forms/SelectChipWidget";
 
 const InterruptionsModal = ({
   showModal,
@@ -65,7 +66,6 @@ const InterruptionsModal = ({
   const [loading, setLoading] = useState(false);
   const [selectedReason, setSelectedReason] = useState(null);
   const [expandedNodes, setExpandedNodes] = useState([]);
-  const [selectedLine, setSelectedLine] = useState(false);
   //TREEVIEW DATA
   useEffect(() => {
     if (showModal) {
@@ -260,7 +260,9 @@ const InterruptionsModal = ({
     setLoading(true);
 
     const paramObj = {
-      lineaId: fromInterruptionsManager ? selectedLine : entId,
+      lineaId: fromInterruptionsManager
+        ? formWidget.createInterruptionForm.line
+        : entId,
       reasCd: selectedReason.reas_cd,
       comments: formWidget?.createInterruptionForm?.comment
         ? formWidget.createInterruptionForm.comment
@@ -308,7 +310,7 @@ const InterruptionsModal = ({
       closeModal();
     }
   };
-
+  console.log("lines", lines);
   const createInterruptionModalContent = (
     <>
       <Grid container spacing={2}>
@@ -323,20 +325,16 @@ const InterruptionsModal = ({
           <Grid container>
             {fromInterruptionsManager && (
               <Grid item xs={12}>
-                <FormControl fullWidth>
-                  <InputLabel>Línea</InputLabel>
-                  <Select
-                    value={selectedLine}
-                    label="Línea"
-                    onChange={(e) => setSelectedLine(e.target.value)}
-                  >
-                    {console.log("lines", lines)}
-                    {lines &&
-                      lines.map((ent) => (
-                        <MenuItem value={ent.value}>{ent.text}</MenuItem>
-                      ))}
-                  </Select>
-                </FormControl>
+                <SelectChipWidget
+                  formId={"createInterruptionForm"}
+                  id={"line"}
+                  label={<Text tid={"line"} />}
+                  multiple={false}
+                  options={lines}
+                  required={true}
+                  placeholder={""}
+                  disabled={false}
+                />
               </Grid>
             )}
 

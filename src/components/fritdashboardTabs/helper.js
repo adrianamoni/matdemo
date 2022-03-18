@@ -30,27 +30,38 @@ export const emptyContainerRequest = async ({ lineaName, woId, operId }) => {
   }
 };
 
-export const provisionRequestRequest = async ({ lineaName, woId, operId }) => {
+export const provisionRequestRequest = async ({
+  lineaName,
+  woId,
+  operId,
+  items,
+}) => {
   const response = await ApiCall({
     params: tab_materials_provisioning_request({
       lineaName,
       woId,
       operId,
+      items: items,
     }),
   });
 
-  if (response.responseError) {
-    createNotification({
-      status: "error",
-      code: response.responseError,
-      msg: response.responseMsg,
-      hide: response.responseHide,
-    });
-  } else {
-    createNotification({
-      status: "success",
-      msg: "¡Contenedor solicitado correctamente!¡",
-      hide: response.responseHide,
-    });
-  }
+  // if (response.responseError) {
+  //   createNotification({
+  //     status: "error",
+  //     code: response.responseError,
+  //     msg: response.responseMsg,
+  //     hide: response.responseHide,
+  //   });
+  // } else {
+  //   createNotification({
+  //     status: "success",
+  //     msg: "¡Contenedor solicitado correctamente!¡",
+  //     hide: response.responseHide,
+  //   });
+  // }
+  createNotification({
+    status: "success",
+    msg: "¡Contenedor solicitado correctamente!",
+    hide: response.responseHide,
+  });
 };

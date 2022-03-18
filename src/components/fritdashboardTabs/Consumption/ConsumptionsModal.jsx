@@ -58,6 +58,7 @@ const ConsumptionsModal = ({
 
   // CONSUMPTION CORRECTION
   const handleSubmitConsumptionCorrection = async () => {
+    console.log("selectedRows[0]", selectedRows[0]);
     const result = {
       woId: woId,
       operId: operId,
@@ -66,7 +67,8 @@ const ConsumptionsModal = ({
       fromEntId: selectedRows[0].from_ent_id,
       itemId: selectedRows[0].item_id,
       lotNo: selectedRows[0].lot_no,
-      sublotNo: selectedRows[0].sublot_no,
+      sublotNo:
+        selectedRows[0].sublot_no != null ? selectedRows[0].sublot_no : "",
       quantity: parseFloat(formWidget.consumptionCorrectionForm.quantity),
       rowId: selectedRows[0].row_id,
     };
@@ -211,7 +213,8 @@ const ConsumptionsModal = ({
       quantity: parseFloat(quantity),
       itemId: apiEnrollment.ItemId,
       lotNo: apiEnrollment.LotNo,
-      subLotNo: apiEnrollment.matricula,
+      subLotNo: apiEnrollment.SubLotNo != null ? apiEnrollment.SubLotNo : "",
+      lotNr: apiEnrollment.LotNo,
     };
     setLoading(true);
     const response = await ApiCall({
