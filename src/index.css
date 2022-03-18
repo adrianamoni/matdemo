@@ -126,6 +126,7 @@ code {
   border-radius: 0px !important;
 }
 
+/* TreeView styles */
 .MuiTreeItem-label,
 .MuiTreeItem-content.MuiTreeItem-content.Mui-expanded,
 .MuiTreeItem-content.MuiTreeItem-content.Mui-collapsed,

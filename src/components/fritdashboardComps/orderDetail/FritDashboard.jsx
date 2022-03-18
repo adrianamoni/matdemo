@@ -44,8 +44,10 @@ import { read_tags_teams } from "../../../services/serviceHelper";
 import ActualInterruption from "./ActualInterruption";
 import { get_actual_interruption } from "../../../services/Interruptions";
 import BadgeSvg from "../../svg/BadgeSvg";
+import useWindowSize from "./../../customHooks/UseWindowsSize";
 
 const FritDashboard = () => {
+  const { width } = useWindowSize();
   /*  let { slug } = useParams(); */
   /*  const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME; */
   const { globalData, setGlobalData } = useContext(globalDataContext);
@@ -173,7 +175,8 @@ const FritDashboard = () => {
             onChange={handleChange}
             scrollButtons={true}
             allowScrollButtonsMobile
-            variant="scrollable"
+            //variant="scrollable"
+            variant={width > 1640 ? "fullWidth" : "scrollable"}
             indicatorColor="secondary"
             textColor="secondary"
             aria-label="scrollable auto tabs example"
