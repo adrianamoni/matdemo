@@ -47,7 +47,7 @@ const LogoutModal = ({ logoutModal, setLogoutModal }) => {
     } else {
       createNotification({
         status: "success",
-        msg: "¡Se ha cerrado la sesión!", //TODO
+        msg: Text({ tid: "logoutSuccess" }),
         hide: response.responseHide,
       });
     }

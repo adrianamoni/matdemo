@@ -63,7 +63,7 @@ const InfoOE = () => {
       operId: productionData.oper_id,
       seqNo: productionData.seq_no,
     });
-    setLoadingPlay(false);
+    setTimeout(() => setLoadingPlay(false), 1000);
   };
 
   const handlePause = async () => {
@@ -74,7 +74,7 @@ const InfoOE = () => {
       operId: productionData.oper_id,
       seqNo: productionData.seq_no,
     });
-    setLoadingPause(false);
+    setTimeout(() => setLoadingPause(false), 1000);
   };
 
   const handleStop = async () => {
@@ -86,7 +86,7 @@ const InfoOE = () => {
       operId: productionData.oper_id,
       seqNo: productionData.seq_no,
     });
-    setLoadingStop(false);
+    setTimeout(() => setLoadingStop(false), 1000);
   };
 
   const handleConfirmStop = async () => {

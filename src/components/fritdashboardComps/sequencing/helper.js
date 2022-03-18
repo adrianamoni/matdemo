@@ -8,6 +8,7 @@ import {
 } from "../../../services/serviceHelper";
 import { createNotification } from "../../alerts/NotificationAlert";
 import moment from "moment";
+import Text from "../../../languages/Text";
 export const getSections = async () => {
   let tempOp;
   const response = await MemoryDatabaseCall({
@@ -430,7 +431,7 @@ export const saveOrders = async (array) => {
   } else {
     createNotification({
       status: "success",
-      msg: `¡Órdenes guardadas correctamente!`,
+      msg: Text({ tid: "ordersSavedSuccessfully" }),
       hide: response.responseHide,
     });
     return true;

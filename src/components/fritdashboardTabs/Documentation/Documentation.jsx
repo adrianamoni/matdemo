@@ -129,7 +129,7 @@ const Documentation = () => {
     tableData && tableData.length < 1
       ? setUserAlert({
           show: true,
-          message: "No hay documentación disponible", //TODO
+          message: Text({ tid: "noDocumentationAvailable" }),
           severity: "info",
         })
       : setUserAlert({

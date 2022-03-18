@@ -60,7 +60,7 @@ const Interruptions = () => {
   const [loading, setLoading] = useState(false);
   const [userAlert, setUserAlert] = useState({
     show: true,
-    message: "No hay paros actualmente", //TODO
+    message: Text({ tid: "noInterruptions" }), //TODO
     severity: "info",
   });
   const [showModal, setShowModal] = useState(false);

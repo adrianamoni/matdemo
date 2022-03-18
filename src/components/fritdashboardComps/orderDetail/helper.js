@@ -7,6 +7,7 @@ import moment from "moment";
 import _ from "lodash";
 import { pending_interruptions } from "../../../services/Interruptions";
 import uuid from "react-uuid";
+import Text from "../../../languages/Text";
 
 export const getOrderDetails = async ({ order }) => {
   let error;
@@ -424,4 +425,22 @@ export const processOrderTimeData = ({ orderTime, duracionJob }) => {
   let tempRemainingTime = Math.ceil(res) + " min";
 
   return { value: res, text: tempRemainingTime };
+};
+
+export const getCleaningText = (cleanState) => {
+  let text;
+
+  if (cleanState || cleanState === "") {
+    if (cleanState === "" || cleanState === "S") {
+      text = Text({ tid: "dryCleaning" });
+    } else if (cleanState === "P") {
+      text = Text({ tid: "cleaningWithProduct" });
+    } else if (cleanState === "A") {
+      text = Text({ tid: "cleaningWithWater" });
+    }
+  } else {
+    text = "-";
+  }
+
+  return text;
 };

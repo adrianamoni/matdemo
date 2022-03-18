@@ -17,6 +17,7 @@ import { createNotification } from "../../alerts/NotificationAlert";
 import { ApiCall } from "../../../services/Service";
 import UseFetchMemory from "../../customHooks/UseFetchMemory";
 import useWindowSize from "../../customHooks/UseWindowsSize";
+import Text from "../../../languages/Text";
 const ModalCreateOrder = ({ open, close, setRefreshMain }) => {
   const { width } = useWindowSize();
   const [material, setMaterial] = useState("");
@@ -53,7 +54,7 @@ const ModalCreateOrder = ({ open, close, setRefreshMain }) => {
       } else {
         createNotification({
           status: "success",
-          msg: "¡Orden creada con éxito!",
+          msg: Text({ tid: "orderSuccessfullyCreated" }),
           hide: 1,
         });
       }
@@ -109,7 +110,7 @@ const ModalCreateOrder = ({ open, close, setRefreshMain }) => {
 
               <TextField
                 id="outlined-number"
-                label="Cantidad a fabricar"
+                label={Text({ tid: "qtyToManufacture" })}
                 type="number"
                 onChange={(e) => setCantidad(e.target.value)}
                 InputLabelProps={{
@@ -124,7 +125,7 @@ const ModalCreateOrder = ({ open, close, setRefreshMain }) => {
                 disabled={!material || !cantidad || loadingSubmit}
                 loading={loadingSubmit}
               >
-                Crear
+                {Text({ tid: "create" })}
               </LoadingButton>
             </div>
           </>

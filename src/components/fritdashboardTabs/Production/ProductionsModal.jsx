@@ -80,7 +80,7 @@ const ProductionsModal = ({
       setLoading(false);
       createNotification({
         status: "success",
-        msg: "¡Producción manual realizada correctemente!", //TODO
+        msg: Text({ tid: "manualProductionSuccess" }),
         hide: 1,
       });
       closeModal();
@@ -160,7 +160,7 @@ const ProductionsModal = ({
       setLoading(false);
       createNotification({
         status: "success",
-        msg: "¡Producción corregida con éxito!", //TODO
+        msg: Text({ tid: "productionCorrection" }),
         hide: response.responseHide,
       });
       closeModal();
@@ -261,7 +261,7 @@ const ProductionsModal = ({
       setLoading(false);
       createNotification({
         status: "success",
-        msg: "¡Merma añadida correctemente!", //TODO
+        msg: Text({ tid: "addWastageSuccess" }),
         hide: 1,
       });
       closeModal();

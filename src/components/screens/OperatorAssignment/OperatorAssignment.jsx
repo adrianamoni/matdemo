@@ -141,36 +141,41 @@ const OperatorAssignment = ({ line, modal, close }) => {
   const handleAssign = async () => {
     setLoading(true);
 
-    const param_entId = tableData.find(
+    const param = tableData.find(
       (e) => e.ent_name === selectedRows[0].ent_name
-    ).entId;
-
-    const response = await ApiCall({
-      params: screen_operatorAssignment_assign({
-        userId: formWidget.operatorForm.operator,
-        entId: param_entId,
-      }),
-    });
-
-    if (response.responseError) {
-      setLoading(false);
-      createNotification({
-        status: "error",
-        code: response.responseError,
-        msg: response.responseMsg,
-        hide: response.responseHide,
+    );
+    if (param) {
+      /* const response = await ApiCall({
+        params: screen_operatorAssignment_assign({
+          userId: formWidget.operatorForm.operator,
+          entId: param.entId,
+        }),
       });
-    } else {
+
+      if (response.responseError) {
+        setLoading(false);
+        createNotification({
+          status: "error",
+          code: response.responseError,
+          msg: response.responseMsg,
+          hide: response.responseHide,
+        });
+      } else { */
+      const successMsg = Text({ tid: "operatorAssignSuccess" });
       setLoading(false);
       createNotification({
         status: "success",
-        msg: "¡Operario asignado a línea correctamente!", //TODO
-        hide: response.responseHide,
-      });
+        msg: `${successMsg} ${param.ent_name}`,
+        hide: 1,
+      }); //response.responseHide,
+      /* });
+      }
     }
+
     setformWidget({ ...formWidget, operatorForm: [] });
     setRefreshData(true);
-    close(false);
+    close(false); */
+    }
   };
 
   return loading ? (

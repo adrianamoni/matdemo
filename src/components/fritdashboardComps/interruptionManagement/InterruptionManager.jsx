@@ -419,7 +419,7 @@ const InterruptionManager = () => {
         ) : (
           <Grid item xs={12}>
             <Alert variant="outlined" severity="info">
-              {Text({ tid: "noInterruptions" })}
+              {Text({ tid: "noInterruptionsMatchingFilter" })}
             </Alert>
           </Grid>
         )}

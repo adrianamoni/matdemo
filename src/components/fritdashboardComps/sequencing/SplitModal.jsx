@@ -1,6 +1,7 @@
 import { LoadingButton } from "@mui/lab";
 import { Button, Grid, Input, Slider } from "@mui/material";
 import React, { useState, useEffect } from "react";
+import Text from "../../../languages/Text";
 import { ApiCall } from "../../../services/Service";
 import { split_operation } from "../../../services/serviceHelper";
 import ModalWidget from "../../../widgets/modalWidget/ModalWidget";
@@ -50,7 +51,7 @@ const SplitModal = ({ open, close, ofSelected, setRefreshMain }) => {
       setLoading(false);
       createNotification({
         status: "success",
-        msg: "¡Operación dividida correctamente!",
+        msg: Text({ tid: "splitSuccess" }),
         hide: response.responseHide,
       });
     }
@@ -64,7 +65,7 @@ const SplitModal = ({ open, close, ofSelected, setRefreshMain }) => {
   };
   const modalContent = (
     <>
-      <Grid container spacing={2} alignItems="center" sx={{ p: 3 }}>
+      <Grid container spacing={4} alignItems="center" sx={{ p: 2 }}>
         <Grid item xs={12}>
           <Grid container colSpacing={2} textAlign="center">
             <Grid item xs={3}>
@@ -96,7 +97,7 @@ const SplitModal = ({ open, close, ofSelected, setRefreshMain }) => {
             onClick={handleSubmit}
             loading={loading}
           >
-            Aceptar
+            {Text({ tid: "accept" })}
           </LoadingButton>
         </Grid>
       </Grid>

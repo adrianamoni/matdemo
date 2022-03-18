@@ -136,6 +136,7 @@ const TableWidget = ({
   }, [searchInput, data]);
 
   const handleCellEditCommit = (params, event, details) => {
+    console.log("params", params);
     let temp = data.map((el) => {
       if (el.id === params.id) {
         el.CantidadAprov = params.value;
@@ -244,7 +245,8 @@ const TableWidget = ({
           tableName={tableName}
           disableSelection={disableSelection}
           multipleSelection={multipleSelection}
-          editModel={handleEditRowsModelChange}
+          edit={handleCellEditCommit}
+          /*      editModel={handleEditRowsModelChange} */
         />
       )}
     </TableContainer>

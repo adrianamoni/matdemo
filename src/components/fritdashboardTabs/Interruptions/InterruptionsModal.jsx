@@ -304,7 +304,7 @@ const InterruptionsModal = ({
       setLoading(false);
       createNotification({
         status: "success",
-        msg: "¡Paro generado con éxito!", //TODO
+        msg: Text({ tid: "interruptionGeneratedSuccessfully" }),
         hide: response.responseHide,
       });
       closeModal();
@@ -407,7 +407,7 @@ const InterruptionsModal = ({
       setLoading(false);
       createNotification({
         status: "success",
-        msg: "¡Paro justificado con éxito!", //TODO
+        msg: Text({ tid: "interruptionJustifiedSuccessfully" }),
         hide: response.responseHide,
       });
       closeModal();

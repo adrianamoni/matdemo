@@ -27,6 +27,7 @@ import { grey } from "@mui/material/colors";
 import { checkIfModified } from "./helper";
 import { globalDataContext } from "../../../context/ContextProvider";
 import { get_simulation_interruptions } from "../../../services/OFservices";
+import Text from "../../../languages/Text";
 
 const Simulation = () => {
   const { globalData } = useContext(globalDataContext);
@@ -101,7 +102,7 @@ const Simulation = () => {
         if (response.responseCode === "0") {
           createNotification({
             status: "success",
-            msg: "¡Datos guardados correctamente!",
+            msg: Text({ tid: "dataSavedSuccess" }),
             hide: 1,
           });
         }
@@ -116,7 +117,7 @@ const Simulation = () => {
     </Box>
   ) : (
     <>
-      <Grid container spacing={2} sx={{ mt: 1 }}>
+      <Grid container sx={{ mt: 4 }}>
         <Grid item xs={12}>
           {apiData && apiData.length > 0 && (
             <>
@@ -124,7 +125,7 @@ const Simulation = () => {
                 <Table sx={{ backgroundColor: "background.grey4" }}>
                   <TableHead sx={{ backgroundColor: "background.grey3" }}>
                     <TableRow>
-                      <TableCell>Paro</TableCell>
+                      <TableCell>{Text({ tid: "interruption" })}</TableCell>
 
                       <TableCell align="center">Tag</TableCell>
                     </TableRow>

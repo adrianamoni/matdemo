@@ -140,7 +140,7 @@ const SequencingGateway = () => {
       if (orders.length === 0) {
         setNotificationModal({
           status: "info",
-          msg: "No hay ordenes en esta sección",
+          msg: Text({ tid: "noOrdersInSection" }),
           hide: 0,
           size: "huge",
         });
@@ -148,7 +148,7 @@ const SequencingGateway = () => {
         if (productionOrders.length === 0) {
           setNotificationModal({
             status: "info",
-            msg: "No hay ordenes en esta sección",
+            msg: Text({ tid: "noOrdersInSection" }),
             hide: 0,
             size: "huge",
           });
@@ -227,7 +227,7 @@ const SequencingGateway = () => {
     } else {
       createNotification({
         status: "info",
-        msg: "No hay ordenes para guardar",
+        msg: Text({ tid: "noOrdersToSave" }),
         hide: 1,
       });
     }
@@ -266,7 +266,9 @@ const SequencingGateway = () => {
       }
       createNotification({
         status: "info",
-        msg: `Liberando ${liberateOrders.length} ${orderWord}...`,
+        msg: `${Text({ tid: "releasing" })} ${
+          liberateOrders.length
+        } ${orderWord}...`,
         hide: 1,
       });
       const response = await ApiCall({
@@ -285,14 +287,16 @@ const SequencingGateway = () => {
         setRefreshMain(true);
         createNotification({
           status: "success",
-          msg: `¡Órdenes en ${apiData[0].entName} liberadas correctamente!`,
+          msg: `${Text({ tid: "ordersReleasedSucessfully" })} ${
+            apiData[0].entName
+          }!`,
           hide: response.responseHide,
         });
       }
     } else {
       createNotification({
         status: "warning",
-        msg: "No hay órdenes a liberar",
+        msg: Text({ tid: "noOrdersToRelease" }),
         hide: 1,
       });
     }
@@ -344,7 +348,7 @@ const SequencingGateway = () => {
   return (
     <>
       {/* <Container maxWidth="xl"> */}
-      <Grid container spacing={2}>
+      <Grid container spacing={3}>
         <Grid item xs={12}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={4}>
@@ -462,7 +466,7 @@ const SequencingGateway = () => {
                         disabled={!userWritePermissions}
                       >
                         <ContentPasteGoIcon />
-                        {Text({ tid: "liberate" })}
+                        {Text({ tid: "release" })}
                       </LoadingButton>
                     </ButtonGroup>
                   </Grid>

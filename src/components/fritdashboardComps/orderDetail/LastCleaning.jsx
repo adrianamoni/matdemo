@@ -1,7 +1,9 @@
 import { Box, Grid, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import { globalDataContext } from "../../../context/ContextProvider";
+import Text from "../../../languages/Text";
 import UseFetchMemory from "../../customHooks/UseFetchMemory";
+import { getCleaningText } from "./helper";
 
 const LastCleaning = () => {
   const { globalData } = useContext(globalDataContext);
@@ -17,14 +19,15 @@ const LastCleaning = () => {
     state = lastCleaningResponse[0].Estado;
     lastClean = lastCleaningResponse[0].UltimaLimpieza;
   }
-
+  const text = getCleaningText(lastClean);
   return (
     <>
       <Grid item xs={6}>
-        <strong>Última Limpieza:</strong>
+        <strong>{Text({ tid: "lastCleaning" })}</strong>
       </Grid>
       <Grid item xs={6} textAlign="right">
-        {lastClean && (lastClean === "" || lastClean === "S") ? (
+        <span>{text}</span>
+        {/* {lastClean && (lastClean === "" || lastClean === "S") ? (
           <span>
             Limpieza
             <br />
@@ -44,10 +47,10 @@ const LastCleaning = () => {
           </span>
         ) : (
           "-"
-        )}
+        )} */}
       </Grid>
       <Grid item xs={6}>
-        <strong>Estado: </strong>
+        <strong>{Text({ tid: "state" })}</strong>
       </Grid>
       <Grid item xs={6} textAlign="right">
         <Typography>

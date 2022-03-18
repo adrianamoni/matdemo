@@ -21,7 +21,9 @@ const Materials = () => {
   const { orderData, lineData } = globalData;
   const { woId, operId, seqNo } = orderData;
   const { formWidget, setformWidget } = useContext(formContext);
-  const { selectedRowsIds } = useContext(selectedRowsIdsContext);
+  const { selectedRowsIds, setSelectedRowsIds } = useContext(
+    selectedRowsIdsContext
+  );
   const { selectedRows, setSelectedRows } = useContext(selectedRowsContext);
   const { materials } = selectedRowsIds;
   const [loadingEmptyContainer, setLoadingEmptyContainer] = useState(false);
@@ -63,6 +65,13 @@ const Materials = () => {
       flex: 1,
     },
   ];
+
+  useEffect(() => {
+    return () => {
+      setSelectedRowsIds([]);
+      setSelectedRows([]);
+    };
+  }, []);
   useEffect(() => {
     if (formWidget.materials) {
       if (formWidget.materials) {
@@ -118,12 +127,13 @@ const Materials = () => {
   const handleProvisioningRequest = async () => {
     setLoadingProvisioning(true);
 
-    await provisionRequestRequest({
+    const submitObj = {
       lineaName: lineData.entId,
       woId,
       operId,
       items: cantidades,
-    });
+    };
+    await provisionRequestRequest(submitObj);
 
     setLoadingProvisioning(false);
   };
@@ -160,6 +170,10 @@ const Materials = () => {
               text: "provisioningRequest",
               color: "primary",
               onClick: handleProvisioningRequest,
+              disabled:
+                selectedRowsIds && selectedRowsIds["materials"]?.length > 0
+                  ? false
+                  : true,
             },
             {
               text: "emptyContainerRequest",

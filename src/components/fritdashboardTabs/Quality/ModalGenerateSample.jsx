@@ -86,7 +86,7 @@ const ModalGenerateSample = ({ setRefreshMain }) => {
         setLoadingSubmit(false);
         createNotification({
           status: "success",
-          msg: "¡Muestra generada correctamente!",
+          msg: Text({ tid: "sampleSuccess" }),
           hide: response.responseHide,
         });
       }
@@ -107,9 +107,9 @@ const ModalGenerateSample = ({ setRefreshMain }) => {
     <Grid container spacing={2} sx={{ width: "20em" }}>
       <Grid item xs={12}>
         <FormControl fullWidth>
-          <InputLabel>Selecciona una muestra</InputLabel>
+          <InputLabel>{Text({ tid: "selectSample" })}</InputLabel>
           <Select
-            label="Selecciona una muestra"
+            label={Text({ tid: "selectSample" })}
             onChange={(e) => setQmSpec(e.target.value)}
             value={qmSpec}
           >
@@ -135,7 +135,7 @@ const ModalGenerateSample = ({ setRefreshMain }) => {
   ) : (
     <Grid item xs={12}>
       <Alert variant="outlined" severity="info">
-        No hay qmspec definida para este material
+        {Text({ tid: "noQmspec" })}
       </Alert>
     </Grid>
   );

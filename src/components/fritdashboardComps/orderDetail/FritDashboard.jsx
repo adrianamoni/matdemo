@@ -104,7 +104,7 @@ const FritDashboard = () => {
     if (lineData) {
       if (orderData) {
         fetchData(true);
-        clearIntervalData = setInterval(fetchData, 4000);
+        clearIntervalData = setInterval(fetchData, 3000);
       }
     }
     if (modalJustify) {
@@ -176,7 +176,7 @@ const FritDashboard = () => {
             scrollButtons={true}
             allowScrollButtonsMobile
             //variant="scrollable"
-            variant={width > 1640 ? "fullWidth" : "scrollable"}
+            variant={width > 1770 ? "fullWidth" : "scrollable"}
             indicatorColor="secondary"
             textColor="secondary"
             aria-label="scrollable auto tabs example"

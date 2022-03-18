@@ -1,3 +1,4 @@
+import Text from "../../../languages/Text";
 import {
   screen_of_pause_btn,
   screen_of_start_btn,
@@ -8,9 +9,12 @@ import { createNotification } from "../../alerts/NotificationAlert";
 
 export const handleOperationAction = async ({ type, woId, operId, seqNo }) => {
   const actions = {
-    start: { service: screen_of_start_btn, msg: "iniciada" },
-    pause: { service: screen_of_pause_btn, msg: "pausada" },
-    stop: { service: screen_of_stop_btn, msg: "parada" },
+    start: { service: screen_of_start_btn, msg: Text({ tid: "orderStarted" }) },
+    pause: {
+      service: screen_of_pause_btn,
+      msg: Text({ tid: "orderPaused" }),
+    },
+    stop: { service: screen_of_stop_btn, msg: Text({ tid: "orderStopped" }) },
   };
   const { service, msg } = actions[type];
   const response = await ApiCall({
@@ -29,10 +33,14 @@ export const handleOperationAction = async ({ type, woId, operId, seqNo }) => {
       hide: response.responseHide,
     });
   } else {
-    createNotification({
-      status: "success",
-      msg: `¡Orden ${msg} correctamente!`,
-      hide: response.responseHide,
-    });
+    setTimeout(
+      () =>
+        createNotification({
+          status: "success",
+          msg,
+          hide: response.responseHide,
+        }),
+      1000
+    );
   }
 };

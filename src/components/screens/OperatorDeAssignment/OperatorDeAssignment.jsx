@@ -138,7 +138,7 @@ const OperatorDeAssignment = ({ line, modal, close }) => {
       setLoading(false);
       createNotification({
         status: "success",
-        msg: "¡Operario desasignado correctamente!", //TODO
+        msg: Text({ tid: "operatorDeassignSuccess" }),
         hide: response.responseHide,
       });
     }

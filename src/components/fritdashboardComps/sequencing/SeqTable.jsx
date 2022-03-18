@@ -28,6 +28,7 @@ import {
 import CallSplitIcon from "@mui/icons-material/CallSplit";
 import DatePickerWidget from "../../../widgets/forms/DatePickerWidget";
 import { formContext } from "../../../context/ContextProvider";
+import Text from "../../../languages/Text";
 const SeqTable = ({
   apiData,
   setApiData,
@@ -273,13 +274,11 @@ const SeqTable = ({
 
                     <TableCell>
                       <FormControl error={!lineExist}>
-                        <InputLabel>Linea</InputLabel>
                         <Select
                           value={row.target_EntId}
                           onChange={(e) => handleLineChange(e, row.id)}
                           disabled={row.matriculasCargadas}
                           labelId="demo-simple-select-error-label"
-                          label="Linea"
                         >
                           {possibleLinesOptions.map((line) => (
                             <MenuItem value={line.value}>{line.text}</MenuItem>

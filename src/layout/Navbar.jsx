@@ -13,7 +13,6 @@ import {
   Popover,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-
 import {
   formContext,
   selectedRowsIdsContext,
@@ -50,7 +49,8 @@ const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
   );
   const { globalData, setGlobalData } = useContext(globalDataContext);
   const { lineUsers, setLineUsers } = useContext(lineUsersContext);
-  const { loggedUser } = useContext(loginContext);
+  const loginCtxt = useContext(loginContext);
+  const loggedUser = loginCtxt?.loggedUser;
   const { setformWidget } = useContext(formContext);
   const { setSelectedRowsIds } = useContext(selectedRowsIdsContext);
   const { setSelectedRows } = useContext(selectedRowsContext);
@@ -224,10 +224,10 @@ const AssignedUser = ({ user }) => {
       onMouseEnter={handlePopoverOpen}
       onMouseLeave={handlePopoverClose}
     >
-      <div style={{ marginBottom: "-5px" }}>
+      <div style={{ marginBottom: "-10px" }}>
         <AccountCircleIcon />
       </div>
-      <div style={{ marginTop: "-5px" }}>
+      <div style={{ marginTop: "-10px" }}>
         <Typography>{user.user_id}</Typography>
       </div>
 

@@ -21,7 +21,7 @@ const CustomResponsive = ({
   tableName,
   disableSelection,
   multipleSelection,
-  editModel,
+  edit,
 }) => {
   console.log("columns", columns);
   const { selectedRowsIds, setSelectedRowsIds } = useContext(
@@ -54,10 +54,12 @@ const CustomResponsive = ({
 
   const handleClick = (id) => {
     if (multipleSelection && selectedRowsIds && selectedRowsIds[tableName]) {
-      setSelectedRowsIds({
-        ...selectedRowsIds,
-        [tableName]: [...selectedRowsIds[tableName], id],
-      });
+      if (!selectedRowsIds[tableName].includes(id)) {
+        setSelectedRowsIds({
+          ...selectedRowsIds,
+          [tableName]: [...selectedRowsIds[tableName], id],
+        });
+      }
     } else {
       setSelectedRowsIds({
         ...selectedRowsIds,
@@ -66,52 +68,62 @@ const CustomResponsive = ({
     }
   };
 
-  const handleEdit = (e) => {
-    console.log("e.target.value", e.target.value);
-    /*      setformWidget({ ...formWidget, materials: model }); */
+  const handleEdit = ({ value, id, field }) => {
+    const params = { value, id, field };
+    edit(params);
   };
 
   return (
     <div>
       <Pagination count={totalPages} onChange={handlePagination} />
       {paginatedData &&
-        paginatedData.map((data, i) => (
-          <Box
-            index={i}
-            sx={{
-              borderBottom: "1px solid #cecece",
-              padding: "5px",
-              backgroundColor:
-                selectedRowsIds[tableName] &&
-                !!selectedRowsIds[tableName].find((el) => el === data.id) &&
-                "#7cbedd",
-              "&:hover": { backgroundColor: "#bcdff0" },
-            }}
-            onClick={() => !disableSelection && handleClick(data.id)}
-          >
-            {columns.map((column, index) => (
-              <Grid container spacing={2} index={index}>
-                <Grid item xs={4}>
-                  <span className="customResponsiveTable">
-                    {column.headerName}
-                  </span>
+        paginatedData.map((data, i) => {
+          const isSelected =
+            selectedRowsIds[tableName] &&
+            !!selectedRowsIds[tableName].find((el) => el === data.id);
+          return (
+            <Box
+              index={i}
+              sx={{
+                borderBottom: "1px solid #cecece",
+                padding: "5px",
+                backgroundColor: isSelected ? "#7cbedd" : undefined,
+                "&:hover": {
+                  backgroundColor: !isSelected ? "#bcdff0" : undefined,
+                },
+              }}
+              onClick={() => !disableSelection && handleClick(data.id)}
+            >
+              {columns.map((column, index) => (
+                <Grid container spacing={2} index={index}>
+                  <Grid item xs={4}>
+                    <span className="customResponsiveTable">
+                      {column.headerName}
+                    </span>
+                  </Grid>
+                  <Grid item xs={8}>
+                    {!column.editable ? (
+                      <span>{data[column.field]}</span>
+                    ) : (
+                      <FormControl fullWidth>
+                        <TextField
+                          onChange={(e) =>
+                            handleEdit({
+                              field: column.field,
+                              value: e.target.value,
+                              id: data.id,
+                            })
+                          }
+                          type={column?.type || "text"}
+                        />
+                      </FormControl>
+                    )}
+                  </Grid>
                 </Grid>
-                <Grid item xs={8}>
-                  {!column.editable ? (
-                    <span>{data[column.field]}</span>
-                  ) : (
-                    <FormControl fullWidth>
-                      <TextField
-                        onChange={handleEdit}
-                        type={column?.type || "text"}
-                      />
-                    </FormControl>
-                  )}
-                </Grid>
-              </Grid>
-            ))}
-          </Box>
-        ))}
+              ))}
+            </Box>
+          );
+        })}
     </div>
   );
 };

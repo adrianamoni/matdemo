@@ -14,6 +14,7 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
 import PauseIcon from "@mui/icons-material/Pause";
 import {
+  getCleaningText,
   operation_states,
   processOrderTimeData,
   timeFormating,
@@ -128,39 +129,40 @@ const Limpieza = () => {
             : Text({ tid: "cleaningAndChange" })}
         </Typography>
 
-        <Grid container item rowSpacing={3}>
+        <Grid
+          container
+          item
+          rowSpacing={1}
+          columnSpacing={2}
+          alignItems="stretch"
+        >
           <Grid item xs={12} sm={12} md={12} lg={12} xl={5}>
-            <Grid container rowSpacing={2} textAlign="left">
+            <Grid container rowSpacing={2} textAlign="left" sx={{ p: 2 }}>
               <Grid item xs={6}>
                 <strong>{Text({ tid: "description" })}</strong>
               </Grid>
               <Grid item xs={6} textAlign="right">
                 {cleaningData.DuracionJob === "0"
-                  ? "SIN LIMPIEZA"
-                  : cleaningData.job_desc === "P"
-                  ? "Limpieza con producto"
-                  : cleaningData.job_desc === "S"
-                  ? "Limpieza en seco"
-                  : cleaningData.job_desc === "A"
-                  ? "Limpieza con agua"
-                  : cleaningData.job_desc === ""
-                  ? "Limpieza en seco"
-                  : "SIN LIMPIEZA"}
+                  ? Text({ tid: "noCleaning" })
+                  : getCleaningText(cleaningData.job_desc)}
               </Grid>
               <Grid item xs={6}>
-                <strong>Tiempo</strong>
+                <strong>{Text({ tid: "time" })}</strong>
               </Grid>
               <Grid item xs={6} textAlign="right">
                 {cleaningData.DuracionJob
                   ? timeFormating(cleaningData.DuracionJob * 60)
                   : "0 min"}
               </Grid>
-              <Grid item xs={12} textAlign="center">
+              <Grid
+                item
+                xs={12}
+                sx={{ justifyContent: "center", display: "flex" }}
+              >
                 <Grid
                   container
                   spacing={2}
                   columnSpacing={3}
-                  textAlign="center"
                   sx={{ maxWidth: 300 }}
                 >
                   <Grid item xs={4}>
@@ -170,7 +172,7 @@ const Limpieza = () => {
                       disabled={loadingPlay ? true : play}
                       variant="contained"
                       color="primary"
-                      sx={{ marginInline: 1, p: 3 }}
+                      sx={{ marginInline: 0, p: 2 }}
                     >
                       <PlayArrowIcon />
                     </LoadingButton>
@@ -182,7 +184,7 @@ const Limpieza = () => {
                       disabled={loadingPause ? true : pause}
                       variant="contained"
                       color="primary"
-                      sx={{ marginInline: 1, p: 3 }}
+                      sx={{ marginInline: 0, p: 2 }}
                     >
                       <PauseIcon />
                     </LoadingButton>
@@ -198,7 +200,7 @@ const Limpieza = () => {
                       disabled={loadingStop ? true : stop}
                       variant="contained"
                       color="primary"
-                      sx={{ marginInline: 1, p: 3 }}
+                      sx={{ marginInline: 0, p: 2 }}
                     >
                       <StopIcon />
                     </LoadingButton>
@@ -207,40 +209,56 @@ const Limpieza = () => {
               </Grid>
             </Grid>
           </Grid>
+
           <Grid item xs={12} sm={12} md={12} lg={12} xl={3}>
-            <ListItem>
-              <Grid container textAlign="center">
-                <Grid
-                  item
-                  xs={6}
-                  sm={6}
-                  md={6}
-                  lg={6}
-                  xl={12}
-                  textAlign={width > 1536 ? "center" : "left"}
-                >
-                  <strong>{Text({ tid: "timeRemaining" })}</strong>
-                </Grid>
-                <Grid
-                  item
-                  xs={6}
-                  sm={6}
-                  md={6}
-                  lg={6}
-                  xl={12}
-                  textAlign={width > 1536 ? "center" : "right"}
-                >
-                  {processedOrderTime?.text || "-"}
-                </Grid>
+            <Grid
+              container
+              textAlign="center"
+              sx={{
+                p: 2,
+                height: "100%",
+                alignItems: "center",
+              }}
+            >
+              <Grid
+                item
+                xs={6}
+                sm={6}
+                md={6}
+                lg={6}
+                xl={12}
+                textAlign={width > 1536 ? "center" : "left"}
+              >
+                <strong>{Text({ tid: "timeRemaining" })}</strong>
               </Grid>
-            </ListItem>
+              <Grid
+                item
+                xs={6}
+                sm={6}
+                md={6}
+                lg={6}
+                xl={12}
+                textAlign={width > 1536 ? "center" : "right"}
+              >
+                {processedOrderTime?.text || "-"}
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12} xl={4}>
-            <ListItem>
-              <Grid container rowSpacing={2} textAlign="left">
-                <LastCleaning />
-              </Grid>
-            </ListItem>
+            <Grid
+              container
+              rowSpacing={2}
+              textAlign="left"
+              alignItems={"center"}
+              sx={{
+                p: 2,
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <LastCleaning />
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
