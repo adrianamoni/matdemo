@@ -9,12 +9,7 @@ const TreeViewWidget = (props) => {
   const windowSize = useWindowSize();
 
   const renderTree = (nodes) => (
-    <TreeItem
-      key={nodes.id}
-      nodeId={nodes.id}
-      label={nodes.name}
-      sx={{ paddingTop: "15px" }}
-    >
+    <TreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name}>
       {Array.isArray(nodes.children)
         ? nodes.children.map((node) => renderTree(node))
         : null}
@@ -29,7 +24,7 @@ const TreeViewWidget = (props) => {
         defaultExpandIcon={<AddBoxIcon color="primary" />}
         defaultEndIcon={""}
         sx={{
-          height: windowSize.width < 820 ? "350px" : "auto",
+          height: windowSize.width < 820 ? "350px" : "500px",
           flexGrow: 1,
           maxWidth: 400,
           overflowY: "auto",
@@ -46,11 +41,13 @@ const TreeViewWidget = (props) => {
       <TreeView
         aria-label="customized"
         defaultExpanded={["root"]}
-        defaultCollapseIcon={<IndeterminateCheckBoxIcon color="primary" />}
-        defaultExpandIcon={<AddBoxIcon color="primary" />}
+        defaultCollapseIcon={
+          <IndeterminateCheckBoxIcon color="primary" sx={{ fontSize: 40 }} />
+        }
+        defaultExpandIcon={<AddBoxIcon color="primary" fontSize="large" />}
         defaultEndIcon={""}
         sx={{
-          height: windowSize.width < 820 ? "350px" : "auto",
+          height: windowSize.width < 820 ? "350px" : "500px",
           flexGrow: 1,
           maxWidth: 400,
           overflowY: "auto",

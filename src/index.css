@@ -125,3 +125,16 @@ code {
   padding: 0px 6px !important;
   border-radius: 0px !important;
 }
+
+.MuiTreeItem-label,
+.MuiTreeItem-content.MuiTreeItem-content.Mui-expanded,
+.MuiTreeItem-content.MuiTreeItem-content.Mui-collapsed,
+.MuiTreeItem-content.Mui-selected,
+.MuiTreeItem-content:hover {
+  padding: 10px !important;
+}
+
+.MuiTreeItem-iconContainer svg {
+  /* padding: 10px; */
+  font-size: 28px !important;
+}
