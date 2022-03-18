@@ -208,7 +208,6 @@ const InfoOE = () => {
                   </LoadingButton>
                 </Grid>
                 <Grid item xs={4} sm={4} md={4}>
-                  {" "}
                   <LoadingButton
                     loading={loadingStop}
                     onClick={handleConfirmStop}
@@ -227,13 +226,13 @@ const InfoOE = () => {
       </Grid>
       {/*  */}
       <ConfirmationDialog
-        title="Parar operarción"
+        title="stopOperation"
         open={confirmStop}
         close={() => {
           setConfirmStop(false);
           setLoadingStop(false);
         }}
-        msg="¿Estás seguro de que quieres parar la operación?"
+        msg="areYouSure"
         handleConfirm={handleStop}
       />
     </>

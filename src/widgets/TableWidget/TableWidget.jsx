@@ -88,7 +88,7 @@ const TableWidget = ({
           };
         }
       });
-
+      console.log("bgColorsArr", bgColorsArr);
       const rowsColorsObj = Object.assign({}, ...bgColorsArr);
       // const rowsColorsObj = Object.assign(
       //   // {
@@ -98,6 +98,7 @@ const TableWidget = ({
       //   // },
       //   ...bgColorsArr
       // );
+      console.log("rowsColorsObj", rowsColorsObj);
       setRowsColors(rowsColorsObj);
     }
     // else {
@@ -109,6 +110,17 @@ const TableWidget = ({
     //    setRowsColors(rowsColorsObj);
     // }
   }, [data]);
+
+  const customHeaderStyle = {
+    "& .MuiDataGrid-columnHeaders": {
+      backgroundColor: "background.grey3",
+      boxShadow: "0px 0px 2px 2px rgba(0, 0, 0, 0.2)",
+      borderRadius: "none",
+    },
+    "& .MuiDataGrid-columnHeaderTitle": {
+      fontWeight: 700,
+    },
+  };
 
   const size = useWindowSize();
 
@@ -135,8 +147,8 @@ const TableWidget = ({
   return (
     <TableContainer
       sx={{
-        border: "solid 1px",
-        borderColor: "background.paper",
+        /*  border: "solid 1px",
+        borderColor: "background.paper", */
         backgroundColor: "background.grey4",
       }}
     >
@@ -171,16 +183,17 @@ const TableWidget = ({
         multipleSelection ? (
           <div
             style={{
-              height: pagination ? pagination * 65 : 400,
+              /* height: pagination ? pagination * 65 : 400, */
               width: "100%",
             }}
           >
             <DataGrid
-              sx={rowsColors}
+              sx={{ ...customHeaderStyle, rowsColors }}
               rows={renderData}
               columns={columns}
-              pageSize={pagination || 5}
-              rowsPerPageOptions={[pagination || 5]}
+              autoHeight
+              pageSize={pagination || 10}
+              rowsPerPageOptions={[pagination || 10]}
               checkboxSelection
               onSelectionModelChange={(newSelectionModel) => {
                 setSelectedRowsIds({
@@ -200,16 +213,17 @@ const TableWidget = ({
         ) : (
           <div
             style={{
-              height: pagination ? pagination * 65 : 400,
+              /*  height: pagination ? pagination * 65 : 400, */
               width: "100%",
             }}
           >
             <DataGrid
-              sx={rowsColors}
+              sx={{ ...customHeaderStyle, rowsColors }}
               rows={renderData}
               columns={columns}
-              pageSize={pagination || 5}
-              rowsPerPageOptions={[pagination || 5]}
+              autoHeight
+              pageSize={pagination || 10}
+              rowsPerPageOptions={[pagination || 10]}
               onSelectionModelChange={(newSelectionModel) => {
                 !disableSelection &&
                   setSelectedRowsIds({
@@ -225,7 +239,14 @@ const TableWidget = ({
           </div>
         )
       ) : (
-        <CustomResponsive rows={renderData} columns={columns} />
+        <CustomResponsive
+          rows={renderData}
+          columns={columns}
+          tableName={tableName}
+          disableSelection={disableSelection}
+          multipleSelection={multipleSelection}
+          editModel={handleEditRowsModelChange}
+        />
       )}
     </TableContainer>
   );

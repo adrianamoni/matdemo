@@ -57,10 +57,10 @@ const LastCleaning = () => {
               backgroundColor:
                 state === "Limpio"
                   ? "lightskyblue" //</Typography>"#70f5a7" //background.success"
-                  : "#f5cb70", // "background.warning"
+                  : state === "Limpio" && "#f5cb70", // "background.warning"
             }}
           >
-            {state.toUpperCase() || "-"}
+            {state ? state.toUpperCase() : "-"}
           </span>
         </Typography>
       </Grid>

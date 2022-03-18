@@ -129,6 +129,11 @@ const en = {
   wo: "Wo",
   pendingInterruptions: "Pending interruptions",
   lastSelfControlDate: "Last self-control date",
+  change: "Change",
+  cleaningAndChange: "Cleaning and Change",
+  stopOperation: "Stop Operation",
+  areYouSure: "Are you sure?",
+  timeRemaining: "Time remaining",
   /* NOTIFICATION MESSAGES */
   loginSuccess: "User logged!",
   noInterruptions: "There are no interruptions matching the applied filters",

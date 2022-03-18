@@ -25,6 +25,7 @@ const AutoControles = ({ data, alert }) => {
   let styledAlert = alert
     ? {
         border: "1.5px solid",
+
         borderColor: "error.main",
         backgroundColor: "background.error",
       }
@@ -49,6 +50,7 @@ const AutoControles = ({ data, alert }) => {
             variant="h6"
             component="h6"
             color={alert && "error"}
+            sx={{ borderRadius: "3px" }}
             className="title"
           >
             {Text({ tid: "selfControls" })}

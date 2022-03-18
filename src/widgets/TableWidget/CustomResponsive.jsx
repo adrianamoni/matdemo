@@ -1,9 +1,33 @@
-import React, { useState, useEffect } from "react";
-import { Box, Pagination } from "@mui/material";
+import React, { useState, useEffect, useContext } from "react";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  Pagination,
+  TextField,
+} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Paginate from "./paginate";
+import {
+  formContext,
+  selectedRowsIdsContext,
+} from "../../context/ContextProvider";
+import InputWidget from "../forms/InputWidget";
 
-const CustomResponsive = ({ keys, rows, columns }) => {
+const CustomResponsive = ({
+  keys,
+  rows,
+  columns,
+  tableName,
+  disableSelection,
+  multipleSelection,
+  editModel,
+}) => {
+  console.log("columns", columns);
+  const { selectedRowsIds, setSelectedRowsIds } = useContext(
+    selectedRowsIdsContext
+  );
+  const { formWidget, setformWidget } = useContext(formContext);
   const [paginatedData, setPaginatedData] = useState(undefined);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
@@ -28,13 +52,24 @@ const CustomResponsive = ({ keys, rows, columns }) => {
     setCurrentPage(v);
   };
 
-  /* onSelectionModelChange={(newSelectionModel) => {
-                setSelectedRowsIds({
-                  ...selectedRowsIds,
-                  [tableName]: newSelectionModel,
-                });
-              }}
-              selectionModel={selectedRowsIds[tableName]} */
+  const handleClick = (id) => {
+    if (multipleSelection && selectedRowsIds && selectedRowsIds[tableName]) {
+      setSelectedRowsIds({
+        ...selectedRowsIds,
+        [tableName]: [...selectedRowsIds[tableName], id],
+      });
+    } else {
+      setSelectedRowsIds({
+        ...selectedRowsIds,
+        [tableName]: [id],
+      });
+    }
+  };
+
+  const handleEdit = (e) => {
+    console.log("e.target.value", e.target.value);
+    /*      setformWidget({ ...formWidget, materials: model }); */
+  };
 
   return (
     <div>
@@ -46,7 +81,13 @@ const CustomResponsive = ({ keys, rows, columns }) => {
             sx={{
               borderBottom: "1px solid #cecece",
               padding: "5px",
+              backgroundColor:
+                selectedRowsIds[tableName] &&
+                !!selectedRowsIds[tableName].find((el) => el === data.id) &&
+                "#7cbedd",
+              "&:hover": { backgroundColor: "#bcdff0" },
             }}
+            onClick={() => !disableSelection && handleClick(data.id)}
           >
             {columns.map((column, index) => (
               <Grid container spacing={2} index={index}>
@@ -56,7 +97,16 @@ const CustomResponsive = ({ keys, rows, columns }) => {
                   </span>
                 </Grid>
                 <Grid item xs={8}>
-                  <span>{data[column.field]}</span>
+                  {!column.editable ? (
+                    <span>{data[column.field]}</span>
+                  ) : (
+                    <FormControl fullWidth>
+                      <TextField
+                        onChange={handleEdit}
+                        type={column?.type || "text"}
+                      />
+                    </FormControl>
+                  )}
                 </Grid>
               </Grid>
             ))}

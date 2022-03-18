@@ -24,6 +24,7 @@ import UseFetchMemory from "../../customHooks/UseFetchMemory";
 import LastCleaning from "./LastCleaning";
 import useWindowSize from "../../customHooks/UseWindowsSize";
 import Text from "../../../languages/Text";
+import ConfirmationDialog from "../../alerts/ConfirmationDialog";
 
 const Limpieza = () => {
   const { width } = useWindowSize();
@@ -112,10 +113,6 @@ const Limpieza = () => {
     setLoadingStop(false);
   };
 
-  const handleConfirmStop = async () => {
-    setLoadingStop(true);
-    setConfirmStop(true);
-  };
   const { play, pause, stop } = operation_states({
     stateCd: cleaningData.state_cd,
     type: "cleaningOrder",
@@ -127,8 +124,8 @@ const Limpieza = () => {
       <Grid item textAlign="center">
         <Typography align="center" variant="h6" component="h6">
           {cleaningData.DuracionJob && cleaningData.DuracionJob === "0"
-            ? "Cambio"
-            : "Limpieza y Cambio"}
+            ? Text({ tid: "change" })
+            : Text({ tid: "cleaningAndChange" })}
         </Typography>
 
         <Grid container item rowSpacing={3}>
@@ -222,7 +219,7 @@ const Limpieza = () => {
                   xl={12}
                   textAlign={width > 1536 ? "center" : "left"}
                 >
-                  <strong>Tiempo Restante</strong>
+                  <strong>{Text({ tid: "timeRemaining" })}</strong>
                 </Grid>
                 <Grid
                   item
@@ -247,6 +244,16 @@ const Limpieza = () => {
           </Grid>
         </Grid>
       </Grid>
+      <ConfirmationDialog
+        title={"stopOperation"}
+        open={confirmStop}
+        close={() => {
+          setConfirmStop(false);
+          setLoadingStop(false);
+        }}
+        msg={"areYouSure"}
+        handleConfirm={handleStop}
+      />
     </>
   ) : (
     <></>

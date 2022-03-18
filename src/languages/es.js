@@ -129,7 +129,11 @@ const es = {
   wo: "Wo",
   lastSelfControlDate: "Fecha último auto control",
   pendingInterruptions: "Paros pendientes",
-
+  change: "Cambio",
+  cleaningAndChange: "Limpiexa y Cambio",
+  stopOperation: "Parar operación",
+  areYouSure: "¿Está seguro?",
+  timeRemaining: "Tiempo restante",
   /* NOTIFICATION MESSAGES */
   loginSuccess: "¡Usuario logueado correctamente!",
   noInterruptions: "No hay paros que coincidan con los filtros aplicados",

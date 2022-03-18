@@ -26,8 +26,6 @@ import {
   TextField,
 } from "@mui/material";
 import CallSplitIcon from "@mui/icons-material/CallSplit";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import DatePickerWidget from "../../../widgets/forms/DatePickerWidget";
 import { formContext } from "../../../context/ContextProvider";
 const SeqTable = ({

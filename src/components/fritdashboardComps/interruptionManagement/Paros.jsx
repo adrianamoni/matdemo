@@ -41,6 +41,7 @@ const Paros = ({ alert, data }) => {
             variant="h6"
             component="h6"
             color={alert && "error"}
+            sx={{ borderRadius: "3px" }}
             className="title"
           >
             {Text({ tid: "interruptions" })}

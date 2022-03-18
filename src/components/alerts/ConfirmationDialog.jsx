@@ -21,9 +21,9 @@ const ConfirmationDialog = ({
         onClose={close}
         /* PaperComponent={PaperComponent} */
       >
-        <DialogTitle>{title}</DialogTitle>
+        <DialogTitle>{Text({ tid: title })}</DialogTitle>
         <DialogContent>
-          <DialogContentText>{msg}</DialogContentText>
+          <DialogContentText>{Text({ tid: msg })}</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button variant="contained" autoFocus onClick={handleCancel || close}>

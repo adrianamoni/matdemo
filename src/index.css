@@ -48,6 +48,9 @@ code {
 }
 
 /* TABLE STYLES */
+.MuiDataGrid-root {
+  border-radius: 0px !important;
+}
 .MuiDataGrid-columnHeadersInner {
   /*  background-color: #f9fafb; */
   font-weight: 400;
@@ -56,6 +59,7 @@ code {
 }
 .MuiDataGrid-row:hover {
   background-color: #bcdff0 !important;
+  font-weight: 600 !important;
 }
 .MuiDataGrid-row.Mui-selected {
   background-color: #7cbedd !important;
@@ -89,7 +93,7 @@ code {
 
 /* BLINKING ANIMATION */
 .blinking-effect-red {
-  animation: blinkRed 1s infinite ease;
+  animation: blinkRed 0.7s infinite linear alternate-reverse;
 }
 
 .blinking-effect-red .title {
