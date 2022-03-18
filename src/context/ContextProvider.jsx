@@ -2,15 +2,16 @@ import React, { useState, useEffect, useMemo } from "react";
 import { createBrowserHistory } from "history";
 import { languageOptions, dictionaryList } from "../languages";
 import {
-  getColorFromStorage,
+  getPreferencesFromStorage,
   getStorageData,
   getLoginStorageData,
   getStorageLineUsers,
+  getLanguageFromStorage,
 } from "./initalStates";
 
 const history = createBrowserHistory();
 const historyContext = React.createContext(history);
-const colorModeContext = React.createContext();
+const userPreferencesContext = React.createContext();
 const loginContext = React.createContext();
 const pageSizeContext = React.createContext();
 const selectedRowsIdsContext = React.createContext();
@@ -41,8 +42,11 @@ const ContextProvider = (props) => {
   const [lineUsers, setLineUsers] = useState(storageLineUsers);
   /**form widget setup*/
   const [formWidget, setformWidget] = useState({});
-  const colorModeStorage = getColorFromStorage();
-  const [colorMode, setColorMode] = useState(colorModeStorage);
+  const userPreferencesStorage = getPreferencesFromStorage();
+
+  const [userPreferences, setUserPreferences] = useState(
+    userPreferencesStorage
+  );
   const [navigationData, setNavigationData] = useState({
     activeTab: 0,
   });
@@ -59,10 +63,12 @@ const ContextProvider = (props) => {
     activeTab: undefined,
   });
   /**MultiLanguage Setup */
-  const [language, setLanguage] = useState(languageOptions[0]);
+  const languageFromStorage = getLanguageFromStorage();
+  const [language, setLanguage] = useState(languageFromStorage);
   const [dictionary, setDictionary] = useState(
-    dictionaryList[languageOptions[0].id]
+    dictionaryList[languageFromStorage.id]
   );
+
   const provider = {
     language,
     dictionary,
@@ -77,7 +83,9 @@ const ContextProvider = (props) => {
   }, [dictionary]);
   return (
     <>
-      <colorModeContext.Provider value={{ colorMode, setColorMode }}>
+      <userPreferencesContext.Provider
+        value={{ userPreferences, setUserPreferences }}
+      >
         <languageContext.Provider value={provider}>
           <loginContext.Provider value={{ loggedUser, setLoggedUser }}>
             <pageSizeContext.Provider value={{ pageSize, setPageSize }}>
@@ -110,14 +118,14 @@ const ContextProvider = (props) => {
             </pageSizeContext.Provider>
           </loginContext.Provider>
         </languageContext.Provider>
-      </colorModeContext.Provider>
+      </userPreferencesContext.Provider>
     </>
   );
 };
 
 export {
   ContextProvider,
-  colorModeContext,
+  userPreferencesContext,
   languageContext,
   loginContext,
   pageSizeContext,

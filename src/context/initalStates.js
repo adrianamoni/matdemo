@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import { languageOptions } from "../languages";
 const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME;
 
 export const getTerminal = () => {
@@ -45,16 +46,14 @@ export const getLoginStorageData = () => {
   return { userId, isLogged, sessionId, permissions };
 };
 
-export const getColorFromStorage = () => {
-  let colorMode;
+export const getPreferencesFromStorage = () => {
+  let colorMode = "light";
 
   if (localStorage.getItem(`ColorMode_${PROJECT_NAME}`)) {
     colorMode = localStorage.getItem(`ColorMode_${PROJECT_NAME}`);
-  } else {
-    colorMode = "light";
   }
 
-  return colorMode;
+  return { colorMode };
 };
 
 export const getStorageLineUsers = () => {
@@ -67,4 +66,16 @@ export const getStorageLineUsers = () => {
   }
 
   return users;
+};
+
+export const getLanguageFromStorage = () => {
+  let language;
+
+  if (localStorage.getItem(`Language_${PROJECT_NAME}`)) {
+    language = JSON.parse(localStorage.getItem(`Language_${PROJECT_NAME}`));
+  } else {
+    language = languageOptions[0];
+  }
+
+  return language;
 };

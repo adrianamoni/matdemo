@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 
 import { languageContext } from "../context/ContextProvider";
 import { languageOptions } from ".";
@@ -13,6 +13,7 @@ import Text from "./Text";
 // import { languageOptions } from "../languages";
 
 export default function LanguageSelector() {
+  const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME;
   const language = useContext(languageContext);
 
   const handleLanguageChange = (event) => {
@@ -20,6 +21,10 @@ export default function LanguageSelector() {
       (item) => item.id === event.target.value
     );
     // set selected language by calling context method
+    localStorage.setItem(
+      `Language_${PROJECT_NAME}`,
+      JSON.stringify(selectedLanguage)
+    );
     language.setLanguage(selectedLanguage);
   };
 

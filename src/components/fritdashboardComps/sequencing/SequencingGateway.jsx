@@ -38,6 +38,7 @@ import useWindowSize from "../../customHooks/UseWindowsSize";
 import ConfirmationDialog from "../../alerts/ConfirmationDialog";
 import { ApiCall } from "../../../services/Service";
 import { screen_sequencing_onLiberate } from "../../../services/serviceHelper";
+import Text from "../../../languages/Text";
 
 const SequencingGateway = () => {
   const navigateTo = useNavigate();
@@ -117,8 +118,6 @@ const SequencingGateway = () => {
     //eslint-disable-next-line
   }, [apiData]);
   useEffect(() => {
-    console.log("apiData", apiData);
-
     if (apiData && apiData.length > 0) {
       let currentLines = apiData[0].lineas;
       let currentOperation = apiData[0];
@@ -129,7 +128,7 @@ const SequencingGateway = () => {
           id: line.entId,
         }))
       );
-      console.log("tempLinesForDropDown", tempLinesForDropDown);
+
       setLinesDropdown(tempLinesForDropDown);
 
       setOperationObj(currentOperation);
@@ -351,9 +350,9 @@ const SequencingGateway = () => {
             <Grid item xs={12} sm={12} md={4}>
               {operations && (
                 <FormControl fullWidth>
-                  <InputLabel>Operación</InputLabel>
+                  <InputLabel>{Text({ tid: "operation" })}</InputLabel>
                   <Select
-                    label="Operación"
+                    label={Text({ tid: "operation" })}
                     onChange={(e) => handleOperationSelect(e.target.value)}
                     value={operationDropdown}
                   >
@@ -367,9 +366,9 @@ const SequencingGateway = () => {
             <Grid item xs={12} sm={12} md={4}>
               {linesDropdown && (
                 <FormControl fullWidth>
-                  <InputLabel>Líneas</InputLabel>
+                  <InputLabel>{Text({ tid: "lines" })}</InputLabel>
                   <Select
-                    label="Líneas"
+                    label={Text({ tid: "lines" })}
                     onChange={(e) => handleLineSelection(e.target.value)}
                     value={selectedLine && selectedLine.id}
                     disabled={!operationDropdown}
@@ -438,14 +437,14 @@ const SequencingGateway = () => {
                     >
                       <LoadingButton variant="contained" disabled>
                         <InsertDriveFileIcon />
-                        Generar Necesidades
+                        {Text({ tid: "generateNeeds" })}
                       </LoadingButton>
                       <LoadingButton
                         variant="contained"
                         onClick={() => setConfirmRefresh(true)}
                       >
                         <RefreshIcon />
-                        Actualizar
+                        {Text({ tid: "refresh" })}
                       </LoadingButton>
                       <LoadingButton
                         variant="contained"
@@ -454,7 +453,7 @@ const SequencingGateway = () => {
                         loading={loadingSave}
                       >
                         <SaveIcon />
-                        Guardar
+                        {Text({ tid: "save" })}
                       </LoadingButton>
                       <LoadingButton
                         variant="contained"
@@ -463,7 +462,7 @@ const SequencingGateway = () => {
                         disabled={!userWritePermissions}
                       >
                         <ContentPasteGoIcon />
-                        Liberar
+                        {Text({ tid: "liberate" })}
                       </LoadingButton>
                     </ButtonGroup>
                   </Grid>

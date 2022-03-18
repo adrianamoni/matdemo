@@ -29,28 +29,28 @@ const InfoOE = () => {
   let processedData = [];
   if (productionData) {
     processedData = [
-      { Wo: productionData.wo_id },
-      { Estado: productionData.state_desc },
+      { wo: productionData.wo_id },
+      { state: productionData.state_desc },
       {
-        "Inicio teor.": dateFormater({
+        theorerticalStart: dateFormater({
           date: productionData.sched_start_time_local,
           type: "fecha-hora",
         }),
       },
       {
-        "Inicio Real": dateFormater({
+        actualStart: dateFormater({
           date: productionData.act_start_time_local,
           type: "fecha-hora",
         }),
       },
       {
-        "Cant. a fabricar": `${productionData.qty_reqd} ${productionData.uomAbreviacion}`,
+        qtyToManufacture: `${productionData.qty_reqd} ${productionData.uomAbreviacion}`,
       },
       {
-        "Cant.Buena": `${productionData.qty_prod} ${productionData.uomAbreviacion}`,
+        goodQty: `${productionData.qty_prod} ${productionData.uomAbreviacion}`,
       },
       {
-        "Cant.Rechazada": `${productionData.qty_rejected} ${productionData.uomAbreviacion}`,
+        deniedQty: `${productionData.qty_rejected} ${productionData.uomAbreviacion}`,
       },
     ];
   }
@@ -121,8 +121,12 @@ const InfoOE = () => {
                         <Grid item xs={6}>
                           <Typography>
                             <strong>
-                              {Object.keys(item).length > 0 &&
-                                Object.keys(item)}
+                              {/* Object.keys(item) */}
+                              {Object.keys(item).length > 0 ? (
+                                Text({ tid: Object.keys(item) })
+                              ) : (
+                                <></>
+                              )}
                             </strong>
                           </Typography>
                         </Grid>
@@ -130,7 +134,7 @@ const InfoOE = () => {
                           <Typography align="right">
                             <span
                               style={
-                                item.hasOwnProperty("Estado")
+                                item.hasOwnProperty("state")
                                   ? {
                                       paddingInline: "12px",
                                       backgroundColor: background,

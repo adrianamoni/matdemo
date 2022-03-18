@@ -323,7 +323,9 @@ const InterruptionManager = () => {
           </Grid>
         )}
         <Grid item xs={12} sm={12} md={12} lg={12} xl={2}>
-          <Typography variant="h5">Gestión de Paros</Typography>
+          <Typography variant="h5">
+            {Text({ tid: "interruptionManager" })}
+          </Typography>
         </Grid>
 
         <Grid item xs={12} sm={12} md={12} lg={12} xl={10}>
@@ -334,15 +336,17 @@ const InterruptionManager = () => {
                   variant="outlined"
                   onClick={() => setPendingsFilter(!pendingsFilter)}
                 >
-                  {pendingsFilter ? `Pendientes` : `Históricos`}
+                  {pendingsFilter
+                    ? Text({ tid: "pendings" })
+                    : Text({ tid: "historical" })}
                 </Button>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={3}>
               <FormControl fullWidth>
-                <InputLabel>Sección</InputLabel>
+                <InputLabel>{Text({ tid: "section" })}</InputLabel>
                 <Select
-                  label="Sección"
+                  label={Text({ tid: "section" })}
                   onChange={(e) => setSelectedReason(e.target.value)}
                   value={selectedReason}
                 >
@@ -355,12 +359,12 @@ const InterruptionManager = () => {
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={3}>
               <FormControl fullWidth>
-                <InputLabel>Motivo</InputLabel>
+                <InputLabel> {Text({ tid: "reason" })}</InputLabel>
                 <Select
                   disabled={!selectedReason}
                   value={specificReason}
                   onChange={(e) => setSpecificReason(e.target.value)}
-                  label="Motivo"
+                  label={Text({ tid: "reason" })}
                 >
                   {specificDropdown &&
                     specificDropdown.map((item) => (
@@ -371,9 +375,9 @@ const InterruptionManager = () => {
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={2}>
               <FormControl fullWidth>
-                <InputLabel>Línea</InputLabel>
+                <InputLabel>{Text({ tid: "line" })}</InputLabel>
                 <Select
-                  label="Línea"
+                  label={Text({ tid: "line" })}
                   value={lineFilter}
                   onChange={(e) => setLineFilter(e.target.value)}
                 >
@@ -415,7 +419,7 @@ const InterruptionManager = () => {
         ) : (
           <Grid item xs={12}>
             <Alert variant="outlined" severity="info">
-              No hay paros que coincidan con los filtros aplicados
+              {Text({ tid: "noInterruptions" })}
             </Alert>
           </Grid>
         )}

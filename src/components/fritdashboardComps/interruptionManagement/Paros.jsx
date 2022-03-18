@@ -5,6 +5,7 @@ import {
   globalDataContext,
   navigationDataContext,
 } from "../../../context/ContextProvider";
+import Text from "../../../languages/Text";
 
 const Paros = ({ alert, data }) => {
   const { navigationData, setNavigationData } = useContext(
@@ -42,14 +43,14 @@ const Paros = ({ alert, data }) => {
             color={alert && "error"}
             className="title"
           >
-            PAROS
+            {Text({ tid: "interruptions" })}
           </Typography>
         </Grid>
 
         <Grid item xs={12} /* sx={{ height: "100%" }} */>
           <Grid container sx={{ alignItems: "center" }}>
             <Grid item xs={6} sm={6} md={6} lg={6} align="left">
-              <strong>Paros pendientes</strong>
+              <strong>{Text({ tid: "pendingInterruptions" })}</strong>
             </Grid>
             <Grid item xs={6} sm={6} md={6} lg={6} align="right">
               {pendingInterruptions?.data.length || "-"}

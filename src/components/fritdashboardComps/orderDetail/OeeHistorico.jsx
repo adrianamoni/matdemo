@@ -98,7 +98,7 @@ const OEEHistorico = () => {
       <Grid container sx={{ height: "100%" }}>
         <Grid item xs={12}>
           <Typography align="center" variant="h6" component="h6">
-            OEE TURNO
+            {Text({ tid: "turnOee" })}
           </Typography>
         </Grid>
 

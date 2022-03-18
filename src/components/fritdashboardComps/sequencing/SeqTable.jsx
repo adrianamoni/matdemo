@@ -132,14 +132,14 @@ const SeqTable = ({
             <TableHead>
               <TableRow>
                 <TableCell></TableCell>
-                <TableCell>Fecha Inicio</TableCell>
-                <TableCell>Fecha Fin</TableCell>
-                <TableCell>Estado</TableCell>
+                <TableCell>{Text({ tid: "initDate" })}</TableCell>
+                <TableCell>{Text({ tid: "endDate" })}</TableCell>
+                <TableCell>{Text({ tid: "state" })}</TableCell>
                 <TableCell>Material</TableCell>
-                <TableCell>Id Orden</TableCell>
-                <TableCell>Línea</TableCell>
-                <TableCell>Personas</TableCell>
-                <TableCell>Cantidad</TableCell>
+                <TableCell>{Text({ tid: "orderId" })}</TableCell>
+                <TableCell>{Text({ tid: "line" })}</TableCell>
+                <TableCell>{Text({ tid: "people" })}</TableCell>
+                <TableCell>{Text({ tid: "quantity" })}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

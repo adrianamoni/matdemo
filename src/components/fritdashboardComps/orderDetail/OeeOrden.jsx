@@ -45,7 +45,7 @@ const OeeOrden = () => {
       <Grid container sx={{ height: "100%" }}>
         <Grid item xs={12}>
           <Typography align="center" variant="h6" component="h6">
-            OEE ORDEN
+            {Text({ tid: "orderOee" })}
           </Typography>
         </Grid>
 

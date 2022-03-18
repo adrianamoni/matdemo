@@ -37,7 +37,7 @@ const titles = {
   "/secuenciacion": "sequencing",
   "/detalle-orden": "orderDetail",
   "/ordenes": "orderManagement",
-  "/gestor-paros": "interruptionManagement",
+  "/gestor-paros": "interruptionManager",
 };
 
 const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
@@ -49,7 +49,6 @@ const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
     moment().format("DD/MM/YYYY, HH:mm")
   );
   const { globalData, setGlobalData } = useContext(globalDataContext);
-  const { lineData } = globalData;
   const { lineUsers, setLineUsers } = useContext(lineUsersContext);
   const { loggedUser } = useContext(loginContext);
   const { setformWidget } = useContext(formContext);
@@ -66,7 +65,10 @@ const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
           filterItem: {
             column: "ent_name",
             dataType: "STRING",
-            value: pathname === "/limpieza" ? "LIM01" : lineData.entName,
+            value:
+              pathname === "/limpieza"
+                ? "LIM01"
+                : globalData?.lineData?.entName || null,
             filterItemType: "Equal",
             checkDBNull: false,
           },
@@ -86,7 +88,7 @@ const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
     };
 
     if (
-      lineData &&
+      globalData.lineData &&
       pathname !== "/secuenciacion" &&
       /* pathname !== "/contenedor" && */
       pathname !== "/pdf" &&
@@ -103,7 +105,7 @@ const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
       localStorage.removeItem("lineUsers");
     };
     //eslint-disable-next-line
-  }, [lineData, pathname]);
+  }, [globalData.lineData, pathname]);
 
   useEffect(() => {
     setformWidget({});

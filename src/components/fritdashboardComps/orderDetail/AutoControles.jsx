@@ -6,6 +6,7 @@ import {
   navigationDataContext,
 } from "../../../context/ContextProvider";
 import { dateFormater } from "./helper";
+import Text from "../../../languages/Text";
 
 const AutoControles = ({ data, alert }) => {
   const { navigationData, setNavigationData } = useContext(
@@ -50,18 +51,14 @@ const AutoControles = ({ data, alert }) => {
             color={alert && "error"}
             className="title"
           >
-            AUTO CONTROLES
+            {Text({ tid: "selfControls" })}
           </Typography>
         </Grid>
 
         <Grid item xs={12} /* sx={{ height: "100%" }} */>
           <Grid container sx={{ alignItems: "center" }}>
             <Grid item xs={6} sm={6} md={6} lg={6} align="left">
-              <strong>
-                Fecha último
-                <br />
-                auto control
-              </strong>
+              <strong>{Text({ tid: "lastSelfControlDate" })}</strong>
             </Grid>
             <Grid item xs={6} sm={6} md={6} lg={6} align="right">
               {samplesData

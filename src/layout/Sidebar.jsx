@@ -4,12 +4,16 @@ import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import FeedIcon from "@mui/icons-material/Feed";
 import Text from "../languages/Text";
-import { languageContext, colorModeContext } from "../context/ContextProvider";
+import {
+  languageContext,
+  userPreferencesContext,
+} from "../context/ContextProvider";
 import DrawerComp from "./DrawerComp";
 
 const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth, window }) => {
   const language = useContext(languageContext);
-  const { colorMode } = useContext(colorModeContext);
+  const { userPreferences } = useContext(userPreferencesContext);
+  const { colorMode } = userPreferences;
 
   const container =
     window !== undefined ? () => window().document.body : undefined;

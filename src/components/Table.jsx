@@ -6,8 +6,8 @@ import Text from "./../languages/Text";
 
 const Table = () => {
   const columns = [
-    { field: "id", headerName: `${Text({ tid: "id" })}`, width: 70 },
-    { field: "name", headerName: `${Text({ tid: "name" })}`, width: 130 },
+    { field: "id", headerName: `${Text({ tid: "id" })}`, flex: 1 },
+    { field: "name", headerName: `${Text({ tid: "name" })}`, flex: 1 },
     { field: "username", headerName: `${Text({ tid: "user" })}`, flex: 1 },
     {
       field: "email",

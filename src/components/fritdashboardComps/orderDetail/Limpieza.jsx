@@ -23,6 +23,7 @@ import { handleOperationAction } from "../../fritdashboardTabs/General/helper";
 import UseFetchMemory from "../../customHooks/UseFetchMemory";
 import LastCleaning from "./LastCleaning";
 import useWindowSize from "../../customHooks/UseWindowsSize";
+import Text from "../../../languages/Text";
 
 const Limpieza = () => {
   const { width } = useWindowSize();
@@ -134,7 +135,7 @@ const Limpieza = () => {
           <Grid item xs={12} sm={12} md={12} lg={12} xl={5}>
             <Grid container rowSpacing={2} textAlign="left">
               <Grid item xs={6}>
-                <strong>Descripción</strong>
+                <strong>{Text({ tid: "description" })}</strong>
               </Grid>
               <Grid item xs={6} textAlign="right">
                 {cleaningData.DuracionJob === "0"

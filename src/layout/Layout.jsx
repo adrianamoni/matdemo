@@ -7,7 +7,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material";
-import { colorModeContext } from "../context/ContextProvider";
+import { userPreferencesContext } from "../context/ContextProvider";
 import { getPalette } from "./palettes";
 import { grey } from "@mui/material/colors";
 import useWindowSize from "../components/customHooks/UseWindowsSize";
@@ -16,6 +16,9 @@ const drawerWidth = 220;
 
 function Layout(props) {
   const { window } = props;
+  const userPreferencesCtxt = useContext(userPreferencesContext);
+  const colorMode = userPreferencesCtxt?.userPreferences?.colorMode || "light";
+
   /*   const [height, setHeight] = useState();
   const containerComp = useRef(null); */
 
@@ -25,7 +28,6 @@ function Layout(props) {
     setMobileOpen(!mobileOpen);
   };
 
-  const { colorMode } = useContext(colorModeContext);
   /* palettes: 'oasys', 'grey-orange','green-orange', 'darkblue-lightblue','pink-purple','purple-green' */
   const palette = getPalette("grey-orange", colorMode);
 

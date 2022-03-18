@@ -45,7 +45,7 @@ const es = {
   quality: "Calidad",
   quantity: "Cantidad",
   readRegistration: "Leer Matrícula",
-  reason: "Razón",
+  reason: "Motivo",
   registration: "Matrícula",
   send: "Enviar",
   status: "Estado",
@@ -111,8 +111,28 @@ const es = {
   createOrder: "Crear Orden",
   orderDetail: "Detalle Orden",
   orderManagement: "Gestor de Órdenes",
-  interruptionManagement: "Gestor de Paros",
   simulation: "Simulación",
+  operation: "Operación",
+  lines: "Líneas",
+  generateNeeds: "Generar Necesidades",
+  refresh: "Actualizar",
+  liberate: "Liberar",
+  orderId: "ID Orden",
+  people: "Personas",
+  turnOee: "OEE TURNO",
+  orderOee: "OEE ORDEN",
+  theorerticalStart: "Inicio teórico",
+  actualStart: "Inicio real",
+  qtyToManufacture: "Cantidad a fabricar",
+  goodQty: "Cantidad buena",
+  deniedQty: "Cantidad rechazada",
+  wo: "Wo",
+  lastSelfControlDate: "Fecha último auto control",
+  pendingInterruptions: "Paros pendientes",
+
+  /* NOTIFICATION MESSAGES */
+  loginSuccess: "¡Usuario logueado correctamente!",
+  noInterruptions: "No hay paros que coincidan con los filtros aplicados",
 };
 
 export default es;

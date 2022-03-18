@@ -50,20 +50,18 @@ const LastCleaning = () => {
         <strong>Estado: </strong>
       </Grid>
       <Grid item xs={6} textAlign="right">
-        <Typography
-          variant="body2"
-          component="p"
-          sx={{
-            border: "1px solid",
-            borderColor: state === "Limpio" ? "success.main" : "warning.main",
-            fontWeight: "bold",
-            padding: "0.3em",
-            color: state === "Limpio" ? "success.main" : "warning.main",
-            backgroundColor:
-              state === "Limpio" ? "background.success" : "background.warning",
-          }}
-        >
-          {state || "-"}
+        <Typography>
+          <span
+            style={{
+              paddingInline: "12px",
+              backgroundColor:
+                state === "Limpio"
+                  ? "lightskyblue" //</Typography>"#70f5a7" //background.success"
+                  : "#f5cb70", // "background.warning"
+            }}
+          >
+            {state.toUpperCase() || "-"}
+          </span>
         </Typography>
       </Grid>
     </>

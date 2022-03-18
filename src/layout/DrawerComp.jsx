@@ -152,10 +152,12 @@ const DrawerComp = () => {
         <div>
           <Toolbar
             sx={{
-              backgroundColor: "background.grey2",
+              backgroundColor: "background.grey3",
               /* color: "text", */
-              height: 65,
+              /*         height: 52, */
               textAlign: "center",
+              border: "none",
+              boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.2)",
             }}
           >
             <StyledLink to={"/"}>
@@ -163,25 +165,24 @@ const DrawerComp = () => {
                 variant="h5"
                 noWrap
                 sx={{
-                  color: "whitesmoke",
+                  color: "#111",
                   fontWeight: 700,
-
-                  marginBottom: "-18px",
+                  marginBottom: "-20px",
                 }}
               >
                 <img
-                  style={{ width: "85%" }}
-                  src="/images/oasys_logo2.png"
+                  style={{ width: "80%" }}
+                  src="images/oasys_logo2.png"
                   alt="Oasys"
                 />
                 {/*  APP LOGO */}
               </Typography>
             </StyledLink>
           </Toolbar>
-          <Divider />
+          {/*  <Divider /> */}
           <List id="sidebar-list">
             {filteredItems.map((link) => (
-              <StyledLink key={link.id} to={link.path} classes>
+              <StyledLink key={link.id} to={link.path} /* classes */>
                 <ListItem button>
                   <ListItemIcon
                     sx={{

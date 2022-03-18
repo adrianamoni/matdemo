@@ -1,10 +1,11 @@
 import { grey } from "@mui/material/colors";
 import React, { useContext } from "react";
 import ReactApexChart from "react-apexcharts";
-import { colorModeContext } from "../../context/ContextProvider";
+import { userPreferencesContext } from "../../context/ContextProvider";
 
 const HalfDoughnut = ({ value, color }) => {
-  const { colorMode } = useContext(colorModeContext);
+  const { userPreferences } = useContext(userPreferencesContext);
+  const { colorMode } = userPreferences;
 
   /**
    * @param {{value:Array}}

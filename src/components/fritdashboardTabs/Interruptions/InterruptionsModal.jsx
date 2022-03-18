@@ -45,8 +45,12 @@ const InterruptionsModal = ({
 
   //useContext
   const { globalData } = useContext(globalDataContext);
-  const { woId, operId, seqNo } = globalData.orderData;
-  const { entId, entName } = globalData.lineData;
+  let entId, entName;
+  if (globalData.lineData) {
+    entId = globalData.lineData.entId;
+    entName = globalData.lineData.entName;
+  } else {
+  }
   const { formWidget, setformWidget } = useContext(formContext);
   const { selectedRowsIds, setSelectedRowsIds } = useContext(
     selectedRowsIdsContext

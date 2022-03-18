@@ -9,7 +9,6 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
-import { colorModeContext } from "../../../context/ContextProvider";
 import WindowIcon from "@mui/icons-material/Window";
 import CropDinIcon from "@mui/icons-material/CropDin";
 import Variables from "./Variables";
@@ -21,8 +20,6 @@ function TabPanel(props) {
 }
 
 const Signals = () => {
-  const { colorMode, setColorMode } = useContext(colorModeContext);
-
   let loading;
 
   const [value, setValue] = useState(0);

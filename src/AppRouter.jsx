@@ -22,16 +22,16 @@ import InterruptionManager from "./components/fritdashboardComps/interruptionMan
 import SequencingGateway from "./components/fritdashboardComps/sequencing/SequencingGateway";
 
 const AppRouter = () => {
-  const { setPageSize } = useContext(pageSizeContext);
+  const pageSizeCtxt = useContext(pageSizeContext);
   const size = useWindowSize();
 
   //useEffect for hiding the switch on table layout
   useEffect(() => {
     console.log("size", size);
-    setPageSize(size);
+    size && pageSizeCtxt && pageSizeCtxt.setPageSize(size);
   }, [size]);
   useEffect(() => {
-    setPageSize(size);
+    size && pageSizeCtxt && pageSizeCtxt.setPageSize(size);
   }, []);
 
   return (
