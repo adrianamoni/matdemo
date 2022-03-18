@@ -19,7 +19,7 @@ const palettes = (isDark) => {
         text: isDark ? "#000" : "#fff",
       },
       secondary: {
-        main: isDark ? "#ffbb93" : "#ff8a65",
+        main: isDark ? "#FF7149" : "#FF7149",
         contrastText: isDark ? "#000" : "#fff",
         text: isDark ? "#000" : "#fff",
       },

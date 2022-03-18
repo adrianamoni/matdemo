@@ -143,6 +143,7 @@ const Quality = () => {
               columns={samplesTableColumns}
               multipleSelection={false}
               tableName="samples"
+              pagination={10}
             />
           </Grid>
         )}

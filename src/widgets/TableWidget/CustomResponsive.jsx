@@ -28,6 +28,14 @@ const CustomResponsive = ({ keys, rows, columns }) => {
     setCurrentPage(v);
   };
 
+  /* onSelectionModelChange={(newSelectionModel) => {
+                setSelectedRowsIds({
+                  ...selectedRowsIds,
+                  [tableName]: newSelectionModel,
+                });
+              }}
+              selectionModel={selectedRowsIds[tableName]} */
+
   return (
     <div>
       <Pagination count={totalPages} onChange={handlePagination} />

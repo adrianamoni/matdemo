@@ -22,7 +22,6 @@ export const emptyContainerRequest = async ({ lineaName, woId, operId }) => {
       hide: response.responseHide,
     });
   } else {
-    setLoadingEmptyContainer(false);
     createNotification({
       status: "success",
       msg: "¡Contenedor solicitado correctamente!¡",
@@ -48,7 +47,6 @@ export const provisionRequestRequest = async ({ lineaName, woId, operId }) => {
       hide: response.responseHide,
     });
   } else {
-    setLoadingEmptyContainer(false);
     createNotification({
       status: "success",
       msg: "¡Contenedor solicitado correctamente!¡",
