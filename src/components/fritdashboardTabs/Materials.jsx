@@ -7,12 +7,13 @@ import { Box } from "@mui/system";
 import {
   globalDataContext,
   selectedRowsIdsContext,
+  selectedRowsContext,
   formContext,
 } from "../../context/ContextProvider";
 import UseFetchMemory from "../customHooks/UseFetchMemory";
 import ButtonGroupWidget from "../../widgets/buttonGroup/ButtonGroupWidget";
 import { ApiCall } from "../../services/Service";
-import { emptyContainerRequest } from "./helper";
+import { emptyContainerRequest, provisionRequestRequest } from "./helper";
 import { DataGrid } from "@mui/x-data-grid";
 
 const Materials = () => {
@@ -21,9 +22,12 @@ const Materials = () => {
   const { woId, operId, seqNo } = orderData;
   const { formWidget, setformWidget } = useContext(formContext);
   const { selectedRowsIds } = useContext(selectedRowsIdsContext);
+  const { selectedRows, setSelectedRows } = useContext(selectedRowsContext);
   const { materials } = selectedRowsIds;
   const [loadingEmptyContainer, setLoadingEmptyContainer] = useState(false);
   const [loadingProvisioning, setLoadingProvisioning] = useState(false);
+  const [tableData, setTableData] = useState([]);
+  const [cantidades, setCantidades] = useState([]);
   const columns = [
     {
       field: "material",
@@ -75,32 +79,51 @@ const Materials = () => {
       seqNo,
     },
   });
-  let processedData;
-  if (data) {
-    processedData = data.map((el) => ({
-      ...el,
-      material: `${el.item_id} (${el.item_desc})`,
-    }));
-  }
+
+  useEffect(() => {
+    if (data) {
+      let temp = data.map((el) => ({
+        ...el,
+        material: `${el.item_id} (${el.item_desc})`,
+      }));
+      setTableData(temp);
+    }
+  }, [data]);
+
+  //useEffect on change selected row
+  useEffect(() => {
+    if (
+      selectedRowsIds["materials"] &&
+      selectedRowsIds["materials"].length > 0
+    ) {
+      let tempRows = selectedRowsIds["materials"].map((rowId) => {
+        return tableData.filter((material) => {
+          return material.id === rowId;
+        });
+      });
+      setSelectedRows(tempRows);
+    }
+  }, [selectedRowsIds]);
+
+  useEffect(() => {
+    let tempQtys = selectedRows.map((row) => {
+      return {
+        itemId: row[0].item_id,
+        CantidadAprov: row[0].CantidadAprov,
+      };
+    });
+    setCantidades(tempQtys);
+  }, [selectedRows]);
 
   const handleProvisioningRequest = async () => {
     setLoadingProvisioning(true);
-    let cantidades;
-    if (materials && materials.length > 0) {
-      cantidades = data
-        .filter((el) => materials.find((el2) => el.id === el2))
-        .map((item) => ({
-          itemId: item.item_id,
-          CantidadAprov: item.qtyAprov, //cantidad del input
-        }));
-    }
 
-    /* await provisionRequestRequest({
-      lineaName: lineData.entName,
+    await provisionRequestRequest({
+      lineaName: lineData.entId,
       woId,
       operId,
       items: cantidades,
-    }); */
+    });
 
     setLoadingProvisioning(false);
   };
@@ -120,7 +143,8 @@ const Materials = () => {
       <Grid item xs={12}>
         <TableWidget
           multipleSelection={true}
-          data={processedData}
+          data={tableData}
+          setData={setTableData}
           columns={columns}
           tableName="materials"
           pagination={6}

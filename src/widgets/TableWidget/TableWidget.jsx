@@ -11,15 +11,13 @@ import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import useWindowSize from "../../components/customHooks/UseWindowsSize";
 import { searchbarFilter } from "./searchBarHelper";
 import Text from "./../../languages/Text";
-import {
-  formContext,
-  selectedRowsIdsContext,
-} from "../../context/ContextProvider";
+import { selectedRowsIdsContext } from "../../context/ContextProvider";
 import { darken, lighten } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";
 
 const TableWidget = ({
   data,
+  setData,
   columns,
   multipleSelection,
   tableName,
@@ -36,13 +34,6 @@ const TableWidget = ({
   //searchbar
   const [searchInput, setsearchInput] = useState("");
   const [renderData, setrenderData] = useState(undefined);
-  const [editRowsModel, setEditRowsModel] = useState({});
-  const { formWidget, setformWidget } = useContext(formContext);
-  const handleEditRowsModelChange = useCallback((model) => {
-    console.log("model", model);
-    setformWidget({ ...formWidget, materials: model });
-    setEditRowsModel(model);
-  }, []);
 
   /**
    * columns example
@@ -132,6 +123,16 @@ const TableWidget = ({
     }
   }, [searchInput, data]);
 
+  const handleCellEditCommit = (params, event, details) => {
+    let temp = data.map((el) => {
+      if (el.id === params.id) {
+        el.CantidadAprov = params.value;
+      }
+      return el;
+    });
+    setData(temp);
+  };
+
   return (
     <TableContainer
       sx={{
@@ -192,9 +193,7 @@ const TableWidget = ({
               getRowClassName={(params) =>
                 `super-app-theme--${params.row.color}`
               }
-              editRowsModel={editRowsModel}
-              onEditRowsModelChange={handleEditRowsModelChange}
-              /*  onCellEditCommit */
+              onCellEditCommit={handleCellEditCommit}
             />
           </div>
         ) : (
