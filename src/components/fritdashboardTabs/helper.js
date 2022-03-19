@@ -1,4 +1,3 @@
-import Text from "../../languages/Text";
 import {
   empty_container_request,
   tab_materials_provisioning_request,
@@ -25,7 +24,7 @@ export const emptyContainerRequest = async ({ lineaName, woId, operId }) => {
   } else {
     createNotification({
       status: "success",
-      msg: Text({ tid: "containerSuccessfullyRequested" }),
+      msg: "containerSuccessfullyRequested",
       hide: response.responseHide,
     });
   }

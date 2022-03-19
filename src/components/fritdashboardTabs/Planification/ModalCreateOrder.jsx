@@ -33,10 +33,7 @@ const ModalCreateOrder = ({ open, close, setRefreshMain }) => {
   } */
   const handleSubmit = async () => {
     setLoadingSubmit(true);
-    console.log("materialOptions", materialOptions);
-    console.log("materialOptions2", material);
     const findEl = materialOptions.find((el) => el.itemId === material);
-    console.log("materialOptions3", findEl);
     if (findEl) {
       const response = await ApiCall({
         params: create_order_manually({
@@ -54,12 +51,12 @@ const ModalCreateOrder = ({ open, close, setRefreshMain }) => {
       } else {
         createNotification({
           status: "success",
-          msg: Text({ tid: "orderSuccessfullyCreated" }),
+          msg: "orderSuccessfullyCreated",
           hide: 1,
         });
       }
     }
-
+    handleClose();
     setLoadingSubmit(false);
   };
 

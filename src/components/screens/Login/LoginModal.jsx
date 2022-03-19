@@ -51,7 +51,7 @@ const LoginModal = ({ loginModal, setLoginModal }) => {
 
       createNotification({
         status: "success",
-        msg: Text({ tid: "loginSuccess" }),
+        msg: "loginSuccess",
         hide: response.responseHide,
       });
       setformWidget({ ...formWidget, loginForm: [] });

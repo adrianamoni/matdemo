@@ -143,14 +143,14 @@ const en = {
   selectSample: "Select sample",
   create: "Create",
   /* NOTIFICATION MESSAGES */
-  loginSuccess: "User logged!",
+  loginSuccess: "User logged in!",
   noInterruptionsMatchingFilter:
     "There are no interruptions matching the applied filters",
   noInterruptions: "There are no interruptions",
   noQmpsec: "There are no QMPsec defined for this material",
   ordersSavedSuccessfully: "Orders saved successfully!",
   noOrdersToSave: "There are no orders to save",
-  releasing: "Releasing",
+  releasing: "Releasing orders...",
   ordersReleasedSucessfully: "Orders successfully released on",
   noOrdersToRelease: "There are no orders to release",
   splitSuccess: "Order successfully splited!",
@@ -172,9 +172,12 @@ const en = {
   sampleSuccess: "Sample successfully generated!",
   dataSavedSuccess: "Data saved successfully!",
   logoutSuccess: "Session has been closed!",
-  operatorAssignSuccess: "Operator correctly assigned to",
+  operatorAssignSuccess: "Operator correctly assigned to line!",
   operatorDeassignSuccess: "Operator deassigned successfully!",
   noOrdersInSection: "There are no orders in this section",
+  releasingOrdersMessage:
+    "The orders assigned to a line, which are currently in the 'New' state, will be released",
+  doYouWantToSaveChanges: "Do you want to save changes?",
 };
 
 export default en;

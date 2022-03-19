@@ -151,7 +151,7 @@ const es = {
   noQmpsec: "No hay qmspec definida para este material",
   ordersSavedSuccessfully: "¡Órdenes guardadas correctamente!",
   noOrdersToSave: "No hay ordenes para guardar",
-  releasing: "Liberando",
+  releasing: "Liberando órdenes...",
   ordersReleasedSucessfully: "¡Órdenes liberadas correctamente en",
   noOrdersToRelease: "No hay órdenes a liberar",
   splitSuccess: "¡Operación dividida correctamente!",
@@ -173,9 +173,12 @@ const es = {
   sampleSuccess: "¡Muestra generada correctamente!",
   dataSavedSuccess: "¡Datos guardados correctamente!",
   logoutSuccess: "¡Se ha cerrado la sesión!",
-  operatorAssignSuccess: "¡Operario asignado correctamente a",
+  operatorAssignSuccess: "¡Operario asignado correctamente a línea!",
   operatorDeassignSuccess: "¡Operario desasignado correctamente!",
   noOrdersInSection: "No hay ordenes en esta sección",
+  releasingOrdersMessage:
+    "Se liberaran las ordenes asignadas a línea, que actualmente estan en estado 'New'",
+  doYouWantToSaveChanges: "¿Quieres guardar los cambios?",
 };
 
 export default es;

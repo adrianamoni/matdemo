@@ -51,7 +51,7 @@ const SplitModal = ({ open, close, ofSelected, setRefreshMain }) => {
       setLoading(false);
       createNotification({
         status: "success",
-        msg: Text({ tid: "splitSuccess" }),
+        msg: "splitSuccess",
         hide: response.responseHide,
       });
     }

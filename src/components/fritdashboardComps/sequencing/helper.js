@@ -49,7 +49,6 @@ export const getData = async ({ userId, operId }) => {
       code: response.responseError,
       msg: response.responseMsg,
       hide: response.responseHide,
-      size: "huge",
     });
   } else {
     newData = response.responseData.map((data) => {
@@ -431,7 +430,7 @@ export const saveOrders = async (array) => {
   } else {
     createNotification({
       status: "success",
-      msg: Text({ tid: "ordersSavedSuccessfully" }),
+      msg: "ordersSavedSuccessfully",
       hide: response.responseHide,
     });
     return true;

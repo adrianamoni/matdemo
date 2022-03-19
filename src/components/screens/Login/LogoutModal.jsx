@@ -47,7 +47,7 @@ const LogoutModal = ({ logoutModal, setLogoutModal }) => {
     } else {
       createNotification({
         status: "success",
-        msg: Text({ tid: "logoutSuccess" }),
+        msg: "logoutSuccess",
         hide: response.responseHide,
       });
     }

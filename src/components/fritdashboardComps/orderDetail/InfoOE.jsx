@@ -12,6 +12,8 @@ import { dateFormater, operation_states } from "./helper";
 import { handleOperationAction } from "../../fritdashboardTabs/General/helper";
 import { propsByState } from "../../../helpers/props";
 import ConfirmationDialog from "../../alerts/ConfirmationDialog";
+import { createNotification } from "../../alerts/NotificationAlert";
+import { toast } from "react-toastify";
 
 const InfoOE = () => {
   const { globalData } = useContext(globalDataContext);
@@ -63,7 +65,10 @@ const InfoOE = () => {
       operId: productionData.oper_id,
       seqNo: productionData.seq_no,
     });
-    setTimeout(() => setLoadingPlay(false), 1000);
+
+    setTimeout(() => {
+      setLoadingPlay(false);
+    }, 1000);
   };
 
   const handlePause = async () => {
@@ -74,7 +79,9 @@ const InfoOE = () => {
       operId: productionData.oper_id,
       seqNo: productionData.seq_no,
     });
-    setTimeout(() => setLoadingPause(false), 1000);
+    setTimeout(() => {
+      setLoadingPause(false);
+    }, 1000);
   };
 
   const handleStop = async () => {
@@ -86,7 +93,9 @@ const InfoOE = () => {
       operId: productionData.oper_id,
       seqNo: productionData.seq_no,
     });
-    setTimeout(() => setLoadingStop(false), 1000);
+    setTimeout(() => {
+      setLoadingStop(false);
+    }, 1000);
   };
 
   const handleConfirmStop = async () => {
@@ -119,7 +128,7 @@ const InfoOE = () => {
                     <ListItem>
                       <Grid container>
                         <Grid item xs={6}>
-                          <Typography>
+                          <Typography sx={{ fontSize: "1.1rem" }}>
                             <strong>
                               {/* Object.keys(item) */}
                               {Object.keys(item).length > 0 ? (
@@ -131,7 +140,7 @@ const InfoOE = () => {
                           </Typography>
                         </Grid>
                         <Grid item xs={6}>
-                          <Typography align="right">
+                          <Typography align="right" sx={{ fontSize: "1.1rem" }}>
                             <span
                               style={
                                 item.hasOwnProperty("state")

@@ -54,15 +54,12 @@ const OperatorAssignment = ({ line, modal, close }) => {
   //fetch data
   const fetchData = async () => {
     setLoading(true);
-    /*     const localTerminal = terminal
-      ? terminal
-      : localStorage.getItem("FritTerminal"); */
 
     let response = await MemoryDatabaseCall({
       params: line_assignment({
         name: "terminal",
         dataType: "String",
-        value: "1" /* localTerminal === "asignacion" ? null : localTerminal */,
+        value: "1",
       }),
       url: "queryDataAsync",
     });
@@ -145,7 +142,7 @@ const OperatorAssignment = ({ line, modal, close }) => {
       (e) => e.ent_name === selectedRows[0].ent_name
     );
     if (param) {
-      /* const response = await ApiCall({
+      const response = await ApiCall({
         params: screen_operatorAssignment_assign({
           userId: formWidget.operatorForm.operator,
           entId: param.entId,
@@ -160,22 +157,19 @@ const OperatorAssignment = ({ line, modal, close }) => {
           msg: response.responseMsg,
           hide: response.responseHide,
         });
-      } else { */
-      const successMsg = Text({ tid: "operatorAssignSuccess" });
-      setLoading(false);
-      createNotification({
-        status: "success",
-        msg: `${successMsg} ${param.ent_name}`,
-        hide: 1,
-      }); //response.responseHide,
-      /* });
+      } else {
+        setLoading(false);
+        createNotification({
+          status: "success",
+          msg: "operatorAssignSuccess",
+          hide: 1,
+        });
       }
     }
 
     setformWidget({ ...formWidget, operatorForm: [] });
     setRefreshData(true);
-    close(false); */
-    }
+    close(false);
   };
 
   return loading ? (

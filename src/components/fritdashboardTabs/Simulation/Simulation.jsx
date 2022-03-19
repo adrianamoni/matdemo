@@ -102,7 +102,7 @@ const Simulation = () => {
         if (response.responseCode === "0") {
           createNotification({
             status: "success",
-            msg: Text({ tid: "dataSavedSuccess" }),
+            msg: "dataSavedSuccess",
             hide: 1,
           });
         }

@@ -80,7 +80,7 @@ const ProductionsModal = ({
       setLoading(false);
       createNotification({
         status: "success",
-        msg: Text({ tid: "manualProductionSuccess" }),
+        msg: "manualProductionSuccess",
         hide: 1,
       });
       closeModal();
@@ -160,7 +160,7 @@ const ProductionsModal = ({
       setLoading(false);
       createNotification({
         status: "success",
-        msg: Text({ tid: "productionCorrection" }),
+        msg: "productionCorrection",
         hide: response.responseHide,
       });
       closeModal();
@@ -261,7 +261,7 @@ const ProductionsModal = ({
       setLoading(false);
       createNotification({
         status: "success",
-        msg: Text({ tid: "addWastageSuccess" }),
+        msg: "addWastageSuccess",
         hide: 1,
       });
       closeModal();

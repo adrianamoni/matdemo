@@ -86,7 +86,7 @@ const ModalGenerateSample = ({ setRefreshMain }) => {
         setLoadingSubmit(false);
         createNotification({
           status: "success",
-          msg: Text({ tid: "sampleSuccess" }),
+          msg: "sampleSuccess",
           hide: response.responseHide,
         });
       }

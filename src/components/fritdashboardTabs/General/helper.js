@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import Text from "../../../languages/Text";
 import {
   screen_of_pause_btn,
@@ -9,12 +10,12 @@ import { createNotification } from "../../alerts/NotificationAlert";
 
 export const handleOperationAction = async ({ type, woId, operId, seqNo }) => {
   const actions = {
-    start: { service: screen_of_start_btn, msg: Text({ tid: "orderStarted" }) },
+    start: { service: screen_of_start_btn, msg: "orderStarted" },
     pause: {
       service: screen_of_pause_btn,
-      msg: Text({ tid: "orderPaused" }),
+      msg: "orderPaused",
     },
-    stop: { service: screen_of_stop_btn, msg: Text({ tid: "orderStopped" }) },
+    stop: { service: screen_of_stop_btn, msg: "orderStopped" },
   };
   const { service, msg } = actions[type];
   const response = await ApiCall({
@@ -28,7 +29,7 @@ export const handleOperationAction = async ({ type, woId, operId, seqNo }) => {
   if (response.responseError) {
     createNotification({
       status: "error",
-      code: response.responseError,
+      /*  code: response.responseError, */
       msg: response.responseMsg,
       hide: response.responseHide,
     });
@@ -40,7 +41,7 @@ export const handleOperationAction = async ({ type, woId, operId, seqNo }) => {
           msg,
           hide: response.responseHide,
         }),
-      1000
+      500
     );
   }
 };

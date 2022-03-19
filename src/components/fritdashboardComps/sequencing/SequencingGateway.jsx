@@ -227,7 +227,7 @@ const SequencingGateway = () => {
     } else {
       createNotification({
         status: "info",
-        msg: Text({ tid: "noOrdersToSave" }),
+        msg: "noOrdersToSave",
         hide: 1,
       });
     }
@@ -260,15 +260,10 @@ const SequencingGateway = () => {
     }));
 
     if (liberateOrders.length > 0) {
-      let orderWord = "ordenes";
-      if (liberateOrders.length === 1) {
-        orderWord = "orden";
-      }
       createNotification({
         status: "info",
-        msg: `${Text({ tid: "releasing" })} ${
-          liberateOrders.length
-        } ${orderWord}...`,
+        msg: "releasing",
+        num: liberateOrders.length,
         hide: 1,
       });
       const response = await ApiCall({
@@ -287,16 +282,14 @@ const SequencingGateway = () => {
         setRefreshMain(true);
         createNotification({
           status: "success",
-          msg: `${Text({ tid: "ordersReleasedSucessfully" })} ${
-            apiData[0].entName
-          }!`,
+          msg: "ordersReleasedSucessfully",
           hide: response.responseHide,
         });
       }
     } else {
       createNotification({
         status: "warning",
-        msg: Text({ tid: "noOrdersToRelease" }),
+        msg: "noOrdersToRelease",
         hide: 1,
       });
     }
@@ -506,17 +499,17 @@ const SequencingGateway = () => {
       {/*  </Container> */}
 
       <ConfirmationDialog
-        title="Liberar Órdenes"
-        msg="Se liberaran las ordenes asignadas a línea, que actualmente estan en estado 'New'"
+        title="release"
+        msg="releasingOrdersMessage"
         open={confirmLiberate}
         close={() => setConfirmLiberate(false)}
         handleConfirm={handleLiberate}
       />
       <ConfirmationDialog
-        title="Liberar Órdenes"
+        title="refresh"
         open={confirmRefresh}
         close={() => setConfirmRefresh(false)}
-        msg="¿Quieres guardar los cambios?"
+        msg="doYouWantToSaveChanges"
         handleCancel={() => handleRefresh({ save: false })}
         handleConfirm={() => handleRefresh({ save: true })}
       />

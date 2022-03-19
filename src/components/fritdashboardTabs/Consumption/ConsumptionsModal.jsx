@@ -89,7 +89,7 @@ const ConsumptionsModal = ({
       setLoading(false);
       createNotification({
         status: "success",
-        msg: Text({ tid: "consumptionCorrection" }),
+        msg: "consumptionCorrection",
         hide: response.responseHide,
       });
       closeModal();
@@ -233,7 +233,7 @@ const ConsumptionsModal = ({
       setLoading(false);
       createNotification({
         status: "success",
-        msg: Text({ tid: "consumptionSubmited" }),
+        msg: "consumptionSubmited",
         hide: response.responseHide,
       });
       closeModal();

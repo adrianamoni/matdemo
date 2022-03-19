@@ -60,7 +60,6 @@ const ContextProvider = (props) => {
     orderDetails: undefined,
     pendingSamples: { alert: undefined, data: undefined },
     pendingInterruptions: { alert: undefined, data: undefined },
-    activeTab: undefined,
   });
   /**MultiLanguage Setup */
   const languageFromStorage = getLanguageFromStorage();
