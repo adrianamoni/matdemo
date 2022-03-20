@@ -31,11 +31,13 @@ import {
 import Text from "../../../languages/Text";
 import { tab_quality_generate_sample } from "../../../services/OFservices";
 import { ApiCall } from "../../../services/Service";
+import ButtonGroupWidget from "../../../widgets/buttonGroup/ButtonGroupWidget";
 import SelectWidget from "../../../widgets/forms/SelectWidget";
+import ModalWidget from "../../../widgets/modalWidget/ModalWidget";
 import { createNotification } from "../../alerts/NotificationAlert";
 import UseFetchMemory from "../../customHooks/UseFetchMemory";
 
-const ModalGenerateSample = ({ setRefreshMain }) => {
+const ModalGenerateSample = ({ showModal, setShowModal, setRefreshMain }) => {
   const { globalData } = useContext(globalDataContext);
   const { orderDetails, orderData } = globalData;
   const { productionData } = orderDetails;
@@ -96,15 +98,14 @@ const ModalGenerateSample = ({ setRefreshMain }) => {
   const handleClose = () => {
     setRefreshMain(true);
     setQmSpec(null);
-    close(false);
+    setShowModal(false);
   };
-
-  return loading ? (
+  const modalContent = loading ? (
     <Box sx={{ width: "100%" }}>
       <LinearProgress variant="indeterminate" color="secondary" />
     </Box>
   ) : data ? (
-    <Grid container spacing={2} sx={{ width: "20em" }}>
+    <>
       <Grid item xs={12}>
         <FormControl fullWidth>
           <InputLabel>{Text({ tid: "selectSample" })}</InputLabel>
@@ -121,23 +122,41 @@ const ModalGenerateSample = ({ setRefreshMain }) => {
         </FormControl>
       </Grid>
       <Grid item xs={12} sx={{ display: "flex" }} justifyContent="flex-end">
-        <LoadingButton
-          disabled={!qmSpec && qmSpec !== 0}
-          onClick={() => handleGenerateSample()}
-          variant="contained"
-          color="primary"
-          loading={loadingSubmit}
-        >
-          {Text({ tid: "send" })}
-        </LoadingButton>
+        <ButtonGroupWidget
+          position="right"
+          buttons={[
+            {
+              text: "cancel",
+              color: "primary",
+              onClick: handleClose,
+              disabled: false,
+            },
+            {
+              text: "send",
+              color: "secondary",
+              onClick: handleGenerateSample,
+              disabled: !qmSpec && qmSpec !== 0,
+            },
+          ]}
+          loading={loading}
+        />
       </Grid>
-    </Grid>
+    </>
   ) : (
     <Grid item xs={12}>
       <Alert variant="outlined" severity="info">
         {Text({ tid: "noQmspec" })}
       </Alert>
     </Grid>
+  );
+
+  return (
+    <ModalWidget
+      open={showModal}
+      close={handleClose}
+      content={modalContent}
+      title={"registerTest"}
+    />
   );
 };
 export default ModalGenerateSample;

@@ -110,8 +110,14 @@ const ProductionsModal = ({
           position="right"
           buttons={[
             {
-              text: "send",
+              text: "cancel",
               color: "primary",
+              onClick: () => setShowModal(false),
+              disabled: false,
+            },
+            {
+              text: "send",
+              color: "secondary",
               onClick: handleSubmitManualProduction,
               disabled: formWidget?.manualProductionForm?.quantity
                 ? false
@@ -160,7 +166,7 @@ const ProductionsModal = ({
       setLoading(false);
       createNotification({
         status: "success",
-        msg: "productionCorrection",
+        msg: "productionCorrectionSuccess",
         hide: response.responseHide,
       });
       closeModal();
@@ -220,10 +226,17 @@ const ProductionsModal = ({
           position="right"
           buttons={[
             {
-              text: "send",
+              text: "cancel",
               color: "primary",
+              onClick: () => setShowModal(false),
+              disabled: false,
+            },
+            {
+              text: "send",
+              color: "secondary",
               onClick: handleSubmitProductionCorrection,
               disabled:
+                selectedRows &&
                 selectedRows.length > 0 &&
                 parseInt(formWidget?.productionCorrectionForm?.quantity) ===
                   selectedRows[0].qty_prod,
@@ -291,8 +304,14 @@ const ProductionsModal = ({
           position="right"
           buttons={[
             {
-              text: "send",
+              text: "cancel",
               color: "primary",
+              onClick: () => setShowModal(false),
+              disabled: false,
+            },
+            {
+              text: "send",
+              color: "secondary",
               onClick: handleSubmitProductionDecrease,
               disabled: formWidget?.addDecreaseForm?.quantity ? false : true,
             },

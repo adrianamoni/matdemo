@@ -88,7 +88,7 @@ const ConsumptionsModal = ({
       setLoading(false);
       createNotification({
         status: "success",
-        msg: "consumptionCorrection",
+        msg: "consumptionCorrectionSuccess",
         hide: response.responseHide,
       });
       closeModal();
@@ -147,6 +147,12 @@ const ConsumptionsModal = ({
         <ButtonGroupWidget
           position="right"
           buttons={[
+            {
+              text: "cancel",
+              color: "primary",
+              onClick: () => setShowModal(false),
+              disabled: false,
+            },
             {
               text: "send",
               color: "primary",
@@ -310,6 +316,12 @@ const ConsumptionsModal = ({
         <ButtonGroupWidget
           position="right"
           buttons={[
+            {
+              text: "cancel",
+              color: "primary",
+              onClick: () => setShowModal(false),
+              disabled: false,
+            },
             {
               text: "consume",
               color: "primary",

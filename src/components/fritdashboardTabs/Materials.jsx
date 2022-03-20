@@ -68,6 +68,7 @@ const Materials = () => {
 
   useEffect(() => {
     return () => {
+      console.log("here", setSelectedRowsIds);
       setSelectedRowsIds([]);
       setSelectedRows([]);
     };
@@ -115,18 +116,22 @@ const Materials = () => {
   }, [selectedRowsIds]);
 
   useEffect(() => {
-    let tempQtys = selectedRows.map((row) => {
-      return {
-        itemId: row[0].item_id,
-        CantidadAprov: row[0].CantidadAprov,
-      };
-    });
-    setCantidades(tempQtys);
+    if (selectedRows && selectedRows.length > 0) {
+      let tempQtys = selectedRows.map((row) => {
+        if (row[0]) {
+          return {
+            itemId: row[0].item_id,
+            CantidadAprov: row[0].CantidadAprov,
+          };
+        }
+      });
+
+      setCantidades(tempQtys);
+    }
   }, [selectedRows]);
 
   const handleProvisioningRequest = async () => {
     setLoadingProvisioning(true);
-
     const submitObj = {
       lineaName: lineData.entId,
       woId,

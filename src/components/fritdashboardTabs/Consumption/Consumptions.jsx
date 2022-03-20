@@ -185,7 +185,12 @@ const Consumptions = () => {
                 text: "consumptionCorrection",
                 color: "primary",
                 onClick: handleConsumptionCorrection,
-                disabled: !selectedRows[0] ? true : false,
+                disabled:
+                  selectedRowsIds["consumptions"] &&
+                  selectedRowsIds["consumptions"].length > 0 &&
+                  selectedRows[0]
+                    ? false
+                    : true,
               },
               {
                 text: "consume",

@@ -18,6 +18,7 @@ import { ApiCall } from "../../../services/Service";
 import UseFetchMemory from "../../customHooks/UseFetchMemory";
 import useWindowSize from "../../customHooks/UseWindowsSize";
 import Text from "../../../languages/Text";
+import ButtonGroupWidget from "../../../widgets/buttonGroup/ButtonGroupWidget";
 const ModalCreateOrder = ({ open, close, setRefreshMain }) => {
   const { width } = useWindowSize();
   const [material, setMaterial] = useState("");
@@ -116,14 +117,24 @@ const ModalCreateOrder = ({ open, close, setRefreshMain }) => {
               />
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <LoadingButton
-                variant="contained"
-                onClick={handleSubmit}
-                disabled={!material || !cantidad || loadingSubmit}
+              <ButtonGroupWidget
+                position="right"
+                buttons={[
+                  {
+                    text: "cancel",
+                    color: "primary",
+                    onClick: handleClose,
+                    disabled: false,
+                  },
+                  {
+                    text: "create",
+                    color: "secondary",
+                    disabled: !material || !cantidad || loadingSubmit,
+                    onClick: handleSubmit,
+                  },
+                ]}
                 loading={loadingSubmit}
-              >
-                {Text({ tid: "create" })}
-              </LoadingButton>
+              />
             </div>
           </>
         )}

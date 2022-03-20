@@ -24,7 +24,7 @@ import SequencingGateway from "./components/fritdashboardComps/sequencing/Sequen
 const AppRouter = () => {
   const pageSizeCtxt = useContext(pageSizeContext);
   const size = useWindowSize();
-
+  /*   const history = useContext(HistoryContext); */
   //useEffect for hiding the switch on table layout
   useEffect(() => {
     size && pageSizeCtxt && pageSizeCtxt.setPageSize(size);
@@ -35,6 +35,7 @@ const AppRouter = () => {
 
   return (
     <>
+      {/* HashRouter history={history} */}
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>

@@ -142,6 +142,7 @@ const en = {
   lastCleaning: "Last cleaning",
   selectSample: "Select sample",
   create: "Create",
+  submit: "Submit",
   /* NOTIFICATION MESSAGES */
   loginSuccess: "User logged in!",
   noInterruptionsMatchingFilter:
@@ -157,7 +158,7 @@ const en = {
   containerSuccessfullyRequested: "Container successfully requested!",
   provisioningRequestSubmitedSuccessfully:
     "Provisioning request submited successfully!",
-  consumptionCorrection: "Consumption corrected successfully!",
+  consumptionCorrectionSuccess: "Consumption corrected successfully!",
   consumptionSubmited: "Consumption submited successfully!",
   noDocumentationAvailable: "No documentation available",
   orderStarted: "Order started successfully!",
@@ -167,7 +168,6 @@ const en = {
   interruptionJustifiedSuccessfully: "Interruption justified successfully!",
   orderSuccessfullyCreated: "Order successfully created!",
   manualProductionSuccess: "Manual production successfully done!",
-  productionCorrection: "Production corrected successfully!",
   addWastageSuccess: "Wastage added correctly!",
   sampleSuccess: "Sample successfully generated!",
   dataSavedSuccess: "Data saved successfully!",
@@ -179,6 +179,7 @@ const en = {
     "The orders assigned to a line, which are currently in the 'New' state, will be released",
   doYouWantToSaveChanges: "Do you want to save changes?",
   resultsSavedSuccess: "Results saved successfully!",
+  productionCorrectionSuccess: "Production corrected successfully!",
 };
 
 export default en;

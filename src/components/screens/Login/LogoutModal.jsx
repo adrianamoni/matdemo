@@ -77,8 +77,8 @@ const LogoutModal = ({ logoutModal, setLogoutModal }) => {
               disabled: false,
             },
             {
-              text: "yes",
-              color: "primary",
+              text: "accept",
+              color: "secondary",
               onClick: handleConfirmLogout,
               disabled: false,
             },

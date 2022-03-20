@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Text from "../../../languages/Text";
 import { ApiCall } from "../../../services/Service";
 import { split_operation } from "../../../services/serviceHelper";
+import ButtonGroupWidget from "../../../widgets/buttonGroup/ButtonGroupWidget";
 import ModalWidget from "../../../widgets/modalWidget/ModalWidget";
 import { createNotification } from "../../alerts/NotificationAlert";
 import useWindowSize from "../../customHooks/UseWindowsSize";
@@ -92,13 +93,24 @@ const SplitModal = ({ open, close, ofSelected, setRefreshMain }) => {
           </Grid>
         </Grid>
         <Grid item xs={12} textAlign="right">
-          <LoadingButton
-            variant="contained"
-            onClick={handleSubmit}
+          <ButtonGroupWidget
+            position="right"
+            buttons={[
+              {
+                text: "cancel",
+                color: "primary",
+                onClick: handleClose,
+                disabled: false,
+              },
+              {
+                text: "send",
+                color: "secondary",
+                disabled: !qty,
+                onClick: handleSubmit,
+              },
+            ]}
             loading={loading}
-          >
-            {Text({ tid: "accept" })}
-          </LoadingButton>
+          />
         </Grid>
       </Grid>
     </>

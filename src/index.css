@@ -33,10 +33,10 @@
 }
 :root {
   /* CUSTOMIZED TOASTIFY COLORS */
-  --toastify-color-info: #0288d1;
-  --toastify-color-success: #0bd689;
-  --toastify-color-warning: #feab5e;
-  --toastify-color-error: #fe5e69;
+  --toastify-color-info: rgba(2, 136, 209, 0.9);
+  --toastify-color-success: rgba(11, 214, 137, 0.9);
+  --toastify-color-warning: rgba(254, 171, 94, 0.9);
+  --toastify-color-error: rgba(254, 94, 105, 0.9);
   --toastify-text-color-info: #e2f5ff;
   --toastify-text-color-success: #0d3d2b;
   --toastify-text-color-warning: #5e3006;
@@ -158,4 +158,8 @@ code {
 .MuiTreeItem-iconContainer svg {
   /* padding: 10px; */
   font-size: 28px !important;
+}
+
+.separated-button-group {
+  border-radius: 4px !important;
 }

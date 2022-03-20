@@ -87,7 +87,11 @@ const Productions = () => {
         )
       ) {
         setProductionCorrectionPermission(true);
+      } else {
+        setProductionCorrectionPermission(false);
       }
+    } else {
+      setProductionCorrectionPermission(false);
     }
   }, [loggedUser]);
 
@@ -260,9 +264,12 @@ const Productions = () => {
                 color: "secondary",
                 onClick: handleProductionCorrection,
                 disabled:
-                  !productionCorrectionPermission || !selectedRows[0]
-                    ? true
-                    : false,
+                  productionCorrectionPermission &&
+                  selectedRowsIds["productions"] &&
+                  selectedRowsIds["productions"].length > 0 &&
+                  selectedRows[0]
+                    ? false
+                    : true,
               },
               {
                 text: "addDecrease",

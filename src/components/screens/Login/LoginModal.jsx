@@ -118,8 +118,8 @@ const LoginModal = ({ loginModal, setLoginModal }) => {
               disabled: false,
             },
             {
-              text: "yes",
-              color: "primary",
+              text: "submit",
+              color: "secondary",
               onClick: handleSubmit,
               disabled: false,
             },

@@ -303,12 +303,10 @@ const Quality = () => {
           <></>
         )}
       </Grid>
-
-      <ModalWidget
-        open={generateSampleModal}
-        close={setGenerateSampleModal}
-        content={<ModalGenerateSample setRefreshMain={setRefreshMain} />}
-        title={"registerTest"}
+      <ModalGenerateSample
+        showModal={generateSampleModal}
+        setShowModal={setGenerateSampleModal}
+        setRefreshMain={setRefreshMain}
       />
     </>
   );

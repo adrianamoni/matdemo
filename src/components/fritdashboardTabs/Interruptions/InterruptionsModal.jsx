@@ -356,11 +356,17 @@ const InterruptionsModal = ({
         </Grid>
         <Grid item md={12} xs={12}>
           <ButtonGroupWidget
-            position={"right"}
+            position="right"
             buttons={[
               {
-                text: "save",
+                text: "cancel",
                 color: "primary",
+                onClick: () => setShowModal(false),
+                disabled: false,
+              },
+              {
+                text: "send",
+                color: "secondary",
                 onClick: handleSubmitCreateInterruption,
                 disabled: !selectedReason ? true : false,
               },
@@ -441,11 +447,17 @@ const InterruptionsModal = ({
         </Grid>
         <Grid item md={12} xs={12}>
           <ButtonGroupWidget
-            position={"right"}
+            position="right"
             buttons={[
               {
-                text: "save",
+                text: "cancel",
                 color: "primary",
+                onClick: () => setShowModal(false),
+                disabled: false,
+              },
+              {
+                text: "send",
+                color: "secondary",
                 onClick: handleSubmitJustifyInterruption,
                 disabled: false,
               },

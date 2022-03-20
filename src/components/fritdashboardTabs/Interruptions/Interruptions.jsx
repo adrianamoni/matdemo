@@ -204,9 +204,9 @@ const Interruptions = () => {
               },
               {
                 text: "justifyInterruption",
-                color: "primary",
+                color: "secondary",
                 onClick: handleJustifyInterruption,
-                disabled: !selectedRows[0] ? true : false,
+                disabled: selectedRows && selectedRows[0] ? false : true,
               },
             ]}
             loading={loading}

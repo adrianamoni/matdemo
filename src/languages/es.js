@@ -142,7 +142,7 @@ const es = {
   lastCleaning: "Última limpieza",
   selectSample: "Selecciona una muestra",
   create: "Crear",
-
+  submit: "Enviar",
   /* NOTIFICATION MESSAGES */
   loginSuccess: "¡Usuario logueado correctamente!",
   noInterruptionsMatchingFilter:
@@ -158,7 +158,7 @@ const es = {
   containerSuccessfullyRequested: "¡Contenedor solicitado correctamente!",
   provisioningRequestSubmitedSuccessfully:
     "¡Solicitud de aprovisionamiento con éxito!",
-  consumptionCorrection: "¡Consumo corregido con éxito!",
+  consumptionCorrectionSuccess: "¡Consumo corregido con éxito!",
   consumptionSubmited: "¡Consumo realizado con éxito!",
   noDocumentationAvailable: "No hay documentación disponible",
   orderStarted: "Orden iniciada correctamente",
@@ -168,7 +168,6 @@ const es = {
   interruptionJustifiedSuccessfully: "¡Paro justificado con éxito!",
   orderSuccessfullyCreated: "¡Orden creada con éxito!",
   manualProductionSuccess: "¡Producción manual realizada correctemente!",
-  productionCorrection: "¡Producción corregida con éxito!",
   addWastageSuccess: "¡Merma añadida correctemente!",
   sampleSuccess: "¡Muestra generada correctamente!",
   dataSavedSuccess: "¡Datos guardados correctamente!",
@@ -180,6 +179,7 @@ const es = {
     "Se liberaran las ordenes asignadas a línea, que actualmente estan en estado 'New'",
   doYouWantToSaveChanges: "¿Quieres guardar los cambios?",
   resultsSavedSuccess: "¡Resultados guardados correctamente!",
+  productionCorrectionSuccess: "¡Producción corregida con éxito!",
 };
 
 export default es;

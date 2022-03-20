@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { globalDataContext } from "../../../context/ContextProvider";
 import { MemoryDatabaseCall } from "../../../services/Service";
 import { get_documentation_data } from "../../../services/OFservices";
@@ -8,24 +7,15 @@ import {
   LinearProgress,
   Grid,
   Typography,
-  Divider,
   Stack,
   Button,
+  Paper,
 } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import FileOpenIcon from "@mui/icons-material/FileOpen";
 import ScreenShareIcon from "@mui/icons-material/ScreenShare";
 import UserAlert from "./../../alerts/UserAlert";
 import { createNotification } from "./../../alerts/NotificationAlert";
 import Text from "./../../../languages/Text";
-
-const theme = createTheme({
-  palette: {
-    neutral: {
-      main: "#e0e1e2",
-    },
-  },
-});
 
 const IframeComp = ({ url }) => {
   return (
@@ -145,28 +135,35 @@ const Documentation = () => {
     </Box>
   ) : (
     <>
-      {tableData?.length > 0 ? (
-        <>
-          <Grid container xs={12} sx={{ mt: 2, paddingRight: 3 }}>
-            <Grid item xs={12} md={12} lg={12} xl={4}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={12} lg={12} xl={5}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
               <Typography variant="h6" component="h6">
                 <Text tid={"files"} />
               </Typography>
-              <Divider sx={{ marginTop: "25px", marginBottom: "25px" }} />
-              {tableData.map((el) => (
+            </Grid>
+            <Grid item xs={12}>
+              {tableData ? (
                 <Stack
-                  direction="column"
-                  justifyContent="center"
-                  alignItems="flex-start"
                   spacing={2}
-                  sx={{ margin: "10px" }}
+                  sx={{
+                    p: 2,
+                    maxHeight: "calc(100vh - 240px)",
+                    overflowY: "auto",
+                    backgroundColor: "background.grey3",
+                  }}
                 >
-                  <ThemeProvider theme={theme}>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} md={12} lg={12} xl={8}>
+                  {tableData.map((el) => (
+                    <>
+                      <Paper
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                        }}
+                      >
                         <Button
-                          variant="contained"
-                          color="neutral"
                           onClick={() =>
                             setDisplayPdfViewer({
                               name: el.NombreFichero,
@@ -177,63 +174,69 @@ const Documentation = () => {
                               }${el.NombreFichero}#navpanes=0`,
                             })
                           }
-                          sx={{ marginBottom: "10px", padding: "10px" }}
                         >
                           {el.Descripcion}
                         </Button>
-                      </Grid>
-                      <Grid item xs={6} md={6} lg={6} xl={2}>
-                        <Button
-                          variant="contained"
-                          onClick={() =>
-                            setDisplayPdfViewer({
-                              name: el.NombreFichero,
-                              url: `${
-                                process.env.NODE_ENV === "production"
-                                  ? production_uri
-                                  : development_uri
-                              }${el.NombreFichero}#navpanes=0`,
-                            })
-                          }
-                          color="neutral"
-                        >
-                          <FileOpenIcon color="primary" />
-                        </Button>
-                      </Grid>
-                      <Grid item xs={6} md={6} lg={6} xl={2}>
-                        <Button
-                          variant="contained"
-                          href={`${
-                            process.env.NODE_ENV === "production"
-                              ? production_uri
-                              : development_uri
-                          }${el.NombreFichero}`}
-                          target="_blank"
-                          color="neutral"
-                        >
-                          <ScreenShareIcon color="action" />
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  </ThemeProvider>
+                        <div>
+                          <Button
+                            onClick={() =>
+                              setDisplayPdfViewer({
+                                name: el.NombreFichero,
+                                url: `${
+                                  process.env.NODE_ENV === "production"
+                                    ? production_uri
+                                    : development_uri
+                                }${el.NombreFichero}#navpanes=0`,
+                              })
+                            }
+                          >
+                            <FileOpenIcon color="info" />
+                          </Button>
+                          <Button
+                            href={`${
+                              process.env.NODE_ENV === "production"
+                                ? production_uri
+                                : development_uri
+                            }${el.NombreFichero}`}
+                            target="_blank"
+                          >
+                            <ScreenShareIcon color="primary" />
+                          </Button>
+                        </div>
+                      </Paper>
+                    </>
+                  ))}
                 </Stack>
-              ))}
-            </Grid>
-            <Grid item xs={12} md={12} lg={12} xl={8}>
-              <IframeComp url={displayPdfViewer.url} />
+              ) : (
+                userAlert.show && (
+                  <UserAlert
+                    severity={userAlert.severity}
+                    message={userAlert.message}
+                  />
+                )
+              )}
             </Grid>
           </Grid>
-        </>
-      ) : (
-        userAlert.show && (
-          <UserAlert
-            severity={userAlert.severity}
-            message={userAlert.message}
-          />
-        )
-      )}
+        </Grid>
+
+        <Grid
+          item
+          xs={12}
+          md={12}
+          lg={12}
+          xl={7}
+          sx={{ display: "flex", alignItems: "center" }}
+        >
+          <IframeComp url={displayPdfViewer.url} />
+        </Grid>
+      </Grid>
     </>
   );
 };
 
 export default Documentation;
+
+{
+  /* 
+      ) :  */
+}

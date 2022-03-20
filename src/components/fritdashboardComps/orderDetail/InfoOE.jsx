@@ -114,14 +114,15 @@ const InfoOE = () => {
 
   return productionData ? (
     <>
-      <Grid container sx={{ height: "100%" }}>
-        <Grid item>
+      <Grid container rowSpacing={2} sx={{ height: "100%" }}>
+        <Grid item xs={12}>
           <Typography variant="h6" component="h6">
             {productionData?.item_id.slice(-6)} {productionData?.item_desc}
           </Typography>
-
+        </Grid>
+        <Grid item xs={12}>
           <List>
-            <Grid container item>
+            <Grid container>
               {processedData &&
                 processedData.map((item, index) => (
                   <Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
@@ -182,58 +183,49 @@ const InfoOE = () => {
               </Grid>
             </Grid>
           </List>
-          <Grid container spacing={2}>
-            <Grid item container xs={12} justifyContent={"center"}>
-              {/* <ButtonGroup variant="contained" size="large"> */}
-              <Grid
-                container
-                spacing={2}
-                columnSpacing={3}
-                textAlign="center"
-                sx={{ maxWidth: 300 }}
+        </Grid>
+        <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
+          <Grid container sx={{ maxWidth: 350, p: 2 }}>
+            <Grid item xs={4} sm={4} md={4}>
+              <LoadingButton
+                loading={loadingPlay}
+                onClick={handlePlay}
+                disabled={loadingPlay ? true : play}
+                variant="contained"
+                color="primary"
+                sx={{ marginInline: 1, p: 3 }}
               >
-                <Grid item xs={4} sm={4} md={4}>
-                  <LoadingButton
-                    loading={loadingPlay}
-                    onClick={handlePlay}
-                    disabled={loadingPlay ? true : play}
-                    variant="contained"
-                    color="primary"
-                    sx={{ marginInline: 1, p: 3 }}
-                  >
-                    <PlayArrowIcon />
-                  </LoadingButton>
-                </Grid>
-                <Grid item xs={4} sm={4} md={4}>
-                  <LoadingButton
-                    loading={loadingPause}
-                    onClick={handlePause}
-                    disabled={loadingPause ? true : pause}
-                    variant="contained"
-                    color="primary"
-                    sx={{ marginInline: 1, p: 3 }}
-                  >
-                    <PauseIcon />
-                  </LoadingButton>
-                </Grid>
-                <Grid item xs={4} sm={4} md={4}>
-                  <LoadingButton
-                    loading={loadingStop}
-                    onClick={handleConfirmStop}
-                    disabled={loadingStop ? true : stop}
-                    variant="contained"
-                    color="primary"
-                    sx={{ marginInline: 1, p: 3 }}
-                  >
-                    <StopIcon />
-                  </LoadingButton>
-                </Grid>
-              </Grid>
+                <PlayArrowIcon />
+              </LoadingButton>
+            </Grid>
+            <Grid item xs={4} sm={4} md={4}>
+              <LoadingButton
+                loading={loadingPause}
+                onClick={handlePause}
+                disabled={loadingPause ? true : pause}
+                variant="contained"
+                color="primary"
+                sx={{ marginInline: 1, p: 3 }}
+              >
+                <PauseIcon />
+              </LoadingButton>
+            </Grid>
+            <Grid item xs={4} sm={4} md={4}>
+              <LoadingButton
+                loading={loadingStop}
+                onClick={handleConfirmStop}
+                disabled={loadingStop ? true : stop}
+                variant="contained"
+                color="primary"
+                sx={{ marginInline: 1, p: 3 }}
+              >
+                <StopIcon />
+              </LoadingButton>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-      {/*  */}
+
       <ConfirmationDialog
         title="stopOperation"
         open={confirmStop}

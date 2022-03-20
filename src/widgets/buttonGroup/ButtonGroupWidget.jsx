@@ -26,7 +26,7 @@ const ButtonGroupWidget = ({ position, buttons, loading, size }) => {
           aria-label="outlined primary button group"
         >
           {buttons &&
-            buttons.map((btn, i) => {
+            buttons.map((btn, i, list) => {
               return !loading ? (
                 <Button
                   variant="contained"
@@ -37,7 +37,12 @@ const ButtonGroupWidget = ({ position, buttons, loading, size }) => {
                       ? btn.onClick
                       : () => console.log("no click func")
                   }
-                  sx={{ marginRight: "10px", padding: "15px" }}
+                  //SEPARATED BUTTONS STYLE
+                  className="separated-button-group"
+                  sx={{
+                    marginRight: i === 0 && "15px",
+                    marginLeft: i === list.length && "15px",
+                  }}
                 >
                   {Text({ tid: btn.text })}
                 </Button>

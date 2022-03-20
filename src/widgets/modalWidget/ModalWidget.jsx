@@ -16,7 +16,7 @@ const ModalWidget = ({ open, close, title, content, customWidth }) => {
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: customWidth,
-    bgcolor: "background.paper",
+    bgcolor: "background.grey3",
     boxShadow: 24,
     p: 3,
   };
@@ -32,12 +32,20 @@ const ModalWidget = ({ open, close, title, content, customWidth }) => {
       aria-describedby="modal-modal-description"
     >
       <Paper elevation={24} sx={style}>
-        <Typography variant="h5" component="h6" sx={{ mb: 1 }}>
-          {Text({ tid: title })}
-        </Typography>
-        <Divider />
-        <Grid container sx={{ mt: 1 }} spacing={2}>
-          {content}
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Typography variant="h5" component="h6">
+              {Text({ tid: title })}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container sx={{ mt: 1 }} spacing={2}>
+              {content}
+            </Grid>
+          </Grid>
         </Grid>
       </Paper>
     </Modal>
