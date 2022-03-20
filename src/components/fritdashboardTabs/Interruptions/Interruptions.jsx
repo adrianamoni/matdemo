@@ -152,7 +152,7 @@ const Interruptions = () => {
     </Box>
   ) : (
     <>
-      <Grid container spacing={1} sx={{ mt: 0 }}>
+      <Grid container spacing={1} sx={{ mt: 0, paddingRight: 3 }}>
         <Grid item xs={12} sx={{ textAlign: "right" }}>
           <Button
             variant="contained"

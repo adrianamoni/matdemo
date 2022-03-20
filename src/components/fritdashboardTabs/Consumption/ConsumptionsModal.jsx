@@ -58,7 +58,6 @@ const ConsumptionsModal = ({
 
   // CONSUMPTION CORRECTION
   const handleSubmitConsumptionCorrection = async () => {
-    console.log("selectedRows[0]", selectedRows[0]);
     const result = {
       woId: woId,
       operId: operId,

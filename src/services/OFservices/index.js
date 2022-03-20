@@ -40,7 +40,6 @@ const tab_of_parameters = ({ woId, operId, seqNo }) => {
 };
 
 const screen_of_start_btn = ({ woId, operId, seqNo }) => {
-  console.log("woId, operId, seqNo", woId, operId, seqNo);
   return {
     ExecutionType: 1,
     RuleId: "InicioOperacion",
@@ -847,7 +846,6 @@ const tab_quality_generate_sample = ({
   seqNo,
   qmSpecName,
 }) => {
-  console.log("first", itemId, woId, operId, entName, seqNo, qmSpecName);
   return {
     ExecutionType: 1,
     RuleId: "GenerateSample",

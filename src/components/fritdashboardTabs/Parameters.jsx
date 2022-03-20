@@ -37,15 +37,13 @@ const Parameters = () => {
       <LinearProgress variant="indeterminate" color="secondary" />
     </Box>
   ) : (
-    <>
-      <Grid container sx={{ mt: 4 }}>
-        <TableWidget
-          data={data}
-          columns={parameterColumns}
-          tableName="parameters"
-        />
-      </Grid>
-    </>
+    <Grid container sx={{ mt: 4, paddingRight: 3 }} id="frit-tab-component">
+      <TableWidget
+        data={data}
+        columns={parameterColumns}
+        tableName="parameters"
+      />
+    </Grid>
   );
 };
 

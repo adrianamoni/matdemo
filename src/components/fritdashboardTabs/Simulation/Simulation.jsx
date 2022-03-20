@@ -85,7 +85,6 @@ const Simulation = () => {
         },
       ];
       setApiData(newData);
-      console.log("tags_arr", tags_arr);
 
       const response = await ApiCall({
         params: write_tags({ tags_arr }),
@@ -117,7 +116,7 @@ const Simulation = () => {
     </Box>
   ) : (
     <>
-      <Grid container sx={{ mt: 4 }}>
+      <Grid container sx={{ mt: 4, paddingRight: 3 }}>
         <Grid item xs={12}>
           {apiData && apiData.length > 0 && (
             <>

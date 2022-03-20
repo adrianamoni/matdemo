@@ -23,13 +23,19 @@ const General = ({ loading }) => {
       <LinearProgress variant="indeterminate" color="secondary" />
     </Box>
   ) : (
-    <Grid container sx={{ p: 2 }} columnSpacing={4} alignItems="stretch">
+    <Grid
+      container
+      sx={{ p: 2, mt: 2 }}
+      columnSpacing={4}
+      rowSpacing={3}
+      alignItems="stretch"
+    >
       <Grid
         container
         alignItems="stretch"
-        columnSpacing={4}
-        rowSpacing={1}
-        sx={{ p: 2 }}
+        sx={{ mb: 3 }}
+        columnSpacing={3}
+        rowSpacing={3}
       >
         <Grid item xs={12} sm={12}>
           <Card sx={{ p: 2, backgroundColor: "background.grey4" }}>
@@ -38,13 +44,13 @@ const General = ({ loading }) => {
         </Grid>
       </Grid>
       <Grid
-        sx={{ p: 2, display: "flex" }}
         container
         alignItems="stretch"
-        columnSpacing={4}
-        rowSpacing={4}
+        columnSpacing={3}
+        rowSpacing={3}
+        sx={{ mb: 3, display: "flex" }}
       >
-        <Grid item xs={12} sm={12} md={12} lg={7} sx={{}}>
+        <Grid item xs={12} sm={12} md={12} lg={7}>
           <Card
             sx={{ p: 2, height: "100%", backgroundColor: "background.grey4" }}
           >
@@ -58,8 +64,8 @@ const General = ({ loading }) => {
           sm={12}
           md={12}
           lg={5}
-          columnSpacing={4}
-          rowSpacing={4}
+          columnSpacing={3}
+          rowSpacing={3}
         >
           <Grid item xs={12}>
             <Card
@@ -77,9 +83,9 @@ const General = ({ loading }) => {
       <Grid
         container
         alignItems="stretch"
-        columnSpacing={4}
-        rowSpacing={4}
-        sx={{ p: 2 }}
+        columnSpacing={3}
+        rowSpacing={3}
+        /* sx={{ p: 2 }} */
       >
         <Grid item xs={12} sm={12} md={12} lg={7}>
           <Card sx={{ p: 2, backgroundColor: "background.grey4" }}>

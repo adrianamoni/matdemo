@@ -56,7 +56,6 @@ const OperatorDeAssignment = ({ line, modal, close }) => {
     });
     if (response) {
       response = response.map((el) => {
-        console.log("el", el);
         return {
           id: uuid(),
           unusedColor: el.color,

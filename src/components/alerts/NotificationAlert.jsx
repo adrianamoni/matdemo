@@ -14,13 +14,26 @@ const createNotification = ({ status, msg, hide, num }) => {
     draggable: true,
     progress: undefined,
     theme: "colored",
-    type: status,
+    type:
+      status === "success"
+        ? toast.TYPE.SUCCESS
+        : status === "error"
+        ? toast.TYPE.ERROR
+        : status === "warning"
+        ? toast.TYPE.WARNING
+        : toast.TYPE.INFO,
   };
   if (status === "error") {
-    toast(msg, options);
+    toast(msg || "error", options);
   } else {
     if (num) {
-      toast(<Text tid={msg} /> + `(${num})`, options);
+      toast(
+        <>
+          <Text tid={msg} />
+          <span>&nbsp;({num})</span>
+        </>,
+        options
+      );
     } else {
       toast(<Text tid={msg} />, options);
     }

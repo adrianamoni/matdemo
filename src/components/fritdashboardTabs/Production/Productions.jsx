@@ -225,7 +225,7 @@ const Productions = () => {
     </Box>
   ) : (
     <>
-      <Grid container sx={{ mt: 4 }}>
+      <Grid container sx={{ mt: 4, paddingRight: 3 }}>
         {/* Productions Table */}
         {tableData?.length > 0 ? (
           <Grid item xs={12}>

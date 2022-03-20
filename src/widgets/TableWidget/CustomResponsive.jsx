@@ -23,7 +23,6 @@ const CustomResponsive = ({
   multipleSelection,
   edit,
 }) => {
-  console.log("columns", columns);
   const { selectedRowsIds, setSelectedRowsIds } = useContext(
     selectedRowsIdsContext
   );

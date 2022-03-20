@@ -79,7 +79,6 @@ const TableWidget = ({
           };
         }
       });
-      console.log("bgColorsArr", bgColorsArr);
       const rowsColorsObj = Object.assign({}, ...bgColorsArr);
       // const rowsColorsObj = Object.assign(
       //   // {
@@ -89,7 +88,6 @@ const TableWidget = ({
       //   // },
       //   ...bgColorsArr
       // );
-      console.log("rowsColorsObj", rowsColorsObj);
       setRowsColors(rowsColorsObj);
     }
     // else {
@@ -136,7 +134,6 @@ const TableWidget = ({
   }, [searchInput, data]);
 
   const handleCellEditCommit = (params, event, details) => {
-    console.log("params", params);
     let temp = data.map((el) => {
       if (el.id === params.id) {
         el.CantidadAprov = params.value;

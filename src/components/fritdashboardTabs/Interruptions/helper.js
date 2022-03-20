@@ -165,7 +165,6 @@ const fetchPendingManagerData = async ({ entId }) => {
     }),
     url: "queryDataFrameDataAsync",
   });
-  console.log("response", response);
   if (response) {
     if (response.responseError) {
       err = {

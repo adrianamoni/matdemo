@@ -36,7 +36,6 @@ export const getSections = async () => {
 
 export const getData = async ({ userId, operId }) => {
   let newData;
-  console.log("userId, operId", userId, operId);
   const response = await ApiCall({
     params: screen_sequencing_onCreate({
       userId,
@@ -418,7 +417,6 @@ export const saveOrders = async (array) => {
       edited_operations_arr: array,
     }),
   });
-  console.log("response", response);
   if (response.responseError) {
     createNotification({
       status: "error",

@@ -12,12 +12,10 @@ export default function UseDispatcher({ request, customParams }) {
     const sendData = async () => {
       try {
         const parameters = getParams(request);
-        console.log("parameters", parameters);
 
         const response = await ApiCall({
           params: parameters.params(customParams || {}),
         });
-        console.log("response", response);
         /* setData(response.map((item) => ({ ...item, id: uuid() }))); */
       } catch (err) {
         setError(err);

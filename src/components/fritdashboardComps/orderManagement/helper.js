@@ -21,7 +21,6 @@ export const getOrdersData = async ({ entId, itemId, initDate, endDate }) => {
 
   if (response) {
     if (response.length > 0) {
-      console.log("response3", response);
       result = response.map((item) => ({
         ...item,
         id: uuid(),
@@ -43,7 +42,6 @@ export const getOrdersData = async ({ entId, itemId, initDate, endDate }) => {
           type: "hora-fecha",
         }),
       }));
-      console.log("response4", result);
     }
   }
   return result;

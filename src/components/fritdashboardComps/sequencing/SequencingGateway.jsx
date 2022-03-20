@@ -194,7 +194,6 @@ const SequencingGateway = () => {
     });
     if (res) {
       const original = JSON.parse(JSON.stringify(res));
-      console.log("res", res);
       setApiData(res);
       setOriginalData(original[0].ordenes);
     }
@@ -213,12 +212,9 @@ const SequencingGateway = () => {
   const handleSave = async () => {
     setTimelineHours(24);
     setLoadingSave(true);
-    console.log("111", apiData[0].ordenes);
-    console.log("1112", apiData[0].ordenes);
+
     const arr_seq_table = filterArray(apiData[0].ordenes, originalData);
-    console.log("1113", arr_seq_table);
     const allOperations_filtered = formatForSave(arr_seq_table);
-    console.log("1114", allOperations_filtered);
     if (allOperations_filtered.length > 0) {
       const res = await saveOrders(allOperations_filtered);
       if (res) {
@@ -263,7 +259,7 @@ const SequencingGateway = () => {
       createNotification({
         status: "info",
         msg: "releasing",
-        num: liberateOrders.length,
+        num: 4, //liberateOrders.length,
         hide: 1,
       });
       const response = await ApiCall({
@@ -337,7 +333,6 @@ const SequencingGateway = () => {
       };
     }
   }, [loadingTimeline]);
-  console.log("linesDropdown", linesDropdown);
   return (
     <>
       {/* <Container maxWidth="xl"> */}
@@ -379,12 +374,11 @@ const SequencingGateway = () => {
             </Grid>
           </Grid>
         </Grid>
-
-        {loadingInitialData && (
-          <Grid item xs={12}>
+        <Grid item xs={12}>
+          {loadingInitialData && (
             <LinearProgress variant="indeterminate" color="secondary" />
-          </Grid>
-        )}
+          )}
+        </Grid>
         {notificationModal && notificationModal.status && (
           <Grid item xs={12}>
             <Alert variant="outlined" severity="info">

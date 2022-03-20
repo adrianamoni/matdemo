@@ -178,6 +178,7 @@ const en = {
   releasingOrdersMessage:
     "The orders assigned to a line, which are currently in the 'New' state, will be released",
   doYouWantToSaveChanges: "Do you want to save changes?",
+  resultsSavedSuccess: "Results saved successfully!",
 };
 
 export default en;

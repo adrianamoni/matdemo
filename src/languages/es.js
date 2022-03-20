@@ -179,6 +179,7 @@ const es = {
   releasingOrdersMessage:
     "Se liberaran las ordenes asignadas a línea, que actualmente estan en estado 'New'",
   doYouWantToSaveChanges: "¿Quieres guardar los cambios?",
+  resultsSavedSuccess: "¡Resultados guardados correctamente!",
 };
 
 export default es;

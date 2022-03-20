@@ -141,7 +141,6 @@ const Planification = () => {
   };
   const handleStartOrder = async () => {
     setLoadingPlay(true);
-    console.log("selectedRows", selectedRows);
     if (selectedRows && selectedRows.length > 0) {
       await handleOperationAction({
         type: "start",
@@ -169,7 +168,7 @@ const Planification = () => {
     </Box>
   ) : (
     <>
-      <Grid container sx={{ mt: 4 }}>
+      <Grid container sx={{ mt: 4, paddingRight: 3 }}>
         <Grid item xs={12}>
           {apiData && apiData.length > 0 && (
             <>
@@ -181,7 +180,6 @@ const Planification = () => {
             </>
           )}
         </Grid>
-        {console.log("createOrderPermission", createOrderPermission)}
         <Grid item xs={12}>
           <ButtonGroupWidget
             position="center"

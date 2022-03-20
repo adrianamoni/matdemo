@@ -149,7 +149,7 @@ const Materials = () => {
       <LinearProgress variant="indeterminate" color="secondary" />
     </Box>
   ) : (
-    <Grid container sx={{ mt: 4 }}>
+    <Grid container sx={{ mt: 4, paddingRight: 3 }}>
       <Grid item xs={12}>
         <TableWidget
           multipleSelection={true}

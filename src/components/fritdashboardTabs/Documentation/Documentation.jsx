@@ -147,7 +147,7 @@ const Documentation = () => {
     <>
       {tableData?.length > 0 ? (
         <>
-          <Grid container xs={12} sx={{ mt: 2 }}>
+          <Grid container xs={12} sx={{ mt: 2, paddingRight: 3 }}>
             <Grid item xs={12} md={12} lg={12} xl={4}>
               <Typography variant="h6" component="h6">
                 <Text tid={"files"} />

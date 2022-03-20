@@ -17,7 +17,6 @@ const OeeOrden = () => {
 
     const fetch = async () => {
       let entId = globalData.lineData.entId;
-      console.log("entId", entId);
       let response = await MemoryDatabaseCall({
         params: get_oee_order({ entId }),
         url: "queryDataAsync",

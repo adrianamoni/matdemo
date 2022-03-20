@@ -5,6 +5,7 @@ import {
   tab_quality_get_attributes,
 } from "../../../services/OFservices";
 import _ from "lodash";
+import Text from "../../../languages/Text";
 
 export const fetchAllSampleData = async ({
   entId,
@@ -117,11 +118,11 @@ export const checkInputResult = (min, max, num) => {
   let className = "custom-default";
   let res;
   if (num) {
-    let value = Number.isNaN(num) ? undefined : num;
+    let value = Number.isNaN(num) ? undefined : parseFloat(num);
 
     className = "custom-red";
 
-    if (value) {
+    if (value || value === 0) {
       if (min == null || max == null) {
         if (min == null && value <= max) {
           className = "custom-green";

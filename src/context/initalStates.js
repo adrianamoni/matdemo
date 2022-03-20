@@ -5,7 +5,6 @@ const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME;
 export const getTerminal = () => {
   let { search } = useLocation();
   const terminalParam = new URLSearchParams(search).get("terminal");
-  console.log("terminalParam", terminalParam);
 };
 
 export const getStorageData = () => {

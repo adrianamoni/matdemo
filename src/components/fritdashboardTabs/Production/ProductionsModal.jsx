@@ -63,7 +63,7 @@ const ProductionsModal = ({
         : null,
       seqNo: data.seqNo,
     };
-    console.log("paramObj", paramObj);
+
     const response = await ApiCall({
       params: tab_production_add(paramObj),
     });
@@ -142,7 +142,7 @@ const ProductionsModal = ({
       lastEditAt: selectedRows[0].last_edit_at,
       createdAtUtc: selectedRows[0].created_at_utc,
     };
-    console.log("paramObj", paramObj);
+
     setLoading(true);
     const response = await ApiCall({
       params: tab_productions_correction(paramObj),
@@ -244,7 +244,7 @@ const ProductionsModal = ({
       quantity: parseFloat(formWidget.addDecreaseForm.quantity),
       seqNo: data.seqNo,
     };
-    console.log("paramObj", paramObj);
+
     const response = await ApiCall({
       params: tab_wastage_add(paramObj),
     });

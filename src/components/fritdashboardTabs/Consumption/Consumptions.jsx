@@ -158,8 +158,7 @@ const Consumptions = () => {
     </Box>
   ) : (
     <>
-      <Grid container sx={{ mt: 4 }}>
-        {/* Consumpions Table */}
+      <Grid container sx={{ mt: 4, paddingRight: 3 }}>
         {tableData?.length > 0 ? (
           <Grid item xs={12}>
             <TableWidget

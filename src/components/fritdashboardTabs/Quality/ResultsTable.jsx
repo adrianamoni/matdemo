@@ -1,12 +1,34 @@
-import React, { useState } from "react";
-/* import { useEffect } from "react";
-import { createNotification } from "../../common/alerts/NotificationAlert";
+import { LoadingButton } from "@mui/lab";
+import {
+  Button,
+  FormControl,
+  Grid,
+  MenuItem,
+  Paper,
+  Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+} from "@mui/material";
+import React, { useState, useEffect, useContext } from "react";
+import { selectedRowsContext } from "../../../context/ContextProvider";
+import Text from "../../../languages/Text";
+import { tab_quality_save_results } from "../../../services/OFservices";
+import { ApiCall } from "../../../services/Service";
+import { createNotification } from "../../alerts/NotificationAlert";
+import { compareArrays } from "../../common/helpers/helper";
+import { checkDropdownResult, checkInputResult } from "./helper";
+import "./ResultsTable.css";
+/* import { createNotification } from "../../common/alerts/NotificationAlert";
 import { compareArrays } from "../../common/helpers/helper";
 import { tab_quality_save_results } from "../../services/OFservices";
 import { ApiCall } from "../../services/Service";
 import { checkDropdownResult, checkInputResult } from "./helper"; */
-
-/* const checkIfModified = (arr1, arr2) => {
+const checkIfModified = (arr1, arr2) => {
   let enableSave = false;
 
   let filteredArray1 = arr1.map((item) => {
@@ -32,16 +54,17 @@ import { checkDropdownResult, checkInputResult } from "./helper"; */
   }
 
   return enableSave;
-}; */
+};
 
 const ResultsTable = ({
   results,
   originalResults,
   handleChange,
-  selectedSample,
+
   setRefreshMain,
 }) => {
-  /*   const [enableSave, setEnableSave] = useState(false);
+  const { selectedRows, setSelectedRows } = useContext(selectedRowsContext);
+  const [enableSave, setEnableSave] = useState(false);
   const [loadingSave, setLoadingSave] = useState(false);
 
   useEffect(() => {
@@ -52,8 +75,6 @@ const ResultsTable = ({
           JSON.stringify(originalResults)
         );
 
-        console.log("deepCopyResults", deepCopyResults);
-        console.log("deepCopyOriginalResults", deepCopyOriginalResults);
         setEnableSave(
           checkIfModified(deepCopyResults, deepCopyOriginalResults)
         );
@@ -72,7 +93,7 @@ const ResultsTable = ({
       )
       .map((item) => {
         let submitObj = {
-          sampleId: selectedSample,
+          sampleId: selectedRows && selectedRows.id,
           charId: item.charId,
           charName: item.charName,
           valueNo: "1", //hardcoded
@@ -99,122 +120,124 @@ const ResultsTable = ({
     } else {
       createNotification({
         status: "success",
-        msg: "¡Resultados guardados correctamente!",
+        msg: "resultsSavedSuccess",
         hide: response.responseHide,
       });
     }
     setRefreshMain(true);
     setLoadingSave(false);
-  }; */
+  };
 
   return (
-    <>
-      RESULTS TABLE
-      {/*  <Table id="QualityResultTable">
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Característica</Table.HeaderCell>
-            <Table.HeaderCell textAlign="right">LL</Table.HeaderCell>
-            <Table.HeaderCell textAlign="right">HH</Table.HeaderCell>
-            <Table.HeaderCell textAlign="right">Resultado</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {results.map((item) => {
-            const {
-              charId,
-              charName,
-              charDesc,
-              lowerLimit,
-              upperLimit,
-              isDropdown,
-              result,
-              resultAttribute,
-            } = item;
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <TableContainer component={Paper}>
+          <Table size="small" id="result-quality-table">
+            <TableHead>
+              <TableRow sx={{ fontWeight: 600 }}>
+                <TableCell>Característica</TableCell>
+                <TableCell align="right">LL</TableCell>
+                <TableCell align="right">HH</TableCell>
+                <TableCell align="right">Resultado</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {results.map((item) => {
+                const {
+                  charId,
+                  charName,
+                  charDesc,
+                  lowerLimit,
+                  upperLimit,
+                  isDropdown,
+                  result,
+                  resultAttribute,
+                } = item;
 
-            let resultValue;
-            if (isDropdown) {
-              if (result) {
-                resultValue = item.dropdownOptions.find(
-                  (opt) => opt.extra === resultAttribute
+                let resultValue;
+                if (isDropdown) {
+                  if (result) {
+                    resultValue = item.dropdownOptions.find(
+                      (opt) => opt.extra === resultAttribute
+                    );
+                  }
+                } else {
+                  resultValue = result ? parseFloat(result) : "";
+                }
+                const dropdownClass = checkDropdownResult(
+                  lowerLimit,
+                  upperLimit,
+                  resultValue?.value || "",
+                  charId
                 );
-              }
-            } else {
-              resultValue = result ? parseFloat(result) : "";
-            }
-            const dropdownClass = checkDropdownResult(
-              lowerLimit,
-              upperLimit,
-              resultValue?.value || "",
-              charId
-            );
-            return (
-              <Table.Row key={charId}>
-                <Table.Cell width={8}>
-                  {charName} - {charDesc}
-                </Table.Cell>
-                <Table.Cell width={1} textAlign="right">
-                  {lowerLimit}
-                </Table.Cell>
-                <Table.Cell width={1} textAlign="right">
-                  {upperLimit}
-                </Table.Cell>
-                <Table.Cell width={6} style={{ height: 54 }} textAlign="right">
-                  <Form>
-                    {!isDropdown ? (
-                      <>
-                        <Form.Input
-                          id="input-result"
-                          className={checkInputResult(
-                            lowerLimit,
-                            upperLimit,
-                            result
-                          )}
-                          value={resultValue}
-                          type={"number"}
-                          onChange={(e, d) =>
-                            handleChange(d, charId, isDropdown)
-                          }
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <Form.Dropdown
-                          id="dropdown-result"
-                          selection
-                          style={{
-                            alignSelf: "stretch",
-                            justifySelf: "center",
-                          }}
-                          className={`wide-scrollbar ${dropdownClass}`}
-                          value={resultValue?.value}
-                          options={item.dropdownOptions}
-                          onChange={(e, d) =>
-                            handleChange(d, charId, isDropdown)
-                          }
-                        />
-                      </>
-                    )}
-                  </Form>
-                </Table.Cell>
-              </Table.Row>
-            );
-          })}
-        </Table.Body>
-      </Table>
-
-      <div style={{ display: "flex", justifyContent: "center", padding: 10 }}>
-        <Button
-          primary
+                const inputClass = checkInputResult(
+                  lowerLimit,
+                  upperLimit,
+                  result
+                );
+                return (
+                  <TableRow key={charId}>
+                    <TableCell>
+                      {charName} - {charDesc}
+                    </TableCell>
+                    <TableCell align="right">{lowerLimit}</TableCell>
+                    <TableCell align="right">{upperLimit}</TableCell>
+                    <TableCell style={{ height: 54 }} align="right">
+                      {!isDropdown ? (
+                        <>
+                          <FormControl fullWidth>
+                            <TextField
+                              id="input-result"
+                              className={inputClass}
+                              value={resultValue}
+                              type={"number"}
+                              onChange={(e) =>
+                                handleChange({ e, charId, isDropdown })
+                              }
+                            />
+                          </FormControl>
+                        </>
+                      ) : (
+                        <>
+                          <FormControl fullWidth>
+                            <Select
+                              id="dropdown-result"
+                              className={`wide-scrollbar ${dropdownClass}`}
+                              value={resultValue?.value}
+                              onChange={(e) =>
+                                handleChange({ e, charId, isDropdown })
+                              }
+                            >
+                              {item.dropdownOptions &&
+                                item.dropdownOptions.map((item) => (
+                                  <MenuItem value={item.value}>
+                                    {item.text}
+                                  </MenuItem>
+                                ))}
+                            </Select>
+                          </FormControl>
+                        </>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Grid>
+      <Grid item xs={12} textAlign="center">
+        <LoadingButton
+          variant="contained"
+          color="secondary"
           onClick={handleSubmit}
           disabled={!enableSave}
           loading={loadingSave}
         >
-          <Icon name="save" />
-          Guardar
-        </Button>
-      </div> */}
-    </>
+          {Text({ tid: "save" })}
+        </LoadingButton>
+      </Grid>
+    </Grid>
   );
 };
 

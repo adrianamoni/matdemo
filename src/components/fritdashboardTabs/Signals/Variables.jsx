@@ -40,7 +40,7 @@ const Variables = () => {
       <LinearProgress variant="indeterminate" color="secondary" />
     </Box>
   ) : processedData && processedData.length > 0 ? (
-    <Grid container sx={{ mt: 4 }}>
+    <Grid container sx={{ mt: 4, paddingRight: 3 }}>
       <TableWidget
         data={processedData}
         columns={variablesColumns}

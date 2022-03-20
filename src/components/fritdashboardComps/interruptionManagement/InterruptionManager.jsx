@@ -165,7 +165,6 @@ const InterruptionManager = () => {
           interruption.id === selectedRowsIds["InterruptionsManagerTable"][0]
         );
       });
-      console.log("tempRow", tempRow);
       setSelectedRows(tempRow);
       setSelectedNode("reas" + tempRow[0]?.ReasonCd);
     }
@@ -190,7 +189,6 @@ const InterruptionManager = () => {
     specificReason,
     lineFilter,
   ]);
-  console.log("formWidget", formWidget.interruptionManager);
   useEffect(() => {
     if (reasons) {
       let reasonsDropDown = _.uniqBy(reasons, "reas_grp_id");

@@ -206,8 +206,6 @@ const SeqTable = ({
                     (el) => el.personas === row.Personas
                   )?.velocidad || undefined;
 
-                console.log("peopleValue", peopleValue);
-
                 return (
                   <TableRow
                     key={row.id}
@@ -232,7 +230,6 @@ const SeqTable = ({
                       </Button>
                     </TableCell>
                     <TableCell>
-                      {console.log("startdate", row.SchedStartTimeLocal)}
                       {/* <DatePicker
                         selected={new Date(row.SchedStartTimeLocal)}
                         onChange={(date) => handleInitDateChange(date, row.id)}

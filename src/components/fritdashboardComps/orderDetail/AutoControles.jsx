@@ -57,7 +57,7 @@ const AutoControles = ({ data, alert }) => {
           </Typography>
         </Grid>
 
-        <Grid item xs={12} /* sx={{ height: "100%" }} */>
+        <Grid item xs={12} sx={{ margin: 2 }}>
           <Grid container sx={{ alignItems: "center" }}>
             <Grid item xs={6} sm={6} md={6} lg={6} align="left">
               <strong>{Text({ tid: "lastSelfControlDate" })}</strong>

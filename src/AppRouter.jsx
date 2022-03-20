@@ -27,7 +27,6 @@ const AppRouter = () => {
 
   //useEffect for hiding the switch on table layout
   useEffect(() => {
-    console.log("size", size);
     size && pageSizeCtxt && pageSizeCtxt.setPageSize(size);
   }, [size]);
   useEffect(() => {

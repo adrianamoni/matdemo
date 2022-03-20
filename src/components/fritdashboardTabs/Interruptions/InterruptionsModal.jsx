@@ -310,7 +310,6 @@ const InterruptionsModal = ({
       closeModal();
     }
   };
-  console.log("lines", lines);
   const createInterruptionModalContent = (
     <>
       <Grid container spacing={2}>
