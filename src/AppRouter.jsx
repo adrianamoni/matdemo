@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 import About from "./components/About";
 import Dashboard from "./components/Dashboard";
 import FritDashboard from "./components/fritDashboardComps/orderDetail/FritDashboard";
@@ -35,8 +35,8 @@ const AppRouter = () => {
 
   return (
     <>
-      {/* HashRouter history={history} */}
-      <BrowserRouter>
+      <HashRouter history={history}>
+        {/*  <BrowserRouter> */}
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Dashboard />} />
@@ -59,7 +59,8 @@ const AppRouter = () => {
           </Route>
         </Routes>
         <ToastContainer />
-      </BrowserRouter>
+        {/* </BrowserRouter> */}
+      </HashRouter>
     </>
   );
 };

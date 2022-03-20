@@ -82,48 +82,53 @@ const ContextProvider = (props) => {
   }, [dictionary]);
   return (
     <>
-      <userPreferencesContext.Provider
-        value={{ userPreferences, setUserPreferences }}
-      >
-        <languageContext.Provider value={provider}>
-          <loginContext.Provider value={{ loggedUser, setLoggedUser }}>
-            <pageSizeContext.Provider value={{ pageSize, setPageSize }}>
-              <selectedRowsIdsContext.Provider
-                value={{ selectedRowsIds, setSelectedRowsIds }}
-              >
-                <selectedRowsContext.Provider
-                  value={{ selectedRows, setSelectedRows }}
+      <historyContext.Provider value={history}>
+        <userPreferencesContext.Provider
+          value={{ userPreferences, setUserPreferences }}
+        >
+          <languageContext.Provider value={provider}>
+            <loginContext.Provider value={{ loggedUser, setLoggedUser }}>
+              <pageSizeContext.Provider value={{ pageSize, setPageSize }}>
+                <selectedRowsIdsContext.Provider
+                  value={{ selectedRowsIds, setSelectedRowsIds }}
                 >
-                  <lineUsersContext.Provider
-                    value={{ lineUsers, setLineUsers }}
+                  <selectedRowsContext.Provider
+                    value={{ selectedRows, setSelectedRows }}
                   >
-                    <formContext.Provider value={{ formWidget, setformWidget }}>
-                      <navigationDataContext.Provider
-                        value={{ navigationData, setNavigationData }}
+                    <lineUsersContext.Provider
+                      value={{ lineUsers, setLineUsers }}
+                    >
+                      <formContext.Provider
+                        value={{ formWidget, setformWidget }}
                       >
-                        <globalDataContext.Provider
-                          value={{
-                            globalData,
-                            setGlobalData,
-                          }}
+                        <navigationDataContext.Provider
+                          value={{ navigationData, setNavigationData }}
                         >
-                          {props.children}
-                        </globalDataContext.Provider>
-                      </navigationDataContext.Provider>
-                    </formContext.Provider>
-                  </lineUsersContext.Provider>
-                </selectedRowsContext.Provider>
-              </selectedRowsIdsContext.Provider>
-            </pageSizeContext.Provider>
-          </loginContext.Provider>
-        </languageContext.Provider>
-      </userPreferencesContext.Provider>
+                          <globalDataContext.Provider
+                            value={{
+                              globalData,
+                              setGlobalData,
+                            }}
+                          >
+                            {props.children}
+                          </globalDataContext.Provider>
+                        </navigationDataContext.Provider>
+                      </formContext.Provider>
+                    </lineUsersContext.Provider>
+                  </selectedRowsContext.Provider>
+                </selectedRowsIdsContext.Provider>
+              </pageSizeContext.Provider>
+            </loginContext.Provider>
+          </languageContext.Provider>
+        </userPreferencesContext.Provider>
+      </historyContext.Provider>
     </>
   );
 };
 
 export {
   ContextProvider,
+  historyContext,
   userPreferencesContext,
   languageContext,
   loginContext,
