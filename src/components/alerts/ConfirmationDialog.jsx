@@ -17,6 +17,7 @@ const ConfirmationDialog = ({
   return (
     <div>
       <Dialog
+        fullWidth={true}
         open={open}
         onClose={close}
         /* PaperComponent={PaperComponent} */

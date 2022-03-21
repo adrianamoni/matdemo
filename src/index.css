@@ -160,6 +160,10 @@ code {
   font-size: 28px !important;
 }
 
+/* .MuiListItemIcon-root svg {
+  font-size: 36px !important;
+} */
+
 .separated-button-group {
   border-radius: 4px !important;
 }

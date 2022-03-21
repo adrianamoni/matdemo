@@ -30,11 +30,13 @@ function Layout(props) {
 
   /* palettes: 'oasys', 'grey-orange','green-orange', 'darkblue-lightblue','pink-purple','purple-green' */
   const palette = getPalette("grey-orange", colorMode);
+  const { primary, secondary } = palette;
 
   const theme = createTheme({
     palette: {
       mode: colorMode,
-      ...palette,
+      primary,
+      secondary,
       error: {
         main: colorMode === "dark" ? "#DC143C" : "#c41034",
         contrastText: "#fff",
@@ -56,6 +58,7 @@ function Layout(props) {
         text: "#fff",
       },
       background: {
+        primary: colorMode === "dark" ? "#1e1e1e" : "#fff",
         error: colorMode === "dark" ? "#2e090d" : "#fff2f2",
         success: "#00FA9A20",
         warning: "#d1a35e20",

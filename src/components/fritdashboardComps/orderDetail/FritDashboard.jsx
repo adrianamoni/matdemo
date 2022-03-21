@@ -104,7 +104,7 @@ const FritDashboard = () => {
     if (lineData) {
       if (orderData) {
         fetchData(true);
-        clearIntervalData = setInterval(fetchData, 3000);
+        clearIntervalData = setInterval(fetchData, 2500);
       }
     }
     if (modalJustify) {

@@ -5,6 +5,7 @@ const palettes = (isDark) => {
         main: isDark ? "#828081" : "#828081",
         contrastText: isDark ? "#000" : "#fff",
         text: isDark ? "#000" : "#fff",
+        background: isDark === "dark" ? "#82808130" : "red",
       },
       secondary: {
         main: isDark ? "#EA5428" : "#EA5428",

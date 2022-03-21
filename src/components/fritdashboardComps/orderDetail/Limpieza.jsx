@@ -20,7 +20,10 @@ import {
   timeFormating,
 } from "./helper";
 import { globalDataContext } from "../../../context/ContextProvider";
-import { handleOperationAction } from "../../fritdashboardTabs/General/helper";
+import {
+  handleOperationAction,
+  handleStopCleaning,
+} from "../../fritdashboardTabs/General/helper";
 import UseFetchMemory from "../../customHooks/UseFetchMemory";
 import LastCleaning from "./LastCleaning";
 import useWindowSize from "../../customHooks/UseWindowsSize";
@@ -33,7 +36,7 @@ const Limpieza = () => {
   const { orderDetails, /* orderData */ lineData } = globalData;
   const { productionData, cleaningData } = orderDetails;
   /*   const { woId, operId, seqNo } = orderData; */
-  const { entId } = lineData;
+  const { entId, entName } = lineData;
   const [loadingPlay, setLoadingPlay] = useState(false);
   const [loadingPause, setLoadingPause] = useState(false);
   const [loadingStop, setLoadingStop] = useState(false);
@@ -87,6 +90,7 @@ const Limpieza = () => {
       woId: cleaningData.wo_id,
       operId: cleaningData.oper_id,
       seqNo: cleaningData.seq_no,
+      isCleaning: true,
     });
     setLoadingPlay(false);
   };
@@ -98,6 +102,7 @@ const Limpieza = () => {
       woId: cleaningData.wo_id,
       operId: cleaningData.oper_id,
       seqNo: cleaningData.seq_no,
+      isCleaning: true,
     });
     setLoadingPause(false);
   };
@@ -105,11 +110,12 @@ const Limpieza = () => {
   const handleStop = async () => {
     setConfirmStop(false);
     setLoadingStop(true);
-    await handleOperationAction({
-      type: "stop",
+
+    await handleStopCleaning({
       woId: cleaningData.wo_id,
       operId: cleaningData.oper_id,
       seqNo: cleaningData.seq_no,
+      entName,
     });
     setLoadingStop(false);
   };

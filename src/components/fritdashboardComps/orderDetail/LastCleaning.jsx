@@ -60,7 +60,7 @@ const LastCleaning = () => {
               backgroundColor:
                 state === "Limpio"
                   ? "lightskyblue" //</Typography>"#70f5a7" //background.success"
-                  : state === "Limpio" && "#f5cb70", // "background.warning"
+                  : state === "Sucio" && "#9c7a4860", // "background.warning"
             }}
           >
             {state ? state.toUpperCase() : "-"}
