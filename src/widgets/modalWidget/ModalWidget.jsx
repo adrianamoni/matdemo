@@ -42,7 +42,7 @@ const ModalWidget = ({ open, close, title, content, customWidth }) => {
             <Divider />
           </Grid>
           <Grid item xs={12}>
-            <Grid container sx={{ mt: 1 }} spacing={2}>
+            <Grid container sx={{ mt: 1 }} spacing={2} justifyContent="center">
               {content}
             </Grid>
           </Grid>

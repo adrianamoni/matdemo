@@ -11,6 +11,8 @@ import {
   ListItemAvatar,
   ListItemText,
   Popover,
+  Divider,
+  Chip,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
@@ -146,9 +148,30 @@ const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
           )}
 
           <Grid item xs={3} textAlign="left">
-            <Typography variant="h6" noWrap component="div" sx={{ flex: 1 }}>
-              {Text({ tid: title })}
-            </Typography>
+            <Grid container spacing={2} alignItems="middle">
+              {pathname === "/detalle-orden" && width < 1150 ? (
+                <></>
+              ) : (
+                <Grid item>
+                  <Typography variant="h6">{Text({ tid: title })}</Typography>
+                </Grid>
+              )}
+              {pathname === "/detalle-orden" && globalData.lineData && (
+                <>
+                  <Grid item>
+                    <Chip
+                      sx={{
+                        color: "whitesmoke",
+                        backgroundColor: "#525252",
+                        fontSize: "1em",
+                      }}
+                      label={globalData.lineData.entName}
+                      variant="contained"
+                    />
+                  </Grid>
+                </>
+              )}
+            </Grid>
           </Grid>
           <Grid
             item

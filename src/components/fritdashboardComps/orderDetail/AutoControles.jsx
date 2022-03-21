@@ -40,7 +40,7 @@ const AutoControles = ({ data, alert }) => {
         backgroundColor: "background.grey4",
         ...styledAlert,
       }}
-      className={alert && "blinking-effect-red"}
+      className={alert ? "blinking-effect-red" : undefined}
       onClick={() => setNavigationData({ ...navigationData, activeTab: 6 })}
     >
       <Grid container sx={{ height: "100%" }}>

@@ -31,7 +31,7 @@ const Paros = ({ alert, data }) => {
         cursor: "pointer",
         ...styledAlert,
       }}
-      className={alert && "blinking-effect-red"}
+      className={alert ? "blinking-effect-red" : undefined}
       onClick={() => setNavigationData({ ...navigationData, activeTab: 7 })}
     >
       <Grid container sx={{ height: "100%" }}>

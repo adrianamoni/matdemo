@@ -39,6 +39,7 @@ import ConfirmationDialog from "../../alerts/ConfirmationDialog";
 import { ApiCall } from "../../../services/Service";
 import { screen_sequencing_onLiberate } from "../../../services/serviceHelper";
 import Text from "../../../languages/Text";
+import { fakeData1 } from "./fakeData";
 
 const SequencingGateway = () => {
   const navigateTo = useNavigate();

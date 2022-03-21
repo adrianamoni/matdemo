@@ -167,3 +167,12 @@ code {
 .separated-button-group {
   border-radius: 4px !important;
 }
+
+/* ALIGN RIGHT INPUT NUMBER */
+.custom-number-input {
+  text-align: right !important;
+}
+.custom-number-input::-webkit-outer-spin-button,
+.custom-number-input::-webkit-inner-spin-button {
+  margin-left: 5px !important;
+}

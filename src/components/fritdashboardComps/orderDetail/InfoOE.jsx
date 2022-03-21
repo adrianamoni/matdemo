@@ -125,7 +125,7 @@ const InfoOE = () => {
             <Grid container>
               {processedData &&
                 processedData.map((item, index) => (
-                  <Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
+                  <Grid key={index} item xs={12} sm={12} md={12} lg={12} xl={6}>
                     <ListItem>
                       <Grid container>
                         <Grid item xs={6}>

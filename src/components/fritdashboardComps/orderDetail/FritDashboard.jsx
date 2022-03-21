@@ -45,6 +45,7 @@ import ActualInterruption from "./ActualInterruption";
 import { get_actual_interruption } from "../../../services/Interruptions";
 import BadgeSvg from "../../svg/BadgeSvg";
 import useWindowSize from "./../../customHooks/UseWindowsSize";
+import uuid from "react-uuid";
 
 const FritDashboard = () => {
   const { width } = useWindowSize();
@@ -74,18 +75,16 @@ const FritDashboard = () => {
   const [refreshMain, setRefreshMain] = useState(false);
 
   const ofDetailNav = [
-    "General",
-    Text({ tid: "signals" }),
-    Text({ tid: "parameters" }),
-    Text({ tid: "materials" }),
-    /*    Text({ tid: "load" }), */
-    Text({ tid: "consumptions" }),
-    Text({ tid: "productions" }),
-    Text({ tid: "selfControls" }),
-    Text({ tid: "interruptions" }),
-    Text({ tid: "documentation" }),
-    Text({ tid: "planification" }),
-    Text({ tid: "simulation" }),
+    { id: uuid(), name: "General" },
+    { id: uuid(), name: Text({ tid: "signals" }) },
+    { id: uuid(), name: Text({ tid: "parameters" }) },
+    { id: uuid(), name: Text({ tid: "consumptions" }) },
+    { id: uuid(), name: Text({ tid: "productions" }) },
+    { id: uuid(), name: Text({ tid: "selfControls" }) },
+    { id: uuid(), name: Text({ tid: "interruptions" }) },
+    { id: uuid(), name: Text({ tid: "documentation" }) },
+    { id: uuid(), name: Text({ tid: "planification" }) },
+    { id: uuid(), name: Text({ tid: "simulation" }) },
   ];
 
   /* const [value, setValue] = useState(0); */
@@ -166,10 +165,6 @@ const FritDashboard = () => {
           }}
           justifyContent="center"
         >
-          {/* <AppBar
-            position="static"
-            sx={{ backgroundColor: "background.grey3" }}
-          > */}
           <Tabs
             value={navigationData.activeTab}
             onChange={handleChange}
@@ -199,24 +194,24 @@ const FritDashboard = () => {
 
               return (
                 <Tab
-                  /*    label={tab} */
+                  key={tab.id}
                   label={
                     sampleAlert ? (
                       <Badge
                         badgeContent={pendingSamples.data.length}
                         color="error"
                       >
-                        {tab}
+                        {tab.name}
                       </Badge>
                     ) : interruptionAlert ? (
                       <Badge
                         badgeContent={pendingInterruptions.data.length}
                         color="error"
                       >
-                        {tab}
+                        {tab.name}
                       </Badge>
                     ) : (
-                      tab
+                      tab.name
                     )
                   }
                   index={index}
@@ -227,7 +222,6 @@ const FritDashboard = () => {
               );
             })}
           </Tabs>
-          {/* </AppBar> */}
         </Box>
 
         <Container
