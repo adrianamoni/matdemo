@@ -167,7 +167,7 @@ const Limpieza = () => {
               >
                 <Grid
                   container
-                  spacing={2}
+                  rowSpacing={2}
                   columnSpacing={3}
                   sx={{ maxWidth: 300 }}
                 >

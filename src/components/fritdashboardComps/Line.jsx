@@ -107,11 +107,11 @@ const Line = ({ line }) => {
         justifyContent={"center"}
         sx={{ mb: 3 }}
       >
-        <Grid item style={{ width: "100%" }}>
+        <Grid item style={{ width: "100%", maxWidth: 550 }}>
           <OeeTurno line={line} />
         </Grid>
 
-        <Grid item style={{ width: "100%" }}>
+        <Grid item style={{ width: "100%", maxWidth: 550 }}>
           <OeeChartBox
             line={line}
             showChart={true}

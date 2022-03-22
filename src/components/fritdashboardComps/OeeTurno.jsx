@@ -41,7 +41,10 @@ const OeeTurno = ({ line }) => {
           setApiData(response);
         }
       }
-      clearTimeoutKey = setTimeout(fetchData, 60000);
+      clearTimeoutKey = setTimeout(
+        fetchData,
+        5000 //60000
+      );
     };
 
     fetchData();
@@ -59,7 +62,6 @@ const OeeTurno = ({ line }) => {
       let OEEPercentageIndex = apiData.findIndex((obj) => {
         return obj.Tagname.includes("CurrentOEEPercent");
       });
-
       setOEEData({
         OEEPercentage:
           OEEPercentageIndex != "-1"
@@ -77,9 +79,7 @@ const OeeTurno = ({ line }) => {
           {apiData && apiData.length > 0 ? (
             <LineProgress
               value={
-                OEEData?.OEEPercentage
-                  ? parseFloat(OEEData.OEEPercentage) / 100
-                  : 0
+                OEEData?.OEEPercentage ? parseFloat(OEEData.OEEPercentage) : 0
               }
             />
           ) : (

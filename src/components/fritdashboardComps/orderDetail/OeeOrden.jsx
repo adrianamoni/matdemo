@@ -27,7 +27,10 @@ const OeeOrden = () => {
         }
       }
 
-      clearTimeoutTurnoKey = setTimeout(fetch, 60000);
+      clearTimeoutTurnoKey = setTimeout(
+        fetch,
+        5000 //60000
+      );
     };
 
     if (globalData && globalData.lineData && globalData.orderData) {

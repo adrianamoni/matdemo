@@ -84,7 +84,7 @@ const General = ({ loading }) => {
         container
         alignItems="stretch"
         columnSpacing={3}
-        rowSpacing={3}
+        /*       rowSpacing={1} */
         /* sx={{ p: 2 }} */
       >
         <Grid item xs={12} sm={12} md={12} lg={7}>

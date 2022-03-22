@@ -43,7 +43,7 @@ const HalfDoughnut = ({ value, color }) => {
           },
           value: {
             offsetY: -2,
-            fontSize: "1.5rem",
+            fontSize: "1.3em",
             fontWeight: 700,
             color: colorMode === "dark" ? "#eee" : "#222",
           },

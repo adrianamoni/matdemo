@@ -114,7 +114,7 @@ const InfoOE = () => {
 
   return productionData ? (
     <>
-      <Grid container rowSpacing={2} sx={{ height: "100%" }}>
+      <Grid container rowSpacing={1} sx={{ height: "100%" }}>
         <Grid item xs={12}>
           <Typography variant="h6" component="h6">
             {productionData?.item_id.slice(-6)} {productionData?.item_desc}
@@ -129,7 +129,7 @@ const InfoOE = () => {
                     <ListItem>
                       <Grid container>
                         <Grid item xs={6}>
-                          <Typography sx={{ fontSize: "1.1rem" }}>
+                          <Typography sx={{ fontSize: "1.1em" }}>
                             <strong>
                               {/* Object.keys(item) */}
                               {Object.keys(item).length > 0 ? (

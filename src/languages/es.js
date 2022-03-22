@@ -143,6 +143,8 @@ const es = {
   selectSample: "Selecciona una muestra",
   create: "Crear",
   submit: "Enviar",
+  operatingData: "Explotación de Datos",
+
   /* NOTIFICATION MESSAGES */
   loginSuccess: "¡Usuario logueado correctamente!",
   noInterruptionsMatchingFilter:
@@ -183,6 +185,7 @@ const es = {
   doYouWantToSaveChanges: "¿Quieres guardar los cambios?",
   resultsSavedSuccess: "¡Resultados guardados correctamente!",
   productionCorrectionSuccess: "¡Producción corregida con éxito!",
+  redirectingToExternal: "Redirigiendo a una sitio web externo...",
 };
 
 export default es;

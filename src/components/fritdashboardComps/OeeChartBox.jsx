@@ -80,10 +80,12 @@ const OeeChartBox = ({ showChart, line, order, disableClick }) => {
         if (order.state_cd === 4 && order.woStateCd === 3) {
           setStateColor(["#e3e3e3", "#A6A6A6"]); //HARDCODED
         } else {
-          const { light, background } = propsByState({
+          const obj = {
             prodState: order.state_cd,
             cleanState: order.StateCdLimpieza,
-          });
+          };
+          console.log("colorByState", obj);
+          const { light, background } = propsByState(obj);
           setStateColor([light, background]);
         }
       }
@@ -163,23 +165,23 @@ const OeeChartBox = ({ showChart, line, order, disableClick }) => {
         )}
         <CardContent>
           <Grid container alignItems="center">
-            <Grid item xs={6}>
-              <Typography variant="h6" gutterBottom>
+            <Grid item xs={5}>
+              <Typography sx={{ fontSize: "1.2em" }} gutterBottom>
                 <strong>{Text({ tid: "product" })}</strong>
               </Typography>
             </Grid>
-            <Grid item xs={6}>
-              <Typography variant="h8" gutterBottom>
+            <Grid item xs={7} textAlign="right">
+              <Typography variant="body" gutterBottom>
                 {order && `${order.item_id} (${order.item_desc})`}
               </Typography>
             </Grid>
-            <Grid item xs={6}>
-              <Typography variant="h6" gutterBottom>
+            <Grid item xs={5}>
+              <Typography sx={{ fontSize: "1.2em" }} gutterBottom>
                 <strong>{Text({ tid: "order" })}</strong>
               </Typography>
             </Grid>
-            <Grid item xs={6}>
-              <Typography variant="h8" gutterBottom>
+            <Grid item xs={7} textAlign="right">
+              <Typography variant="body" gutterBottom>
                 {order && order.wo_id}
               </Typography>
             </Grid>

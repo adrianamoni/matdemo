@@ -154,8 +154,8 @@ const ResultsTable = ({
                   resultAttribute,
                 } = item;
 
-                let resultValue;
-                if (isDropdown) {
+                let resultValue = result ? parseFloat(result) : "";
+                /*  if (isDropdown) {
                   if (result) {
                     resultValue = item.dropdownOptions.find(
                       (opt) => opt.extra === resultAttribute
@@ -163,7 +163,7 @@ const ResultsTable = ({
                   }
                 } else {
                   resultValue = result ? parseFloat(result) : "";
-                }
+                } */
                 const dropdownClass = checkDropdownResult(
                   lowerLimit,
                   upperLimit,

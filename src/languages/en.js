@@ -72,7 +72,7 @@ const en = {
   quality: "Quality",
   selfControls: "Self-Controls",
   interruption: "Interruption",
-  interruptions: "Interruptions",
+  interruptions: "Stops",
   documentation: "Documentation",
   planification: "Planification",
   //
@@ -143,6 +143,7 @@ const en = {
   selectSample: "Select sample",
   create: "Create",
   submit: "Submit",
+  operatingData: "Operating Data",
   /* NOTIFICATION MESSAGES */
   loginSuccess: "User logged in!",
   noInterruptionsMatchingFilter:
@@ -183,6 +184,7 @@ const en = {
   doYouWantToSaveChanges: "Do you want to save changes?",
   resultsSavedSuccess: "Results saved successfully!",
   productionCorrectionSuccess: "Production corrected successfully!",
+  redirectingToExternal: "Redirecting to an external website...",
 };
 
 export default en;
