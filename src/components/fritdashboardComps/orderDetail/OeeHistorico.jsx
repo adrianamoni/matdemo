@@ -110,7 +110,7 @@ const OEEHistorico = () => {
               <TimelineContainer />
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={3}>
-              <Grid container>
+              <Grid container rowSpacing={1}>
                 <Grid item xs={12}>
                   <Typography align="center" variant="h6" component="h6">
                     {Text({ tid: "turnOee" })}

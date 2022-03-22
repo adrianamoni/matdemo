@@ -154,8 +154,8 @@ const ResultsTable = ({
                   resultAttribute,
                 } = item;
 
-                let resultValue = result ? parseFloat(result) : "";
-                /*  if (isDropdown) {
+                let resultValue;
+                if (isDropdown) {
                   if (result) {
                     resultValue = item.dropdownOptions.find(
                       (opt) => opt.extra === resultAttribute
@@ -163,7 +163,7 @@ const ResultsTable = ({
                   }
                 } else {
                   resultValue = result ? parseFloat(result) : "";
-                } */
+                }
                 const dropdownClass = checkDropdownResult(
                   lowerLimit,
                   upperLimit,
@@ -180,9 +180,13 @@ const ResultsTable = ({
                     <TableCell>
                       {charName} - {charDesc}
                     </TableCell>
-                    <TableCell align="right">{lowerLimit}</TableCell>
-                    <TableCell align="right">{upperLimit}</TableCell>
-                    <TableCell style={{ height: 54 }} align="right">
+                    <TableCell align="right">
+                      {isDropdown ? "n/a" : lowerLimit}
+                    </TableCell>
+                    <TableCell align="right">
+                      {isDropdown ? "n/a" : upperLimit}
+                    </TableCell>
+                    <TableCell align="right">
                       {!isDropdown ? (
                         <>
                           <FormControl fullWidth>
@@ -201,6 +205,7 @@ const ResultsTable = ({
                         <>
                           <FormControl fullWidth>
                             <Select
+                              size="small"
                               id="dropdown-result"
                               className={`wide-scrollbar ${dropdownClass}`}
                               value={resultValue?.value}
