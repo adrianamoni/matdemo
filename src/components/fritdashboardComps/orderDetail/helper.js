@@ -429,7 +429,6 @@ export const processOrderTimeData = ({ orderTime, duracionJob }) => {
 
 export const getCleaningText = (cleanState) => {
   let text;
-  console.log("cleanState", cleanState);
   if (cleanState || cleanState === "") {
     if (cleanState === "" || cleanState === "S") {
       text = Text({ tid: "dryCleaning" });

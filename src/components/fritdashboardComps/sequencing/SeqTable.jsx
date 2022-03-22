@@ -116,9 +116,6 @@ const SeqTable = ({
   //} else if (width < 1600) {
   //  tableClass = "mid-row-seq-table";
   //}
-  /*   useEffect(() => {
-    console.log("startDate2", startDate);
-  }, [startDate]); */
 
   useEffect(() => {
     if (formWidget.sequencingInitDate) {

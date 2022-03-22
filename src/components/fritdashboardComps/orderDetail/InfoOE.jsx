@@ -129,7 +129,7 @@ const InfoOE = () => {
                     <ListItem>
                       <Grid container>
                         <Grid item xs={6}>
-                          <Typography sx={{ fontSize: "1.1em" }}>
+                          <Typography>
                             <strong>
                               {/* Object.keys(item) */}
                               {Object.keys(item).length > 0 ? (
@@ -194,7 +194,7 @@ const InfoOE = () => {
         </Grid>
         <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
           <Grid container sx={{ maxWidth: 350, p: 2 }}>
-            <Grid item xs={4} sm={4} md={4}>
+            <Grid item xs={4}>
               <LoadingButton
                 loading={loadingPlay}
                 onClick={handlePlay}
@@ -206,7 +206,7 @@ const InfoOE = () => {
                 <PlayArrowIcon />
               </LoadingButton>
             </Grid>
-            <Grid item xs={4} sm={4} md={4}>
+            <Grid item xs={4}>
               <LoadingButton
                 loading={loadingPause}
                 onClick={handlePause}
@@ -218,7 +218,7 @@ const InfoOE = () => {
                 <PauseIcon />
               </LoadingButton>
             </Grid>
-            <Grid item xs={4} sm={4} md={4}>
+            <Grid item xs={4}>
               <LoadingButton
                 loading={loadingStop}
                 onClick={handleConfirmStop}

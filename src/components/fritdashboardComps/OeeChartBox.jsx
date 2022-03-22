@@ -84,7 +84,6 @@ const OeeChartBox = ({ showChart, line, order, disableClick }) => {
             prodState: order.state_cd,
             cleanState: order.StateCdLimpieza,
           };
-          console.log("colorByState", obj);
           const { light, background } = propsByState(obj);
           setStateColor([light, background]);
         }

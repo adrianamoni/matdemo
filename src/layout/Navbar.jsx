@@ -149,7 +149,7 @@ const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
 
           <Grid item xs={3} textAlign="left">
             <Grid container spacing={2} alignItems="middle">
-              {pathname === "/detalle-orden" && width < 1150 ? (
+              {pathname === "/detalle-orden" && width < 1180 ? (
                 <></>
               ) : (
                 <Grid item>
@@ -185,7 +185,9 @@ const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
                 pathname === "/limpieza") &&
                 lineUsers &&
                 lineUsers.length > 0 &&
-                lineUsers.map((item, i) => <AssignedUser user={item} />)}
+                lineUsers.map((item, i) => (
+                  <AssignedUser key={i} user={item} />
+                ))}
             </div>
           </Grid>
 

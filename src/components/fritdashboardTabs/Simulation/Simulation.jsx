@@ -130,8 +130,8 @@ const Simulation = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {apiData.map((item) => (
-                      <TableRow>
+                    {apiData.map((item, i) => (
+                      <TableRow key={i}>
                         <TableCell>{item.name}</TableCell>
 
                         <TableCell align="center">

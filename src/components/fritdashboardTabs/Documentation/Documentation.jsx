@@ -150,16 +150,28 @@ const Documentation = () => {
                     backgroundColor: "background.grey3",
                   }}
                 >
-                  {tableData.map((el) => (
-                    <>
-                      <Paper
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                        }}
-                        elevation={0}
+                  {tableData.map((el, i) => (
+                    <Paper
+                      key={i}
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                      elevation={0}
+                    >
+                      <Button
+                        onClick={() =>
+                          setDisplayPdfViewer({
+                            name: el.NombreFichero,
+                            url: `${docUri}${el.NombreFichero}#navpanes=0`,
+                          })
+                        }
                       >
+                        {el.Descripcion}
+                      </Button>
+
+                      <div>
                         <Button
                           onClick={() =>
                             setDisplayPdfViewer({
@@ -168,29 +180,16 @@ const Documentation = () => {
                             })
                           }
                         >
-                          {el.Descripcion}
+                          <FileOpenIcon color="info" />
                         </Button>
-
-                        <div>
-                          <Button
-                            onClick={() =>
-                              setDisplayPdfViewer({
-                                name: el.NombreFichero,
-                                url: `${docUri}${el.NombreFichero}#navpanes=0`,
-                              })
-                            }
-                          >
-                            <FileOpenIcon color="info" />
-                          </Button>
-                          <Button
-                            href={`${docUri}${el.NombreFichero}`}
-                            target="_blank"
-                          >
-                            <ScreenShareIcon color="primary" />
-                          </Button>
-                        </div>
-                      </Paper>
-                    </>
+                        <Button
+                          href={`${docUri}${el.NombreFichero}`}
+                          target="_blank"
+                        >
+                          <ScreenShareIcon color="primary" />
+                        </Button>
+                      </div>
+                    </Paper>
                   ))}
                 </Stack>
               ) : (
@@ -221,8 +220,3 @@ const Documentation = () => {
 };
 
 export default Documentation;
-
-{
-  /* 
-      ) :  */
-}

@@ -29,6 +29,7 @@ const ButtonGroupWidget = ({ position, buttons, loading, size }) => {
             buttons.map((btn, i, list) => {
               return !loading ? (
                 <Button
+                  key={i}
                   variant="contained"
                   color={btn.color}
                   disabled={btn.disabled ? true : false}

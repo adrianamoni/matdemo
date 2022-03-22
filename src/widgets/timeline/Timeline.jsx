@@ -112,15 +112,15 @@ const Timeline = ({ data }) => {
   return (
     <div
       id="timeline-chart-container"
-      style={{ padding: 0, margin: 0, marginLeft: "-20px", marginTop: "-15px" }}
+      /*   style={{ padding: 0, margin: 0, marginLeft: "-20px", marginTop: "-15px" }} */
     >
       {series && series.length > 0 && (
         <Chart
           options={options}
           series={series}
           type="rangeBar"
-          width="100%"
-          height="130px"
+          /*   width="100%" */
+          height="140px"
         />
       )}
     </div>

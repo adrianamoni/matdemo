@@ -82,7 +82,7 @@ const ModalCreateOrder = ({ open, close, setRefreshMain }) => {
         autoComplete="off"
       >
         {loading ? (
-          <LinearProgress variant="indetermiante" color="secondary" />
+          <LinearProgress variant="indeterminate" color="secondary" />
         ) : (
           <>
             <div

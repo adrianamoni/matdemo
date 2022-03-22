@@ -106,10 +106,10 @@ const OEEHistorico = () => {
 
         <Grid item xs={12} /* sx={{ height: "100%" }} */>
           <Grid container sx={{ alignItems: "center" }}>
-            <Grid item xs={12} sm={12} md={12} lg={6} te>
+            <Grid item xs={12} sm={12} md={12} lg={5} te>
               <TimelineContainer />
             </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={3}>
+            <Grid item xs={12} sm={12} md={6} lg={4}>
               <Grid container rowSpacing={1}>
                 <Grid item xs={12}>
                   <Typography align="center" variant="h6" component="h6">

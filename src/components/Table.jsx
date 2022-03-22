@@ -6,7 +6,6 @@ import Text from "./../languages/Text";
 import { DataGrid } from "@mui/x-data-grid";
 
 function renderRating(params) {
-  console.log("params", params);
   return (
     <>
       {/*   <Grid container wrap="nowrap" spacing={2}> */}

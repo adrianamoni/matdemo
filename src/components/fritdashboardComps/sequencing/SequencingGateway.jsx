@@ -347,7 +347,7 @@ const SequencingGateway = () => {
                   <Select
                     label={Text({ tid: "operation" })}
                     onChange={(e) => handleOperationSelect(e.target.value)}
-                    value={operationDropdown}
+                    value={operationDropdown || ""}
                   >
                     {operations.map((op) => (
                       <MenuItem value={op.value}>{op.text}</MenuItem>
@@ -363,7 +363,7 @@ const SequencingGateway = () => {
                   <Select
                     label={Text({ tid: "lines" })}
                     onChange={(e) => handleLineSelection(e.target.value)}
-                    value={selectedLine && selectedLine.id}
+                    value={(selectedLine && selectedLine.id) || ""}
                     disabled={!operationDropdown}
                   >
                     {linesDropdown.map((line) => (

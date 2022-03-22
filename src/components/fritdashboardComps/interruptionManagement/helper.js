@@ -173,7 +173,6 @@ const fetchAllManagerData = async ({ entId, section, reason, date }) => {
     }),
     url: "queryDataFrameDataAsync",
   });
-  console.log("response", response);
   if (response) {
     if (response.responseError) {
       err = {

@@ -1,19 +1,5 @@
-/* import React, { useState, useEffect, useContext } from "react";
-import { Modal, Form, Button, Dropdown, Label } from "semantic-ui-react";
-import AlertModal from "../../common/alerts/AlertModal";
-import { createNotification } from "../../common/alerts/NotificationAlert";
-import { LineContext, OfDetailData } from "../../context/ContextProvider";
-import {
-  tab_quality_generate_sample,
-  tab_quality_get_qmspec_by_filter,
-} from "../../services/OFservices";
-import { ApiCall, MemoryDatabaseCall } from "./../../services/Service"; */
-
-import { LoadingButton } from "@mui/lab";
 import {
   Alert,
-  Button,
-  Container,
   FormControl,
   Grid,
   InputLabel,
@@ -24,15 +10,11 @@ import {
 import { Box } from "@mui/system";
 import { useContext, useState } from "react";
 import uuid from "react-uuid";
-import {
-  formContext,
-  globalDataContext,
-} from "../../../context/ContextProvider";
+import { globalDataContext } from "../../../context/ContextProvider";
 import Text from "../../../languages/Text";
 import { tab_quality_generate_sample } from "../../../services/OFservices";
 import { ApiCall } from "../../../services/Service";
 import ButtonGroupWidget from "../../../widgets/buttonGroup/ButtonGroupWidget";
-import SelectWidget from "../../../widgets/forms/SelectWidget";
 import ModalWidget from "../../../widgets/modalWidget/ModalWidget";
 import { createNotification } from "../../alerts/NotificationAlert";
 import UseFetchMemory from "../../customHooks/UseFetchMemory";
@@ -115,8 +97,10 @@ const ModalGenerateSample = ({ showModal, setShowModal, setRefreshMain }) => {
             value={qmSpec}
           >
             {processedData &&
-              processedData.map((item) => (
-                <MenuItem value={item.value}>{item.text}</MenuItem>
+              processedData.map((item, i) => (
+                <MenuItem key={i} value={item.value}>
+                  {item.text}
+                </MenuItem>
               ))}
           </Select>
         </FormControl>
@@ -138,7 +122,7 @@ const ModalGenerateSample = ({ showModal, setShowModal, setRefreshMain }) => {
               disabled: !qmSpec && qmSpec !== 0,
             },
           ]}
-          loading={loading}
+          loading={loadingSubmit}
         />
       </Grid>
     </>

@@ -68,7 +68,6 @@ const Materials = () => {
 
   useEffect(() => {
     return () => {
-      console.log("here", setSelectedRowsIds);
       setSelectedRowsIds([]);
       setSelectedRows([]);
     };
