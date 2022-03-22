@@ -35,11 +35,7 @@ const IframeComp = ({ url }) => {
 };
 
 const Documentation = () => {
-  const DEVELOPMENT_IP = "192.168.9.128";
-  const PRODUCTION_IP = "192.168.9.128";
-  const production_uri = `http://${PRODUCTION_IP}/documentacion/`;
-  const development_uri = `http://${DEVELOPMENT_IP}/documentacion/`;
-
+  const docUri = POINTING_IPS.documentacion;
   //useContext
   const { globalData } = useContext(globalDataContext);
   const { entName } = globalData.lineData;
@@ -162,42 +158,32 @@ const Documentation = () => {
                           flexDirection: "row",
                           justifyContent: "space-between",
                         }}
+                        elevation={0}
                       >
                         <Button
                           onClick={() =>
                             setDisplayPdfViewer({
                               name: el.NombreFichero,
-                              url: `${
-                                process.env.NODE_ENV === "production"
-                                  ? production_uri
-                                  : development_uri
-                              }${el.NombreFichero}#navpanes=0`,
+                              url: `${docUri}${el.NombreFichero}#navpanes=0`,
                             })
                           }
                         >
                           {el.Descripcion}
                         </Button>
+
                         <div>
                           <Button
                             onClick={() =>
                               setDisplayPdfViewer({
                                 name: el.NombreFichero,
-                                url: `${
-                                  process.env.NODE_ENV === "production"
-                                    ? production_uri
-                                    : development_uri
-                                }${el.NombreFichero}#navpanes=0`,
+                                url: `${docUri}${el.NombreFichero}#navpanes=0`,
                               })
                             }
                           >
                             <FileOpenIcon color="info" />
                           </Button>
                           <Button
-                            href={`${
-                              process.env.NODE_ENV === "production"
-                                ? production_uri
-                                : development_uri
-                            }${el.NombreFichero}`}
+                            href={`${docUri}${el.NombreFichero}`}
                             target="_blank"
                           >
                             <ScreenShareIcon color="primary" />

@@ -160,9 +160,17 @@ const InfoOE = () => {
                     </ListItem>
                   </Grid>
                 ))}
-              <Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                md={12}
+                lg={12}
+                xl={6}
+                alignItems="center"
+              >
                 <ListItem>
-                  <Grid container>
+                  <Grid container sx={{ alignItems: "center" }}>
                     <Grid item xs={6}>
                       <Typography>
                         <strong>

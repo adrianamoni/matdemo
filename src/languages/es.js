@@ -130,7 +130,7 @@ const es = {
   lastSelfControlDate: "Fecha último auto control",
   pendingInterruptions: "Paros pendientes",
   change: "Cambio",
-  cleaningAndChange: "Limpiexa y Cambio",
+  cleaningAndChange: "Limpieza y Cambio",
   stopOperation: "Parar operación",
   areYouSure: "¿Está seguro?",
   timeRemaining: "Tiempo restante",

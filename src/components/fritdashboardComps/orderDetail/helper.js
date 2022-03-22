@@ -429,7 +429,7 @@ export const processOrderTimeData = ({ orderTime, duracionJob }) => {
 
 export const getCleaningText = (cleanState) => {
   let text;
-
+  console.log("cleanState", cleanState);
   if (cleanState || cleanState === "") {
     if (cleanState === "" || cleanState === "S") {
       text = Text({ tid: "dryCleaning" });
@@ -437,6 +437,8 @@ export const getCleaningText = (cleanState) => {
       text = Text({ tid: "cleaningWithProduct" });
     } else if (cleanState === "A") {
       text = Text({ tid: "cleaningWithWater" });
+    } else {
+      text = "-";
     }
   } else {
     text = "-";

@@ -14,7 +14,7 @@ export default function LineProgress({ value, height }) {
             sx={{ height: height || "1rem" }}
           />
         </Box>
-        <Box sx={{ minWidth: 35 }}>
+        <Box sx={{ minWidth: 35 }} textAlign="right">
           <Typography variant="body2" color="text.secondary">
             {value !== undefined ? `${Math.round(value)}%` : ""}
           </Typography>

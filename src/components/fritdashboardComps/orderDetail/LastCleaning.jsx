@@ -15,6 +15,7 @@ const LastCleaning = () => {
     },
   });
   let state, lastClean;
+
   if (lastCleaningResponse) {
     state = lastCleaningResponse[0].Estado;
     lastClean = lastCleaningResponse[0].UltimaLimpieza;

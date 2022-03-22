@@ -1,29 +1,59 @@
 import React from "react";
-import { Typography } from "@mui/material";
+import { Avatar, Grid, Paper, Typography } from "@mui/material";
 import TableWidget from "../widgets/TableWidget/TableWidget";
 import { dataTable } from "../widgets/TableWidget/fakedata";
 import Text from "./../languages/Text";
+import { DataGrid } from "@mui/x-data-grid";
 
-const Table = () => {
-  const columns = [
-    { field: "id", headerName: `${Text({ tid: "id" })}`, flex: 1 },
-    { field: "name", headerName: `${Text({ tid: "name" })}`, flex: 1 },
-    { field: "username", headerName: `${Text({ tid: "user" })}`, flex: 1 },
-    {
-      field: "email",
-      headerName: `${Text({ tid: "email" })}`,
-      flex: 1,
-    },
-    {
-      field: "phone",
-      headerName: `${Text({ tid: "phone" })}`,
-      type: "number",
-      flex: 1,
-    },
-  ];
+function renderRating(params) {
+  console.log("params", params);
   return (
     <>
-      <TableWidget data={dataTable} columns={columns} whatever="sdfsdf" />
+      {/*   <Grid container wrap="nowrap" spacing={2}> */}
+
+      <Grid item xs zeroMinWidth>
+        <Typography
+          sx={{ height: 70 }}
+          /*  style={{
+            wrap: "nowrap",
+
+            maxWidth: "200px",
+          }} */
+        >
+          {params.value}
+        </Typography>
+      </Grid>
+      {/* </Grid> */}
+    </>
+  );
+}
+
+const Table = () => {
+  const rows = [
+    { id: 1, col1: "Hello", col2: "World" },
+    {
+      id: 2,
+      col1: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur quia perferendis quasi, consequuntur eligendi, tempora laboriosam cupiditate magnam in id eum totam laudantium voluptate? Culpa impedit ex harum eius dignissimos?",
+      col2: "is Awesome",
+    },
+    { id: 3, col1: "MUI", col2: "is Amazing" },
+  ];
+
+  const columns = [
+    {
+      field: "col1",
+      headerName: "Column 1",
+      flex: 1,
+      renderCell: renderRating,
+    },
+    { field: "col2", headerName: "Column 2", flex: 1 },
+  ];
+
+  return (
+    <>
+      <div style={{ height: 300, width: "100%" }}>
+        <DataGrid rows={rows} columns={columns} />
+      </div>
     </>
   );
 };

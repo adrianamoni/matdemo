@@ -78,6 +78,7 @@ const FritDashboard = () => {
     { id: uuid(), name: "General" },
     { id: uuid(), name: Text({ tid: "signals" }) },
     { id: uuid(), name: Text({ tid: "parameters" }) },
+    { id: uuid(), name: Text({ tid: "materials" }) },
     { id: uuid(), name: Text({ tid: "consumptions" }) },
     { id: uuid(), name: Text({ tid: "productions" }) },
     { id: uuid(), name: Text({ tid: "selfControls" }) },
