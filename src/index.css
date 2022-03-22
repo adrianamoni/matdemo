@@ -176,3 +176,9 @@ code {
 .custom-number-input::-webkit-inner-spin-button {
   margin-left: 5px !important;
 }
+
+/* custom disabled input */
+.custom-disabled > div {
+  background-color: #fbfbfb !important;
+  -webkit-text-fill-color: #111 !important;
+}

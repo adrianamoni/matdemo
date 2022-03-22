@@ -26,12 +26,6 @@ input::-webkit-calendar-picker-indicator {
   font-size: 0.9rem !important;
 }
 
-/* custom disabled input */
-.custom-disabled > div {
-  background-color: #fbfbfb !important;
-  -webkit-text-fill-color: #111 !important;
-}
-
 .custom-number-input > div > input::-webkit-outer-spin-button,
 .custom-number-input > div > input::-webkit-inner-spin-button {
   margin-left: 5px !important;
