@@ -12,7 +12,7 @@ import ModalWidget from "../../../widgets/modalWidget/ModalWidget";
 import TableWidget from "../../../widgets/TableWidget/TableWidget";
 import ModalGenerateSample from "./ModalGenerateSample";
 import ResultsTable from "./ResultsTable";
-import { fetchAllSampleData, multiCall, sortBy } from "./helper";
+import { fetchAllSampleData, sortBy } from "./helper";
 import { Box } from "@mui/system";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { tab_quality_get_results } from "../../../services/OFservices";
@@ -52,30 +52,7 @@ const Quality = () => {
       flex: 1,
     },
   ];
-  const resultsTableColumns = [
-    {
-      field: "char",
-      headerName: `${Text({ tid: "feature" })}`,
-      flex: 1,
-    },
-    {
-      field: "lowerLimit",
-      headerName: `ll`,
-      flex: 1,
-      type: "number",
-    },
-    {
-      field: "upperLimit",
-      headerName: `hh`,
-      flex: 1,
-      type: "number",
-    },
-    {
-      field: "resultValue",
-      headerName: `${Text({ tid: "result" })}`,
-      flex: 1,
-    },
-  ];
+
   useEffect(() => {
     if (pendingSamples && onlyPendings) {
       setSamples(pendingSamples.data);
@@ -140,12 +117,13 @@ const Quality = () => {
     setOnlyPendings(!onlyPendings);
   };
 
-  useEffect(() => {
+  /*   useEffect(() => {
     if (originalResults) {
       getResultOptions();
     }
     //eslint-disable-next-line
-  }, [originalResults]);
+  }, [originalResults]); */
+
   const fetchResults = async (id) => {
     /* setLoadingResults(true); */
     //setSampleId(id);
@@ -172,13 +150,17 @@ const Quality = () => {
             upperLimit: result.usv,
           }));
           const sorted = sortBy("charName", filteredResults);
-          setOriginalResults(sorted);
+          const original = JSON.parse(JSON.stringify(sorted));
+          setOriginalResults(original);
+          setResults(sorted);
         }
       }
     }
-    /* setLoadingResults(false); */
+    setLoadingResults(false);
   };
-  const getResultOptions = async () => {
+
+  //NO APLICA PARA LA DEMO
+  /*  const getResultOptions = async () => {
     const options = await multiCall(originalResults);
     let res;
 
@@ -209,7 +191,7 @@ const Quality = () => {
 
     setResults(res);
     setLoadingResults(false);
-  };
+  }; */
 
   const handleChange = ({ e, charId, isDropdown }) => {
     const newArr = [...results];

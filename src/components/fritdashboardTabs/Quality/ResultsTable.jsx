@@ -182,7 +182,7 @@ const ResultsTable = ({
                     </TableCell>
                     <TableCell align="right">{lowerLimit}</TableCell>
                     <TableCell align="right">{upperLimit}</TableCell>
-                    <TableCell style={{ height: 54 }} align="right">
+                    <TableCell align="right">
                       {!isDropdown ? (
                         <>
                           <FormControl fullWidth>
@@ -201,6 +201,16 @@ const ResultsTable = ({
                         <>
                           <FormControl fullWidth>
                             <Select
+                              /*   sx={{ height: "40px", padding: "0px" }} */
+                              size="small"
+                              value="N/A"
+                              disabled
+                              className="custom-disabled"
+                            >
+                              <MenuItem value={"N/A"}>N/A</MenuItem>)
+                            </Select>
+
+                            {/* <Select
                               id="dropdown-result"
                               className={`wide-scrollbar ${dropdownClass}`}
                               value={resultValue?.value}
@@ -214,7 +224,7 @@ const ResultsTable = ({
                                     {item.text}
                                   </MenuItem>
                                 ))}
-                            </Select>
+                            </Select> */}
                           </FormControl>
                         </>
                       )}

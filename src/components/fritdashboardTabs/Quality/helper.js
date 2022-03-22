@@ -197,7 +197,8 @@ const apiCall = async (attr_id) => {
   }
 };
 
-export const multiCall = async (results) => {
+//NO APLICA PARA LA DEMO
+/* export const multiCall = async (results) => {
   let allIds;
   allIds = results.filter((c) => c.attrId > -1);
   const char_attr_id = allIds.map((c) => ({
@@ -233,7 +234,7 @@ export const multiCall = async (results) => {
     };
   });
   return drop;
-};
+}; */
 
 export const sortBy = (key, arr) => {
   return arr.sort((a, b) => (a[key] > b[key] ? 1 : b[key] > a[key] ? -1 : 0));
