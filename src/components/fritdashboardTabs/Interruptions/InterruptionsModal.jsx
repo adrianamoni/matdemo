@@ -383,40 +383,42 @@ const InterruptionsModal = ({
     setLoading(true);
 
     let row = originalData.find((el) => {
-      return el.ID == selectedRows[0].id;
+      return el.ID == selectedRows[0].ID;
     });
 
-    let submitObj = {
-      lineaId: selectedRows[0].EntId,
-      reasCd: selectedReason.reas_cd,
-      rawReasCd: selectedRows[0].RawReasCd,
-      eventTime: row.StartDateTime,
-      eventEndTime: row.EndDateTime,
-      comments: formWidget?.justifyInterruptionForm?.comment
-        ? formWidget.justifyInterruptionForm.comment
-        : "",
-    };
-    const response = await ApiCall({
-      params: screen_interruptions_justify(submitObj),
-    });
-    if (response.responseError) {
-      setLoading(false);
-      createNotification({
-        status: "error",
-        code: response.responseError,
-        msg: response.responseMsg,
-        hide: response.responseHide,
+    if (row) {
+      let submitObj = {
+        lineaId: selectedRows[0].EntId,
+        reasCd: selectedReason.reas_cd,
+        rawReasCd: selectedRows[0].RawReasCd,
+        eventTime: row.StartDateTime,
+        eventEndTime: row.EndDateTime,
+        comments: formWidget?.justifyInterruptionForm?.comment
+          ? formWidget.justifyInterruptionForm.comment
+          : "",
+      };
+      const response = await ApiCall({
+        params: screen_interruptions_justify(submitObj),
       });
-      closeModal();
-    } else {
-      setLoading(false);
-      createNotification({
-        status: "success",
-        msg: "interruptionJustifiedSuccessfully",
-        hide: response.responseHide,
-      });
-      closeModal();
+      if (response.responseError) {
+        setLoading(false);
+        createNotification({
+          status: "error",
+          code: response.responseError,
+          msg: response.responseMsg,
+          hide: response.responseHide,
+        });
+      } else {
+        setLoading(false);
+        createNotification({
+          status: "success",
+          msg: "interruptionJustifiedSuccessfully",
+          hide: response.responseHide,
+        });
+      }
     }
+
+    closeModal();
   };
 
   const justifyInterruptionModalContent = (
@@ -459,7 +461,7 @@ const InterruptionsModal = ({
                 text: "send",
                 color: "secondary",
                 onClick: handleSubmitJustifyInterruption,
-                disabled: false,
+                disabled: selectedReason ? false : true,
               },
             ]}
             loading={loading}

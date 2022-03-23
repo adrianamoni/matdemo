@@ -144,7 +144,6 @@ const OeeChartBox = ({ showChart, line, order, disableClick }) => {
       onMouseLeave={() => setRaise(false)}
     >
       <CardActionArea onClick={handlePush}>
-        {/* <StyledLink to={`/frit-dashboard`} onClick={handlePush}> */}
         <CardHeader
           component="div"
           sx={{ bgcolor: stateColor[1], color: "#000", mb: 2 }}
@@ -162,31 +161,32 @@ const OeeChartBox = ({ showChart, line, order, disableClick }) => {
         ) : (
           <HalfDoughnut value={[0]} />
         )}
-        <CardContent>
+        <CardContent
+          sx={{ minHeight: 110, display: "flex", alignItems: "center" }}
+        >
           <Grid container alignItems="center">
             <Grid item xs={5}>
-              <Typography sx={{ fontSize: "1.2em" }} gutterBottom>
+              <Typography variant="body1" gutterBottom>
                 <strong>{Text({ tid: "product" })}</strong>
               </Typography>
             </Grid>
             <Grid item xs={7} textAlign="right">
-              <Typography variant="body" gutterBottom>
+              <Typography variant="body2" gutterBottom>
                 {order && `${order.item_id} (${order.item_desc})`}
               </Typography>
             </Grid>
             <Grid item xs={5}>
-              <Typography sx={{ fontSize: "1.2em" }} gutterBottom>
+              <Typography variant="body1" gutterBottom>
                 <strong>{Text({ tid: "order" })}</strong>
               </Typography>
             </Grid>
             <Grid item xs={7} textAlign="right">
-              <Typography variant="body" gutterBottom>
+              <Typography variant="body2" gutterBottom>
                 {order && order.wo_id}
               </Typography>
             </Grid>
           </Grid>
         </CardContent>
-        {/*  </StyledLink> */}
       </CardActionArea>
     </Card>
   );

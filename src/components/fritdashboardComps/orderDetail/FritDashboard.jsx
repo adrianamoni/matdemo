@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { Box, Container, Tabs, Tab, Badge } from "@mui/material";
+import { Box, Container, Tabs, Tab, Badge, Typography } from "@mui/material";
 import TabPanel from "../../TabPanel";
 
 import General from "../../fritdashboardTabs/General/General";
@@ -185,17 +185,17 @@ const FritDashboard = () => {
                         badgeContent={pendingSamples.data.length}
                         color="error"
                       >
-                        {tab.name}
+                        <Typography variant="body1">{tab.name}</Typography>
                       </Badge>
                     ) : interruptionAlert ? (
                       <Badge
                         badgeContent={pendingInterruptions.data.length}
                         color="error"
                       >
-                        {tab.name}
+                        <Typography variant="body1">{tab.name}</Typography>
                       </Badge>
                     ) : (
-                      tab.name
+                      <Typography variant="body1">{tab.name}</Typography>
                     )
                   }
                   index={index}

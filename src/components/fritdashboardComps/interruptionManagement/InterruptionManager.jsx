@@ -62,9 +62,8 @@ const InterruptionManager = () => {
   const [selectedReason, setSelectedReason] = useState(undefined);
   const [specificReason, setSpecificReason] = useState(undefined);
   const [pendingsFilter, setPendingsFilter] = useState(false);
-  const [dateFilter, setDateFilter] = useState(moment().format("YYYY-MM-DD"));
+  const [dateFilter, setDateFilter] = useState(null);
   const [lineFilter, setLineFilter] = useState(null);
-  const [notificationModal, setNotificationModal] = useState(undefined);
   const [refreshMain, setRefreshMain] = useState(false);
   const [userWritePermissions, setUserWritePermissions] = useState(undefined);
   const [modalContent, setModalContent] = useState("");
@@ -143,17 +142,13 @@ const InterruptionManager = () => {
 
     fetchLinesAndReasons();
 
-    if (refreshMain) {
-      setRefreshMain(false);
-    }
-
     return () => {
       setApiData(undefined);
       clearTimeout(clearTimeoutKey);
       /* setTableVariables({ ...tableVariables, InterruptionsTable: false }); */
     };
     //eslint-disable-next-line
-  }, [refreshMain]);
+  }, []);
 
   useEffect(() => {
     if (
@@ -179,6 +174,11 @@ const InterruptionManager = () => {
 */
   useEffect(() => {
     fetchData();
+
+    if (refreshMain) {
+      setRefreshMain(false);
+    }
+
     //eslint-disable-next-line
   }, [
     generalReasons,
@@ -199,7 +199,7 @@ const InterruptionManager = () => {
       });
       setGeneralReasons(reasonsDropDown);
     }
-  }, [reasons]);
+  }, [reasons, refreshMain]);
 
   useEffect(() => {
     if (selectedReason) {
@@ -231,17 +231,14 @@ const InterruptionManager = () => {
         specificDropdown.find((el) => el.value === specificReason)?.text ||
         null;
     }
-
-    formattedDate = moment(
-      formWidget.interruptionManager.dateFilter,
-      "DD-MM-YYYY"
-    ).format();
+    const actData = formWidget.interruptionManager.dateFilter || "";
+    formattedDate = moment(actData, "DD-MM-YYYY").format();
 
     const { originalRes, res, err } = await fetchAllManagerData({
       entId: lineFilter,
       section: section,
       reason,
-      date: formattedDate,
+      date: formattedDate || null,
     });
     if (err) {
       /* createNotification(err); */
@@ -281,11 +278,11 @@ const InterruptionManager = () => {
     }
     setLoadingInitialData(false);
   };
-  const handleDateChange = (e) => {
+  /*   const handleDateChange = (e) => {
     e.preventDefault();
     setDateFilter(e.target.value);
   };
-
+ */
   const handleCreateInterruption = () => {
     setformWidget({
       ...formWidget,
@@ -313,13 +310,6 @@ const InterruptionManager = () => {
   ) : (
     <>
       <Grid container spacing={2} alignItems="center">
-        {notificationModal && notificationModal.status && (
-          <Grid item xs={12}>
-            <Alert variant="outlined" severity={notificationModal.status}>
-              {notificationModal.msg}
-            </Alert>
-          </Grid>
-        )}
         <Grid item xs={12} sm={12} md={12} lg={12} xl={2}>
           <Typography variant="h5">
             {Text({ tid: "interruptionManager" })}
@@ -331,7 +321,7 @@ const InterruptionManager = () => {
             <Grid item xs={12} sm={12} md={12} lg={2}>
               <FormControl fullWidth>
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   onClick={() => setPendingsFilter(!pendingsFilter)}
                 >
                   {pendingsFilter
@@ -392,7 +382,7 @@ const InterruptionManager = () => {
                 <DatePickerWidget
                   formId="interruptionManager"
                   id="dateFilter"
-                  defaultDate={dateFilter}
+                  defaultDate={dateFilter || new Date()}
                 />
                 {/* <Form.Input
                   onChange={handleDateChange}
@@ -416,7 +406,7 @@ const InterruptionManager = () => {
           </Grid>
         ) : (
           <Grid item xs={12}>
-            <Alert variant="outlined" severity="info">
+            <Alert severity="info" variant="filled">
               {Text({ tid: "noInterruptionsMatchingFilter" })}
             </Alert>
           </Grid>
@@ -441,32 +431,6 @@ const InterruptionManager = () => {
             ]}
           />
         </Grid>
-        {/*  
-          <Grid.Row
-            textAlign="center"
-            style={{ maxWidth: 600, margin: "auto" }}
-          >
-            <Grid.Column mobile={16} tablet={8} computer={8}>
-              <Button
-                onClick={() => setModalGenerate(true)}
-                disabled={!userWritePermissions}
-                primary
-              >
-                Generar Paro
-              </Button>
-            </Grid.Column>
-            <Grid.Column only="mobile tablet">
-              <Divider />
-            </Grid.Column>
-            <Grid.Column mobile={16} tablet={8} computer={8}>
-              <Button
-                disabled={!interruptionSelected || !userWritePermissions}
-                onClick={() => setModalJustify(true)}
-                color="black"
-              >
-                Justificar Paro
-              </Button>
-       */}
       </Grid>
       <InterruptionsModal
         showModal={showModal}
@@ -479,26 +443,6 @@ const InterruptionManager = () => {
         lines={lineOptions}
         fromInterruptionsManager={true}
       />
-      {/* <GenerateInterruptionModal
-        modalGenerate={modalGenerate}
-        setModalGenerate={setModalGenerate}
-        reload={setRefreshMain}
-        fromInterruptionsManager={true}
-        lineOptions={lineOptions}
-      />
-      <JustifyInterruptionModal
-        interruptionSelected={interruptionSelected}
-        modalJustify={modalJustify}
-        setModalJustify={setModalJustify}
-        setRefreshMain={setRefreshMain}
-        fromInterruptionsManager={true}
-      /> */}
-      {/* <InterruptionsModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        modalContent={modalContent}
-        setRefreshData={setRefreshMain}
-      /> */}
     </>
   );
 };

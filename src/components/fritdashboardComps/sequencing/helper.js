@@ -347,7 +347,7 @@ export const prepareItems = (data) => {
         style: {
           color: "rgb(20,20,20)",
           opacity: 1,
-          fontSize: "12px",
+          fontSize: "1em",
           background: `linear-gradient(90deg, ${
             propsByState(e.StateCd).color
           } ${100 - cleaningPercentage}%, #84BBCE ${

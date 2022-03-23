@@ -82,10 +82,12 @@ const Materials = () => {
 
   useEffect(() => {
     if (data) {
-      let temp = data.map((el) => ({
-        ...el,
-        material: `${el.item_id} (${el.item_desc})`,
-      }));
+      let temp = data
+        .filter((el) => el.bom_pos !== 0)
+        .map((el) => ({
+          ...el,
+          material: `${el.item_id} (${el.item_desc})`,
+        }));
       setTableData(temp);
     }
   }, [data]);

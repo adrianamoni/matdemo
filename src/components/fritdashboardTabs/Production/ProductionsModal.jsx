@@ -105,7 +105,7 @@ const ProductionsModal = ({
           max={null}
         />
       </Grid>
-      <Grid container>
+      <Grid item xs={12}>
         <ButtonGroupWidget
           position="right"
           buttons={[
@@ -221,7 +221,7 @@ const ProductionsModal = ({
           max={null}
         />
       </Grid>
-      <Grid container>
+      <Grid item xs={12}>
         <ButtonGroupWidget
           position="right"
           buttons={[

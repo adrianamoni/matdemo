@@ -6,7 +6,12 @@ import Toolbar from "@mui/material/Toolbar";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-import { createTheme, ThemeProvider, useTheme } from "@mui/material";
+import {
+  createTheme,
+  responsiveFontSizes,
+  ThemeProvider,
+  useTheme,
+} from "@mui/material";
 import { userPreferencesContext } from "../context/ContextProvider";
 import { getPalette } from "./palettes";
 import { grey } from "@mui/material/colors";
@@ -32,7 +37,7 @@ function Layout(props) {
   const palette = getPalette("grey-orange", colorMode);
   const { primary, secondary } = palette;
 
-  const theme = createTheme({
+  let theme = createTheme({
     breakpoints: {
       values: {
         xs: 0,
@@ -52,7 +57,7 @@ function Layout(props) {
         text: "#fff",
       },
       success: {
-        main: colorMode === "dark" ? "#08c97f" : "#0bd689",
+        main: colorMode === "dark" ? "#08c97f" : "#2aad76", //"#0bd689",
         contrastText: "#fff",
         text: "#fff",
       },
@@ -82,18 +87,39 @@ function Layout(props) {
       },
     },
     typography: {
-      fontSize: 13,
-
-      /* [theme.breakpoints.up("md")]: {
-        fontSize: "2.4rem",
-      }, */
+      h1: {
+        fontSize: "6rem",
+      },
+      h2: {
+        fontSize: "3.75rem",
+      },
+      h3: {
+        fontSize: "3rem",
+      },
+      h4: {
+        fontSize: "2.125rem",
+      },
+      h5: {
+        fontSize: "1.5rem",
+      },
+      h6: {
+        fontSize: "1.15rem",
+      },
+      body1: {
+        fontSize: "1.05rem",
+      },
+      body2: {
+        fontSize: "0.95rem",
+      },
+      body3: {
+        fontSize: "0.875rem",
+      },
     },
-    /*  typography: {
-      fontSize: 13,
-    }, */
+    /*  spacing: (factor) => `${0.25 * factor}rem`, // (Bootstrap strategy) */
   });
+  theme = responsiveFontSizes(theme);
 
-  theme.typography.h3 = {
+  /* theme.typography.h3 = {
     fontSize: "1.2rem",
     "@media (min-width:600px)": {
       fontSize: "1.5rem",
@@ -110,7 +136,7 @@ function Layout(props) {
     [theme.breakpoints.up("md")]: {
       fontSize: "2.4rem",
     },
-  };
+  }; */
 
   /*   useEffect(() => {
     const color = colorMode === "isDark" ? "rgb(20,20,20)" : "#e0e0e0";

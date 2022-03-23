@@ -191,7 +191,11 @@ const DrawerComp = () => {
                   >
                     {link.icon}
                   </ListItemIcon>
-                  <ListItemText primary={Text({ tid: link.name })} />
+                  <ListItemText disableTypography={true}>
+                    <Typography variant="h6">
+                      {Text({ tid: link.name })}
+                    </Typography>
+                  </ListItemText>
                 </ListItem>
               </StyledLink>
             ))}
@@ -213,7 +217,9 @@ const DrawerComp = () => {
               <LoginIcon />
             </ListItemIcon>
 
-            <ListItemText primary="Login" />
+            <ListItemText disableTypography={true}>
+              <Typography variant="h6">{"Login"}</Typography>
+            </ListItemText>
           </ListItem>
           <ListItem
             button
@@ -223,7 +229,9 @@ const DrawerComp = () => {
             <ListItemIcon sx={{ color: "secondary.main" }}>
               <LogoutIcon />
             </ListItemIcon>
-            <ListItemText primary="Logout" />
+            <ListItemText disableTypography={true}>
+              <Typography variant="h6">{"Logout"}</Typography>
+            </ListItemText>
           </ListItem>
         </List>
       </div>

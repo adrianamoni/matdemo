@@ -26,6 +26,7 @@ import {
   TableHead,
   TableRow,
   TextField,
+  Typography,
 } from "@mui/material";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import CallSplitIcon from "@mui/icons-material/CallSplit";
@@ -267,11 +268,11 @@ const SeqTable = ({
                         </span>
                       </TableCell>
                       <TableCell>
-                        <span>{row.ItemId}</span>
-                        <br />
-                        <span style={{ fontSize: "0.9em" }}>
+                        <Typography variant="body2">{row.ItemId}</Typography>
+
+                        <Typography variant="body2">
                           ({row.ItemDesc})
-                        </span>
+                        </Typography>
                       </TableCell>
 
                       <TableCell>{row.WoId}</TableCell>

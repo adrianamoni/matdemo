@@ -135,10 +135,10 @@ const ResultsTable = ({
           <Table size="small" id="result-quality-table">
             <TableHead>
               <TableRow sx={{ fontWeight: 600 }}>
-                <TableCell>Característica</TableCell>
+                <TableCell>{Text({ tid: "characteristic" })} </TableCell>
                 <TableCell align="right">LL</TableCell>
                 <TableCell align="right">HH</TableCell>
-                <TableCell align="right">Resultado</TableCell>
+                <TableCell align="right">{Text({ tid: "result" })}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

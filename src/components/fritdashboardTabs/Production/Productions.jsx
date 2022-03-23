@@ -251,7 +251,7 @@ const Productions = () => {
 
         <Grid item xs={12}>
           <ButtonGroupWidget
-            position="left"
+            position="center"
             buttons={[
               {
                 text: "manualProduction",

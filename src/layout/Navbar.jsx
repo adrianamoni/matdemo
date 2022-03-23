@@ -163,7 +163,7 @@ const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
                       sx={{
                         color: "whitesmoke",
                         backgroundColor: "#525252",
-                        fontSize: "1em",
+                        /*      fontSize: "1em", */
                       }}
                       label={globalData.lineData.entName}
                       variant="contained"
@@ -191,10 +191,12 @@ const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
             </div>
           </Grid>
 
-          <Grid item xs={3} textAlign="right">
+          <Grid item xs={3} textAlign="right" sx={{ pr: 2 }}>
             <Grid container>
               <Grid item xs={12}>
-                <Typography variant="body2">{currentTime}</Typography>
+                <Typography noWrap variant="body3">
+                  {currentTime}
+                </Typography>
               </Grid>
               <Grid
                 item
@@ -210,7 +212,7 @@ const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
                     >
                       <AccountBoxIcon />
 
-                      <Typography variant="body">
+                      <Typography variant="body2">
                         {loggedUser.userId}
                       </Typography>
                     </Grid>

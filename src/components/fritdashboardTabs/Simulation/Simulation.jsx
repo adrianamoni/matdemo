@@ -15,16 +15,11 @@ import {
   TableRow,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { DataGrid } from "@mui/x-data-grid";
 import React, { useState, useEffect, useContext } from "react";
 import { ApiCall, MemoryDatabaseCall } from "../../../services/Service";
 import { write_tags } from "../../../services/serviceHelper";
-import TableWidget from "../../../widgets/TableWidget/TableWidget";
 import { createNotification } from "../../alerts/NotificationAlert";
-import { styled } from "@mui/material/styles";
-import { tableCellClasses } from "@mui/material/TableCell";
-import { grey } from "@mui/material/colors";
-import { checkIfModified } from "./helper";
+
 import { globalDataContext } from "../../../context/ContextProvider";
 import { get_simulation_interruptions } from "../../../services/OFservices";
 import Text from "../../../languages/Text";
@@ -33,18 +28,26 @@ const Simulation = () => {
   const { globalData } = useContext(globalDataContext);
   const { lineData } = globalData;
   const [loadingInitialData, setLoadingInitialData] = useState(false);
-  const [loadingSubmit, setLoadingSubmit] = useState(false);
+  const [loadingSimulation, setLoadingSimulation] = useState(false);
   const [apiData, setApiData] = useState();
   const [refreshMain, setRefreshMain] = useState(false);
-  const [enableSave, setEnableSave] = useState(false);
+  /* const [simulationState, setSimulationState] = useState(undefined); */
 
   useEffect(() => {
-    fetchData();
+    let clearKey;
+    fetchData(true);
+    /*    if (simulationState) { */
+    clearKey = setInterval(fetchData, 5000); //Si es inferior: se sobreescribe
+    /*   } */
     if (refreshMain) {
       setRefreshMain(false);
     }
-  }, [refreshMain]);
-  const fetchData = async () => {
+    return () => {
+      clearInterval(clearKey);
+    };
+  }, [refreshMain /* simulationState */]);
+  const fetchData = async (showLoader) => {
+    showLoader && setLoadingInitialData(true);
     const response = await MemoryDatabaseCall({
       params: get_simulation_interruptions(),
       url: "queryWWDataFrameDataAsync",
@@ -57,18 +60,19 @@ const Simulation = () => {
             ...item,
             name: item.Tagname.split(".")[1],
             check: item.Value,
-
-            /* id: uuid(),
-         material: item.item_id + " (" + item.item_desc + ")",
-         customSchedStart: dateFormater({
-           date: item.sched_start_time_local,
-           type: "hora-fecha",
-         }), */
           }));
+
+        /*  const findEl = indexedResponse.find(
+          (el) => el.name === "FlagSimulacion"
+        ); */
+        /*  if (findEl && findEl.Quality === 192) {
+          setSimulationState(findEl.Value);
+        } */
 
         setApiData(indexedResponse);
       }
     }
+    showLoader && setLoadingInitialData(false);
   };
 
   const handleSubmit = async (check, tag) => {
@@ -107,16 +111,85 @@ const Simulation = () => {
         }
       }
     }
-    setTimeout(() => fetchData(), 20000);
+    setTimeout(() => fetchData(), 20000); //HARDCODED. Dejar así
   };
 
+  const handleSimulationClick = async ({ action }) => {
+    setLoadingSimulation(true);
+
+    const tags_arr = [
+      {
+        TagName: `${lineData.entName}.FlagSimulacion`,
+        Value: action,
+      },
+    ];
+    const response = await ApiCall({
+      params: write_tags({ tags_arr }),
+    });
+
+    if (response.responseError) {
+      createNotification({
+        status: "error",
+        msg: response.responseMsg,
+        hide: response.responseHide,
+      });
+    } else {
+      if (response.responseCode === "0") {
+        setTimeout(() => {
+          action
+            ? createNotification({
+                status: "success",
+                msg: "simulationStartedSuccess",
+                hide: 1,
+              })
+            : createNotification({
+                status: "success",
+                msg: "simulationStoppedSuccess",
+                hide: 1,
+              });
+        }, 20000);
+      }
+    }
+
+    setTimeout(() => setLoadingSimulation(false), 20000); //HARDCODED. Dejar así
+  };
+
+  const simulationState =
+    (apiData && apiData.find((el) => el.name === "FlagSimulacion")?.Value) ||
+    false;
+  console.log("simulationState", simulationState);
   return loadingInitialData ? (
     <Box sx={{ width: "100%" }}>
       <LinearProgress variant="indeterminate" color="secondary" />
     </Box>
   ) : (
     <>
-      <Grid container sx={{ mt: 4, paddingRight: 3 }}>
+      <Grid container spacing={2} sx={{ mt: 2, paddingRight: 3 }}>
+        <Grid item xs={12} textAlign="center">
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <LoadingButton
+                variant="contained"
+                color={simulationState ? "info" : "secondary"}
+                onClick={() =>
+                  handleSimulationClick({ action: !simulationState })
+                }
+                loading={loadingSimulation}
+              >
+                {simulationState
+                  ? Text({ tid: "simulating" })
+                  : Text({ tid: "startSimulation" })}
+              </LoadingButton>
+            </Grid>
+            {simulationState && (
+              <Grid item xs={12}>
+                <Box sx={{ w: "100%" }}>
+                  <LinearProgress variant="indeterminate" color="info" />
+                </Box>
+              </Grid>
+            )}
+          </Grid>
+        </Grid>
         <Grid item xs={12}>
           {apiData && apiData.length > 0 && (
             <>
@@ -140,7 +213,9 @@ const Simulation = () => {
                             onChange={(e) =>
                               handleSubmit(e.target.checked, item.Tagname)
                             }
-                            disabled={item.Quality !== 192}
+                            disabled={
+                              simulationState ? true : item.Quality !== 192
+                            }
                             color="secondary"
                           />
                         </TableCell>

@@ -109,6 +109,10 @@ const TableWidget = ({
     "& .MuiDataGrid-columnHeaderTitle": {
       fontWeight: 700,
     },
+    ".MuiDataGrid-cell": {
+      whiteSpace: "normal",
+      padding: "0px 5px",
+    },
   };
 
   const size = useWindowSize();

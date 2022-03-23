@@ -97,13 +97,19 @@ const CustomResponsive = ({
               {columns.map((column, index) => (
                 <Grid container spacing={1} index={index}>
                   <Grid item xs={5}>
-                    <Typography noWrap sx={{ fontWeight: "bold" }}>
+                    <Typography
+                      noWrap
+                      variant="body2"
+                      sx={{ fontWeight: "bold" }}
+                    >
                       {column.headerName}
                     </Typography>
                   </Grid>
                   <Grid item xs={7} textAlign="right">
                     {!column.editable ? (
-                      <span>{data[column.field]}</span>
+                      <Typography variant="body2">
+                        {data[column.field]}
+                      </Typography>
                     ) : (
                       <FormControl fullWidth>
                         <TextField

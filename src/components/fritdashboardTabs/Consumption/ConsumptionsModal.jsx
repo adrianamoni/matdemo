@@ -312,7 +312,7 @@ const ConsumptionsModal = ({
           type="number"
         />
       </Grid>
-      <Grid container>
+      <Grid item xs={12}>
         <ButtonGroupWidget
           position="right"
           buttons={[

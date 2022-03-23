@@ -21,7 +21,6 @@ import { createNotification } from "../../../common/alerts/NotificationAlert";
 import { cleaning_type_options } from "../../../services/serviceHelper";
 import { operation_states } from "../../Cleaning/helper_cleaning";
 import LoadingSpinner from "../../../common/LoadingSpinner";
-import AlertModal from "../../../common/alerts/AlertModal";
 import uuid from "react-uuid";
 import _ from "lodash";
 import { parseTimeDec } from "./helper"; */

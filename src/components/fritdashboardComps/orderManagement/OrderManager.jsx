@@ -45,6 +45,7 @@ const OrderManager = () => {
   const { selectedRowsIds, setSelectedRowsIds } = useContext(
     selectedRowsIdsContext
   );
+  const [submitedSearch, setSubmitedSearch] = useState(false);
   const { selectedRows, setSelectedRows } = useContext(selectedRowsContext);
 
   if (loggedUser.isLogged) {
@@ -135,10 +136,7 @@ const OrderManager = () => {
   const { data: itemFilter } = UseFetchMemory({
     request: "order-manager-item",
   });
-  /*   const { data: dateFilter } = UseFetchMemory({
-    request: "order-manager-date",
-  });
- */
+
   const applyFilters = async () => {
     setLoadingData(true);
 
@@ -160,6 +158,7 @@ const OrderManager = () => {
     setSelectedRowsIds([]);
     setOrdersData(response);
     setLoadingData(false);
+    setSubmitedSearch(true);
   };
 
   const getSelectedData = async (selectedRows) => {
@@ -199,10 +198,10 @@ const OrderManager = () => {
           {entFilter && (
             <Grid item xs={12} sm={12} md={3}>
               <FormControl fullWidth>
-                <InputLabel>Línea</InputLabel>
+                <InputLabel>{Text({ tid: "line" })}</InputLabel>
                 <Select
                   value={entIdSelected}
-                  label="Línea"
+                  label={Text({ tid: "line" })}
                   onChange={(e) => setEntIdSelected(e.target.value)}
                 >
                   {entFilter.map((ent) => (
@@ -235,7 +234,7 @@ const OrderManager = () => {
                 locale={frLocale}
               >
                 <DatePicker
-                  label="Fecha inicio"
+                  label={Text({ tid: "initDate" })}
                   value={initDateSelected}
                   onChange={(newValue) => {
                     setInitDateSelected(newValue);
@@ -252,7 +251,7 @@ const OrderManager = () => {
                 locale={frLocale}
               >
                 <DatePicker
-                  label="Fecha inicio"
+                  label={Text({ tid: "endDate" })}
                   value={endDateSelected}
                   onChange={(newValue) => {
                     setEndDateSelected(newValue);
@@ -265,8 +264,8 @@ const OrderManager = () => {
         </Grid>
       </Grid>
       <Grid item xs={12} sm={12} md={2} lg={1}>
-        <Button fullWidth variant="contained" onClick={() => applyFilters()}>
-          Aplicar
+        <Button fullWidth variant="contained" onClick={applyFilters}>
+          {Text({ tid: "apply" })}
         </Button>
       </Grid>
       <Divider />
@@ -283,11 +282,13 @@ const OrderManager = () => {
           />
         </Grid>
       ) : (
-        <Grid item xs={12}>
-          <Alert variant="outlined" severity="info">
-            No hay órdenes que coincidan con los filtros aplicados
-          </Alert>
-        </Grid>
+        submitedSearch && (
+          <Grid item xs={12}>
+            <Alert variant="filled" severity="info">
+              {Text({ tid: "noOrdersMatchingFilter" })}
+            </Alert>
+          </Grid>
+        )
       )}
       <Grid item xs={12}>
         <ConsAndProds

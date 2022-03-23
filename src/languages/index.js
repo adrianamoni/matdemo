@@ -1,5 +1,9 @@
-import es from "./es";
-import en from "./en";
+/* import es from "./es";
+import en from "./en"; */
+
+const en = LANG_EN;
+const es = LANG_ES;
+
 //**Languages files are located in: /public/languages */
 /* export const dictionaryList = {
   es: window.LANG_ES,
