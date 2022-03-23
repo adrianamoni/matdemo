@@ -93,14 +93,7 @@ const Timeline = ({ data }) => {
               decFormatColor: custom_esMicroparo
                 ? custom_colorMicroparo
                 : custom_color,
-            }).background /* 
-              custom_util_state_desc === "Paros no programados"
-                ? "#DC143C"
-                : custom_util_state_desc === "Tiempo productivo"
-                ? "#63EC9B"
-                : custom_util_state_desc === "Paros programados"
-                ? "#f5cb70"
-                : "#d6d6d6", */,
+            }).background,
           },
         ],
       })
@@ -110,10 +103,7 @@ const Timeline = ({ data }) => {
   };
 
   return (
-    <div
-      id="timeline-chart-container"
-      /*   style={{ padding: 0, margin: 0, marginLeft: "-20px", marginTop: "-15px" }} */
-    >
+    <div id="timeline-chart-container">
       {series && series.length > 0 && (
         <Chart
           options={options}
@@ -126,24 +116,5 @@ const Timeline = ({ data }) => {
     </div>
   );
 };
-Timeline.defaultProps = {
-  type: "of",
-};
 
 export default Timeline;
-
-/*   "#008FFB",
-  "#00E396",
-  "#FEB019",
-  "#FF4560",
-  "#775DD0",
-  "#3F51B5",
-  "#546E7A",
-  "#D4526E",
-  "#8D5B4C",
-  "#F86624",
-  "#D7263D",
-  "#1B998B",
-  "#2E294E",
-  "#F46036",
-  "#E2C044", */
