@@ -1,9 +1,9 @@
 import { grey } from "@mui/material/colors";
-import React, { useContext } from "react";
-import ReactApexChart from "react-apexcharts";
+import React, { useContext, useEffect } from "react";
+import Charts from "react-apexcharts";
 import { userPreferencesContext } from "../../context/ContextProvider";
 
-const HalfDoughnut = ({ value, color }) => {
+const HalfDoughnut2 = ({ value, color }) => {
   const { userPreferences } = useContext(userPreferencesContext);
   const { colorMode } = userPreferences;
 
@@ -14,6 +14,7 @@ const HalfDoughnut = ({ value, color }) => {
   const series = value;
   const options = {
     chart: {
+      id: "realtime",
       type: "radialBar",
       offsetY: -20,
       sparkline: {
@@ -46,6 +47,9 @@ const HalfDoughnut = ({ value, color }) => {
             fontSize: "1.3em",
             fontWeight: 700,
             color: colorMode === "dark" ? "#eee" : "#222",
+            formatter: function (val) {
+              return value + "%";
+            },
           },
         },
       },
@@ -70,9 +74,26 @@ const HalfDoughnut = ({ value, color }) => {
         alignContent: "center",
       }}
     >
-      <ReactApexChart options={options} series={series} type="radialBar" />
+      <Chart newSeries={series > 100 ? [100] : [series]} newOptions={options} />
     </div>
   );
 };
 
-export default HalfDoughnut;
+function Chart({ newSeries, newOptions }) {
+  useEffect(() => {
+    // or useEffect
+    ApexCharts.exec(`realtime`, "updateSeries", newSeries);
+    ApexCharts.exec(`realtime`, "updateOptions", newOptions, false, true, true);
+  }, [newSeries, newOptions]);
+
+  return (
+    <Charts
+      options={newOptions}
+      series={newSeries}
+      type="radialBar"
+      /*  height="350" */
+    />
+  );
+}
+
+export default HalfDoughnut2;

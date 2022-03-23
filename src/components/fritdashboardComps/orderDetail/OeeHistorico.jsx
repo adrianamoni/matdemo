@@ -2,16 +2,17 @@ import React, { useState, useEffect, useContext } from "react";
 /* import { get_oee_shift } from "../../services/OFservices";
 import { MemoryDatabaseCall } from "../../services/Service"; */
 
-import { Card, Grid, List, ListItem, Typography } from "@mui/material";
+import { Grid, List, ListItem, Typography } from "@mui/material";
 import HalfDoughnut from "../../../widgets/halfDoughnut/HalfDoughnut";
-import { Timeline } from "@mui/icons-material";
 import { globalDataContext } from "../../../context/ContextProvider";
 import Text from "../../../languages/Text";
 import { get_oee_shift } from "../../../services/OFservices";
 import { MemoryDatabaseCall } from "../../../services/Service";
 import { colorByValue } from "../../../helpers/props";
 import TimelineContainer from "./TimelineContainer";
-
+import { fakeOeeShift } from "./fakeData";
+/* import HalfDoughnut2 from "../../../widgets/halfDoughnut/HalfDoughnut2";
+ */
 const OEEHistorico = () => {
   const { globalData } = useContext(globalDataContext);
   const [apiData, setApiData] = useState(undefined);
@@ -39,13 +40,14 @@ const OEEHistorico = () => {
       });
       if (response) {
         if (response.length > 0) {
-          setApiData(response);
+          console.log("response", response[0].Value);
+          setApiData(response); //!UNDO fakeOeeShift
         }
       }
 
       clearTimeoutTurnoKey = setTimeout(
         fetchTurno,
-        5000 //60000
+        5000 // 5000
       );
     };
 
@@ -94,16 +96,15 @@ const OEEHistorico = () => {
       });
     }
   }, [apiData]);
+  /*   const propColor = colorByValue({
+    value: OEEData && OEEData.OEEPercentage != null ? OEEData.OEEPercentage : 0,
+    targetOee: globalData?.lineData?.oeeTarget,
+    yellowThreshold: globalData?.oeeSpecs?.yellowThreshold,
+  }); */
 
   return (
     <>
       <Grid container sx={{ height: "100%" }}>
-        {/*  <Grid item xs={12}>
-          <Typography align="center" variant="h6" component="h6">
-            {Text({ tid: "turnOee" })}
-          </Typography>
-        </Grid> */}
-
         <Grid item xs={12} /* sx={{ height: "100%" }} */>
           <Grid container sx={{ alignItems: "center" }}>
             <Grid item xs={12} sm={12} md={12} lg={5} te>
@@ -117,17 +118,7 @@ const OEEHistorico = () => {
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <HalfDoughnut
-                    value={[OEEData ? OEEData.OEEPercentage : 0]}
-                    color={colorByValue({
-                      value:
-                        OEEData && OEEData.OEEPercentage != null
-                          ? OEEData.OEEPercentage
-                          : 0,
-                      targetOee: globalData?.lineData?.oeeTarget,
-                      yellowThreshold: globalData?.oeeSpecs?.yellowThreshold,
-                    })}
-                  />
+                  <HalfDoughnut value={[OEEData ? OEEData.OEEPercentage : 0]} />
                 </Grid>
               </Grid>
             </Grid>

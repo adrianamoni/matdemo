@@ -1,4 +1,4 @@
-const es = {
+const es_bckup = {
   addDecrease: "Añadir Merma",
   alternative: "Alternativos",
   assignment: "Asignación",
@@ -144,11 +144,17 @@ const es = {
   create: "Crear",
   submit: "Enviar",
   operatingData: "Explotación de Datos",
-
+  characteristic: "Característica",
+  startSimulation: "Iniciar Simulación",
+  simulating: "Simulando...",
+  openManually: "Abrir manualmente",
+  apply: "Aplicar",
   /* NOTIFICATION MESSAGES */
   loginSuccess: "¡Usuario logueado correctamente!",
   noInterruptionsMatchingFilter:
     "No hay paros que coincidan con los filtros aplicados",
+  noOrdersMatchingFilter:
+    "No hay órdenes que coincidan con los filtros aplicados",
   noInterruptions: "No hay paros actualmente",
   noQmpsec: "No hay qmspec definida para este material",
   ordersSavedSuccessfully: "¡Órdenes guardadas correctamente!",
@@ -186,6 +192,8 @@ const es = {
   resultsSavedSuccess: "¡Resultados guardados correctamente!",
   productionCorrectionSuccess: "¡Producción corregida con éxito!",
   redirectingToExternal: "Redirigiendo a una sitio web externo...",
+  redirectedToExternal: "Redirigido a una sitio web externo",
+  simulationStartedSuccess: "¡Simulación iniciada correctamente!",
+  simulationStoppedSuccess: "¡Simulación parada correctamente!",
 };
-
-export default es;
+export { es_bckup };

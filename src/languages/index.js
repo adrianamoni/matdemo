@@ -1,15 +1,20 @@
-/* import es from "./es";
-import en from "./en"; */
+import { es_bckup } from "./es";
+import { en_bckup } from "./en";
 
-const en = LANG_EN;
-const es = LANG_ES;
-console.log("en", en);
-console.log("es", es);
-//**Languages files are located in: /public/languages */
-/* export const dictionaryList = {
-  es: window.LANG_ES,
-  en: window.LANG_EN,
-}; */
+let en_Lang, es_Lang;
+if (LANG_EN) {
+  en_Lang = LANG_EN;
+} else {
+  en_Lang = en_bckup;
+}
+if (LANG_ES) {
+  es_Lang = LANG_ES;
+} else {
+  es_Lang = es_bckup;
+}
+const en = en_Lang;
+const es = es_Lang;
+
 export const dictionaryList = {
   es,
   en,
