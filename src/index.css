@@ -115,7 +115,7 @@ code {
 
 /* BLINKING ANIMATION */
 .blinking-effect-red {
-  animation: blinkRed 0.7s infinite linear alternate-reverse;
+  animation: blinkRed 0.7s infinite ease;
 }
 
 .blinking-effect-red .title {

@@ -36,16 +36,7 @@ const Materials = () => {
       headerName: `${Text({ tid: "material" })}`,
       flex: 1,
     },
-    /*  {
-      field: "bom_pos",
-      headerName: `${Text({ tid: "alternative" })}`,
-      width: 70,
-    },
-    {
-      field: "BackFlush",
-      headerName: `${Text({ tid: "entityBatch" })}`,
-      width: 70,
-    }, */
+
     {
       field: "UnidadMedida",
       headerName: `${Text({ tid: "unitMeasurement" })}`,

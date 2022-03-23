@@ -82,9 +82,35 @@ function Layout(props) {
       },
     },
     typography: {
-      fontSize: 16,
+      fontSize: 13,
+
+      /* [theme.breakpoints.up("md")]: {
+        fontSize: "2.4rem",
+      }, */
     },
+    /*  typography: {
+      fontSize: 13,
+    }, */
   });
+
+  theme.typography.h3 = {
+    fontSize: "1.2rem",
+    "@media (min-width:600px)": {
+      fontSize: "1.5rem",
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "2.4rem",
+    },
+  };
+  theme.typography.h6 = {
+    fontSize: "1.2rem",
+    "@media (min-width:600px)": {
+      fontSize: "1.5rem",
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "2.4rem",
+    },
+  };
 
   /*   useEffect(() => {
     const color = colorMode === "isDark" ? "rgb(20,20,20)" : "#e0e0e0";

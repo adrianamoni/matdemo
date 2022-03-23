@@ -146,7 +146,7 @@ const InfoOE = () => {
                               style={
                                 item.hasOwnProperty("state")
                                   ? {
-                                      paddingInline: "12px",
+                                      paddingInline: "0.6em",
                                       backgroundColor: background,
                                     }
                                   : {}
@@ -193,7 +193,7 @@ const InfoOE = () => {
           </List>
         </Grid>
         <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
-          <Grid container sx={{ maxWidth: 350, p: 2 }}>
+          <Grid container sx={{ maxWidth: 350, p: 1 }}>
             <Grid item xs={4}>
               <LoadingButton
                 loading={loadingPlay}

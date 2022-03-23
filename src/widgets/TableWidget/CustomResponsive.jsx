@@ -5,6 +5,7 @@ import {
   InputLabel,
   Pagination,
   TextField,
+  Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Paginate from "./paginate";
@@ -94,18 +95,20 @@ const CustomResponsive = ({
               onClick={() => !disableSelection && handleClick(data.id)}
             >
               {columns.map((column, index) => (
-                <Grid container spacing={2} index={index}>
-                  <Grid item xs={4}>
-                    <span className="customResponsiveTable">
+                <Grid container spacing={1} index={index}>
+                  <Grid item xs={5}>
+                    <Typography noWrap sx={{ fontWeight: "bold" }}>
                       {column.headerName}
-                    </span>
+                    </Typography>
                   </Grid>
-                  <Grid item xs={8}>
+                  <Grid item xs={7} textAlign="right">
                     {!column.editable ? (
                       <span>{data[column.field]}</span>
                     ) : (
                       <FormControl fullWidth>
                         <TextField
+                          className="custom-number-input"
+                          size="small"
                           onChange={(e) =>
                             handleEdit({
                               field: column.field,
