@@ -3,7 +3,8 @@ import en from "./en"; */
 
 const en = LANG_EN;
 const es = LANG_ES;
-
+console.log("en", en);
+console.log("es", es);
 //**Languages files are located in: /public/languages */
 /* export const dictionaryList = {
   es: window.LANG_ES,
