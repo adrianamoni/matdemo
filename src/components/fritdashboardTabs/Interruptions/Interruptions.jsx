@@ -223,7 +223,7 @@ const Interruptions = () => {
         setRefreshData={setRefreshData}
         selectedNode={selectedNode}
         setSelectedNode={setSelectedNode}
-        originalData={originalData}
+        originalData={!originalData ? pendingInterruptions.data : originalData}
       />
     </>
   );

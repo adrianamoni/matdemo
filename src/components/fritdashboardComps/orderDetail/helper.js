@@ -125,7 +125,6 @@ export const getPendingInterruptions = async ({ customParams }) => {
         Prompt: item.Prompt,
         ID: item.ID,
         id: item.ID,
-        /*       id: uuid(), */
         ReasonDesc: item.ReasonDesc,
         Comment: item.Comment,
         UtilStateDesc: item.UtilStateDesc,

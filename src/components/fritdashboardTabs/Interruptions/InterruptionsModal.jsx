@@ -30,6 +30,7 @@ import {
 import { write_tags } from "../../../services/serviceHelper";
 import { createNotification } from "./../../alerts/NotificationAlert";
 import SelectChipWidget from "./../../../widgets/forms/SelectChipWidget";
+import JustifyModal from "./JustifyModal";
 
 const InterruptionsModal = ({
   showModal,
@@ -381,7 +382,8 @@ const InterruptionsModal = ({
   // JUSTIFY INTERRUPTION
   const handleSubmitJustifyInterruption = async () => {
     setLoading(true);
-
+    console.log("originalData", originalData);
+    console.log("selectedRows[0].id", selectedRows[0].id);
     let row = originalData.find((el) => {
       return el.ID == selectedRows[0].ID;
     });
@@ -428,7 +430,7 @@ const InterruptionsModal = ({
           <TreeViewWidget
             treeData={treeViewData}
             handleSelectNode={handleSelectNode}
-            expanded={expandedNodes}
+            //expanded={expandedNodes}
             selected={selectedNode}
           />
         </Grid>
@@ -471,20 +473,22 @@ const InterruptionsModal = ({
     </>
   );
 
-  return (
+  const interruptionTitle = selectedRows && selectedRows[0]?.ReasonDesc;
+
+  return modalContent === "createInterruption" ? (
     <ModalWidget
-      title={
-        modalContent === "createInterruption"
-          ? "createInterruption"
-          : "justifyInterruption"
-      }
+      title={"createInterruption"}
       open={showModal}
       close={closeModal}
-      content={
-        modalContent === "createInterruption"
-          ? createInterruptionModalContent
-          : justifyInterruptionModalContent
-      }
+      content={createInterruptionModalContent}
+      customWidth={windowSize.width < 820 ? 350 : 800}
+    />
+  ) : (
+    <JustifyModal
+      title={Text({ tid: "justifyInterruption" }) + ": " + interruptionTitle}
+      open={showModal}
+      close={closeModal}
+      content={justifyInterruptionModalContent}
       customWidth={windowSize.width < 820 ? 350 : 800}
     />
   );
