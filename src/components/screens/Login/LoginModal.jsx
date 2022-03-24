@@ -76,38 +76,40 @@ const LoginModal = ({ loginModal, setLoginModal }) => {
   };
 
   const modalContent = (
-    <>
-      <Grid container sx={{ justifyContent: "center", mt: "25px" }}>
-        <Grid item sx={{ width: "50%" }}>
-          <InputWidget
-            formId={"loginForm"}
-            id={"username"}
-            label={<Text tid={"user"} />}
-            required={true}
-            multiline={false}
-            type="text"
-            maxLength={100}
-            disabled={false}
-            placeholder={""}
-          />
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Grid container rowSpacing={2} sx={{ maxWidth: 300, m: "auto" }}>
+          <Grid item xs={12}>
+            <InputWidget
+              autoFocus
+              formId={"loginForm"}
+              id={"username"}
+              label={<Text tid={"user"} />}
+              required={true}
+              multiline={false}
+              type="text"
+              maxLength={100}
+              disabled={false}
+              placeholder={""}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <InputWidget
+              formId={"loginForm"}
+              id={"password"}
+              label={<Text tid={"password"} />}
+              required={true}
+              multiline={false}
+              type="password"
+              maxLength={100}
+              disabled={false}
+              placeholder={""}
+            />
+          </Grid>
         </Grid>
       </Grid>
-      <Grid container sx={{ justifyContent: "center", mt: "25px" }}>
-        <Grid item sx={{ width: "50%" }}>
-          <InputWidget
-            formId={"loginForm"}
-            id={"password"}
-            label={<Text tid={"password"} />}
-            required={true}
-            multiline={false}
-            type="password"
-            maxLength={100}
-            disabled={false}
-            placeholder={""}
-          />
-        </Grid>
-      </Grid>
-      <Grid container>
+
+      <Grid item xs={12} textAlign="right">
         <ButtonGroupWidget
           position="right"
           buttons={[
@@ -127,7 +129,7 @@ const LoginModal = ({ loginModal, setLoginModal }) => {
           loading={loading}
         />
       </Grid>
-    </>
+    </Grid>
   );
 
   return (

@@ -48,9 +48,9 @@ const ButtonGroupWidget = ({ position, buttons, loading, size }) => {
                   //SEPARATED BUTTONS STYLE
                   className="separated-button-group"
                   sx={{
-                    mr: i < list.length && "15px",
-                    ml: i === list.length && "15px",
-                    mb: 2,
+                    mr: i + 1 < list.length ? "15px" : 0,
+                    ml: i + 1 === list.length && "15px",
+                    mb: i + 1 !== list.length && width < 900 && 2,
                     maxWidth: 360,
                     marginInline: width < 900 ? "auto" : undefined,
                   }}

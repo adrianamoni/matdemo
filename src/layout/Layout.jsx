@@ -79,7 +79,7 @@ function Layout(props) {
         info: "#0288D110",
         grey1: colorMode === "dark" ? "#141414" : grey[600],
         grey2: colorMode === "dark" ? "#141414" : grey[300], //grey[800] : grey[300],
-        grey3: colorMode === "dark" ? grey[900] : grey[200],
+        grey3: colorMode === "dark" ? "#191919" : grey[200],
         grey4: colorMode === "dark" ? grey[900] : grey[50],
       },
       text: {

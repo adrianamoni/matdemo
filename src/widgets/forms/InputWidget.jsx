@@ -15,6 +15,7 @@ const InputWidget = ({
   placeholder,
   min,
   max,
+  autoFocus,
 }) => {
   const { formWidget, setformWidget } = useContext(formContext);
   const [localVal, setLocalVal] = useState(formWidget?.[formId]?.[id]);
@@ -48,6 +49,7 @@ const InputWidget = ({
     <>
       <InputLabel required={required}>{label}</InputLabel>
       <TextField
+        autoFocus={autoFocus || false}
         required={required}
         id={`${formId}-textField-${id}-label`}
         value={localVal}
