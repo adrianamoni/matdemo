@@ -18,11 +18,12 @@ import { createNotification } from "./../../alerts/NotificationAlert";
 import Text from "./../../../languages/Text";
 
 const IframeComp = ({ url }) => {
+  console.log("url", url);
   return (
     <iframe
       title="docs-pdf-frame"
       wmode="opaque"
-      src={url}
+      src={`http://${url}`}
       frameborder="0"
       style={{
         minHeight: 600,
@@ -131,75 +132,79 @@ const Documentation = () => {
     </Box>
   ) : (
     <>
-      <Grid container spacing={2}>
+      <Grid container>
         <Grid item xs={12} md={12} lg={12} xl={5}>
-          <Grid container spacing={2}>
+          <Grid container rowSpacing={2}>
             <Grid item xs={12}>
-              <Typography variant="h6" component="h6">
+              <Typography variant="h5" component="h6">
                 <Text tid={"files"} />
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              {tableData ? (
-                <Stack
-                  spacing={2}
-                  sx={{
-                    p: 2,
-                    maxHeight: "calc(100vh - 240px)",
-                    overflowY: "auto",
-                    backgroundColor: "background.grey3",
-                  }}
-                >
-                  {tableData.map((el, i) => (
-                    <Paper
-                      key={i}
-                      sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                      }}
-                      elevation={0}
-                    >
-                      <Button
-                        onClick={() =>
-                          setDisplayPdfViewer({
-                            name: el.NombreFichero,
-                            url: `${docUri}${el.NombreFichero}#navpanes=0`,
-                          })
-                        }
+              {tableData
+                ? tableData.map((el, i) => (
+                    <>
+                      <Grid
+                        container
+                        rowSpacing={2}
+                        sx={{
+                          p: 2,
+                          maxHeight: "calc(100vh - 240px)",
+                          overflowY: "auto",
+                          backgroundColor: "background.grey3",
+                        }}
                       >
-                        {el.Descripcion}
-                      </Button>
-
-                      <div>
-                        <Button
-                          onClick={() =>
-                            setDisplayPdfViewer({
-                              name: el.NombreFichero,
-                              url: `${docUri}${el.NombreFichero}#navpanes=0`,
-                            })
-                          }
-                        >
-                          <FileOpenIcon color="info" />
-                        </Button>
-                        <Button
-                          href={`${docUri}${el.NombreFichero}`}
-                          target="_blank"
-                        >
-                          <ScreenShareIcon color="primary" />
-                        </Button>
-                      </div>
-                    </Paper>
-                  ))}
-                </Stack>
-              ) : (
-                userAlert.show && (
-                  <UserAlert
-                    severity={userAlert.severity}
-                    message={userAlert.message}
-                  />
-                )
-              )}
+                        <Grid item xs={12} md={8}>
+                          <Button
+                            onClick={() =>
+                              setDisplayPdfViewer({
+                                name: el.NombreFichero,
+                                url: `${docUri}/documentacion/${el.NombreFichero}#navpanes=0`,
+                              })
+                            }
+                          >
+                            {el.Descripcion}
+                          </Button>
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                          <Grid container spacing={2}>
+                            <Grid item xs={12} md={6}>
+                              <Button
+                                fullWidth
+                                variant={"contained"}
+                                color="info"
+                                onClick={() =>
+                                  setDisplayPdfViewer({
+                                    name: el.NombreFichero,
+                                    url: `${docUri}/documentacion/${el.NombreFichero}#navpanes=0`,
+                                  })
+                                }
+                              >
+                                <FileOpenIcon /* color="info" */ />
+                              </Button>
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                              <Button
+                                fullWidth
+                                variant={"contained"}
+                                color="primary"
+                                href={`${docUri}/documentacion/${el.NombreFichero}`}
+                                target="_blank"
+                              >
+                                <ScreenShareIcon /* color="primary" */ />
+                              </Button>
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </>
+                  ))
+                : userAlert.show && (
+                    <UserAlert
+                      severity={userAlert.severity}
+                      message={userAlert.message}
+                    />
+                  )}
             </Grid>
           </Grid>
         </Grid>
@@ -212,7 +217,7 @@ const Documentation = () => {
           xl={7}
           sx={{ display: "flex", alignItems: "center" }}
         >
-          <IframeComp url={displayPdfViewer.url} />
+          {displayPdfViewer && <IframeComp url={displayPdfViewer.url} />}
         </Grid>
       </Grid>
     </>
