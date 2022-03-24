@@ -31,21 +31,23 @@ const Simulation = () => {
   const [loadingSimulation, setLoadingSimulation] = useState(false);
   const [apiData, setApiData] = useState();
   const [refreshMain, setRefreshMain] = useState(false);
-  /* const [simulationState, setSimulationState] = useState(undefined); */
+  const [simulation, setSimulation] = useState(false);
 
   useEffect(() => {
     let clearKey;
     fetchData(true);
-    /*    if (simulationState) { */
-    clearKey = setInterval(fetchData, 5000); //Si es inferior: se sobreescribe
-    /*   } */
+    if (simulation) {
+      clearKey = setInterval(fetchData, 5000); //Si es inferior: se sobreescribe
+    } else {
+      clearInterval(clearKey);
+    }
     if (refreshMain) {
       setRefreshMain(false);
     }
     return () => {
       clearInterval(clearKey);
     };
-  }, [refreshMain /* simulationState */]);
+  }, [refreshMain, simulation]);
   const fetchData = async (showLoader) => {
     showLoader && setLoadingInitialData(true);
     const response = await MemoryDatabaseCall({
@@ -70,6 +72,14 @@ const Simulation = () => {
         } */
 
         setApiData(indexedResponse);
+        const findEl = indexedResponse.find(
+          (el) => el.name === "FlagSimulacion"
+        );
+        if (findEl && findEl.Value) {
+          setSimulation(true);
+        } else {
+          setSimulation(false);
+        }
       }
     }
     showLoader && setLoadingInitialData(false);
@@ -103,11 +113,15 @@ const Simulation = () => {
         });
       } else {
         if (response.responseCode === "0") {
-          createNotification({
-            status: "success",
-            msg: "dataSavedSuccess",
-            hide: 1,
-          });
+          setTimeout(
+            () =>
+              createNotification({
+                status: "success",
+                msg: "dataSavedSuccess",
+                hide: 1,
+              }),
+            10000
+          );
         }
       }
     }
@@ -151,7 +165,10 @@ const Simulation = () => {
       }
     }
 
-    setTimeout(() => setLoadingSimulation(false), 20000); //HARDCODED. Dejar así
+    setTimeout(() => {
+      fetchData();
+      setLoadingSimulation(false);
+    }, 20000); //HARDCODED. Dejar así
   };
 
   const simulationState =

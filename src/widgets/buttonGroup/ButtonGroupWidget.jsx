@@ -23,17 +23,13 @@ const ButtonGroupWidget = ({ position, buttons, loading, size }) => {
         sx={{
           display: "flex",
           justifyContent: width > 900 ? position : "center",
-          /*  justifyContent: position, */
           marginTop: "2rem",
         }}
       >
         <ButtonGroup
-          // variant="contained"
-          //   orientation="vertical"
-          /* sx={{ maxWidth: 700 }} */
           fullWidth
+          sx={{ maxWidth: 600 }}
           orientation={width < 900 ? "vertical" : "horizontal"}
-          /* orientation={"horizontal"} */
           aria-label="outlined primary button group"
         >
           {buttons &&
@@ -55,7 +51,7 @@ const ButtonGroupWidget = ({ position, buttons, loading, size }) => {
                     mr: i < list.length && "15px",
                     ml: i === list.length && "15px",
                     mb: 2,
-                    maxWidth: 370,
+                    maxWidth: 360,
                     marginInline: width < 900 ? "auto" : undefined,
                   }}
                 >

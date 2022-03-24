@@ -191,10 +191,14 @@ const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
             </div>
           </Grid>
 
-          <Grid item xs={3} textAlign="right" sx={{ pr: 2 }}>
+          <Grid item xs={3} textAlign="right" sx={{ pr: 4 }}>
             <Grid container>
               <Grid item xs={12}>
-                <Typography noWrap variant="body3">
+                <Typography
+                  noWrap
+                  variant="body3"
+                  sx={{ fontWeight: "normal" }}
+                >
                   {currentTime}
                 </Typography>
               </Grid>

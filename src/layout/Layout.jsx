@@ -103,13 +103,13 @@ function Layout(props) {
         fontSize: "1.5rem",
       },
       h6: {
-        fontSize: "1.15rem",
+        fontSize: "1.2rem",
       },
       body1: {
         fontSize: "1.05rem",
       },
       body2: {
-        fontSize: "0.95rem",
+        fontSize: "1rem",
       },
       body3: {
         fontSize: "0.875rem",

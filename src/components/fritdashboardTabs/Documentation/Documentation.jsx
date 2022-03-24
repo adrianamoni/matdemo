@@ -10,6 +10,7 @@ import {
   Stack,
   Button,
   Paper,
+  Divider,
 } from "@mui/material";
 import FileOpenIcon from "@mui/icons-material/FileOpen";
 import ScreenShareIcon from "@mui/icons-material/ScreenShare";
@@ -132,28 +133,28 @@ const Documentation = () => {
     </Box>
   ) : (
     <>
-      <Grid container spacing={2} sx={{ paddingRight: 3 }}>
+      <Grid container spacing={2} sx={{ paddingRight: 3, mt: 2 }}>
         <Grid item xs={12} md={12} lg={12} xl={5}>
-          <Grid container spacing={2}>
+          <Grid container rowSpacing={2}>
             <Grid item xs={12}>
               <Typography variant="h5" component="h6">
                 <Text tid={"files"} />
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid
+              item
+              xs={12}
+              sx={{
+                maxHeight: "calc(100vh - 240px)",
+                overflowY: "auto",
+                backgroundColor: "background.grey3",
+                p: 1,
+              }}
+            >
               {tableData
-                ? tableData.map((el, i) => (
+                ? tableData.map((el, i, arr) => (
                     <>
-                      <Grid
-                        container
-                        rowSpacing={2}
-                        sx={{
-                          p: 2,
-                          maxHeight: "calc(100vh - 240px)",
-                          overflowY: "auto",
-                          backgroundColor: "background.grey3",
-                        }}
-                      >
+                      <Grid container>
                         <Grid item xs={12} md={8}>
                           <Button
                             onClick={() =>
@@ -196,6 +197,11 @@ const Documentation = () => {
                             </Grid>
                           </Grid>
                         </Grid>
+                        {i + 1 !== arr.length && (
+                          <Grid item xs={12} sx={{ marginBlock: 1 }}>
+                            <Divider />
+                          </Grid>
+                        )}
                       </Grid>
                     </>
                   ))

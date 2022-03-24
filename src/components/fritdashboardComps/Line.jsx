@@ -105,7 +105,7 @@ const Line = ({ line }) => {
         md={12}
         lg={4}
         justifyContent={"center"}
-        sx={{ mb: 3 }}
+        sx={{ mb: 2 }}
       >
         <Grid item style={{ width: "100%", maxWidth: 550 }}>
           <OeeTurno line={line} />
