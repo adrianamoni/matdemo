@@ -238,15 +238,15 @@ const Quality = () => {
     </Box>
   ) : (
     <>
-      <Grid container spacing={1} sx={{ mt: 0, paddingRight: 3 }}>
+      <Grid container spacing={1} sx={{ mt: 0 }}>
         <Grid item xs={12} sx={{ textAlign: "right" }}>
           <Button
             variant="contained"
             startIcon={<FilterAltIcon />}
             onClick={handleTogglePendings}
-            style={{
-              backgroundColor: "#c0c1c2",
-              color: "#000000",
+            sx={{
+              backgroundColor: "#a2a3a4",
+              color: "#111",
             }}
           >
             {onlyPendings ? <Text tid="pendings" /> : <Text tid="historical" />}
@@ -279,6 +279,8 @@ const Quality = () => {
 
         <Grid item xs={12}>
           <Button
+            fullWidth
+            sx={{ maxWidth: 300, backgroundColor: "#a2a3a4", color: "#111" }}
             variant="contained"
             onClick={() => setGenerateSampleModal(true)}
           >

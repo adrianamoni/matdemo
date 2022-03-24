@@ -349,6 +349,11 @@ const InterruptionManager = () => {
               <FormControl fullWidth>
                 <InputLabel> {Text({ tid: "reason" })}</InputLabel>
                 <Select
+                  sx={{
+                    "& .Mui-disabled": {
+                      backgroundColor: "background.grey3b",
+                    },
+                  }}
                   disabled={!selectedReason}
                   value={specificReason}
                   onChange={(e) => setSpecificReason(e.target.value)}

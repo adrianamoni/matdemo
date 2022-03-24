@@ -181,7 +181,7 @@ const OperatorAssignment = ({ line, modal, close }) => {
       {/* Consumpions Table */}
       {tableData?.length > 0 ? (
         <>
-          <Grid container sx={{ mt: 2 }}>
+          <Grid container spacing={2} sx={{ mt: 2 }}>
             <Grid item md={4} xs={12}>
               <InputWidget
                 formId={"operatorForm"}
@@ -197,8 +197,7 @@ const OperatorAssignment = ({ line, modal, close }) => {
                 max={null}
               />
             </Grid>
-          </Grid>
-          <Grid container sx={{ mt: 2 }}>
+
             <Grid item xs={12}>
               <TableWidget
                 data={tableData}

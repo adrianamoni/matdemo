@@ -3,6 +3,7 @@ import uuid from "react-uuid";
 import moment from "moment";
 import "./SeqTable.css";
 import {
+  colorByState,
   getDateFromInput,
   getLineFromInput,
   getPeopleFromInput,
@@ -31,7 +32,10 @@ import {
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import CallSplitIcon from "@mui/icons-material/CallSplit";
 import DatePickerWidget from "../../../widgets/forms/DatePickerWidget";
-import { formContext } from "../../../context/ContextProvider";
+import {
+  formContext,
+  userPreferencesContext,
+} from "../../../context/ContextProvider";
 import Text from "../../../languages/Text";
 
 const SeqTable = ({
@@ -46,6 +50,11 @@ const SeqTable = ({
 }) => {
   /*   const { width } = useWindowSize(); */
   const { formWidget } = useContext(formContext);
+  const { userPreferences, setUserPreferences } = useContext(
+    userPreferencesContext
+  );
+  const { colorMode } = userPreferences;
+  const isDark = colorMode === "dark";
   /*   const [startDate, setStartDate] = useState(new Date()); */
 
   let productionOrders;
@@ -132,7 +141,7 @@ const SeqTable = ({
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 1450 }} size="small" id="sequencing-table">
               <TableHead>
-                <TableRow>
+                <TableRow sx={{ backgroundColor: "background.grey3" }}>
                   <TableCell></TableCell>
                   <TableCell>{Text({ tid: "initDate" })}</TableCell>
                   <TableCell>{Text({ tid: "endDate" })}</TableCell>
@@ -214,11 +223,11 @@ const SeqTable = ({
                   return (
                     <TableRow
                       key={row.id}
-                      style={
+                      sx={
                         selected === row.id
                           ? {
-                              background:
-                                "radial-gradient(ellipse, #f5fcff 60%, #e1eff5)",
+                              backgroundColor: "selected.main",
+                              /* "radial-gradient(ellipse, #f5fcff 60%, #e1eff5)", */
                             }
                           : {}
                       }
@@ -253,19 +262,22 @@ const SeqTable = ({
                         <span>{endTime}</span>
                       </TableCell>
                       <TableCell>
-                        <span
-                          style={{
-                            backgroundColor: propsByState({
+                        <Typography
+                          variant="body2"
+                          textAlign={"center"}
+                          sx={{
+                            backgroundColor: colorByState({
                               prodState: row.StateCd,
                               cleanState: null,
+                              isDark,
                             }).color,
-                            paddingInline: 10,
-                            paddingBlock: 4,
-                            borderRadius: 2,
+                            paddingInline: "10px",
+                            paddingBlock: "4px",
+                            borderRadius: "2px",
                           }}
                         >
                           {row.StateCdDesc}
-                        </span>
+                        </Typography>
                       </TableCell>
                       <TableCell>
                         <Typography variant="body2">{row.ItemId}</Typography>
@@ -280,7 +292,13 @@ const SeqTable = ({
                       <TableCell>
                         <FormControl error={!lineExist}>
                           <Select
-                            sx={{ minWidth: 88 }}
+                            sx={{
+                              "& .Mui-disabled": {
+                                backgroundColor: "background.grey3b",
+                              },
+                              minWidth: 88,
+                            }}
+                            /*  sx={{}} */
                             value={row.target_EntId}
                             onChange={(e) => handleLineChange(e, row.id)}
                             disabled={row.matriculasCargadas}
@@ -314,7 +332,11 @@ const SeqTable = ({
                             <Select
                               value={peopleValue}
                               disabled
-                              className="custom-disabled"
+                              sx={{
+                                "& .Mui-disabled": {
+                                  backgroundColor: "background.grey3b",
+                                },
+                              }}
                             >
                               {row.posiblesVelocidades.map((el) => (
                                 <MenuItem value={el.velocidad}>

@@ -134,7 +134,9 @@ const ResultsTable = ({
         <TableContainer component={Paper}>
           <Table size="small" id="result-quality-table">
             <TableHead>
-              <TableRow sx={{ fontWeight: 600 }}>
+              <TableRow
+                sx={{ fontWeight: 600, backgroundColor: "background.grey3" }}
+              >
                 <TableCell>{Text({ tid: "characteristic" })} </TableCell>
                 <TableCell align="right">LL</TableCell>
                 <TableCell align="right">HH</TableCell>
@@ -233,6 +235,8 @@ const ResultsTable = ({
       </Grid>
       <Grid item xs={12} textAlign="center">
         <LoadingButton
+          fullWidth
+          sx={{ maxWidth: 300 }}
           variant="contained"
           color="secondary"
           onClick={handleSubmit}

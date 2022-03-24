@@ -23,7 +23,7 @@ const ButtonGroupWidget = ({ position, buttons, loading, size }) => {
         sx={{
           display: "flex",
           justifyContent: width > 900 ? position : "center",
-          marginTop: "2rem",
+          marginTop: "1rem",
         }}
       >
         <ButtonGroup
@@ -49,7 +49,9 @@ const ButtonGroupWidget = ({ position, buttons, loading, size }) => {
                   className="separated-button-group"
                   sx={{
                     mr: i + 1 < list.length ? "15px" : 0,
-                    ml: i + 1 === list.length && "15px",
+                    ml:
+                      i + 1 < list.length ? 0 : i + 1 === list.length && "15px",
+
                     mb: i + 1 !== list.length && width < 900 && 2,
                     maxWidth: 360,
                     marginInline: width < 900 ? "auto" : undefined,

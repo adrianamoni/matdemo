@@ -2,6 +2,13 @@
   overflow: visible !important;
 }
 
-.rct-header-root {
+.dark-timeline > .rct-header-root,
+.dark-timeline .rct-calendar-header,
+.dark-timeline .rct-dateHeader {
+  /*  background-color: #f0f0f0 !important; */
+  background-color: #333 !important;
+}
+.light-timeline > .rct-header-root,
+.light-timeline > .rct-calendar-header {
   background-color: #f0f0f0 !important;
 }

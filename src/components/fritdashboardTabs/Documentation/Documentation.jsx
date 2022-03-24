@@ -133,7 +133,7 @@ const Documentation = () => {
     </Box>
   ) : (
     <>
-      <Grid container spacing={2} sx={{ paddingRight: 3, mt: 2 }}>
+      <Grid container spacing={2} sx={{ mt: 2 }}>
         <Grid item xs={12} md={12} lg={12} xl={5}>
           <Grid container rowSpacing={2}>
             <Grid item xs={12}>
@@ -164,7 +164,9 @@ const Documentation = () => {
                               })
                             }
                           >
-                            {el.Descripcion}
+                            <Typography variant="body" color="text.main">
+                              {el.Descripcion}
+                            </Typography>
                           </Button>
                         </Grid>
                         <Grid item xs={12} md={4}>

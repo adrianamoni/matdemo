@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import moment from "moment";
 import Timeline, {
   DateHeader,
@@ -6,9 +6,10 @@ import Timeline, {
   TimelineHeaders,
 } from "react-calendar-timeline";
 import "react-calendar-timeline/lib/Timeline.css";
-import { prepareItems, propsByState } from "./helper";
+import { colorByState, prepareItems, propsByState } from "./helper";
 import "./TimelineView.css";
 import { Container } from "@mui/material";
+import { userPreferencesContext } from "../../../context/ContextProvider";
 
 const TimelineView = ({
   apiData,
@@ -17,10 +18,17 @@ const TimelineView = ({
   selected,
   setSelected,
 }) => {
+  const { userPreferences, setUserPreferences } = useContext(
+    userPreferencesContext
+  );
+  const { colorMode } = userPreferences;
+  const isDark = colorMode === "dark";
   let refactoredTimelineItems, productionOrders, cleaningOrders;
 
-  [refactoredTimelineItems, productionOrders, cleaningOrders] =
-    prepareItems(apiData);
+  [refactoredTimelineItems, productionOrders, cleaningOrders] = prepareItems(
+    apiData,
+    isDark
+  );
 
   const handleItemSelect = (rowId) => {
     setSelected(rowId);
@@ -75,15 +83,19 @@ const TimelineView = ({
         {...getItemProps({
           style: {
             background: `linear-gradient(90deg, ${
-              propsByState({ prodState: StateCd, cleanState: null }).color
+              colorByState({
+                isDark,
+                prodState: StateCd,
+                cleanState: null,
+              }).color
             } ${100 - cleaningPercentage}%, #84BBCE ${
               100 - cleaningPercentage
             }%)`,
             color: selected
               ? itemContext.selected
-                ? "black"
+                ? "text.main"
                 : "rgb(100,100,100)"
-              : "black",
+              : "text.main",
             opacity: selected ? (itemContext.selected ? 1 : 0.35) : 1,
             fontSize: itemContext.selected ? "14px" : "12px",
             fontWeight: selected
@@ -119,7 +131,7 @@ const TimelineView = ({
       </div>
     );
   };
-
+  const customClass = colorMode === "dark" ? "dark-timeline" : "light-timeline";
   return (
     <>
       {productionOrders && productionOrders.length > 0 && (
@@ -138,6 +150,7 @@ const TimelineView = ({
           selected={[selected]}
           onItemDeselect={handleItemDeselect}
           itemRenderer={itemRenderer}
+          className={customClass}
         >
           <TimelineHeaders style={{ backgroundColor: "#fff" }}>
             <SidebarHeader>

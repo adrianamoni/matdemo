@@ -192,8 +192,8 @@ const OrderManager = () => {
   };
 
   return (
-    <Grid container spacing={1} alignItems="center">
-      <Grid item xs={12} sm={12} md={10} lg={11}>
+    <Grid container spacing={2} alignItems="center">
+      <Grid item xs={12} sm={12} md={12} lg={10}>
         <Grid container spacing={2}>
           {entFilter && (
             <Grid item xs={12} sm={12} md={3}>
@@ -263,7 +263,7 @@ const OrderManager = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12} sm={12} md={2} lg={1}>
+      <Grid item xs={12} sm={12} md={12} lg={2}>
         <Button fullWidth variant="contained" onClick={applyFilters}>
           {Text({ tid: "apply" })}
         </Button>

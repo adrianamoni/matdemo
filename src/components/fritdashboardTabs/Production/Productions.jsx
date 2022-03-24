@@ -151,7 +151,7 @@ const Productions = () => {
     tableData && tableData.length < 1
       ? setUserAlert({
           show: true,
-          message: "No hay producciones actualmente",
+          message: Text({ tid: "noProductionsInThisOrder" }),
           severity: "info",
         })
       : setUserAlert({
@@ -229,7 +229,7 @@ const Productions = () => {
     </Box>
   ) : (
     <>
-      <Grid container sx={{ mt: 4, paddingRight: 3 }}>
+      <Grid container sx={{ mt: 4 }}>
         {/* Productions Table */}
         {tableData?.length > 0 ? (
           <Grid item xs={12}>

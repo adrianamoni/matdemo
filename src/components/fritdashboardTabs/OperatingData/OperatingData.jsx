@@ -25,12 +25,7 @@ const OperatingData = () => {
   const alertText = redirecting;
 
   return (
-    <Grid
-      container
-      spacing={2}
-      sx={{ mt: 2, paddingRight: 3 }}
-      id="frit-tab-component"
-    >
+    <Grid container spacing={2} sx={{ mt: 2 }} id="frit-tab-component">
       {/* <Grid item xs={12} sx={{ minHeight: 20 }}>
         {redirecting && (
           <Box sx={{ width: "100%" }}>

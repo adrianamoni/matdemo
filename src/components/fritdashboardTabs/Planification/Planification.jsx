@@ -168,7 +168,7 @@ const Planification = () => {
     </Box>
   ) : (
     <>
-      <Grid container sx={{ mt: 4, paddingRight: 3 }}>
+      <Grid container sx={{ mt: 4 }}>
         <Grid item xs={12}>
           {apiData && apiData.length > 0 && (
             <>

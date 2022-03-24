@@ -23,13 +23,7 @@ const General = ({ loading }) => {
       <LinearProgress variant="indeterminate" color="secondary" />
     </Box>
   ) : (
-    <Grid
-      container
-      sx={{ p: 2, mt: 2 }}
-      columnSpacing={4}
-      rowSpacing={3}
-      alignItems="stretch"
-    >
+    <Grid container sx={{ p: 2, mt: 2 }} alignItems="stretch">
       <Grid
         container
         alignItems="stretch"

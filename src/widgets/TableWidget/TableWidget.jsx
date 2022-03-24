@@ -114,6 +114,24 @@ const TableWidget = ({
       padding: "0px 5px",
     },
   };
+  const customCellStyle = {
+    "& .MuiDataGrid-cell": {
+      //fontSize: "0.8em",
+      fontSize: {
+        xs: "0.8em",
+        sm: "0.8em",
+        md: "0.85em",
+        lg: "0.9em",
+        xl: "1.05em",
+      },
+    },
+    "& .MuiDataGrid-row.Mui-selected": {
+      backgroundColor: "selected.main", //"#7cbedd",
+    },
+    "& .MuiDataGrid-row:hover": {
+      backgroundColor: "hover.main", //"#bcdff0",
+    },
+  };
 
   const size = useWindowSize();
 
@@ -150,9 +168,8 @@ const TableWidget = ({
   return (
     <TableContainer
       sx={{
-        /*  border: "solid 1px",
-        borderColor: "background.paper", */
         backgroundColor: "background.grey4",
+        p: 1,
       }}
     >
       <TextField
@@ -161,7 +178,6 @@ const TableWidget = ({
         variant="standard"
         value={searchInput}
         onChange={(e) => setsearchInput(e.target.value)}
-        sx={{ p: 1 }}
       />
       {/* //CHANGES FOR ADVANCED FACTORIES */}
       {/* {pageDimentions && pageDimentions.width < 800 && (
@@ -191,7 +207,7 @@ const TableWidget = ({
             }}
           >
             <DataGrid
-              sx={{ ...customHeaderStyle, rowsColors }}
+              sx={{ ...customHeaderStyle, ...customCellStyle, rowsColors }}
               rows={renderData}
               columns={columns}
               autoHeight
@@ -205,9 +221,9 @@ const TableWidget = ({
                 });
               }}
               selectionModel={selectedRowsIds[tableName]}
-              getRowClassName={(params) =>
+              /* getRowClassName={(params) =>
                 `super-app-theme--${params.row.color}`
-              }
+              } */
               onCellEditCommit={handleCellEditCommit}
             />
           </div>
@@ -219,7 +235,7 @@ const TableWidget = ({
             }}
           >
             <DataGrid
-              sx={{ ...customHeaderStyle, rowsColors }}
+              sx={{ ...customHeaderStyle, ...customCellStyle, rowsColors }}
               rows={renderData}
               columns={columns}
               autoHeight
@@ -233,9 +249,9 @@ const TableWidget = ({
                   });
               }}
               selectionModel={!disableSelection && selectedRowsIds[tableName]}
-              getRowClassName={(params) =>
+              /* getRowClassName={(params) =>
                 `super-app-theme--${params.row.color}`
-              }
+              } */
             />
           </div>
         )

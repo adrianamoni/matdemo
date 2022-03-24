@@ -52,19 +52,28 @@ const CustomResponsive = ({
     setCurrentPage(v);
   };
 
-  const handleClick = (id) => {
-    if (multipleSelection && selectedRowsIds && selectedRowsIds[tableName]) {
-      if (!selectedRowsIds[tableName].includes(id)) {
+  const handleClick = ({ dataId, e }) => {
+    if (!e.target.type) {
+      if (multipleSelection && selectedRowsIds && selectedRowsIds[tableName]) {
+        if (!selectedRowsIds[tableName].includes(dataId)) {
+          setSelectedRowsIds({
+            ...selectedRowsIds,
+            [tableName]: [...selectedRowsIds[tableName], dataId],
+          });
+        } else {
+          setSelectedRowsIds({
+            ...selectedRowsIds,
+            [tableName]: selectedRowsIds[tableName].filter(
+              (el) => el !== dataId
+            ),
+          });
+        }
+      } else {
         setSelectedRowsIds({
           ...selectedRowsIds,
-          [tableName]: [...selectedRowsIds[tableName], id],
+          [tableName]: [dataId],
         });
       }
-    } else {
-      setSelectedRowsIds({
-        ...selectedRowsIds,
-        [tableName]: [id],
-      });
     }
   };
 
@@ -85,14 +94,18 @@ const CustomResponsive = ({
             <Box
               index={i}
               sx={{
-                borderBottom: "1px solid #cecece",
+                borderBottom: "1px solid",
+                borderColor: "#aaa",
                 padding: "5px",
-                backgroundColor: isSelected ? "#7cbedd" : undefined,
+                backgroundColor: isSelected ? "selected.main" : undefined,
                 "&:hover": {
-                  backgroundColor: !isSelected ? "#bcdff0" : undefined,
+                  backgroundColor: !isSelected ? "hover.main" : undefined,
                 },
+                wordWrap: "break-word",
               }}
-              onClick={() => !disableSelection && handleClick(data.id)}
+              onClick={(e) =>
+                !disableSelection && handleClick({ dataId: data.id, e })
+              }
             >
               {columns.map((column, index) => (
                 <Grid container spacing={1} index={index}>
@@ -107,7 +120,7 @@ const CustomResponsive = ({
                   </Grid>
                   <Grid item xs={7} textAlign="right">
                     {!column.editable ? (
-                      <Typography variant="body2">
+                      <Typography variant="body3">
                         {data[column.field]}
                       </Typography>
                     ) : (

@@ -286,7 +286,63 @@ export const propsByState = ({ prodState, cleanState }) => {
   }
 };
 
-export const prepareItems = (data) => {
+export const colorByState = ({ isDark, prodState, cleanState }) => {
+  switch (prodState) {
+    case 0:
+      return {
+        color: isDark ? "#454545" : "#bfbfbf",
+      };
+    case 1:
+      return {
+        color: isDark ? "#027a7a" : "#b6f0f0",
+      };
+    case 2:
+      return {
+        color: isDark ? "#868f27" : "#ebf0b6",
+      };
+    case 3:
+      return {
+        color: isDark ? "#275e23" : "#baf0b6",
+      };
+    case 4:
+      if (cleanState === 2 || cleanState === 3) {
+        return {
+          color: isDark ? "#275e23" : "#baf0b6",
+        };
+      } else {
+        return {
+          color: isDark ? "#21246e" : "#b6b8f0",
+        };
+      }
+
+    case 5:
+      return {
+        color: isDark ? "#6b111c" : "#f0b6bd",
+      };
+    case 6:
+      return {
+        color: isDark ? "#6b111c" : "#f0b6bd",
+      };
+    case 7:
+      return {
+        color: isDark ? "#6b111c" : "#f0b6bd",
+      };
+    case 8:
+      return {
+        color: isDark ? "#454545" : "#C1C1C1",
+      };
+    case 9:
+      return {
+        color: isDark ? "#6b111c" : "#f0b6bd",
+      };
+    default:
+      return {
+        color: isDark ? "#454545" : "#C1C1C1",
+      };
+  }
+};
+
+export const prepareItems = (data, isDark) => {
   let productionOrders;
 
   productionOrders = data.ordenes.filter(
@@ -349,7 +405,12 @@ export const prepareItems = (data) => {
           opacity: 1,
           fontSize: "1em",
           background: `linear-gradient(90deg, ${
-            propsByState(e.StateCd).color
+            /*        propsByState(e.StateCd).color */
+            colorByState({
+              isDark,
+              prodState: e.StateCd,
+              cleanState: null,
+            }).color
           } ${100 - cleaningPercentage}%, #84BBCE ${
             100 - cleaningPercentage
           }%)`,

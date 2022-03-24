@@ -181,7 +181,7 @@ const Simulation = () => {
     </Box>
   ) : (
     <>
-      <Grid container spacing={2} sx={{ mt: 2, paddingRight: 3 }}>
+      <Grid container spacing={2} sx={{ mt: 2 }}>
         <Grid item xs={12} textAlign="center">
           <Grid container spacing={2}>
             <Grid item xs={12}>

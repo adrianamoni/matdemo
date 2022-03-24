@@ -197,5 +197,7 @@ const es_bckup = {
   simulationStoppedSuccess: "¡Simulación parada correctamente!",
   noSampleToShow: "No hay muestras para mostrar",
   noResultsForSelectedSample: "No hay resultados para la muestra seleccionada",
+  noConsumptionsInThisOrder: "No hay consumos en esta orden",
+  noProductionsInThisOrder: "No hay producciones en esta orden",
 };
 export { es_bckup };

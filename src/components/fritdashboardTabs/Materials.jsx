@@ -15,6 +15,7 @@ import ButtonGroupWidget from "../../widgets/buttonGroup/ButtonGroupWidget";
 import { ApiCall } from "../../services/Service";
 import { emptyContainerRequest, provisionRequestRequest } from "./helper";
 import { DataGrid } from "@mui/x-data-grid";
+import { LoadingButton } from "@mui/lab";
 
 const Materials = () => {
   const { globalData } = useContext(globalDataContext);
@@ -135,18 +136,22 @@ const Materials = () => {
     setLoadingProvisioning(false);
   };
 
-  const handleEmptyContainerRequest = async () => {
+  /*   const handleEmptyContainerRequest = async () => {
     setLoadingEmptyContainer(true);
     await emptyContainerRequest({ lineaName: lineData.entName, woId, operId });
     setLoadingEmptyContainer(false);
   };
+ */
+
+  const disabledButton =
+    selectedRowsIds && selectedRowsIds["materials"]?.length > 0 ? false : true;
 
   return loading ? (
     <Box sx={{ width: "100%" }}>
       <LinearProgress variant="indeterminate" color="secondary" />
     </Box>
   ) : (
-    <Grid container sx={{ mt: 4, paddingRight: 3 }}>
+    <Grid container spacing={2} sx={{ mt: 2 }}>
       <Grid item xs={12}>
         <TableWidget
           multipleSelection={true}
@@ -158,27 +163,18 @@ const Materials = () => {
         />
       </Grid>
 
-      <Grid item xs={12}>
-        <ButtonGroupWidget
-          position={"center"}
-          loading={loadingEmptyContainer || loadingProvisioning}
-          buttons={[
-            {
-              text: "provisioningRequest",
-              color: "primary",
-              onClick: handleProvisioningRequest,
-              disabled:
-                selectedRowsIds && selectedRowsIds["materials"]?.length > 0
-                  ? false
-                  : true,
-            },
-            {
-              text: "emptyContainerRequest",
-              color: "secondary" /* disabled: true */,
-              onClick: handleEmptyContainerRequest /* disabled: true */,
-            },
-          ]}
-        />
+      <Grid item xs={12} textAlign="center">
+        <LoadingButton
+          variant="contained"
+          sx={{ maxWidth: 400 }}
+          loading={loadingProvisioning}
+          fullWidth
+          disabled={disabledButton}
+          color="primary"
+          onClick={handleProvisioningRequest}
+        >
+          {Text({ tid: "provisioningRequest" })}
+        </LoadingButton>
       </Grid>
     </Grid>
   );

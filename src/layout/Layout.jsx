@@ -80,10 +80,17 @@ function Layout(props) {
         grey1: colorMode === "dark" ? "#141414" : grey[600],
         grey2: colorMode === "dark" ? "#141414" : grey[300], //grey[800] : grey[300],
         grey3: colorMode === "dark" ? "#191919" : grey[200],
+        grey3b: colorMode === "dark" ? "#292929" : "#eaeaea",
         grey4: colorMode === "dark" ? grey[900] : grey[50],
       },
       text: {
         main: colorMode === "dark" ? "#eee" : "#050505",
+      },
+      hover: {
+        main: colorMode === "dark" ? "#0c5e8560" : "#bcdff0",
+      },
+      selected: {
+        main: colorMode === "dark" ? "#0f87bf80" : "#7cbedd",
       },
       /*   action: {
         disabledBackground: colorMode === "dark" ? "#141414" : grey[300],
@@ -116,7 +123,7 @@ function Layout(props) {
         fontSize: "1rem",
       },
       body3: {
-        fontSize: "0.875rem",
+        fontSize: "0.9rem",
       },
     },
     /*  spacing: (factor) => `${0.25 * factor}rem`, // (Bootstrap strategy) */

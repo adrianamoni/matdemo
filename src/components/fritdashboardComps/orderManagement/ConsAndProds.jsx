@@ -122,8 +122,8 @@ const ConsAndProds = ({
               ) : (
                 selectedRows.length > 0 && (
                   <Grid item xs={12}>
-                    <Alert variant="outlined" severity="info">
-                      No hay consumos en esta orden
+                    <Alert variant="filled" severity="info">
+                      {Text({ tid: "noConsumptionsInThisOrder" })}
                     </Alert>
                   </Grid>
                 )
@@ -149,8 +149,8 @@ const ConsAndProds = ({
                 !loading &&
                 selectedRows.length > 0 && (
                   <Grid item xs={12}>
-                    <Alert variant="outlined" severity="info">
-                      No hay producciones en esta orden
+                    <Alert variant="filled" severity="info">
+                      {Text({ tid: "noProductionsInThisOrder" })}
                     </Alert>
                   </Grid>
                 )

@@ -201,12 +201,7 @@ const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
                 >
                   {width < 600 ? (
                     <span>
-                      {moment(currentTime, "DD/MM/YYYY-HH:mm").format(
-                        "DD/MM/YYYY"
-                      )}
-                      <br />
                       {moment(currentTime, "DD/MM/YYYY-HH:mm").format("HH:mm")}
-                      {/*  {new Date(currentTime).toDateString()} */}
                     </span>
                   ) : (
                     moment(currentTime, "DD/MM/YYYY-HH:mm").format(

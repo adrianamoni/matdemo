@@ -1,5 +1,5 @@
 #result-quality-table > thead > tr {
-  background-color: #eeeeee;
+  /* background-color: #eeeeee; */
   box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
   border-radius: none;
   padding: 2rem;
@@ -12,21 +12,21 @@
 .custom-green-input #input-result {
   color: rgb(37, 153, 85) !important;
   border-color: rgba(51, 184, 106, 0.5) !important;
-  background-color: rgba(216, 243, 227, 0.8) !important;
+  background-color: rgba(51, 184, 106, 0.2) !important;
 }
 
 .custom-red-dropdown #dropdown-result,
 .custom-red-input #input-result {
   color: rgb(173, 3, 3) !important;
   border-color: rgba(201, 69, 69, 0.5) !important;
-  background-color: rgba(240, 214, 214, 0.8) !important;
+  background-color: rgba(201, 69, 69, 0.2) !important;
 }
 
 .custom-default-dropdown #dropdown-result,
 .custom-default-input #input-result {
   color: rgb(78, 78, 78) !important;
   /*   border-color: rgba(105, 105, 105, 0.5) !important; */
-  background-color: rgba(245, 245, 245, 0.9) !important;
+  /*  background-color: rgba(245, 245, 245, 0.9) !important; */
 }
 
 #input-result::-webkit-outer-spin-button,
