@@ -194,5 +194,7 @@ const en_bckup = {
   redirectedToExternal: "Redirected to an external website",
   simulationStartedSuccess: "Simulation started successfully!",
   simulationStoppedSuccess: "Simulation stopped successfully!",
+  noSampleToShow: "There are no samples",
+  noResultsForSelectedSample: "There are no results for the selected sample",
 };
 export { en_bckup };

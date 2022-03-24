@@ -57,7 +57,10 @@ const LastCleaning = () => {
         <Typography>
           <span
             style={{
-              paddingInline: "12px",
+              paddingInline: "0.8em",
+              paddingBlock: "0.2em",
+
+              color: "#111",
               backgroundColor:
                 state === "Limpio"
                   ? "lightskyblue" //</Typography>"#70f5a7" //background.success"

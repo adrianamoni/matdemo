@@ -186,10 +186,12 @@ const Interruptions = () => {
           </Grid>
         ) : (
           userAlert.show && (
-            <UserAlert
-              severity={userAlert.severity}
-              message={userAlert.message}
-            />
+            <Grid item xs={12}>
+              <UserAlert
+                severity={userAlert.severity}
+                message={userAlert.message}
+              />
+            </Grid>
           )
         )}
 

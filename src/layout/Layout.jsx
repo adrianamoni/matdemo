@@ -85,6 +85,10 @@ function Layout(props) {
       text: {
         main: colorMode === "dark" ? "#eee" : "#050505",
       },
+      /*   action: {
+        disabledBackground: colorMode === "dark" ? "#141414" : grey[300],
+        disabled: colorMode === "dark" ? "#141414" : grey[300],
+      }, */
     },
     typography: {
       h1: {

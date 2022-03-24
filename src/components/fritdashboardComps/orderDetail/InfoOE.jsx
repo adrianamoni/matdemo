@@ -146,8 +146,10 @@ const InfoOE = () => {
                               style={
                                 item.hasOwnProperty("state")
                                   ? {
-                                      paddingInline: "0.6em",
+                                      paddingInline: "0.8em",
+                                      paddingBlock: "0.15em",
                                       backgroundColor: background,
+                                      color: "#111",
                                     }
                                   : {}
                               }

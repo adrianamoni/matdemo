@@ -17,6 +17,7 @@ import { Box } from "@mui/system";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { tab_quality_get_results } from "../../../services/OFservices";
 import { MemoryDatabaseCall } from "../../../services/Service";
+import UserAlert from "../../alerts/UserAlert";
 
 const Quality = () => {
   const { globalData } = useContext(globalDataContext);
@@ -257,7 +258,7 @@ const Quality = () => {
           </Button>
         </Grid>
 
-        {samples && samples.length > 0 && (
+        {samples && samples.length > 0 ? (
           <Grid item xs={12}>
             <TableWidget
               data={samples}
@@ -265,6 +266,13 @@ const Quality = () => {
               multipleSelection={false}
               tableName="samples"
               pagination={5}
+            />
+          </Grid>
+        ) : (
+          <Grid item xs={12}>
+            <UserAlert
+              severity={"info"}
+              message={Text({ tid: "noSampleToShow" })}
             />
           </Grid>
         )}
@@ -296,7 +304,7 @@ const Quality = () => {
         ) : selectedRows > 0 ? (
           <Grid item xs={12}>
             <Alert variant="filled" severity="info">
-              No hay resultados en la muestra seleccionada
+              {Text({ tid: "noResultsForSelectedSample" })}
             </Alert>
           </Grid>
         ) : (
