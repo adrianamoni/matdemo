@@ -5,12 +5,10 @@ import HalfDoughnut from "../../../widgets/halfDoughnut/HalfDoughnut";
 import { get_oee_order } from "../../../services/OFservices";
 import Text from "./../../../languages/Text";
 import { MemoryDatabaseCall } from "../../../services/Service";
-import { colorByValue } from "../../../helpers/props";
 
 const OeeOrden = () => {
   const { globalData } = useContext(globalDataContext);
   const [apiData, setApiData] = useState(undefined);
-  const [OEEData, setOEEData] = useState(undefined);
 
   useEffect(() => {
     let clearTimeoutTurnoKey;
@@ -42,6 +40,7 @@ const OeeOrden = () => {
     };
   }, []);
 
+  const value = (apiData && apiData[0]?.OEE) || 0;
   return (
     <>
       <Grid container sx={{ height: "100%" }}>
@@ -54,14 +53,7 @@ const OeeOrden = () => {
         <Grid item xs={12} textAlign="center">
           <Grid container justifyContent="center" sx={{ alignItems: "center" }}>
             <Grid item xs={12} sm={12} md={6} lg={12}>
-              <HalfDoughnut
-                value={[apiData?.OEE && apiData.OEE != null ? apiData.OEE : 0]}
-                color={colorByValue({
-                  value: apiData?.OEE && apiData.OEE != null ? apiData.OEE : 0,
-                  targetOee: globalData?.lineData?.oeeTarget,
-                  yellowThreshold: globalData?.oeeSpecs?.yellowThreshold,
-                })}
-              />
+              <HalfDoughnut value={[value ? value.toFixed(2) : 0]} />
             </Grid>
           </Grid>
         </Grid>
