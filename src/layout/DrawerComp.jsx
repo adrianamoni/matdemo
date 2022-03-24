@@ -29,6 +29,7 @@ import LogoutModal from "../components/screens/Login/LogoutModal";
 import LanguageSelector from "../languages/LanguageSelector";
 import ToggleDarkMode from "../theme/ToggleDarkMode";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import useWindowSize from "../components/customHooks/UseWindowsSize";
 
 const sidebarItems = [
   {
@@ -127,6 +128,7 @@ const StyledLink = styled(Link)({
 const DrawerComp = () => {
   const { loggedUser } = useContext(loginContext);
   const { extras } = useContext(globalDataContext);
+  const { width } = useWindowSize();
   const [loginModal, setLoginModal] = useState(false);
   const [logoutModal, setLogoutModal] = useState(false);
   let filteredItems;
@@ -188,12 +190,13 @@ const DrawerComp = () => {
             </StyledLink>
           </Toolbar>
 
-          <List id="sidebar-list">
+          <List id="sidebar-list" dense={width > 900 ? false : true}>
             {filteredItems.map((link) => (
               <>
-                <StyledLink key={link.id} to={link.path} /* classes */>
+                <StyledLink key={link.id} to={link.path}>
                   <ListItem button>
                     <ListItemIcon
+                      className={width > 900 ? "big-size" : "medium-size"}
                       sx={{
                         color: "secondary.main",
                       }}
@@ -207,7 +210,7 @@ const DrawerComp = () => {
                     </ListItemText>
                   </ListItem>
                 </StyledLink>
-                <Divider variant="middle" sx={{ marginBlock: "5px" }} />
+                <Divider variant="middle" sx={{ marginBlock: "2px" }} />
               </>
             ))}
             {/*  <Button
@@ -230,6 +233,7 @@ const DrawerComp = () => {
             </Button> */}
             <ListItem button onClick={handleRedirect}>
               <ListItemIcon
+                className={width > 900 ? "big-size" : "medium-size"}
                 sx={{
                   color: "secondary.main",
                 }}
@@ -264,7 +268,7 @@ const DrawerComp = () => {
               <Typography variant="h6">{"Login"}</Typography>
             </ListItemText>
           </ListItem>
-          <Divider variant="middle" sx={{ marginBlock: 1 }} />
+          <Divider variant="middle" sx={{ marginBlock: "5px" }} />
           <ListItem
             button
             onClick={() => setLogoutModal(true)}

@@ -33,7 +33,7 @@ export default function LanguageSelector() {
       variant="filled"
       fullWidth
       sx={{
-        mb: 4,
+        mb: 1,
         backgroundColor: "background.grey4",
         /* minWidth: 120 */
       }}
