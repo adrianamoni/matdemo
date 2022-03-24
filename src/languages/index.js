@@ -1,7 +1,7 @@
 import { es_bckup } from "./es";
 import { en_bckup } from "./en";
 
-let en_Lang, es_Lang;
+/* let en_Lang, es_Lang;
 if (typeof LANG_EN != "undefined") {
   console.log("LANG_EN1", LANG_EN);
 }
@@ -23,8 +23,9 @@ if (LANG_ES) {
   es_Lang = es_bckup;
 }
 const en = en_Lang;
-const es = es_Lang;
-
+const es = es_Lang; */
+const en = en_bckup;
+const es = es_bckup;
 export const dictionaryList = {
   es,
   en,
