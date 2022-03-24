@@ -132,9 +132,9 @@ const Documentation = () => {
     </Box>
   ) : (
     <>
-      <Grid container>
+      <Grid container spacing={2} sx={{ paddingRight: 3 }}>
         <Grid item xs={12} md={12} lg={12} xl={5}>
-          <Grid container rowSpacing={2}>
+          <Grid container spacing={2}>
             <Grid item xs={12}>
               <Typography variant="h5" component="h6">
                 <Text tid={"files"} />
