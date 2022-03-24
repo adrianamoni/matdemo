@@ -8,6 +8,7 @@ import {
   ListItemText,
   Toolbar,
   Typography,
+  Button,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
@@ -27,6 +28,7 @@ import LoginModal from "../components/screens/Login/LoginModal";
 import LogoutModal from "../components/screens/Login/LogoutModal";
 import LanguageSelector from "../languages/LanguageSelector";
 import ToggleDarkMode from "../theme/ToggleDarkMode";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 const sidebarItems = [
   {
@@ -139,6 +141,12 @@ const DrawerComp = () => {
     filteredItems = [...sidebarItems];
   }
 
+  const handleRedirect = () => {
+    const externalUrl =
+      "http://192.168.9.128:8000/en-US/account/insecurelogin?loginType=splunk&username=admin&password=Aeiou1234&return_to=%2Fapp%2FMES%2Fparos";
+    window.open(externalUrl, "_blank");
+  };
+
   return (
     <>
       <div
@@ -199,6 +207,24 @@ const DrawerComp = () => {
                 </ListItem>
               </StyledLink>
             ))}
+            <Button
+              sx={{ paddingLeft: 2.2, textTransform: "none" }}
+              startIcon={
+                <OpenInNewIcon
+                  sx={{
+                    color: "secondary.main",
+                  }}
+                />
+              }
+              onClick={handleRedirect}
+            >
+              <Typography
+                variant="h6"
+                sx={{ color: "#111", paddingLeft: 1, textAlign: "left" }}
+              >
+                {Text({ tid: "operatingData" })}
+              </Typography>
+            </Button>
           </List>
         </div>
 
