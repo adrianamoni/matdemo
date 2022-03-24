@@ -179,7 +179,7 @@ function Layout(props) {
             flexGrow: 1,
             p: 2,
             width: { sm: `calc(100% - ${drawerWidth}px)` },
-
+            minHeight: "100vh",
             backgroundColor: "background.grey2",
           }}
         >

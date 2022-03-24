@@ -118,7 +118,7 @@ const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentTime(moment().format("DD/MM/YYYY, HH:mm"));
+      setCurrentTime(moment().format("DD/MM/YYYY-HH:mm"));
     }, 60000);
     return () => clearInterval(interval);
   }, [currentTime]); ///<--- this right here
@@ -191,7 +191,7 @@ const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
             </div>
           </Grid>
 
-          <Grid item xs={3} textAlign="right" sx={{ pr: 4 }}>
+          <Grid item xs={3} textAlign="right">
             <Grid container>
               <Grid item xs={12}>
                 <Typography
@@ -199,7 +199,20 @@ const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
                   variant="body3"
                   sx={{ fontWeight: "normal" }}
                 >
-                  {currentTime}
+                  {width < 600 ? (
+                    <span>
+                      {moment(currentTime, "DD/MM/YYYY-HH:mm").format(
+                        "DD/MM/YYYY"
+                      )}
+                      <br />
+                      {moment(currentTime, "DD/MM/YYYY-HH:mm").format("HH:mm")}
+                      {/*  {new Date(currentTime).toDateString()} */}
+                    </span>
+                  ) : (
+                    moment(currentTime, "DD/MM/YYYY-HH:mm").format(
+                      "DD/MM/YYYY, HH:mm"
+                    )
+                  )}
                 </Typography>
               </Grid>
               <Grid

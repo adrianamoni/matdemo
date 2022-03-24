@@ -51,6 +51,7 @@ body {
   background-color: rgb(225, 225, 225) !important;
 
   overflow-y: overlay;
+  height: 100vh !important;
 }
 /* #root {
   background-color: #e0e0e0  !important;
@@ -115,7 +116,7 @@ code {
 
 /* BLINKING ANIMATION */
 .blinking-effect-red {
-  animation: blinkRed 0.7s infinite ease;
+  animation: blinkRed 1s infinite linear;
 }
 
 .blinking-effect-red .title {
@@ -124,13 +125,13 @@ code {
 }
 @keyframes blinkRed {
   0% {
-    border: 1.5px solid lightgray;
+    border: 1.5px solid transparent;
   }
   50% {
     border: 1.5px solid #c41034;
   }
   100% {
-    border: 1.5px solid lightgray;
+    border: 1.5px solid transparent;
   }
 }
 

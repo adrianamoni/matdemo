@@ -187,27 +187,30 @@ const DrawerComp = () => {
               </Typography>
             </StyledLink>
           </Toolbar>
-          {/*  <Divider /> */}
+
           <List id="sidebar-list">
             {filteredItems.map((link) => (
-              <StyledLink key={link.id} to={link.path} /* classes */>
-                <ListItem button>
-                  <ListItemIcon
-                    sx={{
-                      color: "secondary.main",
-                    }}
-                  >
-                    {link.icon}
-                  </ListItemIcon>
-                  <ListItemText disableTypography={true}>
-                    <Typography variant="h6">
-                      {Text({ tid: link.name })}
-                    </Typography>
-                  </ListItemText>
-                </ListItem>
-              </StyledLink>
+              <>
+                <StyledLink key={link.id} to={link.path} /* classes */>
+                  <ListItem button>
+                    <ListItemIcon
+                      sx={{
+                        color: "secondary.main",
+                      }}
+                    >
+                      {link.icon}
+                    </ListItemIcon>
+                    <ListItemText disableTypography={true}>
+                      <Typography variant="h6">
+                        {Text({ tid: link.name })}
+                      </Typography>
+                    </ListItemText>
+                  </ListItem>
+                </StyledLink>
+                <Divider variant="middle" sx={{ marginBlock: "5px" }} />
+              </>
             ))}
-            <Button
+            {/*  <Button
               sx={{ paddingLeft: 2.2, textTransform: "none" }}
               startIcon={
                 <OpenInNewIcon
@@ -224,14 +227,28 @@ const DrawerComp = () => {
               >
                 {Text({ tid: "operatingData" })}
               </Typography>
-            </Button>
+            </Button> */}
+            <ListItem button onClick={handleRedirect}>
+              <ListItemIcon
+                sx={{
+                  color: "secondary.main",
+                }}
+              >
+                <OpenInNewIcon />
+              </ListItemIcon>
+              <ListItemText disableTypography={true}>
+                <Typography variant="h6">
+                  {Text({ tid: "operatingData" })}
+                </Typography>
+              </ListItemText>
+            </ListItem>
           </List>
         </div>
 
         <List>
-          {/* <ListItem sx={{ justifyContent: "center" }}>
+          <ListItem sx={{ justifyContent: "center" }}>
             <ToggleDarkMode />
-          </ListItem> */}
+          </ListItem>
 
           <LanguageSelector />
           <ListItem
@@ -247,6 +264,7 @@ const DrawerComp = () => {
               <Typography variant="h6">{"Login"}</Typography>
             </ListItemText>
           </ListItem>
+          <Divider variant="middle" sx={{ marginBlock: 1 }} />
           <ListItem
             button
             onClick={() => setLogoutModal(true)}
