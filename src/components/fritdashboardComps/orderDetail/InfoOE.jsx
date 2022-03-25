@@ -17,7 +17,6 @@ import { propsByState } from "../../../helpers/props";
 import ConfirmationDialog from "../../alerts/ConfirmationDialog";
 
 const InfoOE = () => {
-  console.log("RENDERED", "INFO OE");
   const { globalData } = useContext(globalDataContext);
   const { orderDetails, orderData } = globalData;
   const { woId, operId, seqNo } = globalData.orderData;

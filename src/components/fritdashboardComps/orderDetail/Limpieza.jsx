@@ -34,8 +34,6 @@ import Text from "../../../languages/Text";
 import ConfirmationDialog from "../../alerts/ConfirmationDialog";
 
 const Limpieza = () => {
-  console.log("RENDERED", "Limpieza");
-
   const { pageSize } = useContext(pageSizeContext);
   const { width } = pageSize;
   const { globalData } = useContext(globalDataContext);

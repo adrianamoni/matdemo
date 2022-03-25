@@ -9,8 +9,6 @@ import TimelineContainer from "./TimelineContainer";
 /* import HalfDoughnut2 from "../../../widgets/halfDoughnut/HalfDoughnut2";
  */
 const OEEHistorico = () => {
-  console.log("RENDERED", "OEEHistorico");
-
   const { globalData } = useContext(globalDataContext);
   const [apiData, setApiData] = useState(undefined);
   const [OEEData, setOEEData] = useState(undefined);
