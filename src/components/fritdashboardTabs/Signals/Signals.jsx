@@ -1,18 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
-import {
-  AppBar,
-  Box,
-  Container,
-  Grid,
-  LinearProgress,
-  Tab,
-  Tabs,
-  Typography,
-} from "@mui/material";
-import WindowIcon from "@mui/icons-material/Window";
-import CropDinIcon from "@mui/icons-material/CropDin";
+import React, { useState } from "react";
+import { Box, Container, LinearProgress } from "@mui/material";
+
 import Variables from "./Variables";
-import VariablesProceso from "./VariablesProceso";
+
 function TabPanel(props) {
   const { children, value, index } = props;
 

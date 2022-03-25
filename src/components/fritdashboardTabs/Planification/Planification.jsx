@@ -14,13 +14,11 @@ import { MemoryDatabaseCall } from "../../../services/Service";
 import ButtonGroupWidget from "../../../widgets/buttonGroup/ButtonGroupWidget";
 import TableWidget from "../../../widgets/TableWidget/TableWidget";
 import { dateFormater } from "../../common/helpers/helper";
-import useWindowSize from "../../customHooks/UseWindowsSize";
 import { operation_states } from "../../fritdashboardComps/orderDetail/helper";
 import { handleOperationAction } from "../General/helper";
 import ModalCreateOrder from "./ModalCreateOrder";
 
 const Planification = () => {
-  const windowSize = useWindowSize();
   const { loggedUser, setLoggedUser } = useContext(loginContext);
   const { globalData } = useContext(globalDataContext);
   const { lineData } = globalData;

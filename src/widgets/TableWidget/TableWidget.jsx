@@ -1,19 +1,15 @@
-import React, { useState, useEffect, useContext, useCallback } from "react";
-
+import React, { useState, useEffect, useContext } from "react";
 import TableContainer from "@mui/material/TableContainer";
-import { Switch, TextField } from "@mui/material/";
-
-import Paper from "@mui/material/Paper";
+import { TextField } from "@mui/material/";
 import { DataGrid } from "@mui/x-data-grid";
-// import { dataTable } from "./fakedata";
 import CustomResponsive from "./CustomResponsive";
-import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
-import useWindowSize from "../../components/customHooks/UseWindowsSize";
 import { searchbarFilter } from "./searchBarHelper";
 import Text from "./../../languages/Text";
-import { selectedRowsIdsContext } from "../../context/ContextProvider";
+import {
+  selectedRowsIdsContext,
+  pageSizeContext,
+} from "../../context/ContextProvider";
 import { darken, lighten } from "@mui/material/styles";
-import { grey } from "@mui/material/colors";
 
 const TableWidget = ({
   data,
@@ -27,7 +23,7 @@ const TableWidget = ({
   const { selectedRowsIds, setSelectedRowsIds } = useContext(
     selectedRowsIdsContext
   );
-
+  const { pageSize } = useContext(pageSizeContext);
   const [rowsColors, setRowsColors] = useState(false);
   const [checked, setChecked] = useState(false);
   const [pageDimentions, setPageDimentions] = useState(undefined);
@@ -133,18 +129,16 @@ const TableWidget = ({
     },
   };
 
-  const size = useWindowSize();
-
   //useEffect for hiding the switch on table layout
   useEffect(() => {
-    setPageDimentions(size);
-    if (size.width > 900) {
+    setPageDimentions(pageSize);
+    if (pageSize.width > 900) {
       // CHANGES FOR ADVANCED FACTORIES
       setChecked(true); //false
     } else {
       setChecked(false);
     }
-  }, [size]);
+  }, [pageSize]);
 
   //useEffect for filtering data
   useEffect(() => {

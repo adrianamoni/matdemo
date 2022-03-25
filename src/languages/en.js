@@ -12,6 +12,7 @@ const en_bckup = {
   consumptionCorrection: "Consumption Adjustment",
   createInterruption: "Add Stop",
   dashboard: "Dashboard",
+  assign: "Assign",
   deassign: "Deassign",
   description: "Description",
   duration: "Duration",

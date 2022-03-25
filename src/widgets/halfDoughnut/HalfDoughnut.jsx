@@ -25,7 +25,7 @@ const HalfDoughnut = ({ value, color }) => {
         startAngle: -90,
         endAngle: 90,
         track: {
-          background: grey[100],
+          background: colorMode === "dark" ? grey[500] : grey[100],
           strokeWidth: "100%",
           margin: -5, // margin is in pixels
           dropShadow: {

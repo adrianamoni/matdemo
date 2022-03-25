@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Grid, ButtonGroup, Button } from "@mui/material";
 import Text from "./../../languages/Text";
 import { LoadingButton } from "@mui/lab";
-import useWindowSize from "../../components/customHooks/UseWindowsSize";
+import { pageSizeContext } from "../../context/ContextProvider";
 
 const ButtonGroupWidget = ({ position, buttons, loading, size }) => {
-  const { width } = useWindowSize();
+  const { pageSize } = useContext(pageSizeContext);
+  const { width } = pageSize;
   // console.log("buttons", buttons);
   /* let customBigSize = {
     p: 3,

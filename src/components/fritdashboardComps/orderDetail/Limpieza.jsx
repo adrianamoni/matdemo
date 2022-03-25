@@ -19,19 +19,25 @@ import {
   processOrderTimeData,
   timeFormating,
 } from "./helper";
-import { globalDataContext } from "../../../context/ContextProvider";
+import {
+  globalDataContext,
+  pageSizeContext,
+} from "../../../context/ContextProvider";
 import {
   handleOperationAction,
   handleStopCleaning,
 } from "../../fritdashboardTabs/General/helper";
 import UseFetchMemory from "../../customHooks/UseFetchMemory";
 import LastCleaning from "./LastCleaning";
-import useWindowSize from "../../customHooks/UseWindowsSize";
+
 import Text from "../../../languages/Text";
 import ConfirmationDialog from "../../alerts/ConfirmationDialog";
 
 const Limpieza = () => {
-  const { width } = useWindowSize();
+  console.log("RENDERED", "Limpieza");
+
+  const { pageSize } = useContext(pageSizeContext);
+  const { width } = pageSize;
   const { globalData } = useContext(globalDataContext);
   const { orderDetails, /* orderData */ lineData } = globalData;
   const { productionData, cleaningData } = orderDetails;
@@ -117,7 +123,7 @@ const Limpieza = () => {
       seqNo: cleaningData.seq_no,
       entName,
     });
-    setLoadingStop(false);
+    setTimeout(() => setLoadingStop(false), 2000);
   };
 
   const { play, pause, stop } = operation_states({

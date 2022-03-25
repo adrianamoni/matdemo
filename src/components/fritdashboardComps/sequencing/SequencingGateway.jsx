@@ -15,7 +15,10 @@ import {
 import _ from "lodash";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginContext } from "../../../context/ContextProvider";
+import {
+  loginContext,
+  pageSizeContext,
+} from "../../../context/ContextProvider";
 import ButtonGroupWidget from "../../../widgets/buttonGroup/ButtonGroupWidget";
 import { createNotification } from "../../alerts/NotificationAlert";
 import { formatForDropdown } from "../../common/helpers/helper";
@@ -34,7 +37,7 @@ import ContentPasteGoIcon from "@mui/icons-material/ContentPasteGo";
 import TimelineView from "./TimelineView";
 import SeqTable from "./SeqTable";
 import SplitModal from "./SplitModal";
-import useWindowSize from "../../customHooks/UseWindowsSize";
+
 import ConfirmationDialog from "../../alerts/ConfirmationDialog";
 import { ApiCall } from "../../../services/Service";
 import { screen_sequencing_onLiberate } from "../../../services/serviceHelper";
@@ -43,7 +46,8 @@ import { fakeData1 } from "./fakeData";
 
 const SequencingGateway = () => {
   const navigateTo = useNavigate();
-  const { width } = useWindowSize();
+  const { pageSize } = useContext(pageSizeContext);
+  const { width } = pageSize;
   const { loggedUser, setLoggedUser } = useContext(loginContext);
   const [loadingInitialData, setLoadingInitialData] = useState(false);
   const [userWritePermissions, setUserWritePermissions] = useState(undefined);

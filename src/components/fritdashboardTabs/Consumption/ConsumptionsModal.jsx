@@ -4,9 +4,10 @@ import {
   formContext,
   selectedRowsIdsContext,
   selectedRowsContext,
+  pageSizeContext,
 } from "../../../context/ContextProvider";
 import { Grid, Divider, InputLabel, TextField } from "@mui/material";
-import useWindowSize from "./../../customHooks/UseWindowsSize";
+
 import ModalWidget from "./../../../widgets/modalWidget/ModalWidget";
 import InputWidget from "./../../../widgets/forms/InputWidget";
 import ButtonGroupWidget from "./../../../widgets/buttonGroup/ButtonGroupWidget";
@@ -25,8 +26,8 @@ const ConsumptionsModal = ({
   modalContent,
   setRefreshData,
 }) => {
-  const windowSize = useWindowSize();
-
+  const { pageSize } = useContext(pageSizeContext);
+  const { width } = pageSize;
   //useContext
   const { globalData } = useContext(globalDataContext);
   const { woId, operId, seqNo } = globalData.orderData;
@@ -349,7 +350,7 @@ const ConsumptionsModal = ({
           ? consumCorrectionModalContent
           : consumeModalContent
       }
-      customWidth={windowSize.width < 820 ? 350 : 800}
+      customWidth={width < 820 ? 350 : 800}
     />
   );
 };

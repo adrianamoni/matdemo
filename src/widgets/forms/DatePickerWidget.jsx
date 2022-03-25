@@ -1,6 +1,5 @@
 ﻿import React, { useContext, useEffect } from "react";
-import { formContext } from "../../context/ContextProvider";
-import useWindowSize from "./../../components/customHooks/UseWindowsSize";
+import { formContext, pageSizeContext } from "../../context/ContextProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import InputLabel from "@mui/material/InputLabel";
 import {
@@ -14,7 +13,8 @@ import TextField from "@mui/material/TextField";
 
 const DatePickerWidget = ({ formId, id, label, defaultDate, type }) => {
   const { formWidget, setformWidget } = useContext(formContext);
-  const { width } = useWindowSize();
+  const { pageSize } = useContext(pageSizeContext);
+  const { width } = pageSize;
 
   useEffect(() => {
     let formToChange = formWidget[formId];

@@ -1,19 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
-/* import { get_oee_shift } from "../../services/OFservices";
-import { MemoryDatabaseCall } from "../../services/Service"; */
-
 import { Grid, List, ListItem, Typography } from "@mui/material";
 import HalfDoughnut from "../../../widgets/halfDoughnut/HalfDoughnut";
 import { globalDataContext } from "../../../context/ContextProvider";
 import Text from "../../../languages/Text";
 import { get_oee_shift } from "../../../services/OFservices";
 import { MemoryDatabaseCall } from "../../../services/Service";
-import { colorByValue } from "../../../helpers/props";
 import TimelineContainer from "./TimelineContainer";
-import { fakeOeeShift } from "./fakeData";
 /* import HalfDoughnut2 from "../../../widgets/halfDoughnut/HalfDoughnut2";
  */
 const OEEHistorico = () => {
+  console.log("RENDERED", "OEEHistorico");
+
   const { globalData } = useContext(globalDataContext);
   const [apiData, setApiData] = useState(undefined);
   const [OEEData, setOEEData] = useState(undefined);

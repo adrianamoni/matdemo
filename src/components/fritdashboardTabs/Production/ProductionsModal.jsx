@@ -4,9 +4,10 @@ import {
   formContext,
   selectedRowsIdsContext,
   selectedRowsContext,
+  pageSizeContext,
 } from "../../../context/ContextProvider";
 import { Grid, Divider } from "@mui/material";
-import useWindowSize from "./../../customHooks/UseWindowsSize";
+
 import ModalWidget from "./../../../widgets/modalWidget/ModalWidget";
 import InputWidget from "./../../../widgets/forms/InputWidget";
 import ButtonGroupWidget from "./../../../widgets/buttonGroup/ButtonGroupWidget";
@@ -26,7 +27,8 @@ const ProductionsModal = ({
   setRefreshData,
   data,
 }) => {
-  const windowSize = useWindowSize();
+  const { pageSize } = useContext(pageSizeContext);
+  const { width } = pageSize;
 
   //useContext
   const { globalData } = useContext(globalDataContext);
@@ -37,7 +39,6 @@ const ProductionsModal = ({
   const { selectedRows, setSelectedRows } = useContext(selectedRowsContext);
   //useState
   const [loading, setLoading] = useState(false);
-  const [notificationModal, setNotificationModal] = useState({});
 
   const closeModal = () => {
     setSelectedRowsIds({ productions: [] });
@@ -340,7 +341,7 @@ const ProductionsModal = ({
           ? productionCorrectionModalContent
           : addDecreaseModalContent
       }
-      customWidth={windowSize.width < 820 ? 350 : 800}
+      customWidth={width < 820 ? 350 : 800}
     />
   );
 };

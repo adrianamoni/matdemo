@@ -125,7 +125,7 @@ const Simulation = () => {
         }
       }
     }
-    setTimeout(() => fetchData(), 20000); //HARDCODED. Dejar así
+    setTimeout(fetchData, 20000); //HARDCODED. Dejar así
   };
 
   const handleSimulationClick = async ({ action }) => {

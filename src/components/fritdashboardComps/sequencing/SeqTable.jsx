@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import uuid from "react-uuid";
 import moment from "moment";
 import "./SeqTable.css";
@@ -8,19 +8,15 @@ import {
   getLineFromInput,
   getPeopleFromInput,
   getQtyFromInput,
-  propsByState,
 } from "./helper";
-import useWindowSize from "../../customHooks/UseWindowsSize";
+
 import {
   Alert,
   Button,
   FormControl,
-  FormHelperText,
-  InputLabel,
   MenuItem,
   Paper,
   Select,
-  styled,
   Table,
   TableBody,
   TableContainer,
@@ -48,7 +44,6 @@ const SeqTable = ({
   lines,
   selectedLine,
 }) => {
-  /*   const { width } = useWindowSize(); */
   const { formWidget } = useContext(formContext);
   const { userPreferences, setUserPreferences } = useContext(
     userPreferencesContext

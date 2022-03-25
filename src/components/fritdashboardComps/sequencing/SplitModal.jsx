@@ -1,16 +1,15 @@
-import { LoadingButton } from "@mui/lab";
-import { Button, Grid, Input, Slider } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import Text from "../../../languages/Text";
+import React, { useState, useEffect, useContext } from "react";
+import { Grid, Input, Slider } from "@mui/material";
+import { pageSizeContext } from "../../../context/ContextProvider";
 import { ApiCall } from "../../../services/Service";
 import { split_operation } from "../../../services/serviceHelper";
 import ButtonGroupWidget from "../../../widgets/buttonGroup/ButtonGroupWidget";
 import ModalWidget from "../../../widgets/modalWidget/ModalWidget";
 import { createNotification } from "../../alerts/NotificationAlert";
-import useWindowSize from "../../customHooks/UseWindowsSize";
 
 const SplitModal = ({ open, close, ofSelected, setRefreshMain }) => {
-  const windowSize = useWindowSize();
+  const { pageSize } = useContext(pageSizeContext);
+  const { width } = pageSize;
   const [loading, setLoading] = useState(false);
   const [qty, setQty] = useState(0);
   const [qtyMax, setQtyMax] = useState(undefined);
@@ -121,7 +120,7 @@ const SplitModal = ({ open, close, ofSelected, setRefreshMain }) => {
       open={open}
       close={close}
       content={modalContent}
-      customWidth={windowSize.width < 620 ? 350 : 800}
+      customWidth={width < 620 ? 350 : 800}
     />
   );
 };

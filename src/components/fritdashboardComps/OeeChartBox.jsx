@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-import { styled } from "@mui/material/styles";
 import {
   Grid,
   Typography,
@@ -9,8 +8,6 @@ import {
   CardActionArea,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
-import { Link } from "react-router-dom";
 import HalfDoughnut from "../../widgets/halfDoughnut/HalfDoughnut";
 import Text from "../../languages/Text";
 import { MemoryDatabaseCall } from "../../services/Service";
@@ -91,39 +88,40 @@ const OeeChartBox = ({ showChart, line, order, disableClick }) => {
     }
   }, [order]);
 
-  const handlePush = (e) => {
-    localStorage.setItem(
-      `LineData_${PROJECT_NAME}`,
-      JSON.stringify({ entId: line.entId, entName: line.ent_name })
-    );
-    localStorage.setItem(
-      `OrderData_${PROJECT_NAME}`,
-      JSON.stringify({
-        woId: order.wo_id,
-        operId: order.oper_id,
-        seqNo: order.seq_no,
-        itemId: order.item_id,
-        stateCd: order.state_cd,
-        spare3: order.spare3,
-      })
-    );
-    setGlobalData({
-      ...globalData,
-      orderData: {
-        woId: order.wo_id,
-        operId: order.oper_id,
-        seqNo: order.seq_no,
-        itemId: order.item_id,
-        stateCd: order.state_cd,
-        spare3: order.spare3,
-      },
-      lineData: { entId: line.entId, entName: line.ent_name },
-    });
-
-    navigateTo("/detalle-orden");
+  const handlePush = () => {
+    if (order) {
+      localStorage.setItem(
+        `LineData_${PROJECT_NAME}`,
+        JSON.stringify({ entId: line.entId, entName: line.ent_name })
+      );
+      localStorage.setItem(
+        `OrderData_${PROJECT_NAME}`,
+        JSON.stringify({
+          woId: order.wo_id,
+          operId: order.oper_id,
+          seqNo: order.seq_no,
+          itemId: order.item_id,
+          stateCd: order.state_cd,
+          spare3: order.spare3,
+        })
+      );
+      setGlobalData({
+        ...globalData,
+        orderData: {
+          woId: order.wo_id,
+          operId: order.oper_id,
+          seqNo: order.seq_no,
+          itemId: order.item_id,
+          stateCd: order.state_cd,
+          spare3: order.spare3,
+        },
+        lineData: { entId: line.entId, entName: line.ent_name },
+      });
+      navigateTo("/detalle-orden");
+    }
   };
 
-  let stockAlert = false;
+  /*   let stockAlert = false;
   let interruptionAlert = false;
   let qualityAlert = false;
   if (order) {
@@ -135,15 +133,16 @@ const OeeChartBox = ({ showChart, line, order, disableClick }) => {
     interruptionAlert =
       order.hasOwnProperty("NumParosPendientes") && order.NumParosPendientes;
   }
-  const alerts = { stockAlert, interruptionAlert, qualityAlert };
+  const alerts = { stockAlert, interruptionAlert, qualityAlert }; */
 
   return (
     <Card
       raised={raise}
-      onMouseEnter={() => setRaise(true)}
+      onMouseEnter={() => order && setRaise(true)}
       onMouseLeave={() => setRaise(false)}
+      sx={{ backgroundColor: "background.grey4" }}
     >
-      <CardActionArea onClick={handlePush}>
+      <CardActionArea onClick={handlePush} sx={{ cursor: !order && "auto" }}>
         <CardHeader
           component="div"
           sx={{ bgcolor: stateColor[1], color: "#000", mb: 2 }}
@@ -172,7 +171,7 @@ const OeeChartBox = ({ showChart, line, order, disableClick }) => {
             </Grid>
             <Grid item xs={7} textAlign="right">
               <Typography variant="body2" gutterBottom>
-                {order && `${order.item_id} (${order.item_desc})`}
+                {order ? `${order.item_id} (${order.item_desc})` : "-"}
               </Typography>
             </Grid>
             <Grid item xs={5}>
@@ -182,7 +181,7 @@ const OeeChartBox = ({ showChart, line, order, disableClick }) => {
             </Grid>
             <Grid item xs={7} textAlign="right">
               <Typography variant="body2" gutterBottom>
-                {order && order.wo_id}
+                {(order && order.wo_id) || "-"}
               </Typography>
             </Grid>
           </Grid>

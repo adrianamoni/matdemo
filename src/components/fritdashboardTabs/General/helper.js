@@ -51,7 +51,7 @@ export const handleOperationAction = async ({
           msg,
           hide: response.responseHide,
         }),
-      500
+      2000
     );
   }
 };
@@ -83,7 +83,7 @@ export const handleStopCleaning = async ({ woId, operId, seqNo, entName }) => {
           msg: "cleaningOrderStopped",
           hide: response.responseHide,
         }),
-      500
+      2000
     );
   }
 };

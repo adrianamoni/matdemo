@@ -1,26 +1,19 @@
-import React, { useState } from "react";
-import { LoadingButton } from "@mui/lab";
-import {
-  FormControl,
-  Grid,
-  InputLabel,
-  LinearProgress,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
-import uuid from "react-uuid";
+import React, { useState, useContext } from "react";
+
+import { LinearProgress, MenuItem, TextField } from "@mui/material";
 import ModalWidget from "../../../widgets/modalWidget/ModalWidget";
 import { Box } from "@mui/system";
 import { create_order_manually } from "../../../services/serviceHelper";
 import { createNotification } from "../../alerts/NotificationAlert";
 import { ApiCall } from "../../../services/Service";
 import UseFetchMemory from "../../customHooks/UseFetchMemory";
-import useWindowSize from "../../customHooks/UseWindowsSize";
+
 import Text from "../../../languages/Text";
 import ButtonGroupWidget from "../../../widgets/buttonGroup/ButtonGroupWidget";
+import { pageSizeContext } from "../../../context/ContextProvider";
 const ModalCreateOrder = ({ open, close, setRefreshMain }) => {
-  const { width } = useWindowSize();
+  const { pageSize } = useContext(pageSizeContext);
+  const { width } = pageSize;
   const [material, setMaterial] = useState("");
   const [cantidad, setCantidad] = useState("");
   const [loadingSubmit, setLoadingSubmit] = useState(false);

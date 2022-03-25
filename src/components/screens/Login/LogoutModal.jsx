@@ -1,7 +1,10 @@
 import React, { useContext, useState } from "react";
-import useWindowSize from "../../customHooks/UseWindowsSize";
+
 import { useNavigate, useLocation } from "react-router-dom";
-import { loginContext } from "../../../context/ContextProvider";
+import {
+  loginContext,
+  pageSizeContext,
+} from "../../../context/ContextProvider";
 import { Grid, Typography } from "@mui/material";
 import { createNotification } from "../../alerts/NotificationAlert";
 import { ApiCall } from "../../../services/Service";
@@ -12,7 +15,8 @@ import Text from "../../../languages/Text";
 
 const LogoutModal = ({ logoutModal, setLogoutModal }) => {
   const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME;
-  const windowSize = useWindowSize();
+  const { pageSize } = useContext(pageSizeContext);
+  const { width } = pageSize;
   const { pathname } = useLocation();
   let navigate = useNavigate();
 
@@ -95,7 +99,7 @@ const LogoutModal = ({ logoutModal, setLogoutModal }) => {
       open={logoutModal}
       close={close}
       content={modalContent}
-      customWidth={windowSize.width < 620 ? 350 : 800}
+      customWidth={width < 620 ? 350 : 800}
     />
   );
 };

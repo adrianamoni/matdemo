@@ -1,27 +1,30 @@
 import { ButtonGroup, Grid, List, ListItem, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import React, { useContext, useEffect, useState } from "react";
-import { globalDataContext } from "../../../context/ContextProvider";
+import {
+  globalDataContext,
+  pageSizeContext,
+} from "../../../context/ContextProvider";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
 import PauseIcon from "@mui/icons-material/Pause";
 import LineProgress from "../../../widgets/progress/LineProgress";
 import Text from "../../../languages/Text";
-import useWindowSize from "../../customHooks/UseWindowsSize";
+
 import { dateFormater, operation_states } from "./helper";
 import { handleOperationAction } from "../../fritdashboardTabs/General/helper";
 import { propsByState } from "../../../helpers/props";
 import ConfirmationDialog from "../../alerts/ConfirmationDialog";
-import { createNotification } from "../../alerts/NotificationAlert";
-import { toast } from "react-toastify";
 
 const InfoOE = () => {
+  console.log("RENDERED", "INFO OE");
   const { globalData } = useContext(globalDataContext);
   const { orderDetails, orderData } = globalData;
   const { woId, operId, seqNo } = globalData.orderData;
   const { productionData } = orderDetails;
+  const { pageSize } = useContext(pageSizeContext);
+  const { width } = pageSize;
 
-  const { width } = useWindowSize();
   const [loadingPlay, setLoadingPlay] = useState(false);
   const [loadingPause, setLoadingPause] = useState(false);
   const [loadingStop, setLoadingStop] = useState(false);
@@ -68,7 +71,7 @@ const InfoOE = () => {
 
     setTimeout(() => {
       setLoadingPlay(false);
-    }, 1000);
+    }, 2000);
   };
 
   const handlePause = async () => {
@@ -81,7 +84,7 @@ const InfoOE = () => {
     });
     setTimeout(() => {
       setLoadingPause(false);
-    }, 1000);
+    }, 2000);
   };
 
   const handleStop = async () => {
@@ -95,7 +98,7 @@ const InfoOE = () => {
     });
     setTimeout(() => {
       setLoadingStop(false);
-    }, 1000);
+    }, 2000);
   };
 
   const handleConfirmStop = async () => {

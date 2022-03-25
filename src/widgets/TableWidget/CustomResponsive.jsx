@@ -2,18 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import {
   Box,
   FormControl,
-  InputLabel,
   Pagination,
   TextField,
   Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Paginate from "./paginate";
-import {
-  formContext,
-  selectedRowsIdsContext,
-} from "../../context/ContextProvider";
-import InputWidget from "../forms/InputWidget";
+import { selectedRowsIdsContext } from "../../context/ContextProvider";
 
 const CustomResponsive = ({
   keys,
@@ -27,7 +22,7 @@ const CustomResponsive = ({
   const { selectedRowsIds, setSelectedRowsIds } = useContext(
     selectedRowsIdsContext
   );
-  const { formWidget, setformWidget } = useContext(formContext);
+
   const [paginatedData, setPaginatedData] = useState(undefined);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
@@ -92,6 +87,7 @@ const CustomResponsive = ({
             !!selectedRowsIds[tableName].find((el) => el === data.id);
           return (
             <Box
+              key={i}
               index={i}
               sx={{
                 borderBottom: "1px solid",
@@ -108,7 +104,7 @@ const CustomResponsive = ({
               }
             >
               {columns.map((column, index) => (
-                <Grid container spacing={1} index={index}>
+                <Grid container spacing={1} index={index} key={index}>
                   <Grid item xs={5}>
                     <Typography
                       noWrap

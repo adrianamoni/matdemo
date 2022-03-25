@@ -72,7 +72,7 @@ const OeeTurno = ({ line }) => {
   }, [apiData]);
 
   return (
-    <Card>
+    <Card sx={{ backgroundColor: "background.grey4" }}>
       <CardHeader component="div" title={cardTitle.toUpperCase()} />
       <CardContent>
         <Grid container alignItems="center">

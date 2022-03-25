@@ -3,33 +3,32 @@ import {
   Divider,
   List,
   ListItem,
-  ListItemButton,
   ListItemIcon,
   ListItemText,
   Toolbar,
   Typography,
-  Button,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { globalDataContext, loginContext } from "../context/ContextProvider";
+import {
+  globalDataContext,
+  loginContext,
+  pageSizeContext,
+} from "../context/ContextProvider";
 import HomeIcon from "@mui/icons-material/Home";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import PersonRemoveAlt1Icon from "@mui/icons-material/PersonRemoveAlt1";
 import HistoryToggleOffIcon from "@mui/icons-material/HistoryToggleOff";
 import ViewTimelineIcon from "@mui/icons-material/ViewTimeline";
 import ViewListIcon from "@mui/icons-material/ViewList";
-import AllInboxIcon from "@mui/icons-material/AllInbox";
-import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
 import Text from "../languages/Text";
 import LoginModal from "../components/screens/Login/LoginModal";
 import LogoutModal from "../components/screens/Login/LogoutModal";
 import LanguageSelector from "../languages/LanguageSelector";
 import ToggleDarkMode from "../theme/ToggleDarkMode";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import useWindowSize from "../components/customHooks/UseWindowsSize";
 
 const sidebarItems = [
   {
@@ -128,7 +127,8 @@ const StyledLink = styled(Link)({
 const DrawerComp = () => {
   const { loggedUser } = useContext(loginContext);
   const { extras } = useContext(globalDataContext);
-  const { width } = useWindowSize();
+  const { pageSize } = useContext(pageSizeContext);
+  const { width } = pageSize;
   const [loginModal, setLoginModal] = useState(false);
   const [logoutModal, setLogoutModal] = useState(false);
   let filteredItems;

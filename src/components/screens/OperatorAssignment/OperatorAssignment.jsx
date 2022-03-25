@@ -18,6 +18,7 @@ import ButtonGroupWidget from "./../../../widgets/buttonGroup/ButtonGroupWidget"
 import Text from "./../../../languages/Text";
 import { createNotification } from "./../../alerts/NotificationAlert";
 import UserAlert from "./../../alerts/UserAlert";
+import { LoadingButton } from "@mui/lab";
 
 const OperatorAssignment = ({ line, modal, close }) => {
   const columns = [
@@ -207,28 +208,28 @@ const OperatorAssignment = ({ line, modal, close }) => {
               />
             </Grid>
 
-            <Grid item xs={12}>
-              <ButtonGroupWidget
-                position="left"
-                buttons={[
-                  {
-                    text: "save",
-                    color: "primary",
-                    onClick: handleAssign,
-                    disabled:
-                      formWidget &&
-                      formWidget.operatorForm &&
-                      formWidget.operatorForm.operator &&
-                      formWidget.operatorForm.operator.length > 0 &&
-                      selectedRows &&
-                      selectedRows &&
-                      selectedRows.length > 0
-                        ? false
-                        : true,
-                  },
-                ]}
+            <Grid item xs={12} md={6}>
+              <LoadingButton
+                variant="contained"
+                sx={{ maxWidth: 200 }}
                 loading={loading}
-              />
+                fullWidth
+                disabled={
+                  formWidget &&
+                  formWidget.operatorForm &&
+                  formWidget.operatorForm.operator &&
+                  formWidget.operatorForm.operator.length > 0 &&
+                  selectedRows &&
+                  selectedRows &&
+                  selectedRows.length > 0
+                    ? false
+                    : true
+                }
+                color="primary"
+                onClick={handleAssign}
+              >
+                {Text({ tid: "assign" })}
+              </LoadingButton>
             </Grid>
           </Grid>
         </>

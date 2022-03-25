@@ -4,16 +4,10 @@ import {
   formContext,
   selectedRowsIdsContext,
   selectedRowsContext,
+  pageSizeContext,
 } from "../../../context/ContextProvider";
-import {
-  Grid,
-  Divider,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-} from "@mui/material";
-import useWindowSize from "./../../customHooks/UseWindowsSize";
+import { Grid } from "@mui/material";
+
 import ModalWidget from "./../../../widgets/modalWidget/ModalWidget";
 import InputWidget from "./../../../widgets/forms/InputWidget";
 import TreeViewWidget from "./../../../widgets/treeView/TreeViewWidget";
@@ -43,7 +37,8 @@ const InterruptionsModal = ({
   originalData,
   lines,
 }) => {
-  const windowSize = useWindowSize();
+  const { pageSize } = useContext(pageSizeContext);
+  const { width } = pageSize;
 
   //useContext
   const { globalData } = useContext(globalDataContext);
@@ -480,7 +475,7 @@ const InterruptionsModal = ({
       open={showModal}
       close={closeModal}
       content={createInterruptionModalContent}
-      customWidth={windowSize.width < 820 ? 350 : 800}
+      customWidth={width < 820 ? 350 : 800}
     />
   ) : (
     <JustifyModal
@@ -488,7 +483,7 @@ const InterruptionsModal = ({
       open={showModal}
       close={closeModal}
       content={justifyInterruptionModalContent}
-      customWidth={windowSize.width < 820 ? 350 : 800}
+      customWidth={width < 820 ? 350 : 800}
     />
   );
 };

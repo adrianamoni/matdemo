@@ -15,7 +15,6 @@ import {
 import { userPreferencesContext } from "../context/ContextProvider";
 import { getPalette } from "./palettes";
 import { grey } from "@mui/material/colors";
-import useWindowSize from "../components/customHooks/UseWindowsSize";
 
 const drawerWidth = 220;
 

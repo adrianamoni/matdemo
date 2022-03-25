@@ -11,6 +11,7 @@ import Text from "../../../languages/Text";
 import {
   globalDataContext,
   navigationDataContext,
+  pageSizeContext,
 } from "../../../context/ContextProvider";
 import {
   getOrderDetails,
@@ -25,12 +26,13 @@ import Planification from "../../fritdashboardTabs/Planification/Planification";
 import Simulation from "../../fritdashboardTabs/Simulation/Simulation";
 import Consumptions from "./../../fritdashboardTabs/Consumption/Consumptions";
 import Productions from "./../../fritdashboardTabs/Production/Productions";
-import useWindowSize from "./../../customHooks/UseWindowsSize";
 import uuid from "react-uuid";
 import OperatingData from "../../fritdashboardTabs/OperatingData/OperatingData";
 
 const FritDashboard = () => {
-  const { width } = useWindowSize();
+  const { pageSize } = useContext(pageSizeContext);
+  const { width } = pageSize;
+
   /*  let { slug } = useParams(); */
   /*  const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME; */
   const { globalData, setGlobalData } = useContext(globalDataContext);
@@ -78,7 +80,7 @@ const FritDashboard = () => {
     if (lineData) {
       if (orderData) {
         fetchData(true);
-        clearIntervalData = setInterval(fetchData, 3000);
+        clearIntervalData = setInterval(fetchData, 5000);
       }
     }
     if (modalJustify) {
@@ -100,12 +102,6 @@ const FritDashboard = () => {
       }); */
     };
   }, [modalJustify]);
-
-  // useEffect(() => {
-  //   setformWidget({});
-  //   setSelectedRowsIds({});
-  //   setSelectedRows([]);
-  // }, [value]);
 
   const fetchData = async (showLoader) => {
     const { productionData, cleaningData } = await getOrderDetails({

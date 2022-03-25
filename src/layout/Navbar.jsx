@@ -6,12 +6,7 @@ import {
   IconButton,
   Toolbar,
   Grid,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
   Popover,
-  Divider,
   Chip,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -22,9 +17,10 @@ import {
   loginContext,
   globalDataContext,
   lineUsersContext,
+  pageSizeContext,
 } from "../context/ContextProvider";
 import Text from "../languages/Text";
-import useWindowSize from "../components/customHooks/UseWindowsSize";
+
 import moment from "moment";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
@@ -45,7 +41,8 @@ const Navbar = ({ drawerWidth, handleDrawerToggle }) => {
   const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME;
   let location = useLocation();
   const { pathname } = location;
-  const { width } = useWindowSize();
+  const { pageSize } = useContext(pageSizeContext);
+  const { width } = pageSize;
   const [currentTime, setCurrentTime] = useState(
     moment().format("DD/MM/YYYY, HH:mm")
   );

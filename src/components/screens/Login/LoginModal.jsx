@@ -1,6 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
-import useWindowSize from "../../customHooks/UseWindowsSize";
-import { loginContext, formContext } from "../../../context/ContextProvider";
+
+import {
+  loginContext,
+  formContext,
+  pageSizeContext,
+} from "../../../context/ContextProvider";
 import { Grid } from "@mui/material";
 import { createNotification } from "../../alerts/NotificationAlert";
 import { ApiCall } from "../../../services/Service";
@@ -11,7 +15,8 @@ import ButtonGroupWidget from "../../../widgets/buttonGroup/ButtonGroupWidget";
 import Text from "../../../languages/Text";
 
 const LoginModal = ({ loginModal, setLoginModal }) => {
-  const windowSize = useWindowSize();
+  const { pageSize } = useContext(pageSizeContext);
+  const { width } = pageSize;
   const PROJECT_NAME = import.meta.env.VITE_APP_PROJECT_NAME;
 
   //useContext
@@ -138,7 +143,7 @@ const LoginModal = ({ loginModal, setLoginModal }) => {
       open={loginModal}
       close={close}
       content={modalContent}
-      customWidth={windowSize.width < 620 ? 350 : 800}
+      customWidth={width < 620 ? 350 : 800}
     />
   );
 };
