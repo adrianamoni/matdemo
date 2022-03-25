@@ -19,7 +19,6 @@ import { createNotification } from "./../../alerts/NotificationAlert";
 import Text from "./../../../languages/Text";
 
 const IframeComp = ({ url }) => {
-  console.log("url", url);
   return (
     <iframe
       title="docs-pdf-frame"

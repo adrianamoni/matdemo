@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useContext, useState } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useContext,
+  useState,
+  Fragment,
+} from "react";
 import { styled } from "@mui/material/styles";
 import {
   Grid,
@@ -174,11 +180,13 @@ const Dashboard = () => {
             </Grid>
           </Grid>
           <Grid container spacing={5}>
-            {lines.slice((activePage - 1) * 3, activePage * 3).map((line) => (
-              <>
-                <Line key={line.entId} line={line} />
-              </>
-            ))}
+            {lines
+              .slice((activePage - 1) * 3, activePage * 3)
+              .map((line, i) => (
+                <Fragment key={i}>
+                  <Line key={line.entId} line={line} />
+                </Fragment>
+              ))}
           </Grid>
         </Box>
       </Container>

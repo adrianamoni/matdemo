@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import {
   Divider,
   List,
@@ -192,8 +192,8 @@ const DrawerComp = () => {
 
           <List id="sidebar-list" dense={width > 900 ? false : true}>
             {filteredItems.map((link) => (
-              <>
-                <StyledLink key={link.id} to={link.path}>
+              <Fragment key={link.id}>
+                <StyledLink to={link.path}>
                   <ListItem button>
                     <ListItemIcon
                       className={width > 900 ? "big-size" : "medium-size"}
@@ -211,7 +211,7 @@ const DrawerComp = () => {
                   </ListItem>
                 </StyledLink>
                 <Divider variant="middle" sx={{ marginBlock: "2px" }} />
-              </>
+              </Fragment>
             ))}
             {/*  <Button
               sx={{ paddingLeft: 2.2, textTransform: "none" }}

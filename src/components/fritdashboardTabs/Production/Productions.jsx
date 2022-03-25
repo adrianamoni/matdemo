@@ -151,7 +151,7 @@ const Productions = () => {
     tableData && tableData.length < 1
       ? setUserAlert({
           show: true,
-          message: Text({ tid: "noProductionsInThisOrder" }),
+          message: "noProductionsInThisOrder",
           severity: "info",
         })
       : setUserAlert({
@@ -244,7 +244,7 @@ const Productions = () => {
           userAlert.show && (
             <UserAlert
               severity={userAlert.severity}
-              message={userAlert.message}
+              message={Text({ tid: userAlert.message })}
             />
           )
         )}

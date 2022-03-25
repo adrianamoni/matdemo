@@ -27,7 +27,7 @@ const ButtonGroupWidget = ({ position, buttons, loading, size }) => {
         }}
       >
         <ButtonGroup
-          fullWidth
+          fullWidth={width < 900}
           sx={{ maxWidth: 600 }}
           orientation={width < 900 ? "vertical" : "horizontal"}
           aria-label="outlined primary button group"

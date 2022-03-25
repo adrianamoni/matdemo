@@ -104,7 +104,7 @@ const Consumptions = () => {
     tableData && tableData.length < 1
       ? setUserAlert({
           show: true,
-          message: Text({ tid: "noConsumptionsInThisOrder" }),
+          message: "noConsumptionsInThisOrder",
 
           severity: "info",
         })
@@ -173,7 +173,7 @@ const Consumptions = () => {
           userAlert.show && (
             <UserAlert
               severity={userAlert.severity}
-              message={userAlert.message}
+              message={Text({ tid: userAlert.message })}
             />
           )
         )}

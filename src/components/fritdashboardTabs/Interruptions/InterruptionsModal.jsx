@@ -382,8 +382,7 @@ const InterruptionsModal = ({
   // JUSTIFY INTERRUPTION
   const handleSubmitJustifyInterruption = async () => {
     setLoading(true);
-    console.log("originalData", originalData);
-    console.log("selectedRows[0].id", selectedRows[0].id);
+
     let row = originalData.find((el) => {
       return el.ID == selectedRows[0].ID;
     });

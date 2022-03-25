@@ -40,8 +40,7 @@ const OEEHistorico = () => {
       });
       if (response) {
         if (response.length > 0) {
-          console.log("response", response[0].Value);
-          setApiData(response); //!UNDO fakeOeeShift
+          setApiData(response);
         }
       }
 

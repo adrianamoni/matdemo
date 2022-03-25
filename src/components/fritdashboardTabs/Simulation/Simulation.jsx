@@ -174,7 +174,6 @@ const Simulation = () => {
   const simulationState =
     (apiData && apiData.find((el) => el.name === "FlagSimulacion")?.Value) ||
     false;
-  console.log("simulationState", simulationState);
   return loadingInitialData ? (
     <Box sx={{ width: "100%" }}>
       <LinearProgress variant="indeterminate" color="secondary" />
