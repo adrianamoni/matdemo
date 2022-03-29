@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import Chart from "react-apexcharts";
-import { getColorFromBackend } from "../../components/fritdashboardComps/orderDetail/helper";
+import { getColorFromBackend } from "../../components/fritDashboardComps/orderDetail/helper";
+import { userPreferencesContext } from "../../context/ContextProvider";
 
 const Timeline = ({ data }) => {
-  const [series, setSeries] = useState(undefined);
+  console.log("RENDERED TIMELINE");
+  const { userPreferences } = useContext(userPreferencesContext);
+  const { colorMode } = userPreferences;
+
   const options = {
     chart: {
       type: "rangeBar",
@@ -46,6 +50,7 @@ const Timeline = ({ data }) => {
     tooltip: {
       enabled: true,
       followCursor: false,
+      theme: colorMode,
       x: {
         show: true,
         format: "HH:mm dd/MM",
@@ -66,55 +71,46 @@ const Timeline = ({ data }) => {
     },
   };
 
-  useEffect(() => {
-    data && getSeries();
-    //eslint-disable-next-line
-  }, [data]);
-  const getSeries = () => {
-    let arr = data.map(
-      ({
-        custom_reas_desc,
-        custom_start_time,
-        custom_end_time,
-        custom_color,
-        custom_esMicroparo,
-        custom_colorMicroparo,
-      }) => ({
-        name: custom_reas_desc,
-        data: [
-          {
-            x: "Turno",
-            y: [
-              new Date(custom_start_time).getTime(),
-              new Date(custom_end_time).getTime(),
-            ],
-            fillColor: getColorFromBackend({
-              microparo: custom_esMicroparo, //REVIEW PUEDE SER MICROPARO?
-              decFormatColor: custom_esMicroparo
-                ? custom_colorMicroparo
-                : custom_color,
-            }).background,
-          },
-        ],
-      })
+  if (data) {
+    const arr = data.map((item, i, arr) => {
+      const { reas_desc, EventStart, EventEnd, color } = item;
+      if (i + 1 === arr.length) {
+        return {
+          name: reas_desc,
+          data: [
+            {
+              x: "Turno",
+              y: [new Date(EventStart).getTime(), new Date().getTime()],
+              fillColor: getColorFromBackend({
+                decFormatColor: color,
+              }).background,
+            },
+          ],
+        };
+      } else {
+        return {
+          name: reas_desc,
+          data: [
+            {
+              x: "Turno",
+              y: [new Date(EventStart).getTime(), new Date(EventEnd).getTime()],
+              fillColor: getColorFromBackend({
+                decFormatColor: color,
+              }).background,
+            },
+          ],
+        };
+      }
+    });
+
+    return (
+      <div id="timeline-chart-container">
+        <Chart options={options} series={arr} type="rangeBar" height="140px" />
+      </div>
     );
-
-    setSeries(arr);
-  };
-
-  return (
-    <div id="timeline-chart-container">
-      {series && series.length > 0 && (
-        <Chart
-          options={options}
-          series={series}
-          type="rangeBar"
-          /*   width="100%" */
-          height="140px"
-        />
-      )}
-    </div>
-  );
+  } else {
+    return null;
+  }
 };
 
 export default Timeline;

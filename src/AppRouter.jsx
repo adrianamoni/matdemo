@@ -3,8 +3,7 @@ import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 import About from "./components/About";
 import Dashboard from "./components/Dashboard";
 import FritDashboard from "./components/fritDashboardComps/orderDetail/FritDashboard";
-import Home from "./components/Home";
-import Charts from "./components/Charts";
+
 import Table from "./components/Table";
 import NoMatch from "./components/NoMatch";
 import Layout from "./layout/Layout";
@@ -14,7 +13,6 @@ import useWindowSize from "./components/customHooks/UseWindowsSize";
 import { pageSizeContext } from "./context/ContextProvider";
 import Test from "./components/Test";
 import MonthlyCleaning from "./components/fritdashboardComps/cleaning/MonthlyCleaning";
-import Init from "./components/Init";
 import OperatorAssignment from "./components/screens/OperatorAssignment/OperatorAssignment";
 import OperatorDeAssignment from "./components/screens/OperatorDeAssignment/OperatorDeAssignment";
 import OrderManager from "./components/fritDashboardComps/OrderManagement/OrderManager";
@@ -46,7 +44,6 @@ const AppRouter = () => {
             <Route path="detalle-orden/:slug" element={<FritDashboard />} />
             <Route path="limpieza-periodica" element={<MonthlyCleaning />} />
             <Route path="table" element={<Table />} />
-            <Route path="charts" element={<Charts />} />
             <Route path="asignacion" element={<OperatorAssignment />} />
             <Route path="ordenes" element={<OrderManager />} />
             <Route path="gestor-paros" element={<InterruptionManager />} />
