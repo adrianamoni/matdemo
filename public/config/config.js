@@ -9,8 +9,15 @@ y seguir el formato <IP>:<PUERTO>
 //! NO CAMBIAR EL NOMBRE DE LAS VARIABLES
 //(o avisar si se hace en cualquier caso)
 
-var POINTING_IPS = {
+/* var POINTING_IPS = {
   dispatcher: "192.168.9.128:8083",
   memoryDatabase: "192.168.9.128:8095",
   documentacion: "192.168.9.128",
+};
+ */
+//FRIT
+var POINTING_IPS = {
+  dispatcher: "192.168.10.168:8080",
+  memoryDatabase: "192.168.10.168:8095",
+  documentacion: "192.168.10.168",
 };

@@ -161,7 +161,7 @@ const OeeChartBox = ({ showChart, line, order, disableClick }) => {
           <HalfDoughnut value={[0]} />
         )}
         <CardContent
-          sx={{ minHeight: 110, display: "flex", alignItems: "center" }}
+          sx={{ minHeight: 120, display: "flex", alignItems: "center" }}
         >
           <Grid container alignItems="center">
             <Grid item xs={5}>
@@ -170,7 +170,7 @@ const OeeChartBox = ({ showChart, line, order, disableClick }) => {
               </Typography>
             </Grid>
             <Grid item xs={7} textAlign="right">
-              <Typography variant="body2" gutterBottom>
+              <Typography variant="body3" gutterBottom>
                 {order ? `${order.item_id} (${order.item_desc})` : "-"}
               </Typography>
             </Grid>
@@ -180,7 +180,7 @@ const OeeChartBox = ({ showChart, line, order, disableClick }) => {
               </Typography>
             </Grid>
             <Grid item xs={7} textAlign="right">
-              <Typography variant="body2" gutterBottom>
+              <Typography variant="body3" gutterBottom>
                 {(order && order.wo_id) || "-"}
               </Typography>
             </Grid>
