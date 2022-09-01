@@ -18,6 +18,7 @@ import OperatorDeAssignment from "./components/screens/OperatorDeAssignment/Oper
 import OrderManager from "./components/fritDashboardComps/OrderManagement/OrderManager";
 import InterruptionManager from "./components/fritdashboardComps/interruptionManagement/InterruptionManager";
 import SequencingGateway from "./components/fritdashboardComps/sequencing/SequencingGateway";
+import Init from "./components/Init";
 
 const AppRouter = () => {
   const pageSizeCtxt = useContext(pageSizeContext);
@@ -51,7 +52,7 @@ const AppRouter = () => {
             <Route path="desasignacion" element={<OperatorDeAssignment />} />
 
             <Route path="test" element={<Test />} />
-            {/*  <Route path="init" element={<Init />} /> */}
+            <Route path="init" element={<Init />} />
             <Route path="*" element={<NoMatch />} />
           </Route>
         </Routes>

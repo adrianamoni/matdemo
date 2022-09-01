@@ -50,6 +50,7 @@ const OeeChartBox = ({ showChart, line, order, disableClick }) => {
           url: "queryDataFrameDataAsync",
         });
         if (response && response.length > 0 && mountedComp) {
+          console.log("oeeReal", response);
           setOeeReal(response);
         }
         clearTimeoutKey = setTimeout(fetchOeeData, 60000);
@@ -116,6 +117,7 @@ const OeeChartBox = ({ showChart, line, order, disableClick }) => {
           spare3: order.spare3,
         },
         lineData: { entId: line.entId, entName: line.ent_name },
+        oeeReal: oeeReal,
       });
       navigateTo("/detalle-orden");
     }

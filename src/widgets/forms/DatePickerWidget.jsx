@@ -1,14 +1,19 @@
 ﻿import React, { useContext, useEffect } from "react";
 import { formContext, pageSizeContext } from "../../context/ContextProvider";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
+// import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import InputLabel from "@mui/material/InputLabel";
 import {
-  LocalizationProvider,
+  // LocalizationProvider,
   DesktopDatePicker,
   MobileDatePicker,
   MobileDateTimePicker,
-  DesktopDateTimePicker,
+  // DesktopDateTimePicker,
 } from "@mui/lab";
+import {
+  DesktopDateTimePicker,
+  LocalizationProvider,
+} from "@mui/x-date-pickers";
 import TextField from "@mui/material/TextField";
 
 const DatePickerWidget = ({ formId, id, label, defaultDate, type }) => {

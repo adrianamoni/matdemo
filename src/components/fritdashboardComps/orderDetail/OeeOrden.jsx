@@ -53,7 +53,12 @@ const OeeOrden = () => {
         <Grid item xs={12} textAlign="center">
           <Grid container justifyContent="center" sx={{ alignItems: "center" }}>
             <Grid item xs={12} sm={12} md={6} lg={12}>
-              <HalfDoughnut value={[value ? value.toFixed(2) : 0]} />
+              <HalfDoughnut
+                value={[
+                  globalData?.oeeReal[0]?.OEE ? globalData.oeeReal[0].OEE : 0,
+                ]}
+              />
+              {/* <HalfDoughnut value={[value ? value.toFixed(2) : 0]} /> */}
             </Grid>
           </Grid>
         </Grid>
