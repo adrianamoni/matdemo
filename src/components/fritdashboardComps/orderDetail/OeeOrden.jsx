@@ -9,7 +9,6 @@ import { MemoryDatabaseCall } from "../../../services/Service";
 const OeeOrden = () => {
   const { globalData } = useContext(globalDataContext);
   const [apiData, setApiData] = useState(undefined);
-
   useEffect(() => {
     let clearTimeoutTurnoKey;
 
@@ -54,11 +53,8 @@ const OeeOrden = () => {
           <Grid container justifyContent="center" sx={{ alignItems: "center" }}>
             <Grid item xs={12} sm={12} md={6} lg={12}>
               <HalfDoughnut
-                value={[
-                  globalData?.oeeReal[0]?.OEE ? globalData.oeeReal[0].OEE : 0,
-                ]}
+                value={[globalData.oeeReal ? globalData.oeeReal[0]?.OEE : 0]}
               />
-              {/* <HalfDoughnut value={[value ? value.toFixed(2) : 0]} /> */}
             </Grid>
           </Grid>
         </Grid>
