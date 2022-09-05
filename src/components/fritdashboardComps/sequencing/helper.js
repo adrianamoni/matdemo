@@ -166,7 +166,6 @@ export const getDateFromInput = (evalue, rowId, apiData) => {
   const initDate = evalue;
 
   let orderIndex = apiData.ordenes.findIndex((el) => el.id === rowId);
-
   if (orderIndex !== -1) {
     apiData.ordenes[orderIndex].SchedStartTimeLocal = initDate;
   }
