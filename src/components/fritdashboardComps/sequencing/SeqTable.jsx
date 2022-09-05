@@ -125,7 +125,14 @@ const SeqTable = ({
   useEffect(() => {
     if (formWidget.sequencingInitDate) {
       const id = Object.keys(formWidget.sequencingInitDate);
-      handleInitDateChange(formWidget.sequencingInitDate[id[0]], id[0]);
+      console.log("id", id);
+      // handleInitDateChange(formWidget.sequencingInitDate[id[0]], id[0]);
+      handleInitDateChange(
+        formWidget.sequencingInitDate[
+          formWidget.sequencingInitDate.lastChanged
+        ],
+        formWidget.sequencingInitDate.lastChanged
+      );
     }
   }, [formWidget]);
 

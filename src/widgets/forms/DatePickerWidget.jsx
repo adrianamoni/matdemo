@@ -30,7 +30,7 @@ const DatePickerWidget = ({ formId, id, label, defaultDate, type }) => {
   const handleChange = (event) => {
     const value = event;
     let formToChange = formWidget[formId];
-    formToChange = { ...formToChange, [id]: value };
+    formToChange = { ...formToChange, [id]: value, lastChanged: id };
     setformWidget({ ...formWidget, [formId]: formToChange });
   };
 
