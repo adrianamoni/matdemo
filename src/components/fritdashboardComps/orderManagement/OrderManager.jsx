@@ -26,17 +26,25 @@ import {
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import ConsAndProds from "./ConsAndProds";
-import { DatePicker, LocalizationProvider } from "@mui/lab";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import frLocale from "date-fns/locale/fr";
+// import { DatePicker, LocalizationProvider } from "@mui/lab";
+// import AdapterDateFns from "@mui/lab/AdapterDateFns";
+// import frLocale from "date-fns/locale/fr";
+import DatePickerWidget from "./../../../widgets/forms/DatePickerWidget";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 const OrderManager = () => {
   const { loggedUser, setLoggedUser } = useContext(loginContext);
   const navigateTo = useNavigate();
   const [entIdSelected, setEntIdSelected] = useState();
   const [itemIdSelected, setItemIdSelected] = useState();
-  const [initDateSelected, setInitDateSelected] = useState(new Date());
-  const [endDateSelected, setEndDateSelected] = useState(new Date());
+  const [initDateSelected, setInitDateSelected] = useState(
+    moment().startOf("week").format("MM/DD/YYYY")
+  );
+  const [endDateSelected, setEndDateSelected] = useState(
+    moment().format("MM/DD/YYYY")
+  );
   const [ordersData, setOrdersData] = useState();
   const [consumptionData, setConsumptionData] = useState();
   const [productionData, setProductionData] = useState();
@@ -46,6 +54,18 @@ const OrderManager = () => {
     selectedRowsIdsContext
   );
   const [submitedSearch, setSubmitedSearch] = useState(false);
+  const [possibleStates, setPossibleStates] = useState([
+    "NEW",
+    "READY",
+    "RUNNING",
+    "COMPLETE",
+    "SUSPENDED",
+    "ONHOLD",
+    "CANCELED",
+    "BYPASSED",
+    "SUPERSEDED",
+  ]);
+  const [selectedState, setSelectedState] = useState(undefined);
   const { selectedRows, setSelectedRows } = useContext(selectedRowsContext);
 
   if (loggedUser.isLogged) {
@@ -65,8 +85,13 @@ const OrderManager = () => {
       flex: 2,
     },
     {
-      field: "run_ent_name",
+      field: "target_sched_ent_name",
       headerName: `${Text({ tid: "line" })}`,
+      flex: 1,
+    },
+    {
+      field: "state_desc",
+      headerName: `${Text({ tid: "status" })}`,
       flex: 1,
     },
     {
@@ -148,7 +173,7 @@ const OrderManager = () => {
       endDateFormatted = moment(endDateSelected, "DD-MM-YYYY").format();
     }
 
-    const response = await getOrdersData({
+    let response = await getOrdersData({
       entId: entIdSelected,
       itemId: itemIdSelected,
       initDate: initDateFormatted,
@@ -156,6 +181,12 @@ const OrderManager = () => {
     });
     setSelectedRows([]);
     setSelectedRowsIds([]);
+    console.log("response", response);
+    //WARNING - HARDCODED FILTER
+    //if state (top filter) selected, hardcode a filter before updating ordersData
+    if (selectedState) {
+      response = response.filter((order) => order.state_desc === selectedState);
+    }
     setOrdersData(response);
     setLoadingData(false);
     setSubmitedSearch(true);
@@ -196,7 +227,7 @@ const OrderManager = () => {
       <Grid item xs={12} sm={12} md={12} lg={10}>
         <Grid container spacing={2}>
           {entFilter && (
-            <Grid item xs={12} sm={12} md={3}>
+            <Grid item xs={12} sm={12} md={2}>
               <FormControl fullWidth>
                 <InputLabel>{Text({ tid: "line" })}</InputLabel>
                 <Select
@@ -212,7 +243,7 @@ const OrderManager = () => {
             </Grid>
           )}
           {itemFilter && (
-            <Grid item xs={12} sm={12} md={3}>
+            <Grid item xs={12} sm={12} md={2}>
               <FormControl fullWidth>
                 <InputLabel>Material</InputLabel>
                 <Select
@@ -227,39 +258,45 @@ const OrderManager = () => {
               </FormControl>
             </Grid>
           )}
-          <Grid item xs={12} sm={12} md={3}>
+          <Grid item xs={12} sm={12} md={2}>
             <FormControl fullWidth>
-              <LocalizationProvider
-                dateAdapter={AdapterDateFns}
-                locale={frLocale}
+              <InputLabel>{Text({ tid: "status" })}</InputLabel>
+              <Select
+                value={selectedState}
+                label={Text({ tid: "status" })}
+                onChange={(e) => setSelectedState(e.target.value)}
               >
-                <DatePicker
-                  label={Text({ tid: "initDate" })}
-                  value={initDateSelected}
-                  onChange={(newValue) => {
-                    setInitDateSelected(newValue);
-                  }}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-              </LocalizationProvider>
+                {possibleStates.map((item) => (
+                  <MenuItem value={item}>{item}</MenuItem>
+                ))}
+              </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={12} md={3}>
-            <FormControl fullWidth>
-              <LocalizationProvider
-                dateAdapter={AdapterDateFns}
-                locale={frLocale}
-              >
-                <DatePicker
-                  label={Text({ tid: "endDate" })}
-                  value={endDateSelected}
-                  onChange={(newValue) => {
-                    setEndDateSelected(newValue);
-                  }}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-              </LocalizationProvider>
-            </FormControl>
+          <Grid item xs={12} sm={12} md={2}>
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <DatePicker
+                inputFormat="DD/MM/yyyy"
+                label={Text({ tid: "startDate" })}
+                value={initDateSelected}
+                onChange={(newValue) => {
+                  setInitDateSelected(newValue);
+                }}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
+          </Grid>
+          <Grid item xs={12} sm={12} md={2}>
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <DatePicker
+                inputFormat="DD/MM/yyyy"
+                label={Text({ tid: "endDate" })}
+                value={endDateSelected}
+                onChange={(newValue) => {
+                  setEndDateSelected(newValue);
+                }}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
           </Grid>
         </Grid>
       </Grid>

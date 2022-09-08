@@ -12,6 +12,7 @@ import {
   LocalizationProvider,
 } from "@mui/x-date-pickers";
 import TextField from "@mui/material/TextField";
+import { FormControl } from "@mui/material";
 
 const DatePickerWidget = ({ formId, id, label, defaultDate, type }) => {
   const { formWidget, setformWidget } = useContext(formContext);
@@ -66,33 +67,36 @@ const DatePickerWidget = ({ formId, id, label, defaultDate, type }) => {
         </>
       ) : (
         <>
-          <InputLabel>{label}</InputLabel>
-          {type !== "datetime" ? (
-            <DesktopDatePicker
-              inputFormat="dd/MM/yyyy"
-              value={formWidget?.[formId]?.[id]}
-              onChange={handleChange}
-              renderInput={(params) => (
-                <TextField
-                  id={`${formId}-selectInput-${id}-label`}
-                  fullWidth
-                  {...params}
-                />
-              )}
-            />
-          ) : (
-            <DesktopDateTimePicker
-              value={formWidget?.[formId]?.[id]}
-              onChange={handleChange}
-              renderInput={(params) => (
-                <TextField
-                  id={`${formId}-selectInput-${id}-label`}
-                  fullWidth
-                  {...params}
-                />
-              )}
-            />
-          )}
+          <FormControl>
+            {/* <InputLabel>{label}</InputLabel> */}
+            {type !== "datetime" ? (
+              <DesktopDatePicker
+                inputFormat="dd/MM/yyyy"
+                label={label}
+                value={formWidget?.[formId]?.[id]}
+                onChange={handleChange}
+                renderInput={(params) => (
+                  <TextField
+                    id={`${formId}-selectInput-${id}-label`}
+                    fullWidth
+                    {...params}
+                  />
+                )}
+              />
+            ) : (
+              <DesktopDateTimePicker
+                value={formWidget?.[formId]?.[id]}
+                onChange={handleChange}
+                renderInput={(params) => (
+                  <TextField
+                    id={`${formId}-selectInput-${id}-label`}
+                    fullWidth
+                    {...params}
+                  />
+                )}
+              />
+            )}
+          </FormControl>
         </>
       )}
     </LocalizationProvider>
