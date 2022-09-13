@@ -167,11 +167,16 @@ const OrderManager = () => {
 
     let initDateFormatted, endDateFormatted;
     if (initDateSelected) {
-      initDateFormatted = moment(initDateSelected, "DD-MM-YYYY").format();
+      initDateFormatted = moment(
+        initDateSelected /* , "DD-MM-YYYY" */
+      ); /* .format(); */
     }
     if (endDateSelected) {
-      endDateFormatted = moment(endDateSelected, "DD-MM-YYYY").format();
+      endDateFormatted = moment(
+        endDateSelected /* , "DD-MM-YYYY" */
+      ); /* .format(); */
     }
+    console.log("endDateFormatted", endDateFormatted);
 
     let response = await getOrdersData({
       entId: entIdSelected,
@@ -181,10 +186,9 @@ const OrderManager = () => {
     });
     setSelectedRows([]);
     setSelectedRowsIds([]);
-    console.log("response", response);
     //WARNING - HARDCODED FILTER
     //if state (top filter) selected, hardcode a filter before updating ordersData
-    if (selectedState) {
+    if (selectedState && response?.length > 0) {
       response = response.filter((order) => order.state_desc === selectedState);
     }
     setOrdersData(response);
