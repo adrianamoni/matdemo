@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Grid, List, ListItem, Typography } from "@mui/material";
+import { Box, List, ListItem, Typography } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
 import HalfDoughnut from "../../../widgets/halfDoughnut/HalfDoughnut";
 import { globalDataContext } from "../../../context/ContextProvider";
 import Text from "../../../languages/Text";
 import { get_oee_shift } from "../../../services/OFservices";
 import { MemoryDatabaseCall } from "../../../services/Service";
 import TimelineContainer from "./TimelineContainer";
-/* import HalfDoughnut2 from "../../../widgets/halfDoughnut/HalfDoughnut2";
- */
+//añadir oee halfdoughnut para energia y consumo
 const OEEHistorico = () => {
   const { globalData } = useContext(globalDataContext);
   const [apiData, setApiData] = useState(undefined);
@@ -90,33 +90,31 @@ const OEEHistorico = () => {
       });
     }
   }, [apiData]);
-  /*   const propColor = colorByValue({
-    value: OEEData && OEEData.OEEPercentage != null ? OEEData.OEEPercentage : 0,
-    targetOee: globalData?.lineData?.oeeTarget,
-    yellowThreshold: globalData?.oeeSpecs?.yellowThreshold,
-  }); */
 
   return (
     <>
       <Grid container sx={{ height: "100%" }}>
         <Grid item xs={12} /* sx={{ height: "100%" }} */>
           <Grid container sx={{ alignItems: "center" }}>
-            <Grid item xs={12} sm={12} md={12} lg={5} te>
-              <TimelineContainer />
+            <Grid item xs={12} sm={12} md={12} lg={4} te>
+              {/* <TimelineContainer /> */}
             </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={4}>
+            <Grid item xs={12} sm={12} md={6} lg={3}>
               <Grid container rowSpacing={1}>
-                <Grid item xs={12}>
+                <Box
+                  sx={{ display: "flex", flex: 1, justifyContent: "center" }}
+                >
                   <Typography align="center" variant="h6" component="h6">
                     {Text({ tid: "turnOee" })}
                   </Typography>
-                </Grid>
+                </Box>
                 <Grid item xs={12}>
                   <HalfDoughnut value={[OEEData ? OEEData.OEEPercentage : 0]} />
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={3}>
+
+            <Grid item xs={12} sm={12} md={6} lg={2}>
               <List>
                 <ListItem>
                   <Grid container>
@@ -170,6 +168,20 @@ const OEEHistorico = () => {
                   </Grid>
                 </ListItem>
               </List>
+            </Grid>
+            <Grid item xs={12} sm={12} md={6} lg={3}>
+              <Grid container rowSpacing={1}>
+                <Box
+                  sx={{ display: "flex", flex: 1, justifyContent: "center" }}
+                >
+                  <Typography align="center" variant="h6" component="h6">
+                    Energía
+                  </Typography>
+                </Box>
+                <Grid item xs={12}>
+                  <HalfDoughnut value={[OEEData ? OEEData.OEEPercentage : 0]} />
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

@@ -1,5 +1,12 @@
-import React, { useContext } from "react";
-import { Grid, Card, LinearProgress, Box } from "@mui/material";
+import React, { useContext, useState, useEffect } from "react";
+import {
+  Button,
+  ButtonGroup,
+  Grid,
+  Card,
+  LinearProgress,
+  Box,
+} from "@mui/material";
 
 import {
   globalDataContext,
@@ -11,16 +18,28 @@ import OeeHistorico from "../../fritdashboardComps/orderDetail/OeeHistorico";
 import AutoControles from "../../fritdashboardComps/orderDetail/AutoControles";
 import Limpieza from "../../fritdashboardComps/orderDetail/Limpieza";
 import Paros from "../../fritdashboardComps/interruptionManagement/Paros";
+import InfoOELimpieza from "../../fritdashboardComps/orderDetail/InfoOeeLimpieza";
 
 const General = ({ loading }) => {
   const { pageSize } = useContext(pageSizeContext);
   const { width } = pageSize;
   const { globalData } = useContext(globalDataContext);
-
-  const { pendingSamples, pendingInterruptions } = globalData;
+  const [orderOrCleaning, setorderOrCleaning] = useState("oee");
+  const { pendingSamples, pendingInterruptions, orderDetails } = globalData;
   const { alert: sampleAlert, data: sampleData } = pendingSamples;
   const { alert: interruptionAlert, data: interruptionData } =
     pendingInterruptions;
+  //effect para determinar cual boton estará activo (detalle de orden o limpieza, basado
+  // en el state_cd)
+  useEffect(() => {
+    //modificar a solo inicio
+    if (orderDetails) {
+      let activeOee = orderDetails.productionData.state_cd === 3;
+      let activeCleanning = orderDetails.cleaningData.state_cd === 3;
+      let response = activeOee ? "oee" : activeCleanning ? "limpieza" : "oee";
+      setorderOrCleaning(response);
+    }
+  }, []);
 
   return loading ? (
     <Box sx={{ width: "100%" }}>
@@ -52,7 +71,31 @@ const General = ({ loading }) => {
           <Card
             sx={{ p: 2, height: "100%", backgroundColor: "background.grey4" }}
           >
-            <InfoOE />
+            <Box sx={{ display: "flex", flex: 1 }}>
+              <ButtonGroup
+                sx={{ marginBottom: "20px" }}
+                aria-label="text button group"
+              >
+                <Button
+                  onClick={() => setorderOrCleaning("oee")}
+                  variant={orderOrCleaning === "oee" ? "contained" : "outlined"}
+                  color="primary"
+                >
+                  PA001 Producto Acabado 1
+                </Button>
+                <Button
+                  variant={
+                    orderOrCleaning === "limpieza" ? "contained" : "outlined"
+                  }
+                  onClick={() => setorderOrCleaning("limpieza")}
+                >
+                  Limpieza
+                </Button>
+              </ButtonGroup>
+            </Box>
+            {/* <InfoOE /> */}
+            {/* <Limpieza /> */}
+            <InfoOELimpieza active={orderOrCleaning} />
           </Card>
         </Grid>
         <Grid
@@ -75,23 +118,9 @@ const General = ({ loading }) => {
           <Grid item xs={12}>
             <AutoControles alert={sampleAlert} data={sampleData} />
           </Grid>
-        </Grid>
-      </Grid>
-
-      <Grid
-        container
-        alignItems="stretch"
-        columnSpacing={3}
-        rowSpacing={3}
-        /* sx={{ p: 2 }} */
-      >
-        <Grid item xs={12} sm={12} md={12} lg={7}>
-          <Card sx={{ p: 2, backgroundColor: "background.grey4" }}>
-            <Limpieza />
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={5}>
-          <Paros alert={interruptionAlert} data={interruptionData} />
+          <Grid item xs={12}>
+            <Paros alert={interruptionAlert} data={interruptionData} />
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

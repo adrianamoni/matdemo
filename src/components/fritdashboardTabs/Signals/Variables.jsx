@@ -33,7 +33,9 @@ const Variables = () => {
     request: "variables-signals",
   });
   if (data) {
+    console.log("data", data);
     processedData = processData(data, entName);
+    console.log(`processedData`, processedData);
   }
   return loading ? (
     <Box sx={{ width: "100%" }}>

@@ -477,6 +477,15 @@ const read_signals = () => {
     filter: null,
   };
 };
+//datos para chart de energia en OEE
+const read_energy = () => {
+  return {
+    clientName: "WebBrowser",
+    dataFrameName: "Energia",
+    columns: [],
+    filter: null,
+  };
+};
 
 const write_tags = ({ tags_arr }) => {
   return {
@@ -672,4 +681,5 @@ export {
   order_manager_date_filter,
   get_all_orders,
   create_order_manually,
+  read_energy,
 };

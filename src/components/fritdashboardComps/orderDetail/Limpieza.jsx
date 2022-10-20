@@ -63,30 +63,6 @@ const Limpieza = () => {
     });
   }
 
-  /*  const fetchOrderTime = async () => {
-    const response = await MemoryDatabaseCall({
-      params: cleaning_order_time({
-        woId: data.wo_id,
-        operId: data.oper_id,
-        seqNo: parseInt(order.spare3), //seqNo
-      }),
-      url: "queryDataAsync",
-    });
-
-    if (response && mountedComp) {
-      if (response.length > 0) {
-        setOrderTime(response[0].tiempo);
-      } else {
-        setOrderTime(0);
-      }
-    }
-    clearTimeoutKey = setTimeout(
-      fetchOrderTime,
-      20000
-      // globalVariables.intervalTime.midLowFrequency
-    );
-  }; */
-
   const handlePlay = async () => {
     setLoadingPlay(true);
     await handleOperationAction({
@@ -123,7 +99,7 @@ const Limpieza = () => {
     });
     setTimeout(() => setLoadingStop(false), 2000);
   };
-
+  //aqui para limpieza
   const { play, pause, stop } = operation_states({
     stateCd: cleaningData.state_cd,
     type: "cleaningOrder",
