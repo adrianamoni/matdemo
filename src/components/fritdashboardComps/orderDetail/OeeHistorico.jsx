@@ -153,7 +153,7 @@ const OEEHistorico = () => {
             <Grid item xs={12} sm={12} md={6} lg={2}>
               <List>
                 <ListItem>
-                  <Grid container>
+                  <Grid container sx={{ flex: 1 }}>
                     <Grid item xs={6}>
                       <Typography>
                         <strong>{Text({ tid: "availability" })}</strong>
@@ -170,7 +170,7 @@ const OEEHistorico = () => {
                   </Grid>
                 </ListItem>
                 <ListItem>
-                  <Grid container>
+                  <Grid container sx={{ flex: 1 }}>
                     <Grid item xs={6}>
                       <Typography>
                         <strong>{Text({ tid: "performance" })}</strong>
@@ -187,7 +187,7 @@ const OEEHistorico = () => {
                   </Grid>
                 </ListItem>
                 <ListItem>
-                  <Grid container>
+                  <Grid container sx={{ flex: 1 }}>
                     <Grid item xs={6}>
                       <Typography>
                         <strong>{Text({ tid: "quality" })}</strong>
