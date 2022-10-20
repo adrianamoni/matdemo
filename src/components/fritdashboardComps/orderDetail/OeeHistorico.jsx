@@ -7,11 +7,16 @@ import Text from "../../../languages/Text";
 import { get_oee_shift } from "../../../services/OFservices";
 import { MemoryDatabaseCall } from "../../../services/Service";
 import TimelineContainer from "./TimelineContainer";
+import { processData } from "./../../fritdashboardTabs/Signals/helper";
 //añadir oee halfdoughnut para energia y consumo
 const OEEHistorico = () => {
   const { globalData } = useContext(globalDataContext);
   const [apiData, setApiData] = useState(undefined);
   const [OEEData, setOEEData] = useState(undefined);
+  const [energyData, setEnergyData] = useState({
+    objetivo: undefined,
+    consumo: undefined,
+  });
 
   useEffect(() => {
     let clearTimeoutTurnoKey;
@@ -44,11 +49,42 @@ const OEEHistorico = () => {
         5000 // 5000
       );
     };
+    const fetchEnergy = async () => {
+      let response = await MemoryDatabaseCall({
+        params: {
+          clientName: "WebBrowser",
+          dataFrameName: "Energia",
+          columns: [],
+          filter: null,
+        },
+        url: "queryWWDataFrameDataAsync",
+      });
+      if (response) {
+        let energyRawData = response.filter((d) =>
+          d.Tagname.includes(globalData?.lineData?.entName)
+        );
+        console.log("energyRawData", energyRawData);
+        let energyObj = energyRawData.find(
+          (d) =>
+            d.Tagname ===
+            `${globalData?.lineData?.entName}.ConsumoEnergiaObjetivo`
+        );
+        energyObj =
+          globalData?.orderDetails?.productionData?.qty_reqd * energyObj.Value;
+        let energyComsuption = energyRawData.find(
+          (d) => d.Tagname === `${globalData?.lineData?.entName}.ConsumoEnergia`
+        );
+        setEnergyData({
+          objetivo: energyObj,
+          consumo: parseInt((energyComsuption.Value / energyObj) * 100),
+        });
+      }
+    };
 
     if (globalData && globalData.lineData && globalData.orderData) {
       fetchTurno();
     }
-
+    fetchEnergy();
     return () => {
       clearTimeout(clearTimeoutTurnoKey);
     };
@@ -97,7 +133,7 @@ const OEEHistorico = () => {
         <Grid item xs={12} /* sx={{ height: "100%" }} */>
           <Grid container sx={{ alignItems: "center" }}>
             <Grid item xs={12} sm={12} md={12} lg={4} te>
-              {/* <TimelineContainer /> */}
+              <TimelineContainer />
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={3}>
               <Grid container rowSpacing={1}>
@@ -179,7 +215,7 @@ const OEEHistorico = () => {
                   </Typography>
                 </Box>
                 <Grid item xs={12}>
-                  <HalfDoughnut value={[OEEData ? OEEData.OEEPercentage : 0]} />
+                  <HalfDoughnut value={[energyData?.consumo] || 0} stroked />
                 </Grid>
               </Grid>
             </Grid>

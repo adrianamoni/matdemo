@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import ReactApexChart from "react-apexcharts";
 import { userPreferencesContext } from "../../context/ContextProvider";
 
-const HalfDoughnut = ({ value, color }) => {
+const HalfDoughnut = ({ value, color, stroked }) => {
   const { userPreferences } = useContext(userPreferencesContext);
   const { colorMode } = userPreferences;
 
@@ -59,6 +59,11 @@ const HalfDoughnut = ({ value, color }) => {
       type: "lineal",
     },
     labels: ["Average Results"],
+    stroke: stroked
+      ? {
+          dashArray: 4,
+        }
+      : {},
   };
   return (
     <div
