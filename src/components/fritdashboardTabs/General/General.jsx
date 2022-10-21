@@ -40,6 +40,15 @@ const General = ({ loading }) => {
       setorderOrCleaning(response);
     }
   }, []);
+  useEffect(() => {
+    if (orderDetails) {
+      if (orderDetails.productionData.state_cd === 4) {
+        setorderOrCleaning("limpieza");
+      } else if (orderDetails.cleaningData.state_cd === 4) {
+        // pedir la proxima orden
+      }
+    }
+  }, [orderDetails]);
 
   return loading ? (
     <Box sx={{ width: "100%" }}>
