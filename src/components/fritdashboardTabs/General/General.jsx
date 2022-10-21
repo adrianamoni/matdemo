@@ -19,13 +19,20 @@ import AutoControles from "../../fritdashboardComps/orderDetail/AutoControles";
 import Limpieza from "../../fritdashboardComps/orderDetail/Limpieza";
 import Paros from "../../fritdashboardComps/interruptionManagement/Paros";
 import InfoOELimpieza from "../../fritdashboardComps/orderDetail/InfoOeeLimpieza";
+import { MemoryDatabaseCall } from "../../../services/Service";
+import { tab_of_planification } from "../../../services/OFservices";
+import uuid from "react-uuid";
+import { dateFormater } from "./../../fritdashboardComps/orderDetail/helper";
+
+import CustomStepper from "../../../widgets/CustomStepper/CustomStepper";
 
 const General = ({ loading }) => {
   const { pageSize } = useContext(pageSizeContext);
   const { width } = pageSize;
   const { globalData } = useContext(globalDataContext);
   const [orderOrCleaning, setorderOrCleaning] = useState("oee");
-  const { pendingSamples, pendingInterruptions, orderDetails } = globalData;
+  const { pendingSamples, pendingInterruptions, orderDetails, lineData } =
+    globalData;
   const { alert: sampleAlert, data: sampleData } = pendingSamples;
   const { alert: interruptionAlert, data: interruptionData } =
     pendingInterruptions;
@@ -40,15 +47,15 @@ const General = ({ loading }) => {
       setorderOrCleaning(response);
     }
   }, []);
-  useEffect(() => {
+  /*  useEffect(() => {
     if (orderDetails) {
       if (orderDetails.productionData.state_cd === 4) {
         setorderOrCleaning("limpieza");
       } else if (orderDetails.cleaningData.state_cd === 4) {
-        // pedir la proxima orden
+       
       }
     }
-  }, [orderDetails]);
+  }, [orderDetails]); */
 
   return loading ? (
     <Box sx={{ width: "100%" }}>
@@ -81,7 +88,7 @@ const General = ({ loading }) => {
             sx={{ p: 2, height: "100%", backgroundColor: "background.grey4" }}
           >
             <Box sx={{ display: "flex", flex: 1 }}>
-              <ButtonGroup
+              {/* <ButtonGroup
                 sx={{ marginBottom: "20px" }}
                 aria-label="text button group"
               >
@@ -102,11 +109,15 @@ const General = ({ loading }) => {
                 >
                   Limpieza
                 </Button>
-              </ButtonGroup>
+              </ButtonGroup> */}
+              <CustomStepper />
             </Box>
             {/* <InfoOE /> */}
             {/* <Limpieza /> */}
-            <InfoOELimpieza active={orderOrCleaning} />
+            <InfoOELimpieza
+              active={orderOrCleaning}
+              setActive={setorderOrCleaning}
+            />
           </Card>
         </Grid>
         <Grid

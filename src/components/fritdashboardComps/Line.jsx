@@ -43,6 +43,7 @@ const Line = ({ line }) => {
           url: "queryDataFrameDataAsync",
         });
         if (response && mountedComp) {
+          console.log("response", response);
           if (response.length > 0) {
             const currentOrdersArr = response.filter(
               (order) => order.RowNum === 1

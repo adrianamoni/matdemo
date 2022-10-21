@@ -22,7 +22,7 @@ import TTorder from "./textTemplates/TTorder";
 import TTlimpieza from "./textTemplates/TTlimpieza";
 import UseFetchMemory from "../../customHooks/UseFetchMemory";
 
-const InfoOELimpieza = ({ active }) => {
+const InfoOELimpieza = ({ active, setActive }) => {
   const { globalData } = useContext(globalDataContext);
   const { orderDetails, orderData, lineData } = globalData;
   const { entName } = lineData;
@@ -174,6 +174,7 @@ const InfoOELimpieza = ({ active }) => {
       woId: productionData.wo_id,
       operId: productionData.oper_id,
       seqNo: productionData.seq_no,
+      callBack: setActive("limpieza"),
     });
     setTimeout(() => {
       setLoadingPause_oee(false);
@@ -214,7 +215,7 @@ const InfoOELimpieza = ({ active }) => {
       seqNo: cleaningData.seq_no,
       entName,
     });
-    setTimeout(() => setLoadingStop(false), 2000);
+    setTimeout(() => setLoadingStop_limpieza(false), 2000);
   };
 
   const handleConfirmStop_oee = async () => {

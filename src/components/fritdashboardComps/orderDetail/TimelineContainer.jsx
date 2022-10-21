@@ -52,7 +52,7 @@ const TimelineContainer = () => {
           return { ...item };
         }
       });
-      console.log("RENDERED CONTAINER");
+      // console.log("RENDERED CONTAINER");
       setTimelineData(arr);
     }
   };
@@ -61,7 +61,7 @@ const TimelineContainer = () => {
 };
 
 function MyComponent2({ data }) {
-  console.log("RENDERED MEMO", data);
+  // console.log("RENDERED MEMO", data);
   const memoizedTimeline = useMemo(() => {
     return data.sort();
   }, [data]);

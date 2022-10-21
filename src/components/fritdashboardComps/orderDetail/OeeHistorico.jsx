@@ -79,6 +79,7 @@ const OEEHistorico = () => {
         let energyComsuption = energyRawData.find(
           (d) => d.Tagname === `${globalData?.lineData?.entName}.ConsumoEnergia`
         );
+        console.log("energyComsuption", energyComsuption.Value);
         setEnergyData({
           objetivo: energyObj,
           consumo: parseInt((energyComsuption.Value / energyObj) * 100),

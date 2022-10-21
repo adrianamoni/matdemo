@@ -15,6 +15,7 @@ export const handleOperationAction = async ({
   woId,
   operId,
   seqNo,
+  // callBack,
 }) => {
   const actions = {
     start: {
@@ -44,15 +45,14 @@ export const handleOperationAction = async ({
       hide: response.responseHide,
     });
   } else {
-    setTimeout(
-      () =>
-        createNotification({
-          status: "success",
-          msg,
-          hide: response.responseHide,
-        }),
-      2000
-    );
+    setTimeout(() => {
+      createNotification({
+        status: "success",
+        msg,
+        hide: response.responseHide,
+      });
+      // callBack();
+    }, 2000);
   }
 };
 export const handleStopCleaning = async ({ woId, operId, seqNo, entName }) => {
