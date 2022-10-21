@@ -6,6 +6,7 @@ import Timeline from "../../../widgets/timeline/Timeline";
 
 /* import { get_utilshift } from "../services/OFservices";
 import { MemoryDatabaseCall } from "../services/Service"; */
+import GradientTimeline from "./../../../widgets/timeline/GradientTimeline";
 
 const TimelineContainer = () => {
   const { globalData } = useContext(globalDataContext);
@@ -65,7 +66,8 @@ function MyComponent2({ data }) {
     return data.sort();
   }, [data]);
 
-  return memoizedTimeline ? <Timeline data={memoizedTimeline} /> : null;
+  return memoizedTimeline ? <GradientTimeline data={memoizedTimeline} /> : null;
+  // return memoizedTimeline ? <Timeline data={memoizedTimeline} /> : null;
 }
 
 export default TimelineContainer;

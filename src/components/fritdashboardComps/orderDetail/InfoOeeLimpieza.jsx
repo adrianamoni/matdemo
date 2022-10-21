@@ -11,8 +11,11 @@ import PauseIcon from "@mui/icons-material/Pause";
 import LineProgress from "../../../widgets/progress/LineProgress";
 import Text from "../../../languages/Text";
 
-import { dateFormater, operation_states } from "./helper";
-import { handleOperationAction } from "../../fritdashboardTabs/General/helper";
+import { dateFormater, operation_states, processOrderTimeData } from "./helper";
+import {
+  handleOperationAction,
+  handleStopCleaning,
+} from "../../fritdashboardTabs/General/helper";
 import { propsByState } from "../../../helpers/props";
 import ConfirmationDialog from "../../alerts/ConfirmationDialog";
 import TTorder from "./textTemplates/TTorder";
@@ -21,7 +24,8 @@ import UseFetchMemory from "../../customHooks/UseFetchMemory";
 
 const InfoOELimpieza = ({ active }) => {
   const { globalData } = useContext(globalDataContext);
-  const { orderDetails, orderData } = globalData;
+  const { orderDetails, orderData, lineData } = globalData;
+  const { entName } = lineData;
   const { woId, operId, seqNo } = globalData.orderData;
   const { productionData, cleaningData } = orderDetails;
   const { pageSize } = useContext(pageSizeContext);
@@ -32,8 +36,9 @@ const InfoOELimpieza = ({ active }) => {
   const [loadingPause_oee, setLoadingPause_oee] = useState(false);
   const [loadingPause_limpieza, setLoadingPause_limpieza] = useState(false);
   const [loadingStop_oee, setloadingStop_oee] = useState(false);
-  const [loadingStop_limpieza, setloadingStop_limpieza] = useState(false);
+  const [loadingStop_limpieza, setLoadingStop_limpieza] = useState(false);
   const [confirmStop_oee, setConfirmStop_oee] = useState(false);
+  const [confirmStop_limpieza, setConfirmStop_limpieza] = useState(false);
   const [disabledButtonsState, setdisabledButtonsState] = useState({
     play_oee: undefined,
     pause_oee: undefined,
@@ -188,7 +193,7 @@ const InfoOELimpieza = ({ active }) => {
 
   const handleStop_oee = async () => {
     setConfirmStop_oee(false);
-    setLoadingStop_oee(true);
+    setloadingStop_oee(true);
     await handleOperationAction({
       type: "stop",
       woId: productionData.wo_id,
@@ -198,6 +203,18 @@ const InfoOELimpieza = ({ active }) => {
     setTimeout(() => {
       setloadingStop_oee(false);
     }, 2000);
+  };
+  const handleStop_limpieza = async () => {
+    setConfirmStop_limpieza(false);
+    setLoadingStop_limpieza(true);
+
+    await handleStopCleaning({
+      woId: cleaningData.wo_id,
+      operId: cleaningData.oper_id,
+      seqNo: cleaningData.seq_no,
+      entName,
+    });
+    setTimeout(() => setLoadingStop(false), 2000);
   };
 
   const handleConfirmStop_oee = async () => {
@@ -335,7 +352,16 @@ const InfoOELimpieza = ({ active }) => {
             <Grid item xs={4}>
               <LoadingButton
                 loading={loadingStop_oee}
-                onClick={handleConfirmStop_oee}
+                onClick={
+                  active === "oee"
+                    ? handleConfirmStop_oee
+                    : active === "limpieza"
+                    ? () =>
+                        processedOrderTime && processedOrderTime.value > 0
+                          ? setConfirmStop_limpieza(true)
+                          : handleStop_limpieza()
+                    : () => console.log("err")
+                }
                 disabled={handleDisable(active, "stop")}
                 variant="contained"
                 color="primary"
