@@ -2,7 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import { Box, List, ListItem, Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import HalfDoughnut from "../../../widgets/halfDoughnut/HalfDoughnut";
-import { globalDataContext } from "../../../context/ContextProvider";
+import {
+  globalDataContext,
+  pageSizeContext,
+} from "../../../context/ContextProvider";
 import Text from "../../../languages/Text";
 import { get_oee_shift } from "../../../services/OFservices";
 import { MemoryDatabaseCall } from "../../../services/Service";
@@ -11,6 +14,8 @@ import { processData } from "./../../fritdashboardTabs/Signals/helper";
 //añadir oee halfdoughnut para energia y consumo
 const OEEHistorico = () => {
   const { globalData } = useContext(globalDataContext);
+  const { pageSize } = useContext(pageSizeContext);
+  const { width } = pageSize;
   const [apiData, setApiData] = useState(undefined);
   const [OEEData, setOEEData] = useState(undefined);
   const [energyData, setEnergyData] = useState({
@@ -130,7 +135,7 @@ const OEEHistorico = () => {
   return (
     <>
       <Grid container sx={{ height: "100%" }}>
-        <Grid item xs={12} /* sx={{ height: "100%" }} */>
+        <Grid item xs={12}>
           <Grid container sx={{ alignItems: "center" }}>
             <Grid item xs={12} sm={12} md={12} lg={4} te>
               <TimelineContainer />
@@ -156,7 +161,12 @@ const OEEHistorico = () => {
                   <Grid container sx={{ flex: 1 }}>
                     <Grid item xs={6}>
                       <Typography>
-                        <strong>{Text({ tid: "availability" })}</strong>
+                        <strong>
+                          {Text({
+                            tid:
+                              width > 1500 ? "availability" : "availabilityAbb",
+                          })}
+                        </strong>
                       </Typography>
                     </Grid>
                     <Grid item xs={6}>
@@ -211,7 +221,7 @@ const OEEHistorico = () => {
                   sx={{ display: "flex", flex: 1, justifyContent: "center" }}
                 >
                   <Typography align="center" variant="h6" component="h6">
-                    Energía
+                    {Text({ tid: "energy" })}
                   </Typography>
                 </Box>
                 <Grid item xs={12}>

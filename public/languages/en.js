@@ -16,6 +16,7 @@ var LANG_EN = {
   description: "Description",
   duration: "Duration",
   email: "Email",
+  energy: "Energy",
   endDate: "End Date",
   entityBatch: "Ent. Batch",
   expiration: "Expiration",

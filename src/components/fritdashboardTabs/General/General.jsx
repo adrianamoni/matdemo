@@ -81,7 +81,9 @@ const General = ({ loading }) => {
                   variant={orderOrCleaning === "oee" ? "contained" : "outlined"}
                   color="primary"
                 >
-                  PA001 Producto Acabado 1
+                  {`${orderDetails?.productionData?.item_id.slice(-6)} ${
+                    orderDetails?.productionData?.item_desc
+                  }`}
                 </Button>
                 <Button
                   variant={

@@ -229,7 +229,7 @@ const InfoOELimpieza = ({ active }) => {
   });
 
   const handleDisable = (tab, root) => {
-    console.log("called", tab, root);
+    // console.log("called", tab, root);
     if (tab === "oee") {
       if (root === "play") {
         return loadingPlay_oee ? true : disabledButtonsState.play_oee;
