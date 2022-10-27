@@ -21,33 +21,36 @@ import {
   read_signals,
 } from "../../services/serviceHelper";
 
-export default function UseFetchMemory({ request, customParams }) {
+export default function UseFetchMemory({ request, customParams, freq }) {
   const [data, setData] = useState(null);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const parameters = getParams(request);
+  useEffect(
+    () => {
+      const fetchData = async () => {
+        try {
+          const parameters = getParams(request);
 
-        const response = await MemoryDatabaseCall({
-          params: parameters.params(customParams || {}),
-          url: parameters.url,
-        });
+          const response = await MemoryDatabaseCall({
+            params: parameters.params(customParams || {}),
+            url: parameters.url,
+          });
 
-        if (response && response.length > 0) {
-          setData(response.map((item) => ({ ...item, id: uuid() })));
+          if (response && response.length > 0) {
+            setData(response.map((item) => ({ ...item, id: uuid() })));
+          }
+        } catch (err) {
+          setError(err);
+        } finally {
+          setLoading(false);
         }
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-    return () => {};
-  }, []);
+      };
+      fetchData();
+      return () => {};
+    },
+    freq ? freq : []
+  );
 
   return { data, error, loading };
 }

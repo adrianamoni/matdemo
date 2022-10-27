@@ -4,7 +4,12 @@ import Text from "../../../../languages/Text";
 import { getCleaningText, timeFormating } from "../helper";
 import LastCleaning from "../LastCleaning";
 
-const TTlimpieza = ({ cleaningData, processedOrderTime, width }) => {
+const TTlimpieza = ({
+  cleaningData,
+  processedOrderTime,
+  width,
+  lastCleaningData,
+}) => {
   return (
     <Grid container item rowSpacing={1} columnSpacing={2} alignItems="stretch">
       <Grid item xs={12} sm={12} md={12} lg={12} xl={5}>
@@ -75,7 +80,7 @@ const TTlimpieza = ({ cleaningData, processedOrderTime, width }) => {
             alignItems: "center",
           }}
         >
-          <LastCleaning />
+          <LastCleaning lastCleaningData={lastCleaningData} />
         </Grid>
       </Grid>
     </Grid>

@@ -22,7 +22,12 @@ import TTorder from "./textTemplates/TTorder";
 import TTlimpieza from "./textTemplates/TTlimpieza";
 import UseFetchMemory from "../../customHooks/UseFetchMemory";
 
-const InfoOELimpieza = ({ active, setActive }) => {
+const InfoOELimpieza = ({
+  active,
+  setActive,
+  lastCleaningData,
+  energyData,
+}) => {
   const { globalData } = useContext(globalDataContext);
   const { orderDetails, orderData, lineData } = globalData;
   const { entName } = lineData;
@@ -56,9 +61,9 @@ const InfoOELimpieza = ({ active, setActive }) => {
   const { data: test } = UseFetchMemory({
     request: "timePerOrder",
     customParams: {
-      woId: cleaningData.wo_id,
-      operId: cleaningData.oper_id,
-      seqNo: cleaningData.seq_no,
+      woId: cleaningData?.wo_id,
+      operId: cleaningData?.oper_id,
+      seqNo: cleaningData?.seq_no,
     },
   });
   useEffect(() => {
@@ -72,8 +77,8 @@ const InfoOELimpieza = ({ active, setActive }) => {
   useEffect(() => {
     if (orderTime) {
       const newData = processOrderTimeData({
-        orderTime: orderTime[0].tiempo,
-        duracionJob: cleaningData.DuracionJob,
+        orderTime: orderTime[0]?.tiempo,
+        duracionJob: cleaningData?.DuracionJob,
       });
       setprocessedOrderTime(newData);
     }
@@ -93,7 +98,7 @@ const InfoOELimpieza = ({ active, setActive }) => {
       pause: pause_limpieza,
       stop: stop_limpieza,
     } = operation_states({
-      stateCd: cleaningData.state_cd,
+      stateCd: cleaningData?.state_cd,
       type: "cleaningOrder",
       prodStateCd: productionData?.state_cd || undefined,
     });
@@ -237,12 +242,12 @@ const InfoOELimpieza = ({ active, setActive }) => {
     pause_limpieza,
     stop_limpieza,
   } = operation_states({
-    stateCd: cleaningData.state_cd,
+    stateCd: cleaningData?.state_cd,
     type: "cleaningOrder",
     prodStateCd: productionData?.state_cd || undefined,
   });
   const { background } = propsByState({
-    prodState: productionData.state_cd,
+    prodState: productionData?.state_cd,
     cleanState: null,
   });
 
@@ -274,7 +279,11 @@ const InfoOELimpieza = ({ active, setActive }) => {
       <Grid
         container
         rowSpacing={1}
-        sx={{ paddingBottom: "40px", height: "100%" }}
+        sx={
+          {
+            /* paddingBottom: "40px", height: "100%" */
+          }
+        }
       >
         <Grid item xs={12}>
           <Typography variant="h6" component="h6">
@@ -295,6 +304,7 @@ const InfoOELimpieza = ({ active, setActive }) => {
             productionData={productionData}
             background={background}
             width={width}
+            energyData={energyData}
           />
         )}
         {active === "limpieza" && (
@@ -302,6 +312,7 @@ const InfoOELimpieza = ({ active, setActive }) => {
             cleaningData={cleaningData}
             processedOrderTime={processedOrderTime}
             width={width}
+            lastCleaningData={lastCleaningData}
           />
         )}
         <Grid

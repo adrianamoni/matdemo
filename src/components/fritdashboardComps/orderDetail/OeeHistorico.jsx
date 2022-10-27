@@ -18,10 +18,10 @@ const OEEHistorico = () => {
   const { width } = pageSize;
   const [apiData, setApiData] = useState(undefined);
   const [OEEData, setOEEData] = useState(undefined);
-  const [energyData, setEnergyData] = useState({
+  /*   const [energyData, setEnergyData] = useState({
     objetivo: undefined,
-    consumo: undefined,
-  });
+    consumo: 0,
+  }); */
 
   useEffect(() => {
     let clearTimeoutTurnoKey;
@@ -54,7 +54,7 @@ const OEEHistorico = () => {
         5000 // 5000
       );
     };
-    const fetchEnergy = async () => {
+    /*  const fetchEnergy = async () => {
       let response = await MemoryDatabaseCall({
         params: {
           clientName: "WebBrowser",
@@ -85,16 +85,15 @@ const OEEHistorico = () => {
           consumo: parseInt((energyComsuption.Value / energyObj) * 100),
         });
       }
-    };
+    }; */
 
     if (globalData && globalData.lineData && globalData.orderData) {
       fetchTurno();
     }
-    fetchEnergy();
+    // fetchEnergy();
     return () => {
       clearTimeout(clearTimeoutTurnoKey);
     };
-    //eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -138,10 +137,10 @@ const OEEHistorico = () => {
       <Grid container sx={{ height: "100%" }}>
         <Grid item xs={12}>
           <Grid container sx={{ alignItems: "center" }}>
-            <Grid item xs={12} sm={12} md={12} lg={4} te>
+            <Grid item xs={12} sm={12} md={12} lg={5} te>
               <TimelineContainer />
             </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={3}>
+            <Grid item xs={12} sm={12} md={6} lg={5}>
               <Grid container rowSpacing={1}>
                 <Box
                   sx={{ display: "flex", flex: 1, justifyContent: "center" }}
@@ -216,7 +215,7 @@ const OEEHistorico = () => {
                 </ListItem>
               </List>
             </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={3}>
+            {/* <Grid item xs={12} sm={12} md={6} lg={3}>
               <Grid container rowSpacing={1}>
                 <Box
                   sx={{ display: "flex", flex: 1, justifyContent: "center" }}
@@ -229,7 +228,7 @@ const OEEHistorico = () => {
                   <HalfDoughnut value={[energyData?.consumo] || 0} stroked />
                 </Grid>
               </Grid>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Grid>
       </Grid>

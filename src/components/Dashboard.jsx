@@ -29,6 +29,8 @@ import Line from "./fritdashboardComps/Line";
 import { oee_targets, read_specs } from "../services/OFservices";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import CustomStepper from "../widgets/CustomStepper/CustomStepper";
+import General from "./fritdashboardTabs/General/General";
 /* const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
@@ -137,11 +139,12 @@ const Dashboard = () => {
       }
     }
   };
-  return loading ? (
+  /* loading ? (
     <Box sx={{ display: "flex" }}>
       <CircularProgress />
     </Box>
-  ) : lines && lines.length > 0 ? (
+  ) : */
+  return lines && lines.length > 0 ? (
     <>
       <Container>
         <Box sx={{ flexGrow: 1 }}>

@@ -3,7 +3,13 @@ import React from "react";
 import Text from "../../../../languages/Text";
 import LineProgress from "../../../../widgets/progress/LineProgress";
 
-const TTorder = ({ processedData, productionData, background, width }) => {
+const TTorder = ({
+  processedData,
+  productionData,
+  background,
+  width,
+  energyData,
+}) => {
   return (
     <Grid item xs={12}>
       <List>
@@ -66,6 +72,52 @@ const TTorder = ({ processedData, productionData, background, width }) => {
               </Grid>
             </ListItem>
           </Grid>
+          {/* energia */}
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
+            <ListItem>
+              <Grid container>
+                <Grid item xs={6}>
+                  <Typography>
+                    <strong>
+                      <Text tid={"consumoTotal"} />
+                    </strong>
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography align="right" sx={{ fontSize: "1.1rem" }}>
+                    <span>{`${energyData?.consumo} kw`}</span>
+                  </Typography>
+                </Grid>
+              </Grid>
+            </ListItem>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={6}>
+            <ListItem>
+              <Grid container>
+                <Grid item xs={6}>
+                  <Typography>
+                    <strong>
+                      <Text tid={"consumoUd"} />
+                    </strong>
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography align="right" sx={{ fontSize: "1.1rem" }}>
+                    <span>
+                      {" "}
+                      {productionData.qty_prod + productionData.qty_rejected > 0
+                        ? `${(
+                            energyData?.consumo / productionData.qty_prod +
+                            productionData.qty_rejected
+                          ).toFixed(2)} kw`
+                        : "-"}
+                    </span>
+                  </Typography>
+                </Grid>
+              </Grid>
+            </ListItem>
+          </Grid>
+          {/* fin energia */}
         </Grid>
       </List>
     </Grid>

@@ -54,7 +54,7 @@ const Paros = ({ alert, data }) => {
               <strong>{Text({ tid: "pendingInterruptions" })}</strong>
             </Grid>
             <Grid item xs={6} sm={6} md={6} lg={6} align="right">
-              {pendingInterruptions?.data.length || "-"}
+              {pendingInterruptions?.data?.length || "-"}
             </Grid>
           </Grid>
         </Grid>

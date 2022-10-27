@@ -7,7 +7,6 @@ import {
   LinearProgress,
   Box,
 } from "@mui/material";
-
 import {
   globalDataContext,
   pageSizeContext,
@@ -25,12 +24,15 @@ import uuid from "react-uuid";
 import { dateFormater } from "./../../fritdashboardComps/orderDetail/helper";
 
 import CustomStepper from "../../../widgets/CustomStepper/CustomStepper";
+import UseFetchMemory from "../../customHooks/UseFetchMemory";
 
 const General = ({ loading }) => {
   const { pageSize } = useContext(pageSizeContext);
   const { width } = pageSize;
-  const { globalData } = useContext(globalDataContext);
+  const { globalData, setGlobalData } = useContext(globalDataContext);
   const [orderOrCleaning, setorderOrCleaning] = useState("oee");
+  const [lastCleaningApiData, setLastCleaningApiData] = useState(undefined);
+  const [energyData, setEnergyData] = useState(undefined);
   const { pendingSamples, pendingInterruptions, orderDetails, lineData } =
     globalData;
   const { alert: sampleAlert, data: sampleData } = pendingSamples;
@@ -41,21 +43,34 @@ const General = ({ loading }) => {
   useEffect(() => {
     //modificar a solo inicio
     if (orderDetails) {
-      let activeOee = orderDetails.productionData.state_cd === 3;
-      let activeCleanning = orderDetails.cleaningData.state_cd === 3;
+      let activeOee = orderDetails?.productionData?.state_cd === 3;
+      let activeCleanning = orderDetails?.cleaningData?.state_cd === 3;
       let response = activeOee ? "oee" : activeCleanning ? "limpieza" : "oee";
       setorderOrCleaning(response);
     }
   }, []);
-  /*  useEffect(() => {
-    if (orderDetails) {
-      if (orderDetails.productionData.state_cd === 4) {
-        setorderOrCleaning("limpieza");
-      } else if (orderDetails.cleaningData.state_cd === 4) {
-       
-      }
+
+  const { data: lastCleaningResponse } = UseFetchMemory({
+    request: "lastCleaning",
+    customParams: {
+      entId: lineData.entId,
+    },
+    freq: [lineData, orderOrCleaning],
+  });
+
+  useEffect(() => {
+    if (lastCleaningResponse) {
+      console.log("lastCleaningResponse", lastCleaningResponse);
+      setLastCleaningApiData({
+        state: lastCleaningResponse[0].Estado,
+        lastClean: lastCleaningResponse[0].UltimaLimpieza,
+        backgroundColor:
+          lastCleaningResponse[0].Estado === "Limpio"
+            ? "#87cefa"
+            : lastCleaningResponse[0].Estado === "Sucio" && "#9c7a4860",
+      });
     }
-  }, [orderDetails]); */
+  }, [lastCleaningResponse]);
 
   return loading ? (
     <Box sx={{ width: "100%" }}>
@@ -88,35 +103,18 @@ const General = ({ loading }) => {
             sx={{ p: 2, height: "100%", backgroundColor: "background.grey4" }}
           >
             <Box sx={{ display: "flex", flex: 1 }}>
-              {/* <ButtonGroup
-                sx={{ marginBottom: "20px" }}
-                aria-label="text button group"
-              >
-                <Button
-                  onClick={() => setorderOrCleaning("oee")}
-                  variant={orderOrCleaning === "oee" ? "contained" : "outlined"}
-                  color="primary"
-                >
-                  {`${orderDetails?.productionData?.item_id.slice(-6)} ${
-                    orderDetails?.productionData?.item_desc
-                  }`}
-                </Button>
-                <Button
-                  variant={
-                    orderOrCleaning === "limpieza" ? "contained" : "outlined"
-                  }
-                  onClick={() => setorderOrCleaning("limpieza")}
-                >
-                  Limpieza
-                </Button>
-              </ButtonGroup> */}
-              <CustomStepper />
+              <CustomStepper
+                setActive={setorderOrCleaning}
+                lastCleaningData={lastCleaningApiData}
+              />
             </Box>
             {/* <InfoOE /> */}
             {/* <Limpieza /> */}
             <InfoOELimpieza
               active={orderOrCleaning}
               setActive={setorderOrCleaning}
+              lastCleaningData={lastCleaningApiData}
+              energyData={energyData}
             />
           </Card>
         </Grid>
@@ -134,7 +132,7 @@ const General = ({ loading }) => {
             <Card
               sx={{ p: 2, height: "100%", backgroundColor: "background.grey4" }}
             >
-              <OeeOrden />
+              <OeeOrden energyData={energyData} setEnergyData={setEnergyData} />
             </Card>
           </Grid>
           <Grid item xs={12}>

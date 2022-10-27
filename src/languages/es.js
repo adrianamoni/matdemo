@@ -10,6 +10,8 @@ const es_bckup = {
   comment: "Comentario",
   confirmLogout: "¿Está seguro de que quiere salir?",
   consume: "Consumir",
+  consumoTotal: "Consumo energético",
+  consumoUd: "Consumo energético ud.",
   consumptionCorrection: "Corrección Consumo",
   createInterruption: "Generar Paro",
   dashboard: "Tablero",

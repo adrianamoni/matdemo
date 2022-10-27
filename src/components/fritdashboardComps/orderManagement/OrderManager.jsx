@@ -33,6 +33,7 @@ import DatePickerWidget from "./../../../widgets/forms/DatePickerWidget";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import ModalCreateOrder from "../../fritdashboardTabs/Planification/ModalCreateOrder";
 
 const OrderManager = () => {
   const { loggedUser, setLoggedUser } = useContext(loginContext);
@@ -42,6 +43,8 @@ const OrderManager = () => {
   const [initDateSelected, setInitDateSelected] = useState(
     moment().startOf("week").format("MM/DD/YYYY")
   );
+  const [refreshMain, setRefreshMain] = useState(false);
+  const [createOrderModal, setCreateOrderModal] = useState(false);
   const [endDateSelected, setEndDateSelected] = useState(
     moment().format("MM/DD/YYYY")
   );
@@ -226,120 +229,145 @@ const OrderManager = () => {
     setLoadingFromSelected(false);
   };
 
+  const handleCreateOrderClick = () => {
+    setCreateOrderModal(true);
+  };
+  useEffect(() => {
+    if (refreshMain) {
+      setRefreshMain(false);
+    }
+    return () => {
+      setApiData(undefined);
+    };
+  }, [refreshMain]);
+
   return (
-    <Grid container spacing={2} alignItems="center">
-      <Grid item xs={12} sm={12} md={12} lg={10}>
-        <Grid container spacing={2}>
-          {entFilter && (
+    <>
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs={12} sm={12} md={12} lg={10}>
+          <Grid container spacing={2}>
+            {entFilter && (
+              <Grid item xs={12} sm={12} md={2}>
+                <FormControl fullWidth>
+                  <InputLabel>{Text({ tid: "line" })}</InputLabel>
+                  <Select
+                    value={entIdSelected}
+                    label={Text({ tid: "line" })}
+                    onChange={(e) => setEntIdSelected(e.target.value)}
+                  >
+                    {entFilter.map((ent) => (
+                      <MenuItem value={ent.ent_id}>{ent.ent_name}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+            )}
+            {itemFilter && (
+              <Grid item xs={12} sm={12} md={2}>
+                <FormControl fullWidth>
+                  <InputLabel>Material</InputLabel>
+                  <Select
+                    value={itemIdSelected}
+                    label="Material"
+                    onChange={(e) => setItemIdSelected(e.target.value)}
+                  >
+                    {itemFilter.map((item) => (
+                      <MenuItem value={item.item_id}>{item.item_desc}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+            )}
             <Grid item xs={12} sm={12} md={2}>
               <FormControl fullWidth>
-                <InputLabel>{Text({ tid: "line" })}</InputLabel>
+                <InputLabel>{Text({ tid: "status" })}</InputLabel>
                 <Select
-                  value={entIdSelected}
-                  label={Text({ tid: "line" })}
-                  onChange={(e) => setEntIdSelected(e.target.value)}
+                  value={selectedState}
+                  label={Text({ tid: "status" })}
+                  onChange={(e) => setSelectedState(e.target.value)}
                 >
-                  {entFilter.map((ent) => (
-                    <MenuItem value={ent.ent_id}>{ent.ent_name}</MenuItem>
+                  {possibleStates.map((item) => (
+                    <MenuItem value={item}>{item}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
             </Grid>
-          )}
-          {itemFilter && (
             <Grid item xs={12} sm={12} md={2}>
-              <FormControl fullWidth>
-                <InputLabel>Material</InputLabel>
-                <Select
-                  value={itemIdSelected}
-                  label="Material"
-                  onChange={(e) => setItemIdSelected(e.target.value)}
-                >
-                  {itemFilter.map((item) => (
-                    <MenuItem value={item.item_id}>{item.item_desc}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <LocalizationProvider dateAdapter={AdapterMoment}>
+                <DatePicker
+                  inputFormat="DD/MM/yyyy"
+                  label={Text({ tid: "startDate" })}
+                  value={initDateSelected}
+                  onChange={(newValue) => {
+                    setInitDateSelected(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
             </Grid>
-          )}
-          <Grid item xs={12} sm={12} md={2}>
-            <FormControl fullWidth>
-              <InputLabel>{Text({ tid: "status" })}</InputLabel>
-              <Select
-                value={selectedState}
-                label={Text({ tid: "status" })}
-                onChange={(e) => setSelectedState(e.target.value)}
-              >
-                {possibleStates.map((item) => (
-                  <MenuItem value={item}>{item}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={12} md={2}>
-            <LocalizationProvider dateAdapter={AdapterMoment}>
-              <DatePicker
-                inputFormat="DD/MM/yyyy"
-                label={Text({ tid: "startDate" })}
-                value={initDateSelected}
-                onChange={(newValue) => {
-                  setInitDateSelected(newValue);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
-          </Grid>
-          <Grid item xs={12} sm={12} md={2}>
-            <LocalizationProvider dateAdapter={AdapterMoment}>
-              <DatePicker
-                inputFormat="DD/MM/yyyy"
-                label={Text({ tid: "endDate" })}
-                value={endDateSelected}
-                onChange={(newValue) => {
-                  setEndDateSelected(newValue);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
+            <Grid item xs={12} sm={12} md={2}>
+              <LocalizationProvider dateAdapter={AdapterMoment}>
+                <DatePicker
+                  inputFormat="DD/MM/yyyy"
+                  label={Text({ tid: "endDate" })}
+                  value={endDateSelected}
+                  onChange={(newValue) => {
+                    setEndDateSelected(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={2}>
-        <Button fullWidth variant="contained" onClick={applyFilters}>
-          {Text({ tid: "apply" })}
-        </Button>
-      </Grid>
-      <Divider />
-      {loadingData ? (
-        <Grid item xs={12}>
-          <LinearProgress variant="indeterminate" color="secondary" />
+        <Grid item xs={12} sm={12} md={12} lg={2}>
+          <Button /* fullWidth */ variant="contained" onClick={applyFilters}>
+            {Text({ tid: "apply" })}
+          </Button>
+          <Button
+            /* fullWidth */ variant="contained"
+            onClick={handleCreateOrderClick}
+          >
+            {Text({ tid: "createOrder" })}
+          </Button>
         </Grid>
-      ) : ordersData && ordersData.length > 0 ? (
+        <Divider />
+        {loadingData ? (
+          <Grid item xs={12}>
+            <LinearProgress variant="indeterminate" color="secondary" />
+          </Grid>
+        ) : ordersData && ordersData.length > 0 ? (
+          <Grid item xs={12}>
+            <TableWidget
+              data={ordersData}
+              columns={orderColumns}
+              tableName="order-management"
+            />
+          </Grid>
+        ) : (
+          submitedSearch && (
+            <Grid item xs={12}>
+              <Alert variant="filled" severity="info">
+                {Text({ tid: "noOrdersMatchingFilter" })}
+              </Alert>
+            </Grid>
+          )
+        )}
         <Grid item xs={12}>
-          <TableWidget
-            data={ordersData}
-            columns={orderColumns}
-            tableName="order-management"
+          <ConsAndProds
+            loading={loadingFromSelected}
+            consumptionData={consumptionData}
+            selectedRows={selectedRows}
+            productionData={productionData}
           />
         </Grid>
-      ) : (
-        submitedSearch && (
-          <Grid item xs={12}>
-            <Alert variant="filled" severity="info">
-              {Text({ tid: "noOrdersMatchingFilter" })}
-            </Alert>
-          </Grid>
-        )
-      )}
-      <Grid item xs={12}>
-        <ConsAndProds
-          loading={loadingFromSelected}
-          consumptionData={consumptionData}
-          selectedRows={selectedRows}
-          productionData={productionData}
-        />
       </Grid>
-    </Grid>
+      <ModalCreateOrder
+        open={createOrderModal}
+        close={setCreateOrderModal}
+        setRefreshMain={setRefreshMain}
+      />
+    </>
   );
 };
 

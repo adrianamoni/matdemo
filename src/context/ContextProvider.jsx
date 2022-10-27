@@ -57,9 +57,14 @@ const ContextProvider = (props) => {
     oeeSpecs: storageData.oeeSpecs || undefined,
     terminal: undefined,
     extras: undefined,
-    orderDetails: undefined,
+    orderDetails: { productionData: undefined, cleaningData: undefined },
     pendingSamples: { alert: undefined, data: undefined },
     pendingInterruptions: { alert: undefined, data: undefined },
+    lastCleaningData: {
+      /* state: undefined,
+      lastClean: undefined,
+      backgroundColor: "#cecece", */
+    },
   });
   /**MultiLanguage Setup */
   const languageFromStorage = getLanguageFromStorage();

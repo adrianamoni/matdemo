@@ -16,7 +16,7 @@ const AutoControles = ({ data, alert }) => {
   const { pendingSamples } = globalData;
 
   let samplesData;
-  if (pendingSamples && pendingSamples.data.length > 0) {
+  if (pendingSamples?.data?.length > 0) {
     let moments = data.map((d) => moment(d.req_time_local)),
       maxDate = moment.max(moments);
     samplesData = maxDate._i;

@@ -26,6 +26,7 @@ const OeeChartBox = ({ showChart, line, order, disableClick }) => {
   const [oeeReal, setOeeReal] = useState(undefined);
   const [stateColor, setStateColor] = useState(["#F0F0F0", "#F0F0F0"]);
   const [raise, setRaise] = useState(false);
+  const [energyData, setEnergyData] = useState(undefined);
   useEffect(
     () => {
       let mountedComp = true;
