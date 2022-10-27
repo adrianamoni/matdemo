@@ -11,7 +11,7 @@ const es_bckup = {
   confirmLogout: "¿Está seguro de que quiere salir?",
   consume: "Consumir",
   consumoTotal: "Consumo energético",
-  consumoUd: "Consumo energético ud.",
+  consumoUd: "C. energético ud.",
   consumptionCorrection: "Corrección Consumo",
   createInterruption: "Generar Paro",
   dashboard: "Tablero",

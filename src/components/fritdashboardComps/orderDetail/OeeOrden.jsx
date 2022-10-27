@@ -23,6 +23,7 @@ const OeeOrden = ({ energyData, setEnergyData }) => {
       let energyRawData = response.filter((d) =>
         d.Tagname.includes(globalData?.lineData?.entName)
       );
+      console.log("energyRawData", energyRawData);
       let energyObj = energyRawData.find(
         (d) =>
           d.Tagname ===
@@ -35,9 +36,10 @@ const OeeOrden = ({ energyData, setEnergyData }) => {
       );
       let res = {
         objetivo: energyObj,
-        consumo: parseInt((energyComsuption.Value / energyObj) * 100),
+        consumo: energyComsuption.Value,
+        consumoPercentage: parseInt((energyComsuption.Value / energyObj) * 100),
       };
-      console.log("energy", res);
+      /*   console.log("energy", res); */
       setEnergyData(res);
     }
   };
@@ -74,7 +76,11 @@ const OeeOrden = ({ energyData, setEnergyData }) => {
                 <strong> {Text({ tid: "energy" })}</strong>
               </Typography>
               <HalfDoughnut
-                value={[energyData?.consumo ? energyData.consumo : 0]}
+                value={[
+                  energyData?.consumoPercentage
+                    ? energyData.consumoPercentage
+                    : 0,
+                ]}
                 stroked
               />
             </Grid>

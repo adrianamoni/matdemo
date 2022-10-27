@@ -6,6 +6,7 @@ import {
   Card,
   LinearProgress,
   Box,
+  Divider,
 } from "@mui/material";
 import {
   globalDataContext,
@@ -108,6 +109,7 @@ const General = ({ loading }) => {
                 lastCleaningData={lastCleaningApiData}
               />
             </Box>
+            <Divider variant="middle" sx={{ margin: "10px" }} />
             {/* <InfoOE /> */}
             {/* <Limpieza /> */}
             <InfoOELimpieza
